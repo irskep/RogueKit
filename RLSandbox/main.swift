@@ -50,7 +50,7 @@ struct Cell {
 class TileMap {
   var cells = [int2: Cell]()
 
-  func cell(_ point: int2) -> Cell? {
+  func get(_ point: int2) -> Cell? {
     return cells[point]
   }
 
@@ -60,14 +60,24 @@ class TileMap {
 }
 
 func getAllowsLight(_ tilemap: TileMap, _ point: int2) -> Bool {
-  guard let cell = tilemap.cell(point) else { return false }
+  guard let cell = tilemap.get(point) else { return false }
   return cell.terrain == .floor
 }
 
 func draw(tilemap: TileMap, playerPos: int2) {
+  let losCache = RecursiveShadowcastingFOVProvider()
+    .getVisiblePoints(vantagePoint: playerPos, maxDistance: 30, getAllowsLight: {
+      return getAllowsLight(tilemap, $0)
+    })
+
+  let space = Array<Int8>(" ".utf8CString)
   for (pt, cell) in tilemap.cells {
-    let chr = Array<Int8>(cell.terrain.cString)
-    terminal_print(pt.x, pt.y, UnsafePointer(chr))
+    if losCache.contains(pt) {
+      let chr = Array<Int8>(cell.terrain.cString)
+      terminal_print(pt.x, pt.y, UnsafePointer(chr))
+    } else {
+      terminal_print(pt.x, pt.y, UnsafePointer(space))
+    }
   }
   let chr = Array<Int8>("@".utf8CString)
   terminal_print(playerPos.x, playerPos.y, UnsafePointer(chr))

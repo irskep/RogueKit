@@ -10,6 +10,7 @@
 		AA2F6A531FFC968100927F17 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F6A521FFC968100927F17 /* main.swift */; };
 		AA2F6A5D1FFC972500927F17 /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */; };
 		AA2F6A5E1FFC98C300927F17 /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AA2F6A621FFD2CED00927F17 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F6A611FFD2CED00927F17 /* FOV.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,7 @@
 		AA2F6A5A1FFC96E800927F17 /* BearLibTerminal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BearLibTerminal.h; sourceTree = "<group>"; };
 		AA2F6A5B1FFC970A00927F17 /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
+		AA2F6A611FFD2CED00927F17 /* FOV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				AA2F6A521FFC968100927F17 /* main.swift */,
+				AA2F6A611FFD2CED00927F17 /* FOV.swift */,
 			);
 			path = RLSandbox;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA2F6A531FFC968100927F17 /* main.swift in Sources */,
+				AA2F6A621FFD2CED00927F17 /* FOV.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

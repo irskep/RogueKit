@@ -33,6 +33,7 @@
 		AA2F6A5B1FFC970A00927F17 /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AA2F6A611FFD2CED00927F17 /* FOV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
+		AAD77B871FFD416900C975C5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +51,7 @@
 		AA2F6A461FFC968100927F17 = {
 			isa = PBXGroup;
 			children = (
+				AAD77B871FFD416900C975C5 /* Readme.md */,
 				AA2F6A591FFC96CF00927F17 /* bearlibterminal */,
 				AA2F6A511FFC968100927F17 /* RLSandbox */,
 				AA2F6A501FFC968100927F17 /* Products */,

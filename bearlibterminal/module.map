@@ -1,4 +1,4 @@
-module BearLibTerminal [system] {
+module CBearLibTerminal {
   header "BearLibTerminal.h"
   export *
 }

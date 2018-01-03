@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import BearLibTerminal
+import CBearLibTerminal
 import GameplayKit
 
 let DUNGEON: [String] = [

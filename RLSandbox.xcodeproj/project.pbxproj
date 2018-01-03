@@ -8,23 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		AA2F6A531FFC968100927F17 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F6A521FFC968100927F17 /* main.swift */; };
+		AA2F6A5D1FFC972500927F17 /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */; };
+		AA2F6A5E1FFC98C300927F17 /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AA2F6A4D1FFC968100927F17 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 6;
 			files = (
+				AA2F6A5E1FFC98C300927F17 /* libBearLibTerminal.dylib in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AA2F6A4F1FFC968100927F17 /* RLSandbox */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RLSandbox; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2F6A521FFC968100927F17 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		AA2F6A5A1FFC96E800927F17 /* BearLibTerminal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BearLibTerminal.h; sourceTree = "<group>"; };
+		AA2F6A5B1FFC970A00927F17 /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
+		AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA2F6A5D1FFC972500927F17 /* libBearLibTerminal.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +48,7 @@
 		AA2F6A461FFC968100927F17 = {
 			isa = PBXGroup;
 			children = (
+				AA2F6A591FFC96CF00927F17 /* bearlibterminal */,
 				AA2F6A511FFC968100927F17 /* RLSandbox */,
 				AA2F6A501FFC968100927F17 /* Products */,
 			);
@@ -60,6 +68,16 @@
 				AA2F6A521FFC968100927F17 /* main.swift */,
 			);
 			path = RLSandbox;
+			sourceTree = "<group>";
+		};
+		AA2F6A591FFC96CF00927F17 /* bearlibterminal */ = {
+			isa = PBXGroup;
+			children = (
+				AA2F6A5A1FFC96E800927F17 /* BearLibTerminal.h */,
+				AA2F6A5B1FFC970A00927F17 /* module.map */,
+				AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */,
+			);
+			path = bearlibterminal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,7 +256,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9TC4EP6SEE;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bearlibterminal",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/bearlibterminal/**";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -248,7 +271,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9TC4EP6SEE;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bearlibterminal",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/bearlibterminal/**";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

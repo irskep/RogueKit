@@ -11,6 +11,8 @@
 		AA2F6A5D1FFC972500927F17 /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */; };
 		AA2F6A5E1FFC98C300927F17 /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA2F6A621FFD2CED00927F17 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F6A611FFD2CED00927F17 /* FOV.swift */; };
+		F225891F20002EFE009D08C4 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225891E20002EFE009D08C4 /* BearLibTerminal.swift */; };
+		F225892120003F22009D08C4 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225892020003F22009D08C4 /* BearLibTerminal+constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +36,8 @@
 		AA2F6A5C1FFC972400927F17 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AA2F6A611FFD2CED00927F17 /* FOV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
 		AAD77B871FFD416900C975C5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		F225891E20002EFE009D08C4 /* BearLibTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
+		F225892020003F22009D08C4 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,8 @@
 			children = (
 				AA2F6A521FFC968100927F17 /* main.swift */,
 				AA2F6A611FFD2CED00927F17 /* FOV.swift */,
+				F225891E20002EFE009D08C4 /* BearLibTerminal.swift */,
+				F225892020003F22009D08C4 /* BearLibTerminal+constants.swift */,
 			);
 			path = RLSandbox;
 			sourceTree = "<group>";
@@ -143,8 +149,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F225891F20002EFE009D08C4 /* BearLibTerminal.swift in Sources */,
 				AA2F6A531FFC968100927F17 /* main.swift in Sources */,
 				AA2F6A621FFD2CED00927F17 /* FOV.swift in Sources */,
+				F225892120003F22009D08C4 /* BearLibTerminal+constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +269,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9TC4EP6SEE;
+				DEVELOPMENT_TEAM = R6WSY7ZR92;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/bearlibterminal",
@@ -276,7 +284,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9TC4EP6SEE;
+				DEVELOPMENT_TEAM = R6WSY7ZR92;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/bearlibterminal",

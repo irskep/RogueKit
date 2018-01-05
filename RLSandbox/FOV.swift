@@ -20,16 +20,16 @@ private let MULT: [[Int32]] = [
 
 protocol FOVProviding {
   func getVisiblePoints(
-    vantagePoint: int2,
+    vantagePoint: RKPoint,
     maxDistance: Int32,
-    getAllowsLight: (int2) -> Bool)
-    -> Set<int2>
+    getAllowsLight: (RKPoint) -> Bool)
+    -> Set<RKPoint>
 }
 
 
 class RecursiveShadowcastingFOVProvider: FOVProviding {
-  func getVisiblePoints(vantagePoint: int2, maxDistance: Int32, getAllowsLight: (int2) -> Bool) -> Set<int2> {
-    var cache = Set<int2>()
+  func getVisiblePoints(vantagePoint: RKPoint, maxDistance: Int32, getAllowsLight: (RKPoint) -> Bool) -> Set<RKPoint> {
+    var cache = Set<RKPoint>()
     cache.insert(vantagePoint)
     for region in 0..<8 {
       _castLight(
@@ -51,9 +51,9 @@ class RecursiveShadowcastingFOVProvider: FOVProviding {
   // Implementation partially borrowed from
   // https://medium.com/lateral-view/making-a-roguelike-using-ncurses-with-swift-part-1-e9f979fca998
   private func _castLight(
-    cache: inout Set<int2>,
-    getAllowsLight: (int2) -> Bool,
-    c: int2,
+    cache: inout Set<RKPoint>,
+    getAllowsLight: (RKPoint) -> Bool,
+    c: RKPoint,
     row: Int32,
     startSlope: Double,
     endSlope: Double,
@@ -83,7 +83,7 @@ class RecursiveShadowcastingFOVProvider: FOVProviding {
         // Translate the dx, dy coordinates into map coordinates.
         let ax : Int32 = c.x + j * xx + dy * xy
         let ay : Int32 = c.y + j * yx + dy * yy
-        let point = int2(ax, ay)
+        let point = RKPoint(x: ax, y: ay)
 
         let radius2 = radius * radius
         if Int32(j * j + dy * dy) < radius2 {

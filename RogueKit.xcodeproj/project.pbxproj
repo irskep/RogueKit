@@ -1,0 +1,373 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F225893C200052DC009D08C4 /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */; };
+		F225893D200052E0009D08C4 /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F2258941200052F0009D08C4 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225893E200052F0009D08C4 /* test.swift */; };
+		F2258942200052F0009D08C4 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225893F200052F0009D08C4 /* BearLibTerminal+constants.swift */; };
+		F2258943200052F0009D08C4 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2258940200052F0009D08C4 /* BearLibTerminal.swift */; };
+		F2258945200052F6009D08C4 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2258944200052F6009D08C4 /* FOV.swift */; };
+		F225894920005343009D08C4 /* fovTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225894820005343009D08C4 /* fovTest.swift */; };
+		OBJ_21 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_27 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* main.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F225893620005290009D08C4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				F225893D200052E0009D08C4 /* libBearLibTerminal.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F225893420005284009D08C4 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
+		F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
+		F225893E200052F0009D08C4 /* test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		F225893F200052F0009D08C4 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
+		F2258940200052F0009D08C4 /* BearLibTerminal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
+		F2258944200052F6009D08C4 /* FOV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
+		F225894820005343009D08C4 /* fovTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		OBJ_9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		"RogueKit::RogueKit::Product" /* RogueKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = RogueKit; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				F225893C200052DC009D08C4 /* libBearLibTerminal.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F225893320005283009D08C4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F225893420005284009D08C4 /* libBearLibTerminal.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F225894A20005379009D08C4 /* Binaries */ = {
+			isa = PBXGroup;
+			children = (
+				F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */,
+			);
+			path = Binaries;
+			sourceTree = "<group>";
+		};
+		F225894B200053D1009D08C4 /* BearLibTerminal */ = {
+			isa = PBXGroup;
+			children = (
+				F2258940200052F0009D08C4 /* BearLibTerminal.swift */,
+				F225893F200052F0009D08C4 /* BearLibTerminal+constants.swift */,
+			);
+			path = BearLibTerminal;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_10 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_13 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		OBJ_14 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"RogueKit::RogueKit::Product" /* RogueKit */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_5 /*  */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				OBJ_7 /* Sources */,
+				OBJ_10 /* Tests */,
+				OBJ_13 /* Dependencies */,
+				F225894A20005379009D08C4 /* Binaries */,
+				OBJ_14 /* Products */,
+				F225893320005283009D08C4 /* Frameworks */,
+			);
+			name = "";
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F225894B200053D1009D08C4 /* BearLibTerminal */,
+				OBJ_8 /* RogueKit */,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_8 /* RogueKit */ = {
+			isa = PBXGroup;
+			children = (
+				F225894820005343009D08C4 /* fovTest.swift */,
+				F2258944200052F6009D08C4 /* FOV.swift */,
+				F225893E200052F0009D08C4 /* test.swift */,
+				OBJ_9 /* main.swift */,
+			);
+			name = RogueKit;
+			path = Sources/RogueKit;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"RogueKit::RogueKit" /* RogueKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_23 /* Build configuration list for PBXNativeTarget "RogueKit" */;
+			buildPhases = (
+				OBJ_26 /* Sources */,
+				OBJ_28 /* Frameworks */,
+				F225893620005290009D08C4 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RogueKit;
+			productName = RogueKit;
+			productReference = "RogueKit::RogueKit::Product" /* RogueKit */;
+			productType = "com.apple.product-type.tool";
+		};
+		"RogueKit::SwiftPMPackageDescription" /* RogueKitPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_17 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */;
+			buildPhases = (
+				OBJ_20 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RogueKitPackageDescription;
+			productName = RogueKitPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 9999;
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "RogueKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5 /*  */;
+			productRefGroup = OBJ_14 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"RogueKit::SwiftPMPackageDescription" /* RogueKitPackageDescription */,
+				"RogueKit::RogueKit" /* RogueKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_21 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				F2258942200052F0009D08C4 /* BearLibTerminal+constants.swift in Sources */,
+				F2258943200052F0009D08C4 /* BearLibTerminal.swift in Sources */,
+				OBJ_27 /* main.swift in Sources */,
+				F225894920005343009D08C4 /* fovTest.swift in Sources */,
+				F2258945200052F6009D08C4 /* FOV.swift in Sources */,
+				F2258941200052F0009D08C4 /* test.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_19 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Binaries",
+					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = RogueKit;
+			};
+			name = Debug;
+		};
+		OBJ_25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Binaries",
+					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = RogueKit;
+			};
+			name = Release;
+		};
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "-DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_17 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_18 /* Debug */,
+				OBJ_19 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_2 /* Build configuration list for PBXProject "RogueKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_23 /* Build configuration list for PBXNativeTarget "RogueKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_24 /* Debug */,
+				OBJ_25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}

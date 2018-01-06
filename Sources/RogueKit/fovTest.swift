@@ -74,7 +74,7 @@ func draw(terminal: RKTerminalInterface, tilemap: TileMap, playerPos: RKPoint) {
     terminal.print(point: playerPos, string: "@")
 }
 
-func main() {
+func fovTest() {
     let terminal = RKTerminal.main
     terminal.open()
 
@@ -108,6 +108,4 @@ func main() {
 
     terminal.close()
 }
-
-runTest()
 

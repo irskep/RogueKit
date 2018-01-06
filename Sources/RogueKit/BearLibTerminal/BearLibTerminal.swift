@@ -10,27 +10,37 @@ import Foundation
 import CBearLibTerminal
 
 
-enum RogueKitError: Error {
+public enum RogueKitError: Error {
     case StringEncodingError
 }
 
 
-typealias RKInt = Int32
-typealias RKColor = UInt32
+public typealias RKInt = Int32
+public typealias RKColor = UInt32
 
-struct RKRect: Equatable {
-    var x: RKInt
-    var y: RKInt
-    var w: RKInt
-    var h: RKInt
-    static func ==(_ a: RKRect, _ b: RKRect) -> Bool { return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h }
+public struct RKRect: Equatable {
+    public var x: RKInt
+    public var y: RKInt
+    public var w: RKInt
+    public var h: RKInt
+    public static func ==(_ a: RKRect, _ b: RKRect) -> Bool { return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h }
+    public init(x: RKInt, y: RKInt, w: RKInt, h: RKInt) {
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+    }
 }
 
-struct RKPoint: Equatable {
-    var x: RKInt
-    var y: RKInt
-    static var zero = RKPoint(x: 0, y: 0)
-    static func ==(_ a: RKPoint, _ b: RKPoint) -> Bool { return a.x == b.x && a.y == b.y }
+public struct RKPoint: Equatable {
+    public var x: RKInt
+    public var y: RKInt
+    public static var zero = RKPoint(x: 0, y: 0)
+    public static func ==(_ a: RKPoint, _ b: RKPoint) -> Bool { return a.x == b.x && a.y == b.y }
+    public init(x: RKInt, y: RKInt) {
+        self.x = x
+        self.y = y
+    }
 }
 extension RKPoint: Hashable {
     public var hashValue: Int {
@@ -38,14 +48,18 @@ extension RKPoint: Hashable {
     }
 }
 
-struct RKSize: Equatable {
-    var w: RKInt
-    var h: RKInt
-    static func ==(_ a: RKSize, _ b: RKSize) -> Bool { return a.w == b.w && a.h == b.h }
+public struct RKSize: Equatable {
+    public var w: RKInt
+    public var h: RKInt
+    public static func ==(_ a: RKSize, _ b: RKSize) -> Bool { return a.w == b.w && a.h == b.h }
+    public init(w: RKInt, h: RKInt) {
+        self.w = w
+        self.h = h
+    }
 }
 
 
-protocol RKTerminalInterface: class {
+public protocol RKTerminalInterface: class {
     func open()
     func close()
     @discardableResult func configure(_ config: String) -> Bool
@@ -80,101 +94,101 @@ protocol RKTerminalInterface: class {
     var isCompositionEnabled: Bool { get set }
 }
 
-extension RKTerminalInterface {
-    func waitForExit() {
+public extension RKTerminalInterface {
+    public func waitForExit() {
         while self.read() != RKConstant.CLOSE { }
         self.close()
     }
 }
 
-class RKTerminal: RKTerminalInterface {
-    static var main: RKTerminalInterface = { RKTerminal() }()
+public class RKTerminal: RKTerminalInterface {
+    public static var main: RKTerminalInterface = { RKTerminal() }()
 
-    init() { }
+    public init() { }
 
-    func open() { terminal_open() }
+    public func open() { terminal_open() }
 
-    func close() { terminal_close() }
+    public func close() { terminal_close() }
 
     @discardableResult
-    func configure(_ config: String) -> Bool {
+    public func configure(_ config: String) -> Bool {
         let s = Array(config.utf8CString)
         return terminal_set(UnsafePointer(s)) != 0
     }
 
-    func refresh() { terminal_refresh() }
+    public func refresh() { terminal_refresh() }
 
-    func clear() { terminal_clear() }
+    public func clear() { terminal_clear() }
 
-    func check(_ slot: Int32) -> Bool { return terminal_check(slot) != 0 }
+    public func check(_ slot: Int32) -> Bool { return terminal_check(slot) != 0 }
 
-    func state(_ slot: Int32) -> Int32 { return terminal_state(slot) }
+    public func state(_ slot: Int32) -> Int32 { return terminal_state(slot) }
 
-    func clear(area: RKRect) {
+    public func clear(area: RKRect) {
         terminal_clear_area(area.x, area.y, area.w, area.h)
     }
 
-    func crop(area: RKRect) {
+    public func crop(area: RKRect) {
         terminal_crop(area.x, area.y, area.w, area.h)
     }
 
-    func delay(milliseconds: RKInt) {
+    public func delay(milliseconds: RKInt) {
         terminal_delay(milliseconds)
     }
 
-    func measure(string: String) -> RKSize {
+    public func measure(string: String) -> RKSize {
         let s = Array(string.utf8CString)
         let result: dimensions_t = terminal_measure(UnsafePointer(s))
         return RKSize(w: result.width, h: result.height)
     }
 
     @discardableResult
-    func print(point: RKPoint, string: String) -> RKSize {
+    public func print(point: RKPoint, string: String) -> RKSize {
         let s = Array(string.utf8CString)
         let result = terminal_print(point.x, point.y, UnsafePointer(s))
         return RKSize(w: result.width, h: result.height)
     }
 
-    func put(point: RKPoint, code: RKInt) {
+    public func put(point: RKPoint, code: RKInt) {
         terminal_put(point.x, point.y, code)
     }
 
-    func put(point: RKPoint, code: RKInt, offset: RKPoint, nw: RKColor, sw: RKColor, se: RKColor, ne: RKColor) {
+    public func put(point: RKPoint, code: RKInt, offset: RKPoint, nw: RKColor, sw: RKColor, se: RKColor, ne: RKColor) {
         let cornersArray: [color_t] = [nw, sw, se, ne]
         let ptr = UnsafeMutablePointer(mutating: cornersArray)
         terminal_put_ext(point.x, point.y, offset.x, offset.y, code, ptr)
     }
 
-    func getColor(name: String) -> RKColor {
+    public func getColor(name: String) -> RKColor {
         let s = Array(name.utf8CString)
         return color_from_name(UnsafePointer(s))
     }
 
-    func getColor(a: UInt8, r: UInt8, g: UInt8, b: UInt8) -> RKColor {
+    public func getColor(a: UInt8, r: UInt8, g: UInt8, b: UInt8) -> RKColor {
         return color_from_argb(a, r, g, b)
     }
 
-    func pickCode(point: RKPoint, index: RKInt) -> RKInt {
+    public func pickCode(point: RKPoint, index: RKInt) -> RKInt {
         return terminal_pick(point.x, point.y, index)
     }
 
-    func pickForegroundColor(point: RKPoint, index: RKInt) -> RKColor {
+    public func pickForegroundColor(point: RKPoint, index: RKInt) -> RKColor {
         return terminal_pick_color(point.x, point.y, index)
     }
 
-    func pickBackgroundColor(point: RKPoint, index: RKInt) -> RKColor {
+    public func pickBackgroundColor(point: RKPoint, index: RKInt) -> RKColor {
         return terminal_pick_bkcolor(point.x, point.y)
     }
 
-    func peek() -> Int32 {
+    public func peek() -> Int32 {
         return terminal_peek()
     }
 
-    func read() -> Int32 {
+    public func read() -> Int32 {
         return terminal_read()
     }
 
-    func readString(point: RKPoint, max: RKInt) -> String? {
+    public func readString(point: RKPoint, max: RKInt) -> String? {
         var bytes = [Int8](repeating: 0, count: Int(max))
         let result = terminal_read_str(point.x, point.y, &bytes, max)
         if result <= 0 {
@@ -188,26 +202,26 @@ class RKTerminal: RKTerminalInterface {
         }
     }
 
-    var hasInput: Bool {
+    public var hasInput: Bool {
         return terminal_has_input() != 0
     }
 
-    var layer: RKInt {
+    public var layer: RKInt {
         get { return terminal_state(TK_LAYER) }
         set { terminal_layer(newValue) }
     }
 
-    var foregroundColor: RKColor {
+    public var foregroundColor: RKColor {
         get { return RKColor(bitPattern: terminal_state(TK_COLOR)) }
         set { terminal_color(newValue) }
     }
 
-    var backgroundColor: RKColor {
+    public var backgroundColor: RKColor {
         get { return RKColor(bitPattern: terminal_state(TK_BKCOLOR)) }
         set { terminal_bkcolor(newValue) }
     }
 
-    var isCompositionEnabled: Bool {
+    public var isCompositionEnabled: Bool {
         get { return terminal_state(RKConstant.COMPOSITION) == RKConstant.ON }
         set { terminal_composition(newValue ? RKConstant.ON : RKConstant.OFF) }
     }

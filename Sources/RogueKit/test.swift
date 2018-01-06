@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steve Johnson. All rights reserved.
 //
 
-import CBearLibTerminal
+//import BearLibTerminal
 
 func runTest() {
     let terminal = RKTerminal.main

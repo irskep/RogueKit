@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F225893C200052DC009D08C4 /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */; };
 		F225893D200052E0009D08C4 /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		F2258941200052F0009D08C4 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225893E200052F0009D08C4 /* test.swift */; };
-		F2258942200052F0009D08C4 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225893F200052F0009D08C4 /* BearLibTerminal+constants.swift */; };
-		F2258943200052F0009D08C4 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2258940200052F0009D08C4 /* BearLibTerminal.swift */; };
 		F2258945200052F6009D08C4 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2258944200052F6009D08C4 /* FOV.swift */; };
 		F225894920005343009D08C4 /* fovTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225894820005343009D08C4 /* fovTest.swift */; };
+		F225895120005793009D08C4 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225894F20005793009D08C4 /* BearLibTerminal+constants.swift */; };
+		F225895220005793009D08C4 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225895020005793009D08C4 /* BearLibTerminal.swift */; };
+		F225895320005BCD009D08C4 /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */; };
 		OBJ_21 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_27 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* main.swift */; };
 /* End PBXBuildFile section */
@@ -35,10 +35,10 @@
 		F225893420005284009D08C4 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		F225893E200052F0009D08C4 /* test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
-		F225893F200052F0009D08C4 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
-		F2258940200052F0009D08C4 /* BearLibTerminal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
 		F2258944200052F6009D08C4 /* FOV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
 		F225894820005343009D08C4 /* fovTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
+		F225894F20005793009D08C4 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
+		F225895020005793009D08C4 /* BearLibTerminal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		"RogueKit::RogueKit::Product" /* RogueKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = RogueKit; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				F225893C200052DC009D08C4 /* libBearLibTerminal.dylib in Frameworks */,
+				F225895320005BCD009D08C4 /* libBearLibTerminal.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,14 +72,23 @@
 			path = Binaries;
 			sourceTree = "<group>";
 		};
-		F225894B200053D1009D08C4 /* BearLibTerminal */ = {
+		F225894C200056CA009D08C4 /* Algorithms */ = {
 			isa = PBXGroup;
 			children = (
-				F2258940200052F0009D08C4 /* BearLibTerminal.swift */,
-				F225893F200052F0009D08C4 /* BearLibTerminal+constants.swift */,
+				F2258944200052F6009D08C4 /* FOV.swift */,
+			);
+			name = Algorithms;
+			path = Sources/RogueKit/Algorithms;
+			sourceTree = SOURCE_ROOT;
+		};
+		F225894E20005793009D08C4 /* BearLibTerminal */ = {
+			isa = PBXGroup;
+			children = (
+				F225894F20005793009D08C4 /* BearLibTerminal+constants.swift */,
+				F225895020005793009D08C4 /* BearLibTerminal.swift */,
 			);
 			path = BearLibTerminal;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		OBJ_10 /* Tests */ = {
 			isa = PBXGroup;
@@ -120,7 +129,6 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				F225894B200053D1009D08C4 /* BearLibTerminal */,
 				OBJ_8 /* RogueKit */,
 			);
 			name = Sources;
@@ -129,10 +137,11 @@
 		OBJ_8 /* RogueKit */ = {
 			isa = PBXGroup;
 			children = (
-				F225894820005343009D08C4 /* fovTest.swift */,
-				F2258944200052F6009D08C4 /* FOV.swift */,
-				F225893E200052F0009D08C4 /* test.swift */,
+				F225894C200056CA009D08C4 /* Algorithms */,
+				F225894E20005793009D08C4 /* BearLibTerminal */,
 				OBJ_9 /* main.swift */,
+				F225893E200052F0009D08C4 /* test.swift */,
+				F225894820005343009D08C4 /* fovTest.swift */,
 			);
 			name = RogueKit;
 			path = Sources/RogueKit;
@@ -211,10 +220,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				F2258942200052F0009D08C4 /* BearLibTerminal+constants.swift in Sources */,
-				F2258943200052F0009D08C4 /* BearLibTerminal.swift in Sources */,
+				F225895120005793009D08C4 /* BearLibTerminal+constants.swift in Sources */,
 				OBJ_27 /* main.swift in Sources */,
 				F225894920005343009D08C4 /* fovTest.swift in Sources */,
+				F225895220005793009D08C4 /* BearLibTerminal.swift in Sources */,
 				F2258945200052F6009D08C4 /* FOV.swift in Sources */,
 				F2258941200052F0009D08C4 /* test.swift in Sources */,
 			);

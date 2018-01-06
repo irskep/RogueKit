@@ -16,7 +16,7 @@ enum RogueKitError: Error {
 
 
 typealias RKInt = Int32
-typealias RKColor = color_t
+typealias RKColor = UInt32
 
 struct RKRect: Equatable {
     var x: RKInt
@@ -29,6 +29,7 @@ struct RKRect: Equatable {
 struct RKPoint: Equatable {
     var x: RKInt
     var y: RKInt
+    static var zero = RKPoint(x: 0, y: 0)
     static func ==(_ a: RKPoint, _ b: RKPoint) -> Bool { return a.x == b.x && a.y == b.y }
 }
 extension RKPoint: Hashable {
@@ -44,10 +45,10 @@ struct RKSize: Equatable {
 }
 
 
-protocol RKTerminalInterface {
+protocol RKTerminalInterface: class {
     func open()
     func close()
-    func configure(_ config: String) -> Bool
+    @discardableResult func configure(_ config: String) -> Bool
 
     func refresh()
     func clear()
@@ -68,16 +69,26 @@ protocol RKTerminalInterface {
 
     func peek() -> Int32
     func read() -> Int32
+    func state(_ slot: Int32) -> Int32
+    func check(_ slot: Int32) -> Bool
     func readString(point: RKPoint, max: RKInt) -> String?
 
     var hasInput: Bool { get }
     var layer: RKInt { get set }
     var foregroundColor: RKColor { get set }
     var backgroundColor: RKColor { get set }
+    var isCompositionEnabled: Bool { get set }
+}
+
+extension RKTerminalInterface {
+    func waitForExit() {
+        while self.read() != RKConstant.CLOSE { }
+        self.close()
+    }
 }
 
 class RKTerminal: RKTerminalInterface {
-    static var main: RKTerminal = { RKTerminal() }()
+    static var main: RKTerminalInterface = { RKTerminal() }()
 
     init() { }
 
@@ -85,6 +96,7 @@ class RKTerminal: RKTerminalInterface {
 
     func close() { terminal_close() }
 
+    @discardableResult
     func configure(_ config: String) -> Bool {
         let s = Array(config.utf8CString)
         return terminal_set(UnsafePointer(s)) != 0
@@ -93,6 +105,10 @@ class RKTerminal: RKTerminalInterface {
     func refresh() { terminal_refresh() }
 
     func clear() { terminal_clear() }
+
+    func check(_ slot: Int32) -> Bool { return terminal_check(slot) != 0 }
+
+    func state(_ slot: Int32) -> Int32 { return terminal_state(slot) }
 
     func clear(area: RKRect) {
         terminal_clear_area(area.x, area.y, area.w, area.h)
@@ -164,8 +180,12 @@ class RKTerminal: RKTerminalInterface {
         if result <= 0 {
             return nil
         }
-        let data: Data = Data(bytes: bytes.map({ UInt8($0) }))
-        return String(data: data, encoding: .utf8)
+        let data: Data = Data(bytes: bytes.map({ UInt8(bitPattern: $0) }))
+        if let longString = String(data: data, encoding: .utf8) {
+            return String(longString.prefix(Int(result)))
+        } else {
+            return nil
+        }
     }
 
     var hasInput: Bool {
@@ -174,16 +194,21 @@ class RKTerminal: RKTerminalInterface {
 
     var layer: RKInt {
         get { return terminal_state(TK_LAYER) }
-        set { terminal_layer(layer) }
+        set { terminal_layer(newValue) }
     }
 
     var foregroundColor: RKColor {
         get { return RKColor(bitPattern: terminal_state(TK_COLOR)) }
-        set { terminal_color(foregroundColor) }
+        set { terminal_color(newValue) }
     }
 
     var backgroundColor: RKColor {
         get { return RKColor(bitPattern: terminal_state(TK_BKCOLOR)) }
-        set { terminal_bkcolor(backgroundColor) }
+        set { terminal_bkcolor(newValue) }
+    }
+
+    var isCompositionEnabled: Bool {
+        get { return terminal_state(RKConstant.COMPOSITION) == RKConstant.ON }
+        set { terminal_composition(newValue ? RKConstant.ON : RKConstant.OFF) }
     }
 }

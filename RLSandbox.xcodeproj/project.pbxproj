@@ -13,6 +13,7 @@
 		AA2F6A621FFD2CED00927F17 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2F6A611FFD2CED00927F17 /* FOV.swift */; };
 		F225891F20002EFE009D08C4 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225891E20002EFE009D08C4 /* BearLibTerminal.swift */; };
 		F225892120003F22009D08C4 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225892020003F22009D08C4 /* BearLibTerminal+constants.swift */; };
+		F22589232000429E009D08C4 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22589222000429E009D08C4 /* test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,6 +39,7 @@
 		AAD77B871FFD416900C975C5 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		F225891E20002EFE009D08C4 /* BearLibTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
 		F225892020003F22009D08C4 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
+		F22589222000429E009D08C4 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				AA2F6A611FFD2CED00927F17 /* FOV.swift */,
 				F225891E20002EFE009D08C4 /* BearLibTerminal.swift */,
 				F225892020003F22009D08C4 /* BearLibTerminal+constants.swift */,
+				F22589222000429E009D08C4 /* test.swift */,
 			);
 			path = RLSandbox;
 			sourceTree = "<group>";
@@ -152,6 +155,7 @@
 				F225891F20002EFE009D08C4 /* BearLibTerminal.swift in Sources */,
 				AA2F6A531FFC968100927F17 /* main.swift in Sources */,
 				AA2F6A621FFD2CED00927F17 /* FOV.swift in Sources */,
+				F22589232000429E009D08C4 /* test.swift in Sources */,
 				F225892120003F22009D08C4 /* BearLibTerminal+constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

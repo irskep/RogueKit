@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import GameplayKit
 
 
 let DUNGEON: [String] = [
@@ -110,4 +109,5 @@ func main() {
     terminal.close()
 }
 
-main()
+runTest()
+

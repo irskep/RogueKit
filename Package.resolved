@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "BearLibTerminal",
+        "repositoryURL": "https://github.com/irskep/BearLibTerminal-Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "f41530dac3a0628a223db3149ededcd304961704",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "CBearLibTerminal",
         "repositoryURL": "https://github.com/irskep/CBearLibTerminal.git",
         "state": {

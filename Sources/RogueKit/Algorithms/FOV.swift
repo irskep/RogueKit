@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import BearLibTerminal
+import BearLibTerminal
 
 
 private let MULT: [[Int32]] = [

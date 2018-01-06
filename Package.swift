@@ -11,12 +11,12 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-         .package(url: "https://github.com/irskep/CBearLibTerminal.git", from: "1.0.3"),
+         .package(url: "https://github.com/irskep/BearLibTerminal-Swift.git", from: "1.0.0"),
     ],
     targets: [
         .target(
             name: "RogueKit",
-            dependencies: ["CBearLibTerminal"]),
+            dependencies: ["BearLibTerminal"]),
 
     ]
 )

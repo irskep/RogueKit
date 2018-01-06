@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steve Johnson. All rights reserved.
 //
 
-//import BearLibTerminal
+import BearLibTerminal
 
 func runTest() {
     let terminal = RKTerminal.main
@@ -78,7 +78,13 @@ func runTest() {
     terminal.delay(milliseconds: 1000)
     terminal.print(point: RKPoint(x: 20, y: 1), string: "Enter a string:")
     terminal.refresh()
-    print(terminal.readString(point: RKPoint(x: 20, y: 2), max: 100) as Any)
+
+    if let s = terminal.readString(point: RKPoint(x: 20, y: 2), max: 100) {
+      terminal.print(point: RKPoint(x: 20, y: 2), string: "> \(s)")
+    } else {
+      terminal.print(point: RKPoint(x: 20, y: 2), string: "> (no text)")
+    }
+    terminal.refresh()
 
     terminal.waitForExit()
 }

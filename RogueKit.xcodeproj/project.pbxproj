@@ -6,124 +6,161 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		"RogueKit::RogueKit Demo::ProductTarget" /* RogueKit Demo */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = OBJ_58 /* Build configuration list for PBXAggregateTarget "RogueKit Demo" */;
+			buildPhases = (
+			);
+			dependencies = (
+				OBJ_61 /* PBXTargetDependency */,
+			);
+			name = "RogueKit Demo";
+			productName = "RogueKit Demo";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
-		F225893D200052E0009D08C4 /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		F2258941200052F0009D08C4 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225893E200052F0009D08C4 /* test.swift */; };
-		F2258945200052F6009D08C4 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2258944200052F6009D08C4 /* FOV.swift */; };
-		F225894920005343009D08C4 /* fovTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225894820005343009D08C4 /* fovTest.swift */; };
-		F225895120005793009D08C4 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225894F20005793009D08C4 /* BearLibTerminal+constants.swift */; };
-		F225895220005793009D08C4 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F225895020005793009D08C4 /* BearLibTerminal.swift */; };
-		F225895320005BCD009D08C4 /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */; };
-		OBJ_21 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_27 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* main.swift */; };
+		AAAC3DB52000848B00C9ED6E /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAC3DB42000848B00C9ED6E /* libBearLibTerminal.dylib */; };
+		AAAC3DB72000849A00C9ED6E /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAAC3DB42000848B00C9ED6E /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		OBJ_30 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_36 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* Package.swift */; };
+		OBJ_42 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* FOV.swift */; };
+		OBJ_43 /* fovTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* fovTest.swift */; };
+		OBJ_44 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* main.swift */; };
+		OBJ_45 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* test.swift */; };
+		OBJ_47 /* BearLibTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */; };
+		OBJ_54 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* BearLibTerminal+constants.swift */; };
+		OBJ_55 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* BearLibTerminal.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AAD77B882000841900C975C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "BearLibTerminal::BearLibTerminal";
+			remoteInfo = BearLibTerminal;
+		};
+		AAD77B892000841900C975C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "RogueKit::RogueKit";
+			remoteInfo = RogueKit;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		F225893620005290009D08C4 /* CopyFiles */ = {
+		AAAC3DB62000848D00C9ED6E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 6;
+			dstSubfolderSpec = 16;
 			files = (
-				F225893D200052E0009D08C4 /* libBearLibTerminal.dylib in CopyFiles */,
+				AAAC3DB72000849A00C9ED6E /* libBearLibTerminal.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F225893420005284009D08C4 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
-		F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
-		F225893E200052F0009D08C4 /* test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
-		F2258944200052F6009D08C4 /* FOV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
-		F225894820005343009D08C4 /* fovTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
-		F225894F20005793009D08C4 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
-		F225895020005793009D08C4 /* BearLibTerminal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
+		AAAC3DB42000848B00C9ED6E /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
+		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_10 /* FOV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
+		OBJ_11 /* fovTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
+		OBJ_12 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		OBJ_13 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		OBJ_15 /* Binaries */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Binaries; sourceTree = SOURCE_ROOT; };
+		OBJ_19 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
+		OBJ_20 /* BearLibTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
+		OBJ_21 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/steve/_d/games/RLSandbox/.build/checkouts/BearLibTerminal-Swift.git--207320618593063566/Package.swift"; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		"RogueKit::RogueKit::Product" /* RogueKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = RogueKit; sourceTree = BUILT_PRODUCTS_DIR; };
+		"RogueKit::RogueKit::Product" /* RogueKit */ = {isa = PBXFileReference; lastKnownFileType = text; path = RogueKit; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_28 /* Frameworks */ = {
+		OBJ_46 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				F225895320005BCD009D08C4 /* libBearLibTerminal.dylib in Frameworks */,
+				OBJ_47 /* BearLibTerminal.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				AAAC3DB52000848B00C9ED6E /* libBearLibTerminal.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F225893320005283009D08C4 /* Frameworks */ = {
+		AAAC3DB32000848A00C9ED6E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F225893420005284009D08C4 /* libBearLibTerminal.dylib */,
+				AAAC3DB42000848B00C9ED6E /* libBearLibTerminal.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F225894A20005379009D08C4 /* Binaries */ = {
-			isa = PBXGroup;
-			children = (
-				F225893B200052DC009D08C4 /* libBearLibTerminal.dylib */,
-			);
-			path = Binaries;
-			sourceTree = "<group>";
-		};
-		F225894C200056CA009D08C4 /* Algorithms */ = {
-			isa = PBXGroup;
-			children = (
-				F2258944200052F6009D08C4 /* FOV.swift */,
-			);
-			name = Algorithms;
-			path = Sources/RogueKit/Algorithms;
-			sourceTree = SOURCE_ROOT;
-		};
-		F225894E20005793009D08C4 /* BearLibTerminal */ = {
-			isa = PBXGroup;
-			children = (
-				F225894F20005793009D08C4 /* BearLibTerminal+constants.swift */,
-				F225895020005793009D08C4 /* BearLibTerminal.swift */,
-			);
-			path = BearLibTerminal;
-			sourceTree = "<group>";
-		};
-		OBJ_10 /* Tests */ = {
+		OBJ_14 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Tests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_13 /* Dependencies */ = {
+		OBJ_16 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				OBJ_17 /* BearLibTerminal 1.0.0 */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		OBJ_14 /* Products */ = {
+		OBJ_17 /* BearLibTerminal 1.0.0 */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_18 /* BearLibTerminal */,
+				OBJ_21 /* Package.swift */,
+			);
+			name = "BearLibTerminal 1.0.0";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_18 /* BearLibTerminal */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_19 /* BearLibTerminal+constants.swift */,
+				OBJ_20 /* BearLibTerminal.swift */,
+			);
+			name = BearLibTerminal;
+			path = ".build/checkouts/BearLibTerminal-Swift.git--207320618593063566/Sources/BearLibTerminal";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_22 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				"RogueKit::RogueKit::Product" /* RogueKit */,
+				"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
-				OBJ_10 /* Tests */,
-				OBJ_13 /* Dependencies */,
-				F225894A20005379009D08C4 /* Binaries */,
-				OBJ_14 /* Products */,
-				F225893320005283009D08C4 /* Frameworks */,
+				OBJ_14 /* Tests */,
+				OBJ_15 /* Binaries */,
+				OBJ_16 /* Dependencies */,
+				OBJ_22 /* Products */,
+				AAAC3DB32000848A00C9ED6E /* Frameworks */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -137,30 +174,68 @@
 		OBJ_8 /* RogueKit */ = {
 			isa = PBXGroup;
 			children = (
-				F225894C200056CA009D08C4 /* Algorithms */,
-				F225894E20005793009D08C4 /* BearLibTerminal */,
-				OBJ_9 /* main.swift */,
-				F225893E200052F0009D08C4 /* test.swift */,
-				F225894820005343009D08C4 /* fovTest.swift */,
+				OBJ_9 /* Algorithms */,
+				OBJ_11 /* fovTest.swift */,
+				OBJ_12 /* main.swift */,
+				OBJ_13 /* test.swift */,
 			);
 			name = RogueKit;
 			path = Sources/RogueKit;
 			sourceTree = SOURCE_ROOT;
 		};
+		OBJ_9 /* Algorithms */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_10 /* FOV.swift */,
+			);
+			path = Algorithms;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		"RogueKit::RogueKit" /* RogueKit */ = {
+		"BearLibTerminal::BearLibTerminal" /* BearLibTerminal */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_23 /* Build configuration list for PBXNativeTarget "RogueKit" */;
+			buildConfigurationList = OBJ_50 /* Build configuration list for PBXNativeTarget "BearLibTerminal" */;
 			buildPhases = (
-				OBJ_26 /* Sources */,
-				OBJ_28 /* Frameworks */,
-				F225893620005290009D08C4 /* CopyFiles */,
+				OBJ_53 /* Sources */,
+				OBJ_56 /* Frameworks */,
+				AAAC3DB62000848D00C9ED6E /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+			);
+			name = BearLibTerminal;
+			productName = BearLibTerminal;
+			productReference = "BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"BearLibTerminal::SwiftPMPackageDescription" /* BearLibTerminalPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_32 /* Build configuration list for PBXNativeTarget "BearLibTerminalPackageDescription" */;
+			buildPhases = (
+				OBJ_35 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BearLibTerminalPackageDescription;
+			productName = BearLibTerminalPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+		"RogueKit::RogueKit" /* RogueKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_38 /* Build configuration list for PBXNativeTarget "RogueKit" */;
+			buildPhases = (
+				OBJ_41 /* Sources */,
+				OBJ_46 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_48 /* PBXTargetDependency */,
 			);
 			name = RogueKit;
 			productName = RogueKit;
@@ -169,9 +244,9 @@
 		};
 		"RogueKit::SwiftPMPackageDescription" /* RogueKitPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_17 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */;
+			buildConfigurationList = OBJ_26 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */;
 			buildPhases = (
-				OBJ_20 /* Sources */,
+				OBJ_29 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -196,43 +271,74 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
-			productRefGroup = OBJ_14 /* Products */;
+			mainGroup = OBJ_5;
+			productRefGroup = OBJ_22 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				"RogueKit::SwiftPMPackageDescription" /* RogueKitPackageDescription */,
+				"BearLibTerminal::SwiftPMPackageDescription" /* BearLibTerminalPackageDescription */,
 				"RogueKit::RogueKit" /* RogueKit */,
+				"BearLibTerminal::BearLibTerminal" /* BearLibTerminal */,
+				"RogueKit::RogueKit Demo::ProductTarget" /* RogueKit Demo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_20 /* Sources */ = {
+		OBJ_29 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_21 /* Package.swift in Sources */,
+				OBJ_30 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_26 /* Sources */ = {
+		OBJ_35 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				F225895120005793009D08C4 /* BearLibTerminal+constants.swift in Sources */,
-				OBJ_27 /* main.swift in Sources */,
-				F225894920005343009D08C4 /* fovTest.swift in Sources */,
-				F225895220005793009D08C4 /* BearLibTerminal.swift in Sources */,
-				F2258945200052F6009D08C4 /* FOV.swift in Sources */,
-				F2258941200052F0009D08C4 /* test.swift in Sources */,
+				OBJ_36 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_42 /* FOV.swift in Sources */,
+				OBJ_43 /* fovTest.swift in Sources */,
+				OBJ_44 /* main.swift in Sources */,
+				OBJ_45 /* test.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_54 /* BearLibTerminal+constants.swift in Sources */,
+				OBJ_55 /* BearLibTerminal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		OBJ_48 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "BearLibTerminal::BearLibTerminal" /* BearLibTerminal */;
+			targetProxy = AAD77B882000841900C975C5 /* PBXContainerItemProxy */;
+		};
+		OBJ_61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "RogueKit::RogueKit" /* RogueKit */;
+			targetProxy = AAD77B892000841900C975C5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		OBJ_18 /* Debug */ = {
+		OBJ_27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
@@ -241,66 +347,12 @@
 			};
 			name = Debug;
 		};
-		OBJ_19 /* Release */ = {
+		OBJ_28 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				LD = /usr/bin/true;
 				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
 				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		OBJ_24 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
-				);
-				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Binaries",
-					"$(PROJECT_DIR)",
-				);
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
-				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = RogueKit;
-			};
-			name = Debug;
-		};
-		OBJ_25 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
-				);
-				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Binaries",
-					"$(PROJECT_DIR)",
-				);
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
-				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = RogueKit;
 			};
 			name = Release;
 		};
@@ -326,6 +378,46 @@
 			};
 			name = Debug;
 		};
+		OBJ_33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = RogueKit;
+			};
+			name = Debug;
+		};
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -346,18 +438,101 @@
 			};
 			name = Release;
 		};
+		OBJ_40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = RogueKit;
+			};
+			name = Release;
+		};
+		OBJ_51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/BearLibTerminal_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Binaries",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = BearLibTerminal;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = BearLibTerminal;
+			};
+			name = Debug;
+		};
+		OBJ_52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/BearLibTerminal_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Binaries",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = BearLibTerminal;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = BearLibTerminal;
+			};
+			name = Release;
+		};
+		OBJ_59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		OBJ_60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		OBJ_17 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_18 /* Debug */,
-				OBJ_19 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		OBJ_2 /* Build configuration list for PBXProject "RogueKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -367,11 +542,47 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_23 /* Build configuration list for PBXNativeTarget "RogueKit" */ = {
+		OBJ_26 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_24 /* Debug */,
-				OBJ_25 /* Release */,
+				OBJ_27 /* Debug */,
+				OBJ_28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_32 /* Build configuration list for PBXNativeTarget "BearLibTerminalPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_33 /* Debug */,
+				OBJ_34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_38 /* Build configuration list for PBXNativeTarget "RogueKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_39 /* Debug */,
+				OBJ_40 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_50 /* Build configuration list for PBXNativeTarget "BearLibTerminal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_51 /* Debug */,
+				OBJ_52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_58 /* Build configuration list for PBXAggregateTarget "RogueKit Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_59 /* Debug */,
+				OBJ_60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -43,23 +43,23 @@ struct Cell {
 }
 
 class TileMap {
-    var cells = [RKPoint: Cell]()
+    var cells = [BLPoint: Cell]()
 
-    func get(_ point: RKPoint) -> Cell? {
+    func get(_ point: BLPoint) -> Cell? {
         return cells[point]
     }
 
-    func put(_ point: RKPoint, _ cell: Cell) {
+    func put(_ point: BLPoint, _ cell: Cell) {
         cells[point] = cell
     }
 }
 
-func getAllowsLight(_ tilemap: TileMap, _ point: RKPoint) -> Bool {
+func getAllowsLight(_ tilemap: TileMap, _ point: BLPoint) -> Bool {
     guard let cell = tilemap.get(point) else { return false }
     return cell.terrain == .floor
 }
 
-func draw(terminal: RKTerminalInterface, tilemap: TileMap, playerPos: RKPoint) {
+func draw(terminal: BLTerminalInterface, tilemap: TileMap, playerPos: BLPoint) {
     let losCache = RecursiveShadowcastingFOVProvider()
         .getVisiblePoints(vantagePoint: playerPos, maxDistance: 30, getAllowsLight: {
             return getAllowsLight(tilemap, $0)
@@ -76,16 +76,16 @@ func draw(terminal: RKTerminalInterface, tilemap: TileMap, playerPos: RKPoint) {
 }
 
 func fovTest() {
-    let terminal = RKTerminal.main
+    let terminal = BLTerminal.main
     terminal.open()
 
     let tilemap = TileMap()
-    var playerPos = RKPoint(x: 0, y: 0)
+    var playerPos = BLPoint(x: 0, y: 0)
     for (y, row) in DUNGEON.enumerated() {
         for (x, char) in row.enumerated() {
-            tilemap.put(RKPoint(x: Int32(x), y: Int32(y)), Cell(terrain: Terrain(rawValue: char) ?? .floor))
+            tilemap.put(BLPoint(x: Int32(x), y: Int32(y)), Cell(terrain: Terrain(rawValue: char) ?? .floor))
             if char == "@" {
-                playerPos = RKPoint(x: Int32(x), y: Int32(y))
+                playerPos = BLPoint(x: Int32(x), y: Int32(y))
             }
         }
     }
@@ -97,11 +97,11 @@ func fovTest() {
 
         if terminal.hasInput {
             switch terminal.read() {
-            case RKConstant.Q, RKConstant.CLOSE: break mainLoop
-            case RKConstant.UP: playerPos.y -= 1
-            case RKConstant.DOWN: playerPos.y += 1
-            case RKConstant.LEFT: playerPos.x -= 1
-            case RKConstant.RIGHT: playerPos.x += 1
+            case BLConstant.Q, BLConstant.CLOSE: break mainLoop
+            case BLConstant.UP: playerPos.y -= 1
+            case BLConstant.DOWN: playerPos.y += 1
+            case BLConstant.LEFT: playerPos.x -= 1
+            case BLConstant.RIGHT: playerPos.x += 1
             default: break
             }
         }

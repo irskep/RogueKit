@@ -6,16 +6,21 @@
 //
 
 import Foundation
-//import CZlib
+import Gzip
 
 
-public class REXPaintImage {
+public class REXPaintImage: CustomDebugStringConvertible {
   public let version: Int32
   public let layers: [[REXPaintCell]]
   public let width: Int32
   public let height: Int32
 
-  public init(data: Data) {
+  public init?(maybeGzippedData: Data) {
+    var data = maybeGzippedData
+    if data.isGzipped {
+      guard let decompressedData = try? data.gunzipped() else { return nil }
+      data = decompressedData
+    }
     let ints: [Int32] = data.withUnsafeBytes {
       Array(UnsafeBufferPointer<Int32>(start: $0, count: data.count/MemoryLayout<Int32>.size))
     }
@@ -28,7 +33,7 @@ public class REXPaintImage {
     let cellsPerLayer = Int(self.width * self.height)
 
     // Initialize layers array
-    self.layers = [[REXPaintCell]](
+    var layers = [[REXPaintCell]](
       repeating: [REXPaintCell](repeating: REXPaintCell.zero, count: cellsPerLayer),
       count: Int(layersCount))
 
@@ -47,16 +52,22 @@ public class REXPaintImage {
           return Array(UnsafeBufferPointer<Int32>(start: $0, count: 1))[0]
         })
         let cellBytes = [UInt8](cellData)
-        layerArr[layerIndex] = REXPaintCell(
+        layerArr[cellIndex] = REXPaintCell(
           code: code,
           foregroundColor: (cellBytes[4], cellBytes[5], cellBytes[6]),
           backgroundColor: (cellBytes[7], cellBytes[8], cellBytes[9]))
       }
+      layers.append(layerArr)
     }
+    self.layers = layers
   }
 
-  public func get(x: Int, y: Int) -> REXPaintCell {
-    return REXPaintCell(code: 0, foregroundColor: (0, 0, 0), backgroundColor: (0, 0, 0))
+  public func get(layer: Int, x: Int, y: Int) -> REXPaintCell {
+    return layers[layer][x * Int(self.height) + y]
+  }
+
+  public var debugDescription: String {
+    return "REXPaintImage(w=\(self.width), h=\(self.width), layers=\(self.layers.count)"
   }
 }
 

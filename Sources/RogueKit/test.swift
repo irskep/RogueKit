@@ -8,12 +8,13 @@
 
 import BearLibTerminal
 
-func runTest() {
+func runTest(rexPaintImage: REXPaintImage, fontPath: String) {
     let terminal = BLTerminal.main
 
     terminal.open()
     let result = terminal.configure("""
-    window.title='RogueKit Test'
+    window.title='RogueKit Test';
+    font: \(fontPath), size=10x10;
     """)
     assert(result == true)
     terminal.clear()
@@ -73,9 +74,14 @@ func runTest() {
     terminal.print(point: BLPoint(x: 20, y: 0), string: "[color=red]Fancy print[/color]")
     assert(terminal.measure(string: "Fancy print") == BLSize(w: 11, h: 1))
 
+    // Can haz REXPaint?
+    rexPaintImage.draw(in: terminal, at: BLPoint(x: 0, y: 13))
+
     terminal.refresh()
 
     terminal.delay(milliseconds: 1000)
+    terminal.foregroundColor = terminal.getColor(a: 255, r: 255, g: 255, b: 255)
+    terminal.backgroundColor = terminal.getColor(a: 0, r: 0, g: 0, b: 0)
     terminal.print(point: BLPoint(x: 20, y: 1), string: "Enter a string:")
     terminal.refresh()
 

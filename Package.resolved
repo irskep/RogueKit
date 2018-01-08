@@ -18,6 +18,24 @@
           "revision": "e45976355a3028a80daab8c89e30fe386a50d7bb",
           "version": "1.0.3"
         }
+      },
+      {
+        "package": "CZlib",
+        "repositoryURL": "https://github.com/IBM-Swift/CZlib.git",
+        "state": {
+          "branch": null,
+          "revision": "a781e6ef055fb8f0d608fe30a28e6a0f62ae498b",
+          "version": "0.1.2"
+        }
+      },
+      {
+        "package": "Gzip",
+        "repositoryURL": "https://github.com/1024jp/GzipSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "377e8bff2a7c99fb5a588dec351334efa3fd0b94",
+          "version": "4.0.4"
+        }
       }
     ]
   },

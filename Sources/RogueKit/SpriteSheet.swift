@@ -23,6 +23,16 @@ private struct CP437 {
   static let ARROW_S = 25
 }
 
+private extension String {
+  static func fromChars(_ chars: [Int32]) -> String {
+    return chars
+      .flatMap({
+        guard let s = UnicodeScalar(Int($0)) else { return nil }
+        return String(Character(s))
+      })
+      .joined()
+  }
+}
 
 private func _findSprites(in image: REXPaintImage) -> [REXPaintSprite] {
   var used = [[Bool]](repeating: [Bool](repeating: false, count: Int(image.width)), count: Int(image.height))
@@ -53,14 +63,19 @@ private func _findSprites(in image: REXPaintImage) -> [REXPaintSprite] {
       h += 1
     }
 
+    var metaX = x + 1
+    var metaChars = [Int32]()
+    while image.get(layer: 1, x: Int(metaX), y: Int(y + h + 1)).code != CP437.LINE_H {
+      metaChars.append(image.get(layer: 1, x: Int(metaX), y: Int(y + h + 1)).code)
+      metaX += 1
+    }
 
-    let nameString: String = nameChars
-      .flatMap({
-        guard let s = UnicodeScalar(Int($0)) else { return nil }
-        return String(Character(s))
-      })
-      .joined()
-    sprites.append(REXPaintSprite(image: image, rect: BLRect(x: x + 1, y: y + 1, w: w, h: h), name: nameString))
+    sprites.append(REXPaintSprite(
+      image: image,
+      rect: BLRect(x: x + 1, y: y + 1, w: w, h: h),
+      name: String.fromChars(nameChars),
+      metadata: String.fromChars(metaChars)))
+    print(sprites.last!)
   }
 
   for y in 0..<image.height {
@@ -91,6 +106,7 @@ struct REXPaintSprite: REXPaintDrawable {
   let image: REXPaintImage
   let rect: BLRect
   let name: String
+  let metadata: String
 
   var layersCount: Int { return image.layersCount }
   var width: Int32 { return rect.w }

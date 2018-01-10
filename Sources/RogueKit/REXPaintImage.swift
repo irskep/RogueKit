@@ -56,8 +56,6 @@ public class REXPaintImage: CustomDebugStringConvertible {
     self.height = ints[3]
     let cellsPerLayer = Int(self.width * self.height)
 
-    print(layersCount)
-
     // Initialize layers array
     var layers = [[REXPaintCell]]()
 

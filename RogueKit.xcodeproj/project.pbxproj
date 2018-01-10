@@ -28,6 +28,7 @@
 		AAC7B3C220033654005D33AE /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC7B3C120033654005D33AE /* libz.1.tbd */; };
 		AAC7B3C82003397B005D33AE /* REXPaintImage+BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7B3C72003397B005D33AE /* REXPaintImage+BearLibTerminal.swift */; };
 		AAC7B3CA20033A8E005D33AE /* BearLibTerminal+Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */; };
+		AAC7B3CD200591A5005D33AE /* SpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */; };
 		OBJ_30 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_36 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* Package.swift */; };
 		OBJ_42 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* FOV.swift */; };
@@ -54,6 +55,13 @@
 			remoteGlobalIDString = "RogueKit::RogueKit";
 			remoteInfo = RogueKit;
 		};
+		AAC7B3D32005950B005D33AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AAC7B3CF20059504005D33AE;
+			remoteInfo = "Sync Resources";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,11 +81,12 @@
 		AAC7B39A2001A359005D33AE /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AAC7B3BB2003321B005D33AE /* cp437_10x10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cp437_10x10.png; sourceTree = "<group>"; };
-		AAC7B3BC2003321B005D33AE /* xptest.xp */ = {isa = PBXFileReference; lastKnownFileType = file; path = xptest.xp; sourceTree = "<group>"; };
 		AAC7B3BD20033223005D33AE /* REXPaintImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = REXPaintImage.swift; sourceTree = "<group>"; };
 		AAC7B3C120033654005D33AE /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		AAC7B3C72003397B005D33AE /* REXPaintImage+BearLibTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "REXPaintImage+BearLibTerminal.swift"; sourceTree = "<group>"; };
 		AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+Geometry.swift"; sourceTree = "<group>"; };
+		AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteSheet.swift; sourceTree = "<group>"; };
+		AAC7B3D520059536005D33AE /* sync_resources.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = sync_resources.sh; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* FOV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
 		OBJ_11 /* fovTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
@@ -132,10 +141,17 @@
 		AAC7B3BA2003321B005D33AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AAC7B3CE200594B1005D33AE /* xp */,
 				AAC7B3BB2003321B005D33AE /* cp437_10x10.png */,
-				AAC7B3BC2003321B005D33AE /* xptest.xp */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		AAC7B3CE200594B1005D33AE /* xp */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = xp;
 			sourceTree = "<group>";
 		};
 		OBJ_14 /* Tests */ = {
@@ -184,6 +200,7 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				AAC7B3D520059536005D33AE /* sync_resources.sh */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_14 /* Tests */,
@@ -213,6 +230,7 @@
 				AAC7B3BD20033223005D33AE /* REXPaintImage.swift */,
 				AAC7B3C72003397B005D33AE /* REXPaintImage+BearLibTerminal.swift */,
 				AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */,
+				AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */,
 			);
 			name = RogueKit;
 			path = Sources/RogueKit;
@@ -238,10 +256,25 @@
 			buildToolPath = /usr/bin/swift;
 			buildWorkingDirectory = "";
 			dependencies = (
+				AAC7B3D42005950B005D33AE /* PBXTargetDependency */,
 			);
 			name = SwiftPM;
 			passBuildSettingsInEnvironment = 1;
 			productName = SwiftPM;
+		};
+		AAC7B3CF20059504005D33AE /* Sync Resources */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = sync_resources.sh;
+			buildConfigurationList = AAC7B3D020059504005D33AE /* Build configuration list for PBXLegacyTarget "Sync Resources" */;
+			buildPhases = (
+			);
+			buildToolPath = /bin/bash;
+			buildWorkingDirectory = "$(SRCROOT)";
+			dependencies = (
+			);
+			name = "Sync Resources";
+			passBuildSettingsInEnvironment = 1;
+			productName = "Sync Resources";
 		};
 /* End PBXLegacyTarget section */
 
@@ -321,6 +354,11 @@
 						DevelopmentTeam = 9TC4EP6SEE;
 						ProvisioningStyle = Automatic;
 					};
+					AAC7B3CF20059504005D33AE = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = 9TC4EP6SEE;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "RogueKit" */;
@@ -340,6 +378,7 @@
 				"RogueKit::RogueKit" /* RogueKit */,
 				"BearLibTerminal::BearLibTerminal" /* BearLibTerminal */,
 				"RogueKit::RogueKit Demo::ProductTarget" /* RogueKit Demo */,
+				AAC7B3CF20059504005D33AE /* Sync Resources */,
 				AAC7B3C320033699005D33AE /* SwiftPM */,
 			);
 		};
@@ -371,6 +410,7 @@
 				AAC7B3CA20033A8E005D33AE /* BearLibTerminal+Geometry.swift in Sources */,
 				AAC7B3C82003397B005D33AE /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				OBJ_44 /* main.swift in Sources */,
+				AAC7B3CD200591A5005D33AE /* SpriteSheet.swift in Sources */,
 				AAC7B3BE20033223005D33AE /* REXPaintImage.swift in Sources */,
 				OBJ_45 /* test.swift in Sources */,
 			);
@@ -388,6 +428,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AAC7B3D42005950B005D33AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AAC7B3CF20059504005D33AE /* Sync Resources */;
+			targetProxy = AAC7B3D32005950B005D33AE /* PBXContainerItemProxy */;
+		};
 		OBJ_48 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "BearLibTerminal::BearLibTerminal" /* BearLibTerminal */;
@@ -458,6 +503,111 @@
 			name = Debug;
 		};
 		AAC7B3C620033699005D33AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9TC4EP6SEE;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AAC7B3D120059504005D33AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9TC4EP6SEE;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AAC7B3D220059504005D33AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -718,6 +868,15 @@
 			buildConfigurations = (
 				AAC7B3C520033699005D33AE /* Debug */,
 				AAC7B3C620033699005D33AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AAC7B3D020059504005D33AE /* Build configuration list for PBXLegacyTarget "Sync Resources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAC7B3D120059504005D33AE /* Debug */,
+				AAC7B3D220059504005D33AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

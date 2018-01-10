@@ -1,11 +1,35 @@
 //
 //  REXPaintImage.swift
-//  RogueKit
 //
 //  Created by Steve Johnson on 1/7/18.
 //
+//  Copyright (c) 2018, Steve Johnson
+//  All rights reserved.
+//
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//  1. Redistributions of source code must retain the above copyright notice, this
+//  list of conditions and the following disclaimer.
+//  2. Redistributions in binary form must reproduce the above copyright notice,
+//  this list of conditions and the following disclaimer in the documentation
+//  and/or other materials provided with the distribution.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+//  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+//  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+//  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+//  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+//  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+//  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+//  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+//  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+//  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
+
+// Requires Gzip package:
+// https://github.com/1024jp/GzipSwift
 import Gzip
 
 
@@ -32,10 +56,10 @@ public class REXPaintImage: CustomDebugStringConvertible {
     self.height = ints[3]
     let cellsPerLayer = Int(self.width * self.height)
 
+    print(layersCount)
+
     // Initialize layers array
-    var layers = [[REXPaintCell]](
-      repeating: [REXPaintCell](repeating: REXPaintCell.zero, count: cellsPerLayer),
-      count: Int(layersCount))
+    var layers = [[REXPaintCell]]()
 
     // w, h, (code + color) * w * h
     let bytesPerCell = 10
@@ -67,7 +91,7 @@ public class REXPaintImage: CustomDebugStringConvertible {
   }
 
   public var debugDescription: String {
-    return "REXPaintImage(w=\(self.width), h=\(self.width), layers=\(self.layers.count)"
+    return "REXPaintImage(w=\(self.width), h=\(self.width), layers=\(self.layers.count))"
   }
 }
 
@@ -77,7 +101,7 @@ public struct REXPaintCell {
   public let foregroundColor: (UInt8, UInt8, UInt8)
   public let backgroundColor: (UInt8, UInt8, UInt8)
 
-  static let zero = { return REXPaintCell(code: 0, foregroundColor: (0, 0, 0), backgroundColor: (0, 0, 0)) }()
+  public static let zero = { return REXPaintCell(code: 0, foregroundColor: (0, 0, 0), backgroundColor: (0, 0, 0)) }()
 
   public init(
     code: Int32,

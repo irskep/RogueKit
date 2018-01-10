@@ -8,7 +8,7 @@
 
 import BearLibTerminal
 
-func runTest(rexPaintImage: REXPaintImage, fontPath: String) {
+func runTest(rexPaintImage: REXPaintDrawable, fontPath: String) {
     let terminal = BLTerminal.main
 
     terminal.open()

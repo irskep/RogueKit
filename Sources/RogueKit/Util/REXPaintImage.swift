@@ -94,7 +94,7 @@ public class REXPaintImage: CustomDebugStringConvertible {
 }
 
 
-public struct REXPaintCell {
+public struct REXPaintCell: Equatable {
   public let code: Int32
   public let foregroundColor: (UInt8, UInt8, UInt8)
   public let backgroundColor: (UInt8, UInt8, UInt8)
@@ -109,5 +109,9 @@ public struct REXPaintCell {
     self.code = code
     self.foregroundColor = foregroundColor
     self.backgroundColor = backgroundColor
+  }
+
+  public static func ==(_ a: REXPaintCell, _ b: REXPaintCell) -> Bool {
+    return a.code == b.code && a.foregroundColor == b.foregroundColor && a.backgroundColor == b.backgroundColor
   }
 }

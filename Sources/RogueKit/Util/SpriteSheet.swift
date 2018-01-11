@@ -8,21 +8,6 @@
 import Foundation
 import BearLibTerminal
 
-
-private struct CP437 {
-  static let LINE_NW = 218
-  static let LINE_NE = 191
-  static let LINE_SW = 192
-  static let LINE_SE = 217
-  static let LINE_H = 196
-  static let LINE_V = 179
-
-  static let ARROW_W = 27
-  static let ARROW_E = 26
-  static let ARROW_N = 24
-  static let ARROW_S = 25
-}
-
 private extension String {
   static func fromChars(_ chars: [Int32]) -> String {
     return chars
@@ -75,7 +60,6 @@ private func _findSprites(in image: REXPaintImage) -> [REXPaintSprite] {
       rect: BLRect(x: x + 1, y: y + 1, w: w, h: h),
       name: String.fromChars(nameChars),
       metadata: String.fromChars(metaChars)))
-    print(sprites.last!)
   }
 
   for y in 0..<image.height {

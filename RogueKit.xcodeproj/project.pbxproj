@@ -21,6 +21,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AA3DA1DA20068DE200A7CA1B /* Prefab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1D920068DE200A7CA1B /* Prefab.swift */; };
+		AA3DA1DC2006919500A7CA1B /* CP437.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1DB2006919500A7CA1B /* CP437.swift */; };
+		AA3DA1DE2006942E00A7CA1B /* RKRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1DD2006942E00A7CA1B /* RKRNG.swift */; };
+		AA3DA1E02006967E00A7CA1B /* PurePrefabGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1DF2006967E00A7CA1B /* PurePrefabGenerator.swift */; };
+		AA3DA1E22007021400A7CA1B /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1E12007021400A7CA1B /* Resources.swift */; };
 		AAC7B3A82001A3E8005D33AE /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC7B3A92001A3FD005D33AE /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; };
 		AAC7B3AA2001A40D005D33AE /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; };
@@ -31,7 +36,7 @@
 		AAC7B3CD200591A5005D33AE /* SpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */; };
 		OBJ_30 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_36 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* Package.swift */; };
-		OBJ_42 /* FOV.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* FOV.swift */; };
+		OBJ_42 /* RecursiveShadowcastingFOVProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* RecursiveShadowcastingFOVProvider.swift */; };
 		OBJ_43 /* fovTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* fovTest.swift */; };
 		OBJ_44 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* main.swift */; };
 		OBJ_45 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* test.swift */; };
@@ -78,6 +83,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA3DA1D920068DE200A7CA1B /* Prefab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefab.swift; sourceTree = "<group>"; };
+		AA3DA1DB2006919500A7CA1B /* CP437.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CP437.swift; sourceTree = "<group>"; };
+		AA3DA1DD2006942E00A7CA1B /* RKRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKRNG.swift; sourceTree = "<group>"; };
+		AA3DA1DF2006967E00A7CA1B /* PurePrefabGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurePrefabGenerator.swift; sourceTree = "<group>"; };
+		AA3DA1E12007021400A7CA1B /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		AA3DA1E42007031500A7CA1B /* xp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = xp; sourceTree = "<group>"; };
 		AAC7B39A2001A359005D33AE /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AAC7B3BB2003321B005D33AE /* cp437_10x10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cp437_10x10.png; sourceTree = "<group>"; };
@@ -88,7 +99,7 @@
 		AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteSheet.swift; sourceTree = "<group>"; };
 		AAC7B3D520059536005D33AE /* sync_resources.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = sync_resources.sh; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_10 /* FOV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FOV.swift; sourceTree = "<group>"; };
+		OBJ_10 /* RecursiveShadowcastingFOVProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecursiveShadowcastingFOVProvider.swift; sourceTree = "<group>"; };
 		OBJ_11 /* fovTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
 		OBJ_12 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_13 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
@@ -121,6 +132,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA3DA1D820068DC300A7CA1B /* Map Gen */ = {
+			isa = PBXGroup;
+			children = (
+				AA3DA1D920068DE200A7CA1B /* Prefab.swift */,
+				AA3DA1DF2006967E00A7CA1B /* PurePrefabGenerator.swift */,
+			);
+			name = "Map Gen";
+			path = "Sources/RogueKit/Map Gen";
+			sourceTree = SOURCE_ROOT;
+		};
+		AA3DA1E3200702BA00A7CA1B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				AAC7B3BD20033223005D33AE /* REXPaintImage.swift */,
+				AAC7B3C72003397B005D33AE /* REXPaintImage+BearLibTerminal.swift */,
+				AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */,
+				AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */,
+				AA3DA1DB2006919500A7CA1B /* CP437.swift */,
+				AA3DA1DD2006942E00A7CA1B /* RKRNG.swift */,
+			);
+			name = Util;
+			path = Sources/RogueKit/Util;
+			sourceTree = SOURCE_ROOT;
+		};
+		AA3DA1E5200715DD00A7CA1B /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				AAC7B3BB2003321B005D33AE /* cp437_10x10.png */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		AAC7B3992001A359005D33AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,17 +184,10 @@
 		AAC7B3BA2003321B005D33AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AAC7B3CE200594B1005D33AE /* xp */,
-				AAC7B3BB2003321B005D33AE /* cp437_10x10.png */,
+				AA3DA1E5200715DD00A7CA1B /* fonts */,
+				AA3DA1E42007031500A7CA1B /* xp */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		AAC7B3CE200594B1005D33AE /* xp */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = xp;
 			sourceTree = "<group>";
 		};
 		OBJ_14 /* Tests */ = {
@@ -217,20 +253,19 @@
 			children = (
 				OBJ_8 /* RogueKit */,
 			);
-			name = Sources;
+			path = Sources;
 			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_8 /* RogueKit */ = {
 			isa = PBXGroup;
 			children = (
+				AA3DA1E3200702BA00A7CA1B /* Util */,
+				AA3DA1D820068DC300A7CA1B /* Map Gen */,
 				OBJ_9 /* Algorithms */,
 				OBJ_11 /* fovTest.swift */,
 				OBJ_12 /* main.swift */,
 				OBJ_13 /* test.swift */,
-				AAC7B3BD20033223005D33AE /* REXPaintImage.swift */,
-				AAC7B3C72003397B005D33AE /* REXPaintImage+BearLibTerminal.swift */,
-				AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */,
-				AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */,
+				AA3DA1E12007021400A7CA1B /* Resources.swift */,
 			);
 			name = RogueKit;
 			path = Sources/RogueKit;
@@ -239,7 +274,7 @@
 		OBJ_9 /* Algorithms */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_10 /* FOV.swift */,
+				OBJ_10 /* RecursiveShadowcastingFOVProvider.swift */,
 			);
 			path = Algorithms;
 			sourceTree = "<group>";
@@ -405,14 +440,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_42 /* FOV.swift in Sources */,
+				OBJ_42 /* RecursiveShadowcastingFOVProvider.swift in Sources */,
 				OBJ_43 /* fovTest.swift in Sources */,
 				AAC7B3CA20033A8E005D33AE /* BearLibTerminal+Geometry.swift in Sources */,
+				AA3DA1DA20068DE200A7CA1B /* Prefab.swift in Sources */,
 				AAC7B3C82003397B005D33AE /* REXPaintImage+BearLibTerminal.swift in Sources */,
+				AA3DA1DC2006919500A7CA1B /* CP437.swift in Sources */,
 				OBJ_44 /* main.swift in Sources */,
 				AAC7B3CD200591A5005D33AE /* SpriteSheet.swift in Sources */,
 				AAC7B3BE20033223005D33AE /* REXPaintImage.swift in Sources */,
 				OBJ_45 /* test.swift in Sources */,
+				AA3DA1DE2006942E00A7CA1B /* RKRNG.swift in Sources */,
+				AA3DA1E02006967E00A7CA1B /* PurePrefabGenerator.swift in Sources */,
+				AA3DA1E22007021400A7CA1B /* Resources.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,6 +765,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
 					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187",
+					"$(SRCROOT)/.build/checkouts/CZlib.git-516057984387857014",
 				);
 				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
@@ -736,7 +777,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
 				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/.build/debug/";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/.build/debug";
 				SWIFT_VERSION = 4.0;
 				TARGET_NAME = RogueKit;
 			};
@@ -773,6 +814,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
 					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187",
+					"$(SRCROOT)/.build/checkouts/CZlib.git-516057984387857014",
 				);
 				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
@@ -784,7 +826,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
 				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/.build/debug/";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/.build/debug";
 				SWIFT_VERSION = 4.0;
 				TARGET_NAME = RogueKit;
 			};

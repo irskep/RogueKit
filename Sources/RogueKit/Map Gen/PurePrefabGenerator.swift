@@ -87,7 +87,6 @@ class PurePrefabGenerator {
   }
 
   func usePort(instance: PrefabInstance, port: PrefabPort, counterpart: PrefabInstance) {
-    print("Cover", port)
     instance.connections[port] = PrefabConnection(a: instance, b: counterpart)
     self.write(port.point, REXPaintCell(code: 219, foregroundColor: (0, 0, 0), backgroundColor: (0, 0, 0)))
   }

@@ -27,18 +27,18 @@ terminal.open()
 let result = terminal.configure("""
   window.title='RogueKit Test';
   font: \(resources.path(for: "fonts/cp437_10x10.png")), size=10x10;
-  window.size=100x100;
+  window.size=80x80;
   """)
 assert(result == true)
 
-let gen = PurePrefabGenerator(rng: RKRNG(), resources: resources, size: BLSize(w: 100, h: 100))
+let gen = PurePrefabGenerator(rng: RKRNG(), resources: resources, size: BLSize(w: 80, h: 80))
 gen.start()
 gen.draw(in: terminal, at: BLPoint.zero)
 terminal.refresh()
-while terminal.read() != BLConstant.CLOSE {
-  print("iter")
+for _ in 0..<100 {
   gen.iterate()
+  terminal.clear()
   gen.draw(in: terminal, at: BLPoint.zero)
   terminal.refresh()
 }
-terminal.close()
+terminal.waitForExit()

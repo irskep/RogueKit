@@ -95,6 +95,7 @@ struct REXPaintSprite: REXPaintDrawable {
   var layersCount: Int { return image.layersCount }
   var width: Int32 { return rect.w }
   var height: Int32 { return rect.h }
+  var bounds: BLRect { return rect.moved(to: BLPoint.zero) }
 
   func get(layer: Int, point: BLPoint) -> REXPaintCell {
     return image.get(layer: layer, x: Int(point.x + rect.x), y: Int(point.y + rect.y))

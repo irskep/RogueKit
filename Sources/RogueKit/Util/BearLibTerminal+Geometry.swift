@@ -63,6 +63,11 @@ public extension BLPoint {
       .filter({ bounds.contains(point: $0) })
   }
 }
+extension BLPoint: CustomDebugStringConvertible {
+  public var debugDescription: String {
+    return "BLPoint(\(x), \(y))"
+  }
+}
 
 
 // MARK: BLRect

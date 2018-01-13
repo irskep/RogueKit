@@ -33,24 +33,34 @@ assert(result == true)
 
 let gen = PurePrefabGenerator(rng: RKRNG(), resources: resources, size: BLSize(w: 80, h: 80))
 gen.start()
-gen.draw(in: terminal, at: BLPoint.zero)
-terminal.refresh()
+
+let draw: () -> () = {
+  terminal.clear()
+  gen.recommitEverything()
+  gen.draw(in: terminal, at: BLPoint.zero)
+  terminal.refresh()
+}
+draw()
+
 //terminal.read()
-for _ in 0..<300 {
+for _ in 0..<500 {
   gen.iterate()
-//  terminal.clear()
-//  gen.draw(in: terminal, at: BLPoint.zero)
-//  gen.drawOpenPorts(in: terminal)
-//  terminal.refresh()
+//  draw()
+//  terminal.read()
 }
 
-gen.draw(in: terminal, at: BLPoint.zero)
-gen.drawOpenPorts(in: terminal)
-terminal.refresh()
+//draw()
+//terminal.read()
 
-terminal.read()
+//gen.drawOpenPorts(in: terminal)
+//terminal.refresh()
+//terminal.read()
+
 gen.connectAdjacentPorts()
-gen.draw(in: terminal, at: BLPoint.zero)
-terminal.refresh()
+draw()
+terminal.read()
+
+gen.removeDeadEnds()
+draw()
 
 terminal.waitForExit()

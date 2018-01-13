@@ -13,6 +13,10 @@ struct PrefabPort: Hashable {
   var point: BLPoint
   var direction: BLPoint
 
+  func moved(relativeTo point: BLPoint) -> PrefabPort {
+    return PrefabPort(point: point + self.point, direction: self.direction)
+  }
+
   static func ==(_ a: PrefabPort, _ b: PrefabPort) -> Bool {
     return a.point == b.point && a.direction == b.direction
   }
@@ -52,9 +56,11 @@ struct Prefab: Equatable {
 class PrefabConnection {
   weak var a: PrefabInstance?
   weak var b: PrefabInstance?
-  init(a: PrefabInstance, b: PrefabInstance) {
+  var port: PrefabPort
+  init(a: PrefabInstance, b: PrefabInstance, port: PrefabPort) {
     self.a = a
     self.b = b
+    self.port = port
   }
 
   func neighbor(of instance: PrefabInstance) -> PrefabInstance? { return a == instance ? b : a }
@@ -63,46 +69,90 @@ class PrefabConnection {
 class PrefabInstance: Hashable, CustomDebugStringConvertible {
   let prefab: Prefab
   let point: BLPoint
-  var connections = [PrefabPort: PrefabConnection]()
-  // TODO: richer data structure than REXPaintCell for these?
-  var replacements = [BLPoint: REXPaintCell]()
+  var connections = [PrefabConnection]()
+  var cells: Array2D<GeneratorCell>
+  var usedPorts = [PrefabPort]()
+  var unusedPorts = [PrefabPort]()
 
   init(prefab: Prefab, point: BLPoint) {
     self.point = point
     self.prefab = prefab
+    self.cells = Array2D(size: prefab.sprite.rect.size, emptyValue: GeneratorCell.zero)
+    for cellPoint in prefab.sprite.bounds {
+      self.cells[cellPoint] = GeneratorCell(
+        layer0Cell: prefab.sprite.get(layer: 0, point: cellPoint),
+        layer1Cell: prefab.sprite.get(layer: 1, point: cellPoint))
+      if let portDirection = self.cells[cellPoint].portDirection {
+        let newPort = PrefabPort(point: point + cellPoint, direction: portDirection)
+        unusedPorts.append(newPort)
+      }
+    }
+  }
+
+  convenience init(prefab: Prefab, point: BLPoint, usingPort usedPort: PrefabPort, toConnectTo counterpart: PrefabInstance) {
+    // If port is at (1,1), and we're placing this to overlap (1, 10), then
+    // we want to place the origin of the prefab instance at (0, 9).
+    self.init(prefab: prefab, point: point - usedPort.point)
+    self.connect(to: counterpart, with: usedPort.moved(relativeTo: self.point))
   }
 
   var rect: BLRect {
     return prefab.sprite.rect.moved(to: point)
   }
 
-  lazy var ports: [PrefabPort] = {
-    return prefab.ports.map({ PrefabPort(point: $0.point + self.point, direction: $0.direction) })
-  }()
+  func connect(to instance: PrefabInstance, with port: PrefabPort) {
+    let oldPorts = unusedPorts
+    self.unusedPorts = oldPorts.filter({ $0 != port })
+    if self.unusedPorts.count != oldPorts.count {
+      usedPorts.append(port)
+    } else {
+      fatalError("Tried to use a port I don't have")
+    }
+    self.connections.append(PrefabConnection(a: self, b: instance, port: port))
+    let cellPoint = port.point - self.point
+    self.cells[cellPoint].flags.remove(.portUnused)
+    self.cells[cellPoint].flags.insert(.portUsed)
+  }
 
-  func ports(omitting: PrefabPort) -> [PrefabPort] {
-    return prefab.ports.filter({ $0 != omitting }).map({ PrefabPort(point: $0.point + self.point, direction: $0.direction) })
+  func disconnect(from instance: PrefabInstance) {
+    for c in connections {
+      if c.neighbor(of: self) == instance {
+        self.usedPorts = usedPorts.filter({ $0 != c.port })
+        self.unusedPorts.append(c.port)
+        self.cells[c.port.point - self.point].flags.remove(.portUsed)
+        self.cells[c.port.point - self.point].flags.insert(.portUnused)
+      }
+    }
+    connections = connections.filter({ $0.neighbor(of: self) != instance })
+  }
+
+  func disconnectFromAll() {
+    for c in connections {
+      c.neighbor(of: self)?.disconnect(from: self)
+    }
+    self.connections = []
+    self.unusedPorts = self.unusedPorts + self.usedPorts
+    self.usedPorts = []
   }
 
   lazy var livePoints: [BLPoint] = {
-    var points = [BLPoint]()
-    for y in 0..<Int(prefab.sprite.rect.h) {
-      for x in 0..<Int(prefab.sprite.rect.w) {
-        let point = BLPoint(x: Int32(x), y: Int32(y))
-        let cell = prefab.sprite.get(layer: 0, point: point)
-        if cell.code == 0 || cell.code == 32 { continue }
-        points.append(point + self.point)
-      }
-    }
-    return points
+    return rect.filter({ self.cells[$0 - self.point].basicType != .empty })
   }()
 
   var neighbors: [PrefabInstance] {
-    return connections.values.flatMap({ $0.neighbor(of: self) })
+    return connections.flatMap({ $0.neighbor(of: self) })
   }
 
   func get(layer: Int, point: BLPoint) -> REXPaintCell {
     return prefab.sprite.get(layer: layer, point: point - self.point)
+  }
+
+  func generatorCell(at cellPoint: BLPoint) -> GeneratorCell {
+    return self.cells[cellPoint - self.point]
+  }
+
+  func replaceGeneratorCell(at cellPoint: BLPoint, with cell: GeneratorCell) {
+    self.cells[cellPoint - self.point] = cell
   }
 
   static func ==(_ a: PrefabInstance, _ b: PrefabInstance) -> Bool {
@@ -113,5 +163,51 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
 
   var debugDescription: String {
     return "PrefabInstance(prefab=\(prefab), point=\(point))"
+  }
+}
+
+
+struct GeneratorCell {
+  var basicType: BasicType
+  var flags: Set<GeneratorCellFlag>
+  var portDirection: BLPoint?
+
+  static var zero: GeneratorCell { return GeneratorCell() }
+
+  init() {
+    basicType = .empty
+    flags = Set()
+    portDirection = nil
+  }
+
+  init(layer0Cell: REXPaintCell, layer1Cell: REXPaintCell) {
+    switch layer0Cell.code {
+    case CP437.BLOCK: self.basicType = .wall
+    case CP437.DOT: self.basicType = .floor
+    case CP437.NULL, CP437.SPACE: self.basicType = .empty
+    default: fatalError("Unknown cell type: \(layer0Cell.code)")
+    }
+
+    switch layer1Cell.code {
+    case CP437.ARROW_E: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: 1, y: 0)
+    case CP437.ARROW_W: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: -1, y: 0)
+    case CP437.ARROW_S: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: 0, y: 1)
+    case CP437.ARROW_N: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: 0, y: -1)
+    default:
+      self.flags = Set()
+      self.portDirection = nil
+    }
+  }
+
+  enum BasicType {
+    case floor
+    case wall
+    case empty
+  }
+
+  enum GeneratorCellFlag: String {
+    case portUsed = "portUsed"
+    case portUnused = "portUnused"
+    case createdToAddCycle = "createdToAddCycle"
   }
 }

@@ -26,6 +26,7 @@
 		AA3DA1DE2006942E00A7CA1B /* RKRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1DD2006942E00A7CA1B /* RKRNG.swift */; };
 		AA3DA1E02006967E00A7CA1B /* PurePrefabGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1DF2006967E00A7CA1B /* PurePrefabGenerator.swift */; };
 		AA3DA1E22007021400A7CA1B /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1E12007021400A7CA1B /* Resources.swift */; };
+		AA3DA1E72009A72900A7CA1B /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1E62009A72900A7CA1B /* Array2D.swift */; };
 		AAC7B3A82001A3E8005D33AE /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AAC7B3A92001A3FD005D33AE /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; };
 		AAC7B3AA2001A40D005D33AE /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; };
@@ -89,6 +90,7 @@
 		AA3DA1DF2006967E00A7CA1B /* PurePrefabGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurePrefabGenerator.swift; sourceTree = "<group>"; };
 		AA3DA1E12007021400A7CA1B /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		AA3DA1E42007031500A7CA1B /* xp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = xp; sourceTree = "<group>"; };
+		AA3DA1E62009A72900A7CA1B /* Array2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
 		AAC7B39A2001A359005D33AE /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AAC7B3BB2003321B005D33AE /* cp437_10x10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cp437_10x10.png; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */,
 				AA3DA1DB2006919500A7CA1B /* CP437.swift */,
 				AA3DA1DD2006942E00A7CA1B /* RKRNG.swift */,
+				AA3DA1E62009A72900A7CA1B /* Array2D.swift */,
 			);
 			name = Util;
 			path = Sources/RogueKit/Util;
@@ -447,6 +450,7 @@
 				AAC7B3C82003397B005D33AE /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				AA3DA1DC2006919500A7CA1B /* CP437.swift in Sources */,
 				OBJ_44 /* main.swift in Sources */,
+				AA3DA1E72009A72900A7CA1B /* Array2D.swift in Sources */,
 				AAC7B3CD200591A5005D33AE /* SpriteSheet.swift in Sources */,
 				AAC7B3BE20033223005D33AE /* REXPaintImage.swift in Sources */,
 				OBJ_45 /* test.swift in Sources */,

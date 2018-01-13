@@ -35,6 +35,7 @@ struct Prefab: Equatable {
       case CP437.ARROW_W: ports.append(PrefabPort(point: point, direction: BLPoint(x: -1, y: 0)))
       case CP437.ARROW_S: ports.append(PrefabPort(point: point, direction: BLPoint(x: 0, y: 1)))
       case CP437.ARROW_N: ports.append(PrefabPort(point: point, direction: BLPoint(x: 0, y: -1)))
+      case CP437.DOT: ports.append(PrefabPort(point: point, direction: BLPoint.zero))
       default: continue
       }
     }

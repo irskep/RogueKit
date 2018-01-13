@@ -44,6 +44,27 @@ public func *(_ a: BLPoint, _ b: BLPoint) -> BLPoint {
 }
 
 
+private let _tDeltas: [BLPoint] = { return [
+  BLPoint(x: -1, y: 0),
+  BLPoint(x: 1, y: 0),
+  BLPoint(x: 0, y: -1),
+  BLPoint(x: 0, y: 1),
+] }()
+private let _xDeltas: [BLPoint] = { return [
+  BLPoint(x: -1, y: -1),
+  BLPoint(x: 1, y: 1),
+  BLPoint(x: 1, y: -1),
+  BLPoint(x: -2, y: 1),
+  ] }()
+public extension BLPoint {
+  func getNeighbors(bounds: BLRect, diagonals: Bool) -> [BLPoint] {
+    return (diagonals ? _tDeltas + _xDeltas : _tDeltas)
+      .map({ self + $0 })
+      .filter({ bounds.contains(point: $0) })
+  }
+}
+
+
 // MARK: BLRect
 
 
@@ -96,6 +117,10 @@ extension BLRect: Sequence {
 
   public func moved(to point: BLPoint) -> BLRect {
     return BLRect(x: point.x, y: point.y, w: w, h: h)
+  }
+
+  public func contains(point: BLPoint) -> Bool {
+    return point.x >= x && point.y >= y && point.x <= max.x && point.y <= max.y
   }
 
   public func contains(rect: BLRect) -> Bool {

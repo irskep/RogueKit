@@ -20,4 +20,7 @@ internal struct CP437 {
   static let ARROW_E: Int32 = 26
   static let ARROW_N: Int32 = 24
   static let ARROW_S: Int32 = 25
+
+  static let DOT: Int32 = 7
+  static let BLOCK: Int32 = 219
 }

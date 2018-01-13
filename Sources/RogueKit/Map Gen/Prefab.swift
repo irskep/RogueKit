@@ -73,6 +73,7 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
   var cells: Array2D<GeneratorCell>
   var usedPorts = [PrefabPort]()
   var unusedPorts = [PrefabPort]()
+  var mergedPorts = [PrefabPort]()
 
   init(prefab: Prefab, point: BLPoint) {
     self.point = point
@@ -135,9 +136,24 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
     self.usedPorts = []
   }
 
-  lazy var livePoints: [BLPoint] = {
+  func removeCells(at points: [BLPoint]) {
+    mergedPorts.append(contentsOf: unusedPorts.filter({ points.contains($0.point) }))
+    unusedPorts = unusedPorts.filter({ !points.contains($0.point) })
+
+    // usedPorts probably contains the cell we're using to connect to another
+    // prefab instance, but it should be OK to remove it. We still track
+    // the connection object for it.
+    usedPorts = usedPorts.filter({ !points.contains($0.point) })
+//    for p in points {
+//      // Remember merged cells just in case
+//      mergedCells[p] = self.generatorCell(at: p)
+//      self.replaceGeneratorCell(at: p, with: GeneratorCell.zero)
+//    }
+  }
+
+  var livePoints: [BLPoint] {
     return rect.filter({ self.cells[$0 - self.point].basicType != .empty })
-  }()
+  }
 
   var neighbors: [PrefabInstance] {
     return connections.flatMap({ $0.neighbor(of: self) })
@@ -193,6 +209,7 @@ struct GeneratorCell {
     case CP437.ARROW_W: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: -1, y: 0)
     case CP437.ARROW_S: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: 0, y: 1)
     case CP437.ARROW_N: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: 0, y: -1)
+    case CP437.DOT: self.flags = Set([.portUnused]); self.portDirection = BLPoint.zero
     default:
       self.flags = Set()
       self.portDirection = nil

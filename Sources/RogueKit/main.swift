@@ -46,15 +46,15 @@ draw()
 for _ in 0..<500 {
   gen.iterate()
 //  draw()
-//  terminal.read()
+//  _ = terminal.read()
 }
 
-//draw()
-//terminal.read()
+draw()
+_ = terminal.read()
 
-//gen.drawOpenPorts(in: terminal)
-//terminal.refresh()
-//terminal.read()
+  //gen.drawOpenPorts(in: terminal)
+  //terminal.refresh()
+  //terminal.read()
 
 gen.connectAdjacentPorts()
 draw()

@@ -59,10 +59,11 @@ class PurePrefabGenerator {
       return
     }
     let prefab = rng.choice(candidates)
+    let delta = rng.get(upperBound: 2) == 0 ? port.direction : BLPoint.zero
     guard
       let newInstance = self.tryPrefab(
         prefab,
-        portPoint: port.point + port.direction,
+        portPoint: port.point + delta,
         newPortDirection: portDirectionInverse,
         counterpart: instance)
       else {
@@ -71,18 +72,6 @@ class PurePrefabGenerator {
     }
     self.register(prefabInstance: newInstance)
     instance.connect(to: newInstance, with: port)
-//    self.usePort(instance: instance, port: port, counterpart: newInstance)
-//    self.usePort(instance: newInstance, port: newPort, counterpart: instance)
-  }
-
-  func drawOpenPorts(in terminal: BLTerminalInterface) {
-    for (_, port) in openPorts {
-      guard rect.contains(point: port.point + port.direction) else { continue }
-      terminal.foregroundColor = terminal.getColor(name: "black")
-      terminal.backgroundColor = terminal.getColor(name: "white")
-      terminal.put(point: port.point, code: 120)
-      terminal.backgroundColor = terminal.getColor(name: "black")
-    }
   }
 
   func connectAdjacentPorts() {
@@ -101,28 +90,26 @@ class PurePrefabGenerator {
       guard rect.contains(point: port.point + port.direction) else { continue }
       portMap[port.point] = (instance, port)
 
-      if let (neighborInstance, neighborPort) = portMap[port.direction + port.point] {
-        print("Added a cycle by joining adjacent ports")
-        numCycles += 1
-        portMap[port.direction + port.point] = nil
-        portMap[port.point] = nil
-        newlyUsedPorts.append((instance, port))
-        newlyUsedPorts.append((neighborInstance, neighborPort))
-        instance.connect(to: neighborInstance, with: port)
-        neighborInstance.connect(to: instance, with: neighborPort)
+      var neighborPair: (PrefabInstance, PrefabPort)? = nil
+      neighborPair = portMap[port.direction + port.point]
+      guard let (neighborInstance, neighborPort) = neighborPair else { continue }
 
-        var cell1 = instance.generatorCell(at: port.point)
-        cell1.flags.insert(.createdToAddCycle)
-        instance.replaceGeneratorCell(at: port.point, with: cell1)
+      print("Added a cycle by joining adjacent ports")
+      numCycles += 1
+      portMap[port.direction + port.point] = nil
+      portMap[port.point] = nil
+      newlyUsedPorts.append((instance, port))
+      newlyUsedPorts.append((neighborInstance, neighborPort))
+      instance.connect(to: neighborInstance, with: port)
+      neighborInstance.connect(to: instance, with: neighborPort)
 
-        var cell2 = neighborInstance.generatorCell(at: neighborPort.point)
-        cell2.flags.insert(.createdToAddCycle)
-        neighborInstance.replaceGeneratorCell(at: neighborPort.point, with: cell2)
-//        usePort(instance: instance, port: port, counterpart: neighborInstance)
-//        usePort(instance: neighborInstance, port: neighborPort, counterpart: instance)
-//        self.write(port.point, REXPaintCell(code: 219, foregroundColor: (255, 0, 255), backgroundColor: (255, 0, 255)))
-//        self.write(port.direction + port.point, REXPaintCell(code: 219, foregroundColor: (255, 0, 255), backgroundColor: (255, 0, 255)))
-      }
+      var cell1 = instance.generatorCell(at: port.point)
+      cell1.flags.insert(.createdToAddCycle)
+      instance.replaceGeneratorCell(at: port.point, with: cell1)
+
+      var cell2 = neighborInstance.generatorCell(at: neighborPort.point)
+      cell2.flags.insert(.createdToAddCycle)
+      neighborInstance.replaceGeneratorCell(at: neighborPort.point, with: cell2)
     }
   }
 
@@ -160,19 +147,22 @@ class PurePrefabGenerator {
     let port = rng.choice(validPorts)
     let instance = PrefabInstance(prefab: prefab, point: portPoint, usingPort: port, toConnectTo: counterpart)
     guard rect.contains(rect: instance.rect) else { return nil }
+    // We might be smushing one prefab into another. We don't want two prefabs
+    // covering the same cell, so give the existing one precedence over this one.
+    var pointsToRemove = [BLPoint]()
     for point in instance.livePoints {
-      if self.cells[point].basicType != .empty {
-        return nil
+      let existingCell = self.cells[point]
+      if existingCell.basicType == .empty { continue }
+      if existingCell.flags.contains(.portUsed) { return nil }
+      if existingCell.basicType == .wall && instance.generatorCell(at: point).basicType == .wall {
+        pointsToRemove.append(point)
+        continue
       }
+      return nil
     }
+    instance.removeCells(at: pointsToRemove)
     return instance
   }
-
-//  func usePort(instance: PrefabInstance, port: PrefabPort, counterpart: PrefabInstance) {
-//    instance.connect(to: counterpart, with: port)
-//    openPorts = openPorts.filter({ (duple) -> Bool in duple.0 != instance || duple.1 != port })
-//    self.write(port.point, REXPaintCell(code: 219, foregroundColor: (0, 0, 0), backgroundColor: (0, 0, 0)))
-//  }
 
   func register(prefabInstance instance: PrefabInstance) {
     prefabInstances.append(instance)
@@ -188,16 +178,6 @@ class PurePrefabGenerator {
     self.commit(instance: instance)
   }
 
-//  func commit(instance: PrefabInstance) {
-//    for point in instance.livePoints {
-//      self.write(point, instance.get(layer: 0, point: point))
-//    }
-//  }
-//
-//  func write(_ point: BLPoint, _ cell: REXPaintCell) {
-//    cells[Int(point.y)][Int(point.x)] = cell
-//  }
-
   func commit(instance: PrefabInstance) {
     for point in instance.livePoints {
       self.cells[point] = instance.generatorCell(at: point)
@@ -208,8 +188,31 @@ class PurePrefabGenerator {
     self.cells = Array2D(size: rect.size, emptyValue: GeneratorCell.zero)
     for instance in prefabInstances {
       for point in instance.livePoints {
-        self.cells[point] = instance.generatorCell(at: point)
+        let newCell = instance.generatorCell(at: point)
+        let oldCell = self.cells[point]
+        if oldCell.basicType == .empty {
+          self.cells[point] = instance.generatorCell(at: point)
+        } else {
+          // Merge cells from two overlapping prefabs
+          if newCell.flags.contains(.portUsed) {
+            self.cells[point].flags.insert(.portUsed)
+          } else if oldCell.flags.contains(.portUnused) && newCell.flags.contains(.portUnused) {
+            self.cells[point].basicType = .floor
+            self.cells[point].flags.insert(.portUsed)
+            self.cells[point].flags.insert(.createdToAddCycle)
+          }
+        }
       }
+    }
+  }
+
+  func drawOpenPorts(in terminal: BLTerminalInterface) {
+    for (_, port) in openPorts {
+      guard rect.contains(point: port.point + port.direction) else { continue }
+      terminal.foregroundColor = terminal.getColor(name: "black")
+      terminal.backgroundColor = terminal.getColor(name: "white")
+      terminal.put(point: port.point, code: 120)
+      terminal.backgroundColor = terminal.getColor(name: "black")
     }
   }
 }

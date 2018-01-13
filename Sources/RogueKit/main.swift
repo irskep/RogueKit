@@ -58,8 +58,14 @@ for _ in 0..<500 {
 
 gen.connectAdjacentPorts()
 draw()
-terminal.read()
+_ = terminal.read()
 
+gen.removeDeadEnds()
+draw()
+
+for _ in 0..<500 {
+  gen.iterate()
+}
 gen.removeDeadEnds()
 draw()
 

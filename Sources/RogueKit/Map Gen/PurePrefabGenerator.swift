@@ -145,6 +145,10 @@ class PurePrefabGenerator {
       }
       update()
     }
+    openPorts = []
+    for i in prefabInstances {
+      openPorts.append(contentsOf: i.unusedPorts.map({ (i, $0) }))
+    }
     recommitEverything()
   }
 

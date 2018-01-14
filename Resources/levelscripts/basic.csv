@@ -5,5 +5,5 @@ removeDeadEndHallways
 addAnyPrefabToAnyUnusedPort,500
 connectAdjacentPorts,10
 removeDeadEndHallways
-addHallwaysToRemoteAreas,5,1
+addHallwaysToRemoteAreas,3,2
 connectAdjacentPorts,10

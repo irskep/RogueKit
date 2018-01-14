@@ -223,10 +223,11 @@ struct GeneratorCell {
   }
 
   enum GeneratorCellFlag: String {
-    case portUsed = "portUsed"
-    case portUnused = "portUnused"
-    case createdToAddCycle = "createdToAddCycle"
-    case debugPoint = "debugPoint"
+    case portUsed
+    case portUnused
+    case createdToAddCycle
+    case debugPoint
+    case lateStageHallway
   }
 
   var isPassable: Bool {

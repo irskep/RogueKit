@@ -16,8 +16,8 @@ class PurePrefabGenerator {
   var prefabInstances = [PrefabInstance]()
   var openPorts = [(PrefabInstance, PrefabPort)]()
   var zeroPorts = [(PrefabInstance, PrefabPort)]()
-  var debugDistanceField: DistanceField?
   var pointsBlacklistedForHallways = Set<BLPoint>()
+  var debugDistanceField: DistanceField?
 
   var rect: BLRect { return BLRect(x: 0, y: 0, w: cells.size.w, h: cells.size.h) }
 
@@ -159,6 +159,7 @@ class PurePrefabGenerator {
     let field = DistanceField(size: self.rect.size)
     field.populate(seeds: cyclePoints, isPassable: {
       let cell = self.cells[$0]
+      if cell.flags.contains(.lateStageHallway) { return false }
       if cell.isPassable { return true }
       return cell.flags.contains(.portUnused) && cell.portDirection != BLPoint.zero
     })
@@ -169,7 +170,7 @@ class PurePrefabGenerator {
     var numIterationsUsed = 0
     while numIterationsLeft > 0 && numIterationsUsed < numIterations * 10 {
       numIterationsUsed += 1
-      if let minPoint = field.findMinimum(where: {
+      if let hallwayStart = field.findMaximum(where: {
         if !self.cells[$0].flags.contains(.portUnused) { return false }
         if self.pointsBlacklistedForHallways.contains($0) { return false }
         for neighbor in $0.getNeighbors(bounds: self.rect, diagonals: false) {
@@ -177,15 +178,15 @@ class PurePrefabGenerator {
         }
         return false
       }) {
-        pointsBlacklistedForHallways.insert(minPoint)
-        if self.addHallwayToNearestUnusedPort(origin: minPoint) {
+        pointsBlacklistedForHallways.insert(hallwayStart)
+        if self.addHallwayToNearestUnusedPort(origin: hallwayStart, minExistingDistance: 40) {
           numIterationsLeft -= 1
         }
       }
     }
   }
 
-  func addHallwayToNearestUnusedPort(origin: BLPoint) -> Bool {
+  func addHallwayToNearestUnusedPort(origin: BLPoint, minExistingDistance: Int = 40) -> Bool {
     var allUnusedPorts = [PrefabPort]()
     for i in prefabInstances {
       allUnusedPorts.append(contentsOf: i.unusedPorts.filter({ $0.direction != BLPoint.zero && $0.point != origin }))
@@ -199,8 +200,11 @@ class PurePrefabGenerator {
     let field = DistanceField(size: self.rect.size)
     field.populate(
       seeds: Array(Set<BLPoint>(allUnusedPorts.map({ $0.point })))
-        .filter({ originProximityField.cells[$0] >= 50 }),
-      isPassable: { self.cells[$0].basicType == .empty || self.cells[$0].basicType == .floor })
+        .filter({ originProximityField.cells[$0] >= minExistingDistance }),
+      isPassable: {
+        self.cells[$0].basicType == .empty ||
+          self.cells[$0].basicType == .floor
+    })
 
     field.cells[origin] = field.maxVal + 1
 
@@ -230,17 +234,29 @@ class PurePrefabGenerator {
       advance()
     }
 
+    if hallPoints.count > 20 { return false }  // long hallways are boring
+
     if let endPoint = endPoint {
       // TODO: make prefab out of this instead?
-      self.cells[endPoint].flags.remove(.portUnused)
-      self.cells[endPoint].flags.insert(.portUsed)
-      self.cells[endPoint].flags.insert(.createdToAddCycle)
-      self.cells[endPoint].flags.insert(.debugPoint)
+      for p in [origin, endPoint] {
+        self.cells[p].flags.remove(.portUnused)
+        self.cells[p].flags.insert(.portUsed)
+        self.cells[p].flags.insert(.createdToAddCycle)
+        self.cells[p].flags.insert(.debugPoint)
+        self.cells[p].flags.insert(.lateStageHallway)
+      }
 
+      var lastHallPoint = hallPoints.first
       for hallPoint in hallPoints {
         self.cells[hallPoint].basicType = .floor
         self.cells[hallPoint].flags.insert(.createdToAddCycle)
         self.cells[hallPoint].flags.insert(.debugPoint)
+        self.cells[hallPoint].flags.insert(.lateStageHallway)
+        if let lhp = lastHallPoint {
+          let delta = hallPoint - lhp
+          self.cells[hallPoint].portDirection = rng.choice([delta.rotatedCounterClockwise, delta.rotatedClockwise])
+        }
+        lastHallPoint = hallPoint
       }
       return true
     } else {

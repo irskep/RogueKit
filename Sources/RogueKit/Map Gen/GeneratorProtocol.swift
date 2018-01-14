@@ -9,6 +9,7 @@ import Foundation
 
 protocol GeneratorProtocol: REXPaintDrawable {
   var cells: Array2D<GeneratorCell> { get }
+  var debugDistanceField: DistanceField? { get }
 
   func runCommand(cmd: String, args: [String])
 }

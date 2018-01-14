@@ -52,6 +52,19 @@ class DistanceField {
     }
     return candidate
   }
+
+  func findMaximum(where filter: (BLPoint) -> Bool) -> BLPoint? {
+    var minVal = Int.min
+    var candidate: BLPoint? = nil
+    for point in BLRect(size: cells.size) {
+      if !filter(point) { continue }
+      if self.cells[point] > minVal && self.cells[point] != Int.max {
+        minVal = self.cells[point]
+        candidate = point
+      }
+    }
+    return candidate
+  }
 }
 
 extension DistanceField: REXPaintDrawable {
@@ -61,7 +74,7 @@ extension DistanceField: REXPaintDrawable {
 
   func get(layer: Int, x: Int, y: Int) -> REXPaintCell {
     if let val = getNormalizedValue(at: BLPoint(x: Int32(x), y: Int32(y))) {
-      return REXPaintCell(code: CP437.BLOCK, foregroundColor: (UInt8(255 * val), 0, 0), backgroundColor: (0, 0, 0))
+      return REXPaintCell(code: CP437.BLOCK, foregroundColor: (UInt8(255 * max(val, 0)), 0, 0), backgroundColor: (0, 0, 0))
     } else {
       return REXPaintCell.transparent
     }

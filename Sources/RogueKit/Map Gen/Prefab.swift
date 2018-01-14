@@ -226,5 +226,10 @@ struct GeneratorCell {
     case portUsed = "portUsed"
     case portUnused = "portUnused"
     case createdToAddCycle = "createdToAddCycle"
+    case debugPoint = "debugPoint"
+  }
+
+  var isPassable: Bool {
+    return basicType == .floor || flags.contains(.portUsed)
   }
 }

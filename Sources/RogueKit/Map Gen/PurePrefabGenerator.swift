@@ -16,6 +16,8 @@ class PurePrefabGenerator {
   var prefabInstances = [PrefabInstance]()
   var openPorts = [(PrefabInstance, PrefabPort)]()
   var zeroPorts = [(PrefabInstance, PrefabPort)]()
+  var debugDistanceField: DistanceField?
+  var pointsBlacklistedForHallways = Set<BLPoint>()
 
   var rect: BLRect { return BLRect(x: 0, y: 0, w: cells.size.w, h: cells.size.h) }
 
@@ -139,6 +141,110 @@ class PurePrefabGenerator {
     recommitEverything()
   }
 
+  func addHallwayToPortFurthestFromACycle(numIterations: Int = 5) {
+    var allUnusedPorts = [PrefabPort]()
+    for i in prefabInstances {
+      allUnusedPorts.append(contentsOf: i.unusedPorts.filter({ $0.direction != BLPoint.zero }))
+    }
+
+    var cyclePoints = self.rect.filter({ self.cells[$0].flags.contains(.createdToAddCycle) })
+    if cyclePoints.isEmpty {  // in case there happened to be no cycles
+      cyclePoints = [rng.choice(prefabInstances).usedPorts[0].point]
+    }
+
+    let field = DistanceField(size: self.rect.size)
+    field.populate(seeds: cyclePoints, isPassable: {
+      let cell = self.cells[$0]
+      if cell.isPassable { return true }
+      return cell.flags.contains(.portUnused) && cell.portDirection != BLPoint.zero
+    })
+
+//    debugDistanceField = field
+
+    var numIterationsLeft = numIterations
+    var numIterationsUsed = 0
+    while numIterationsLeft > 0 && numIterationsUsed < numIterations * 10 {
+      numIterationsUsed += 1
+      if let minPoint = field.findMinimum(where: {
+        if !self.cells[$0].flags.contains(.portUnused) { return false }
+        if self.pointsBlacklistedForHallways.contains($0) { return false }
+        for neighbor in $0.getNeighbors(bounds: self.rect, diagonals: false) {
+          if self.cells[neighbor].basicType == .empty { return true }
+        }
+        return false
+      }) {
+        pointsBlacklistedForHallways.insert(minPoint)
+        if self.addHallwayToNearestUnusedPort(origin: minPoint) {
+          numIterationsLeft -= 1
+        }
+      }
+    }
+  }
+
+  func addHallwayToNearestUnusedPort(origin: BLPoint) -> Bool {
+    var allUnusedPorts = [PrefabPort]()
+    for i in prefabInstances {
+      allUnusedPorts.append(contentsOf: i.unusedPorts.filter({ $0.direction != BLPoint.zero && $0.point != origin }))
+    }
+
+    let originProximityField = DistanceField(size: self.rect.size)
+    originProximityField.populate(seeds: [origin], isPassable: {
+      return self.cells[$0].isPassable || self.cells[$0].flags.contains(.portUnused)
+    })
+
+    let field = DistanceField(size: self.rect.size)
+    field.populate(
+      seeds: Array(Set<BLPoint>(allUnusedPorts.map({ $0.point })))
+        .filter({ originProximityField.cells[$0] >= 50 }),
+      isPassable: { self.cells[$0].basicType == .empty || self.cells[$0].basicType == .floor })
+
+    field.cells[origin] = field.maxVal + 1
+    self.cells[origin].flags.insert(.debugPoint)
+
+//    debugDistanceField = field
+
+    var lastPoint = origin
+    var maybeNextPoint: BLPoint? = nil
+    let advance: () -> Void = {
+      maybeNextPoint = lastPoint.getNeighbors(bounds: self.rect, diagonals: false)
+        .filter({
+          if field.cells[$0] >= field.cells[lastPoint] { return false }
+          return self.cells[$0].basicType == .empty || self.cells[$0].flags.contains(.portUnused)
+        })
+        .first
+    }
+    advance()
+
+    var hallPoints = [BLPoint]()
+    var endPoint: BLPoint? = nil
+    while let nextPoint = maybeNextPoint {
+      lastPoint = nextPoint
+      if self.cells[lastPoint].flags.contains(.portUnused) || self.cells[lastPoint].basicType == .floor {
+        endPoint = lastPoint
+        break
+      }
+      hallPoints.append(lastPoint)
+      advance()
+    }
+
+    if let endPoint = endPoint {
+      // TODO: make prefab out of this instead?
+      self.cells[endPoint].flags.remove(.portUnused)
+      self.cells[endPoint].flags.insert(.portUsed)
+      self.cells[endPoint].flags.insert(.createdToAddCycle)
+      self.cells[endPoint].flags.insert(.debugPoint)
+
+      for hallPoint in hallPoints {
+        self.cells[hallPoint].basicType = .floor
+        self.cells[hallPoint].flags.insert(.createdToAddCycle)
+        self.cells[hallPoint].flags.insert(.debugPoint)
+      }
+      return true
+    } else {
+      return false
+    }
+  }
+
   func tryPrefab(_ prefab: Prefab, portPoint: BLPoint, newPortDirection: BLPoint, counterpart: PrefabInstance) -> PrefabInstance? {
     let validPorts = prefab.ports.filter({ (p: PrefabPort) -> Bool in p.direction == newPortDirection })
     guard validPorts.count > 0 else {
@@ -224,6 +330,10 @@ extension PurePrefabGenerator: REXPaintDrawable {
   var height: Int32 { return cells.size.h }
   func get(layer: Int, x: Int, y: Int) -> REXPaintCell {
     let cell = self.cells[BLPoint(x: Int32(x), y: Int32(y))]
+
+    if cell.flags.contains(.debugPoint) {
+      return REXPaintCell(code: 88, foregroundColor: (255, 0, 255), backgroundColor: (0, 0, 0))
+    }
 
     if cell.flags.contains(.portUsed) {
       if cell.flags.contains(.createdToAddCycle) {

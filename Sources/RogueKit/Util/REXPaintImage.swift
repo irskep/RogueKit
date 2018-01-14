@@ -100,6 +100,7 @@ public struct REXPaintCell: Equatable {
   public let backgroundColor: (UInt8, UInt8, UInt8)
 
   public static let zero = { return REXPaintCell(code: 0, foregroundColor: (0, 0, 0), backgroundColor: (0, 0, 0)) }()
+  public static let transparent = { return REXPaintCell(code: 0, foregroundColor: (0, 0, 0), backgroundColor: (255, 0, 255)) }()
 
   public init(
     code: Int32,

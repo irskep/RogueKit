@@ -27,11 +27,11 @@ terminal.open()
 let result = terminal.configure("""
   window.title='RogueKit Test';
   font: \(resources.path(for: "fonts/cp437_10x10.png")), size=10x10;
-  window.size=80x80;
+  window.size=80x40;
   """)
 assert(result == true)
 
-let gen = PurePrefabGenerator(rng: RKRNG(), resources: resources, size: BLSize(w: 80, h: 80))
+let gen = PurePrefabGenerator(rng: RKRNG(), resources: resources, size: BLSize(w: 80, h: 40))
 gen.start()
 
 let draw: () -> () = {
@@ -50,7 +50,7 @@ for _ in 0..<500 {
 }
 
 draw()
-_ = terminal.read()
+//_ = terminal.read()
 
   //gen.drawOpenPorts(in: terminal)
   //terminal.refresh()
@@ -58,7 +58,7 @@ _ = terminal.read()
 
 gen.connectAdjacentPorts()
 draw()
-_ = terminal.read()
+//_ = terminal.read()
 
 gen.removeDeadEnds()
 draw()
@@ -68,5 +68,16 @@ for _ in 0..<500 {
 }
 gen.removeDeadEnds()
 draw()
+_ = terminal.read()
+
+for _ in 0..<5 {
+  print("adding a hallway")
+  gen.addHallwayToPortFurthestFromACycle(numIterations: 1)
+}
+gen.draw(in: terminal, at: BLPoint.zero)
+terminal.refresh()
+//terminal.layer = 2
+//gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
+//terminal.refresh()
 
 terminal.waitForExit()

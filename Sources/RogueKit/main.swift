@@ -34,20 +34,24 @@ assert(result == true)
 func testEverything() throws {
   let reader = GeneratorReader(resources: resources)
   var loadingY: Int32 = 0
-  try reader.run(id: "basic", rng: RKGetRNG(seed: 135205160)) {
+  try reader.run(id: "basic", rng: RKGetRNG(seed: 135205161)) {
     gen, status, result in
     print(status)
-    if result == nil {
-      terminal.foregroundColor = terminal.getColor(name: "white")
-      terminal.backgroundColor = terminal.getColor(name: "black")
-      terminal.print(point: BLPoint(x: 0, y: loadingY), string: status)
-      terminal.refresh()
-      loadingY += 1
-    } else {
+//    if result == nil && false {
+//      terminal.foregroundColor = terminal.getColor(name: "white")
+//      terminal.backgroundColor = terminal.getColor(name: "black")
+//      terminal.print(point: BLPoint(x: 0, y: loadingY), string: status)
+//      terminal.refresh()
+//      loadingY += 1
+//    } else {
       terminal.clear()
       gen.draw(in: terminal, at: BLPoint.zero)
+      terminal.layer = 2
+      gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
+      terminal.layer = 1
+//      (gen as! PurePrefabGenerator).drawOpenPorts(in: terminal)
       terminal.refresh()
-    }
+//    }
   }
 }
 

@@ -232,12 +232,11 @@ class PurePrefabGenerator {
       }
       hallPoints.append(lastPoint)
       advance()
+      if hallPoints.count >= 25 { return false } // long hallways are boring
     }
 
-    if hallPoints.count > 20 { return false }  // long hallways are boring
-
     if let endPoint = endPoint {
-      // TODO: make prefab out of this instead?
+      // TODO: make prefab out of this instead? remember the hallways so we can add more rooms?
       for p in [origin, endPoint] {
         self.cells[p].flags.remove(.portUnused)
         self.cells[p].flags.insert(.portUsed)

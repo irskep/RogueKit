@@ -22,6 +22,9 @@
 
 /* Begin PBXBuildFile section */
 		AA3DA1F3200BE81300A7CA1B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1F1200BE81200A7CA1B /* Makefile */; };
+		AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */; };
+		AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */; };
+		AA3DA228200BF72100A7CA1B /* GeneratorReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -100,6 +103,9 @@
 		AA3DA1F0200BE81200A7CA1B /* Package.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Package.resolved; sourceTree = "<group>"; };
 		AA3DA1F1200BE81200A7CA1B /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		AA3DA1F2200BE81300A7CA1B /* sync_resources.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = sync_resources.sh; sourceTree = "<group>"; };
+		AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSeedStore.swift; sourceTree = "<group>"; };
+		AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorProtocol.swift; sourceTree = "<group>"; };
+		AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorReader.swift; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,9 +173,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA3DA221200BEC7F00A7CA1B /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */,
+			);
+			name = Game;
+			path = Sources/RogueKit/Game;
+			sourceTree = SOURCE_ROOT;
+		};
 		OBJ_11 /* Map Gen */ = {
 			isa = PBXGroup;
 			children = (
+				AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */,
+				AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */,
 				OBJ_12 /* Prefab.swift */,
 				OBJ_13 /* PurePrefabGenerator.swift */,
 			);
@@ -274,7 +291,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				AA3DA1F1200BE81200A7CA1B /* Makefile */,
@@ -289,7 +306,6 @@
 				OBJ_30 /* Dependencies */,
 				OBJ_44 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -303,6 +319,7 @@
 		OBJ_8 /* RogueKit */ = {
 			isa = PBXGroup;
 			children = (
+				AA3DA221200BEC7F00A7CA1B /* Game */,
 				OBJ_9 /* Algorithms */,
 				OBJ_11 /* Map Gen */,
 				OBJ_14 /* Resources.swift */,
@@ -476,7 +493,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_44 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -555,15 +572,18 @@
 				OBJ_75 /* Resources.swift in Sources */,
 				OBJ_76 /* Array2D.swift in Sources */,
 				OBJ_77 /* BearLibTerminal+Geometry.swift in Sources */,
+				AA3DA228200BF72100A7CA1B /* GeneratorReader.swift in Sources */,
 				OBJ_78 /* CP437.swift in Sources */,
 				OBJ_79 /* DistanceField.swift in Sources */,
 				OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				OBJ_81 /* REXPaintImage.swift in Sources */,
 				OBJ_82 /* RKRNG.swift in Sources */,
 				OBJ_83 /* SpriteSheet.swift in Sources */,
+				AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */,
 				OBJ_84 /* fovTest.swift in Sources */,
 				OBJ_85 /* main.swift in Sources */,
 				OBJ_86 /* test.swift in Sources */,
+				AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,7 @@ import Foundation
 protocol ResourceCollectionProtocol {
   var prefabs: [String: Prefab] { get }
   func path(for name: String) -> String
+  func url(for name: String) -> URL?
   func rexPaintImage(named: String) -> REXPaintImage?
 }
 
@@ -40,6 +41,10 @@ class ResourceCollection: ResourceCollectionProtocol {
 
   func path(for name: String) -> String {
     return "\(path)/\(name)"
+  }
+
+  func url(for name: String) -> URL? {
+    return URL(string: "file://\(path)/\(name)")
   }
 
   func rexPaintImage(named name: String) -> REXPaintImage? {

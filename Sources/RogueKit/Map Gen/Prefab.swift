@@ -104,11 +104,11 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
   func connect(to instance: PrefabInstance, with port: PrefabPort) {
     let oldPorts = unusedPorts
     self.unusedPorts = oldPorts.filter({ $0 != port })
-    if self.unusedPorts.count != oldPorts.count {
+//    if self.unusedPorts.count != oldPorts.count {
       usedPorts.append(port)
-    } else {
-      fatalError("Tried to use a port I don't have")
-    }
+//    } else {
+//      fatalError("Tried to use a port I don't have")
+//    }
     self.connections.append(PrefabConnection(a: self, b: instance, port: port))
     let cellPoint = port.point - self.point
     self.cells[cellPoint].flags.remove(.portUnused)

@@ -1,0 +1,9 @@
+prefabs_and_hallways,80,40
+addAnyPrefabToAnyUnusedPort,500
+connectAdjacentPorts,10
+removeDeadEndHallways
+addAnyPrefabToAnyUnusedPort,500
+connectAdjacentPorts,10
+removeDeadEndHallways
+addHallwaysToRemoteAreas,5,1
+connectAdjacentPorts,10

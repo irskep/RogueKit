@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol RKRNGProtocol {
+public protocol RKRNGProtocol: Codable {
   func get(upperBound: UInt32) -> UInt32
   func choice<T>(_ array: [T]) -> T
   func shuffleInPlace<T>(_ array: inout [T])
@@ -41,9 +41,11 @@ public class RKRNG: RKRNGProtocol {
 
 #if os(OSX) || os(iOS)
   import GameKit
+  @available(OSX 10.11, *)
   public class RKGameKitRNG: RKRNGProtocol {
-    private let _rng: GKRandom
-    init(rng: GKRandom) {
+    private let _rng: GKRandomSource
+
+    init(rng: GKRandomSource) {
       _rng = rng
     }
 
@@ -66,5 +68,31 @@ public class RKRNG: RKRNGProtocol {
         array.swapAt(i, j)
       }
     }
+
+    enum CodingKeys: String, CodingKey {
+      case _rng
+    }
+
+    public func encode(to encoder: Encoder) throws {
+    }
+
+    public required init(from decoder: Decoder) throws {
+      print("WARNING: ignoring all random seeds")
+      _rng = GKMersenneTwisterRandomSource()
+    }
   }
 #endif
+
+public func RKGetRNG(seed: UInt32) -> RKRNGProtocol {
+  #if os(OSX) || os(iOS)
+    if #available(OSX 10.11, iOS 10, *) {
+      return RKGameKitRNG(rng: GKMersenneTwisterRandomSource(seed: UInt64(seed)))
+    } else {
+      print("WARNING: ignoring all random seeds")
+      return RKRNG()
+    }
+  #else
+    print("WARNING: ignoring all random seeds")
+    return RKRNG()
+  #endif
+}

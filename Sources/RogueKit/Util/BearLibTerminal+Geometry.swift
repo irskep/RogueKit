@@ -64,6 +64,14 @@ public extension BLPoint {
   }
 }
 extension BLPoint: CustomDebugStringConvertible {
+  var rotatedClockwise: BLPoint {
+    return BLPoint(x: y, y: -x)
+  }
+
+  var rotatedCounterClockwise: BLPoint {
+    return BLPoint(x: -y, y: x)
+  }
+
   public var debugDescription: String {
     return "BLPoint(\(x), \(y))"
   }

@@ -25,6 +25,7 @@ class PurePrefabGenerator {
     self.rng = rng
     self.resources = resources
     self.cells = Array2D(size: size, emptyValue: GeneratorCell.zero)
+    self.start()
   }
 
   private var _prefabsByDirection: [BLPoint: [Prefab]] = [
@@ -37,18 +38,18 @@ class PurePrefabGenerator {
   func start() {
     let allPrefabs = Array(resources.prefabs.values)
 
+    for p in allPrefabs {
+      for port in p.ports {
+        _prefabsByDirection[port.direction]?.append(p)
+      }
+    }
+
     // Pick a random prefab without the 'hallway' marker. Place it randomly.
     let firstPrefab = rng.choice(allPrefabs.filter({ $0.sprite.metadata != "h" }))
     self.register(
       prefabInstance: PrefabInstance(
         prefab: firstPrefab,
         point: rect.shrunk(by: firstPrefab.sprite.rect.size).randomPoint(rng)))
-
-    for p in allPrefabs {
-      for port in p.ports {
-        _prefabsByDirection[port.direction]?.append(p)
-      }
-    }
   }
 
   func iterate() {
@@ -76,9 +77,12 @@ class PurePrefabGenerator {
     instance.connect(to: newInstance, with: port)
   }
 
-  func connectAdjacentPorts() {
+  func connectAdjacentPorts(maxNewCycles: Int = 10) {
     var portMap = Array2D<(PrefabInstance, PrefabPort)?>(size: rect.size, emptyValue: nil)
     var newlyUsedPorts = [(PrefabInstance, PrefabPort)]()
+
+//    openPorts = openPorts.filter({ i, p in i.unusedPorts.contains(p) })
+//    zeroPorts = zeroPorts.filter({ i, p in i.unusedPorts.contains(p) })
 
     for (instance, port) in zeroPorts {
       guard rect.contains(point: port.point + port.direction) else { continue }
@@ -88,15 +92,15 @@ class PurePrefabGenerator {
     rng.shuffleInPlace(&openPorts)
     var numCycles = 0
     for (instance, port) in openPorts {
-      guard numCycles < 10 else { break }
+      guard numCycles < maxNewCycles else { break }
       guard rect.contains(point: port.point + port.direction) else { continue }
       portMap[port.point] = (instance, port)
 
       var neighborPair: (PrefabInstance, PrefabPort)? = nil
       neighborPair = portMap[port.direction + port.point]
       guard let (neighborInstance, neighborPort) = neighborPair else { continue }
+      guard neighborInstance.unusedPorts.contains(neighborPort) && instance.unusedPorts.contains(port) else { continue }
 
-      print("Added a cycle by joining adjacent ports")
       numCycles += 1
       portMap[port.direction + port.point] = nil
       portMap[port.point] = nil
@@ -199,7 +203,6 @@ class PurePrefabGenerator {
       isPassable: { self.cells[$0].basicType == .empty || self.cells[$0].basicType == .floor })
 
     field.cells[origin] = field.maxVal + 1
-    self.cells[origin].flags.insert(.debugPoint)
 
 //    debugDistanceField = field
 
@@ -347,6 +350,37 @@ extension PurePrefabGenerator: REXPaintDrawable {
     case .wall: return REXPaintCell(code: CP437.BLOCK, foregroundColor: (255, 255, 255), backgroundColor: (0, 0, 0))
     case .floor: return REXPaintCell(code: CP437.DOT, foregroundColor: (55, 55, 55), backgroundColor: (0, 0, 0))
     case .empty: return REXPaintCell.zero
+    }
+  }
+}
+
+extension PurePrefabGenerator: GeneratorProtocol {
+  enum Command: String {
+    case addAnyPrefabToAnyUnusedPort
+    case connectAdjacentPorts
+    case removeDeadEndHallways
+    case addHallwaysToRemoteAreas
+  }
+
+  func runCommand(cmd: String, args: [String]) {
+    guard let command = Command(rawValue: cmd) else { fatalError("Unknown command: \(cmd)") }
+    let intArgs: [Int] = args.map({
+      guard let int = Int($0) else { fatalError("Bad int: \($0)") }
+      return int
+    })
+    switch command {
+    case .addAnyPrefabToAnyUnusedPort where intArgs.count >= 1:
+      for _ in 0..<(intArgs[0]) { self.iterate() }
+    case .connectAdjacentPorts where intArgs.count >= 1:
+      self.connectAdjacentPorts(maxNewCycles: intArgs[0])
+    case .removeDeadEndHallways:
+      self.removeDeadEnds()
+    case .addHallwaysToRemoteAreas where intArgs.count >= 2:
+      for _ in 0..<intArgs[0] {
+        self.addHallwayToPortFurthestFromACycle(numIterations: intArgs[1])
+      }
+    default:
+      fatalError("Not enough arguments to \(cmd)")
     }
   }
 }

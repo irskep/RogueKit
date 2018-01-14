@@ -9,11 +9,11 @@
 /* Begin PBXAggregateTarget section */
 		"RogueKit::RogueKit Demo::ProductTarget" /* RogueKit Demo */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = OBJ_58 /* Build configuration list for PBXAggregateTarget "RogueKit Demo" */;
+			buildConfigurationList = OBJ_119 /* Build configuration list for PBXAggregateTarget "RogueKit Demo" */;
 			buildPhases = (
 			);
 			dependencies = (
-				OBJ_61 /* PBXTargetDependency */,
+				OBJ_122 /* PBXTargetDependency */,
 			);
 			name = "RogueKit Demo";
 			productName = "RogueKit Demo";
@@ -21,234 +21,275 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		AA3DA1DA20068DE200A7CA1B /* Prefab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1D920068DE200A7CA1B /* Prefab.swift */; };
-		AA3DA1DC2006919500A7CA1B /* CP437.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1DB2006919500A7CA1B /* CP437.swift */; };
-		AA3DA1DE2006942E00A7CA1B /* RKRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1DD2006942E00A7CA1B /* RKRNG.swift */; };
-		AA3DA1E02006967E00A7CA1B /* PurePrefabGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1DF2006967E00A7CA1B /* PurePrefabGenerator.swift */; };
-		AA3DA1E22007021400A7CA1B /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1E12007021400A7CA1B /* Resources.swift */; };
-		AA3DA1E72009A72900A7CA1B /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1E62009A72900A7CA1B /* Array2D.swift */; };
-		AAC7B3A82001A3E8005D33AE /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AAC7B3A92001A3FD005D33AE /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; };
-		AAC7B3AA2001A40D005D33AE /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */; };
-		AAC7B3BE20033223005D33AE /* REXPaintImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7B3BD20033223005D33AE /* REXPaintImage.swift */; };
-		AAC7B3C220033654005D33AE /* libz.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC7B3C120033654005D33AE /* libz.1.tbd */; };
-		AAC7B3C82003397B005D33AE /* REXPaintImage+BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7B3C72003397B005D33AE /* REXPaintImage+BearLibTerminal.swift */; };
-		AAC7B3CA20033A8E005D33AE /* BearLibTerminal+Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */; };
-		AAC7B3CD200591A5005D33AE /* SpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */; };
-		OBJ_30 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_36 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* Package.swift */; };
-		OBJ_42 /* RecursiveShadowcastingFOVProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* RecursiveShadowcastingFOVProvider.swift */; };
-		OBJ_43 /* fovTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* fovTest.swift */; };
-		OBJ_44 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* main.swift */; };
-		OBJ_45 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* test.swift */; };
-		OBJ_47 /* BearLibTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */; };
-		OBJ_54 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* BearLibTerminal+constants.swift */; };
-		OBJ_55 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* BearLibTerminal.swift */; };
+		AA3DA1F3200BE81300A7CA1B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1F1200BE81200A7CA1B /* Makefile */; };
+		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
+		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
+		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
+		OBJ_115 /* BearLibTerminal+constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* BearLibTerminal+constants.swift */; };
+		OBJ_116 /* BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* BearLibTerminal.swift */; };
+		OBJ_54 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_60 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* Package.swift */; };
+		OBJ_66 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* Package.swift */; };
+		OBJ_72 /* RecursiveShadowcastingFOVProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* RecursiveShadowcastingFOVProvider.swift */; };
+		OBJ_73 /* Prefab.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Prefab.swift */; };
+		OBJ_74 /* PurePrefabGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* PurePrefabGenerator.swift */; };
+		OBJ_75 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* Resources.swift */; };
+		OBJ_76 /* Array2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* Array2D.swift */; };
+		OBJ_77 /* BearLibTerminal+Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* BearLibTerminal+Geometry.swift */; };
+		OBJ_78 /* CP437.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* CP437.swift */; };
+		OBJ_79 /* DistanceField.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* DistanceField.swift */; };
+		OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* REXPaintImage+BearLibTerminal.swift */; };
+		OBJ_81 /* REXPaintImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* REXPaintImage.swift */; };
+		OBJ_82 /* RKRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* RKRNG.swift */; };
+		OBJ_83 /* SpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* SpriteSheet.swift */; };
+		OBJ_84 /* fovTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* fovTest.swift */; };
+		OBJ_85 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* main.swift */; };
+		OBJ_86 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* test.swift */; };
+		OBJ_88 /* Gzip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::Gzip::Product" /* Gzip.framework */; };
+		OBJ_89 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
+		OBJ_90 /* BearLibTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AA07AFDC2001A3330014788E /* PBXContainerItemProxy */ = {
+		AA3DA1EA200BE66800A7CA1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Gzip::Gzip";
+			remoteInfo = Gzip;
+		};
+		AA3DA1EB200BE66800A7CA1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Gzip::system-zlib";
+			remoteInfo = "system-zlib";
+		};
+		AA3DA1EC200BE66800A7CA1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Gzip::system-zlib";
+			remoteInfo = "system-zlib";
+		};
+		AA3DA1ED200BE66800A7CA1B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "BearLibTerminal::BearLibTerminal";
 			remoteInfo = BearLibTerminal;
 		};
-		AA07AFDD2001A3330014788E /* PBXContainerItemProxy */ = {
+		AA3DA1EE200BE66800A7CA1B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "RogueKit::RogueKit";
 			remoteInfo = RogueKit;
 		};
-		AAC7B3D32005950B005D33AE /* PBXContainerItemProxy */ = {
+		AA3DA1F8200BE89E00A7CA1B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = AAC7B3CF20059504005D33AE;
+			remoteGlobalIDString = AA3DA1F4200BE88A00A7CA1B;
 			remoteInfo = "Sync Resources";
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		AAC7B39C2001A35C005D33AE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-				AAC7B3A82001A3E8005D33AE /* libBearLibTerminal.dylib in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		AA3DA1D920068DE200A7CA1B /* Prefab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefab.swift; sourceTree = "<group>"; };
-		AA3DA1DB2006919500A7CA1B /* CP437.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CP437.swift; sourceTree = "<group>"; };
-		AA3DA1DD2006942E00A7CA1B /* RKRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKRNG.swift; sourceTree = "<group>"; };
-		AA3DA1DF2006967E00A7CA1B /* PurePrefabGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurePrefabGenerator.swift; sourceTree = "<group>"; };
-		AA3DA1E12007021400A7CA1B /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
-		AA3DA1E42007031500A7CA1B /* xp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = xp; sourceTree = "<group>"; };
-		AA3DA1E62009A72900A7CA1B /* Array2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
-		AAC7B39A2001A359005D33AE /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
-		AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
-		AAC7B3BB2003321B005D33AE /* cp437_10x10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cp437_10x10.png; sourceTree = "<group>"; };
-		AAC7B3BD20033223005D33AE /* REXPaintImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = REXPaintImage.swift; sourceTree = "<group>"; };
-		AAC7B3C120033654005D33AE /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
-		AAC7B3C72003397B005D33AE /* REXPaintImage+BearLibTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "REXPaintImage+BearLibTerminal.swift"; sourceTree = "<group>"; };
-		AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+Geometry.swift"; sourceTree = "<group>"; };
-		AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteSheet.swift; sourceTree = "<group>"; };
-		AAC7B3D520059536005D33AE /* sync_resources.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = sync_resources.sh; sourceTree = "<group>"; };
+		AA3DA1EF200BE81200A7CA1B /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		AA3DA1F0200BE81200A7CA1B /* Package.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Package.resolved; sourceTree = "<group>"; };
+		AA3DA1F1200BE81200A7CA1B /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		AA3DA1F2200BE81300A7CA1B /* sync_resources.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = sync_resources.sh; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* RecursiveShadowcastingFOVProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecursiveShadowcastingFOVProvider.swift; sourceTree = "<group>"; };
-		OBJ_11 /* fovTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
-		OBJ_12 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		OBJ_13 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
-		OBJ_19 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
-		OBJ_20 /* BearLibTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
-		OBJ_21 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/steve/_d/games/RogueKit/.build/checkouts/BearLibTerminal-Swift.git--207320618593063566/Package.swift"; sourceTree = "<group>"; };
+		OBJ_12 /* Prefab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefab.swift; sourceTree = "<group>"; };
+		OBJ_13 /* PurePrefabGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurePrefabGenerator.swift; sourceTree = "<group>"; };
+		OBJ_14 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		OBJ_16 /* Array2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array2D.swift; sourceTree = "<group>"; };
+		OBJ_17 /* BearLibTerminal+Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+Geometry.swift"; sourceTree = "<group>"; };
+		OBJ_18 /* CP437.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CP437.swift; sourceTree = "<group>"; };
+		OBJ_19 /* DistanceField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceField.swift; sourceTree = "<group>"; };
+		OBJ_20 /* REXPaintImage+BearLibTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "REXPaintImage+BearLibTerminal.swift"; sourceTree = "<group>"; };
+		OBJ_21 /* REXPaintImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REXPaintImage.swift; sourceTree = "<group>"; };
+		OBJ_22 /* RKRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKRNG.swift; sourceTree = "<group>"; };
+		OBJ_23 /* SpriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteSheet.swift; sourceTree = "<group>"; };
+		OBJ_24 /* fovTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
+		OBJ_25 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		OBJ_26 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		OBJ_28 /* Binaries */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Binaries; sourceTree = SOURCE_ROOT; };
+		OBJ_29 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = SOURCE_ROOT; };
+		OBJ_33 /* anchor.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = anchor.c; sourceTree = "<group>"; };
+		OBJ_35 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = "/Users/steve/_d/games/RogueKit/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include/module.modulemap"; sourceTree = "<group>"; };
+		OBJ_37 /* Data+Gzip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Gzip.swift"; sourceTree = "<group>"; };
+		OBJ_38 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/steve/_d/games/RogueKit/.build/checkouts/GzipSwift.git-2487387372573236187/Package.swift"; sourceTree = "<group>"; };
+		OBJ_41 /* BearLibTerminal+constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BearLibTerminal+constants.swift"; sourceTree = "<group>"; };
+		OBJ_42 /* BearLibTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearLibTerminal.swift; sourceTree = "<group>"; };
+		OBJ_43 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/steve/_d/games/RogueKit/.build/checkouts/BearLibTerminal-Swift.git--207320618593063566/Package.swift"; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		"RogueKit::RogueKit::Product" /* RogueKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = RogueKit; sourceTree = BUILT_PRODUCTS_DIR; };
+		"RogueKit::RogueKit::Product" /* RogueKit */ = {isa = PBXFileReference; lastKnownFileType = text; path = RogueKit; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_46 /* Frameworks */ = {
+		OBJ_102 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				AAC7B3C220033654005D33AE /* libz.1.tbd in Frameworks */,
-				OBJ_47 /* BearLibTerminal.framework in Frameworks */,
-				AAC7B3A92001A3FD005D33AE /* libBearLibTerminal.dylib in Frameworks */,
+				OBJ_103 /* system_zlib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_56 /* Frameworks */ = {
+		OBJ_110 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
-				AAC7B3AA2001A40D005D33AE /* libBearLibTerminal.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_117 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_87 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_88 /* Gzip.framework in Frameworks */,
+				OBJ_89 /* system_zlib.framework in Frameworks */,
+				OBJ_90 /* BearLibTerminal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AA3DA1D820068DC300A7CA1B /* Map Gen */ = {
+		OBJ_11 /* Map Gen */ = {
 			isa = PBXGroup;
 			children = (
-				AA3DA1D920068DE200A7CA1B /* Prefab.swift */,
-				AA3DA1DF2006967E00A7CA1B /* PurePrefabGenerator.swift */,
+				OBJ_12 /* Prefab.swift */,
+				OBJ_13 /* PurePrefabGenerator.swift */,
 			);
-			name = "Map Gen";
-			path = "Sources/RogueKit/Map Gen";
-			sourceTree = SOURCE_ROOT;
-		};
-		AA3DA1E3200702BA00A7CA1B /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				AAC7B3BD20033223005D33AE /* REXPaintImage.swift */,
-				AAC7B3C72003397B005D33AE /* REXPaintImage+BearLibTerminal.swift */,
-				AAC7B3CC200591A5005D33AE /* SpriteSheet.swift */,
-				AAC7B3C920033A8E005D33AE /* BearLibTerminal+Geometry.swift */,
-				AA3DA1DB2006919500A7CA1B /* CP437.swift */,
-				AA3DA1DD2006942E00A7CA1B /* RKRNG.swift */,
-				AA3DA1E62009A72900A7CA1B /* Array2D.swift */,
-			);
-			name = Util;
-			path = Sources/RogueKit/Util;
-			sourceTree = SOURCE_ROOT;
-		};
-		AA3DA1E5200715DD00A7CA1B /* fonts */ = {
-			isa = PBXGroup;
-			children = (
-				AAC7B3BB2003321B005D33AE /* cp437_10x10.png */,
-			);
-			path = fonts;
+			path = "Map Gen";
 			sourceTree = "<group>";
 		};
-		AAC7B3992001A359005D33AE /* Frameworks */ = {
+		OBJ_15 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				AAC7B3C120033654005D33AE /* libz.1.tbd */,
-				AAC7B39A2001A359005D33AE /* libBearLibTerminal.dylib */,
+				OBJ_16 /* Array2D.swift */,
+				OBJ_17 /* BearLibTerminal+Geometry.swift */,
+				OBJ_18 /* CP437.swift */,
+				OBJ_19 /* DistanceField.swift */,
+				OBJ_20 /* REXPaintImage+BearLibTerminal.swift */,
+				OBJ_21 /* REXPaintImage.swift */,
+				OBJ_22 /* RKRNG.swift */,
+				OBJ_23 /* SpriteSheet.swift */,
 			);
-			name = Frameworks;
+			path = Util;
 			sourceTree = "<group>";
 		};
-		AAC7B3A52001A3E3005D33AE /* Binaries */ = {
-			isa = PBXGroup;
-			children = (
-				AAC7B3A62001A3E3005D33AE /* libBearLibTerminal.dylib */,
-			);
-			path = Binaries;
-			sourceTree = "<group>";
-		};
-		AAC7B3BA2003321B005D33AE /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				AA3DA1E5200715DD00A7CA1B /* fonts */,
-				AA3DA1E42007031500A7CA1B /* xp */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		OBJ_14 /* Tests */ = {
+		OBJ_27 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Tests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_16 /* Dependencies */ = {
+		OBJ_30 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_17 /* BearLibTerminal 1.0.1 */,
+				OBJ_31 /* Gzip 4.0.4 */,
+				OBJ_39 /* BearLibTerminal 1.0.1 */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		OBJ_17 /* BearLibTerminal 1.0.1 */ = {
+		OBJ_31 /* Gzip 4.0.4 */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_18 /* BearLibTerminal */,
-				OBJ_21 /* Package.swift */,
+				OBJ_32 /* system-zlib */,
+				OBJ_36 /* Gzip */,
+				OBJ_38 /* Package.swift */,
+			);
+			name = "Gzip 4.0.4";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_32 /* system-zlib */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_33 /* anchor.c */,
+				OBJ_34 /* include */,
+			);
+			name = "system-zlib";
+			path = ".build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_34 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_35 /* module.modulemap */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		OBJ_36 /* Gzip */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_37 /* Data+Gzip.swift */,
+			);
+			name = Gzip;
+			path = ".build/checkouts/GzipSwift.git-2487387372573236187/Sources/Gzip";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_39 /* BearLibTerminal 1.0.1 */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_40 /* BearLibTerminal */,
+				OBJ_43 /* Package.swift */,
 			);
 			name = "BearLibTerminal 1.0.1";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_18 /* BearLibTerminal */ = {
+		OBJ_40 /* BearLibTerminal */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_19 /* BearLibTerminal+constants.swift */,
-				OBJ_20 /* BearLibTerminal.swift */,
+				OBJ_41 /* BearLibTerminal+constants.swift */,
+				OBJ_42 /* BearLibTerminal.swift */,
 			);
 			name = BearLibTerminal;
 			path = ".build/checkouts/BearLibTerminal-Swift.git--207320618593063566/Sources/BearLibTerminal";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_22 /* Products */ = {
+		OBJ_44 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				"RogueKit::RogueKit::Product" /* RogueKit */,
+				"Gzip::Gzip::Product" /* Gzip.framework */,
+				"Gzip::system-zlib::Product" /* system_zlib.framework */,
 				"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 = {
+		OBJ_5 /*  */ = {
 			isa = PBXGroup;
 			children = (
-				AAC7B3D520059536005D33AE /* sync_resources.sh */,
+				AA3DA1F1200BE81200A7CA1B /* Makefile */,
+				AA3DA1F0200BE81200A7CA1B /* Package.resolved */,
+				AA3DA1EF200BE81200A7CA1B /* Readme.md */,
+				AA3DA1F2200BE81300A7CA1B /* sync_resources.sh */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
-				OBJ_14 /* Tests */,
-				AAC7B3BA2003321B005D33AE /* Resources */,
-				AAC7B3A52001A3E3005D33AE /* Binaries */,
-				OBJ_16 /* Dependencies */,
-				OBJ_22 /* Products */,
-				AAC7B3992001A359005D33AE /* Frameworks */,
+				OBJ_27 /* Tests */,
+				OBJ_28 /* Binaries */,
+				OBJ_29 /* Resources */,
+				OBJ_30 /* Dependencies */,
+				OBJ_44 /* Products */,
 			);
+			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -256,19 +297,19 @@
 			children = (
 				OBJ_8 /* RogueKit */,
 			);
-			path = Sources;
+			name = Sources;
 			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_8 /* RogueKit */ = {
 			isa = PBXGroup;
 			children = (
-				AA3DA1E3200702BA00A7CA1B /* Util */,
-				AA3DA1D820068DC300A7CA1B /* Map Gen */,
 				OBJ_9 /* Algorithms */,
-				OBJ_11 /* fovTest.swift */,
-				OBJ_12 /* main.swift */,
-				OBJ_13 /* test.swift */,
-				AA3DA1E12007021400A7CA1B /* Resources.swift */,
+				OBJ_11 /* Map Gen */,
+				OBJ_14 /* Resources.swift */,
+				OBJ_15 /* Util */,
+				OBJ_24 /* fovTest.swift */,
+				OBJ_25 /* main.swift */,
+				OBJ_26 /* test.swift */,
 			);
 			name = RogueKit;
 			path = Sources/RogueKit;
@@ -285,25 +326,10 @@
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		AAC7B3C320033699005D33AE /* SwiftPM */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "build --chdir=\"$(SRCROOT)\" -Xlinker -L\"$(SRCROOT)/Binaries\"";
-			buildConfigurationList = AAC7B3C420033699005D33AE /* Build configuration list for PBXLegacyTarget "SwiftPM" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/swift;
-			buildWorkingDirectory = "";
-			dependencies = (
-				AAC7B3D42005950B005D33AE /* PBXTargetDependency */,
-			);
-			name = SwiftPM;
-			passBuildSettingsInEnvironment = 1;
-			productName = SwiftPM;
-		};
-		AAC7B3CF20059504005D33AE /* Sync Resources */ = {
+		AA3DA1F4200BE88A00A7CA1B /* Sync Resources */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = sync_resources.sh;
-			buildConfigurationList = AAC7B3D020059504005D33AE /* Build configuration list for PBXLegacyTarget "Sync Resources" */;
+			buildConfigurationList = AA3DA1F5200BE88A00A7CA1B /* Build configuration list for PBXLegacyTarget "Sync Resources" */;
 			buildPhases = (
 			);
 			buildToolPath = /bin/bash;
@@ -319,10 +345,10 @@
 /* Begin PBXNativeTarget section */
 		"BearLibTerminal::BearLibTerminal" /* BearLibTerminal */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_50 /* Build configuration list for PBXNativeTarget "BearLibTerminal" */;
+			buildConfigurationList = OBJ_111 /* Build configuration list for PBXNativeTarget "BearLibTerminal" */;
 			buildPhases = (
-				OBJ_53 /* Sources */,
-				OBJ_56 /* Frameworks */,
+				OBJ_114 /* Sources */,
+				OBJ_117 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -335,9 +361,9 @@
 		};
 		"BearLibTerminal::SwiftPMPackageDescription" /* BearLibTerminalPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_32 /* Build configuration list for PBXNativeTarget "BearLibTerminalPackageDescription" */;
+			buildConfigurationList = OBJ_62 /* Build configuration list for PBXNativeTarget "BearLibTerminalPackageDescription" */;
 			buildPhases = (
-				OBJ_35 /* Sources */,
+				OBJ_65 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -347,18 +373,67 @@
 			productName = BearLibTerminalPackageDescription;
 			productType = "com.apple.product-type.framework";
 		};
-		"RogueKit::RogueKit" /* RogueKit */ = {
+		"Gzip::Gzip" /* Gzip */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_38 /* Build configuration list for PBXNativeTarget "RogueKit" */;
+			buildConfigurationList = OBJ_97 /* Build configuration list for PBXNativeTarget "Gzip" */;
 			buildPhases = (
-				OBJ_41 /* Sources */,
-				OBJ_46 /* Frameworks */,
-				AAC7B39C2001A35C005D33AE /* CopyFiles */,
+				OBJ_100 /* Sources */,
+				OBJ_102 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_48 /* PBXTargetDependency */,
+				OBJ_104 /* PBXTargetDependency */,
+			);
+			name = Gzip;
+			productName = Gzip;
+			productReference = "Gzip::Gzip::Product" /* Gzip.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"Gzip::SwiftPMPackageDescription" /* GzipPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_56 /* Build configuration list for PBXNativeTarget "GzipPackageDescription" */;
+			buildPhases = (
+				OBJ_59 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GzipPackageDescription;
+			productName = GzipPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+		"Gzip::system-zlib" /* system-zlib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_105 /* Build configuration list for PBXNativeTarget "system-zlib" */;
+			buildPhases = (
+				OBJ_108 /* Sources */,
+				OBJ_110 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "system-zlib";
+			productName = system_zlib;
+			productReference = "Gzip::system-zlib::Product" /* system_zlib.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"RogueKit::RogueKit" /* RogueKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_68 /* Build configuration list for PBXNativeTarget "RogueKit" */;
+			buildPhases = (
+				OBJ_71 /* Sources */,
+				OBJ_87 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA3DA1F9200BE89E00A7CA1B /* PBXTargetDependency */,
+				OBJ_91 /* PBXTargetDependency */,
+				OBJ_93 /* PBXTargetDependency */,
+				OBJ_95 /* PBXTargetDependency */,
 			);
 			name = RogueKit;
 			productName = RogueKit;
@@ -367,9 +442,9 @@
 		};
 		"RogueKit::SwiftPMPackageDescription" /* RogueKitPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_26 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */;
+			buildConfigurationList = OBJ_50 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */;
 			buildPhases = (
-				OBJ_29 /* Sources */,
+				OBJ_53 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -387,12 +462,7 @@
 			attributes = {
 				LastUpgradeCheck = 9999;
 				TargetAttributes = {
-					AAC7B3C320033699005D33AE = {
-						CreatedOnToolsVersion = 9.2;
-						DevelopmentTeam = 9TC4EP6SEE;
-						ProvisioningStyle = Automatic;
-					};
-					AAC7B3CF20059504005D33AE = {
+					AA3DA1F4200BE88A00A7CA1B = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = 9TC4EP6SEE;
 						ProvisioningStyle = Automatic;
@@ -406,57 +476,47 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5;
-			productRefGroup = OBJ_22 /* Products */;
+			mainGroup = OBJ_5 /*  */;
+			productRefGroup = OBJ_44 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				"RogueKit::SwiftPMPackageDescription" /* RogueKitPackageDescription */,
+				"Gzip::SwiftPMPackageDescription" /* GzipPackageDescription */,
 				"BearLibTerminal::SwiftPMPackageDescription" /* BearLibTerminalPackageDescription */,
 				"RogueKit::RogueKit" /* RogueKit */,
+				"Gzip::Gzip" /* Gzip */,
+				"Gzip::system-zlib" /* system-zlib */,
 				"BearLibTerminal::BearLibTerminal" /* BearLibTerminal */,
 				"RogueKit::RogueKit Demo::ProductTarget" /* RogueKit Demo */,
-				AAC7B3CF20059504005D33AE /* Sync Resources */,
-				AAC7B3C320033699005D33AE /* SwiftPM */,
+				AA3DA1F4200BE88A00A7CA1B /* Sync Resources */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_29 /* Sources */ = {
+		OBJ_100 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_30 /* Package.swift in Sources */,
+				OBJ_101 /* Data+Gzip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_35 /* Sources */ = {
+		OBJ_108 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_36 /* Package.swift in Sources */,
+				OBJ_109 /* anchor.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_41 /* Sources */ = {
+		OBJ_114 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_42 /* RecursiveShadowcastingFOVProvider.swift in Sources */,
-				OBJ_43 /* fovTest.swift in Sources */,
-				AAC7B3CA20033A8E005D33AE /* BearLibTerminal+Geometry.swift in Sources */,
-				AA3DA1DA20068DE200A7CA1B /* Prefab.swift in Sources */,
-				AAC7B3C82003397B005D33AE /* REXPaintImage+BearLibTerminal.swift in Sources */,
-				AA3DA1DC2006919500A7CA1B /* CP437.swift in Sources */,
-				OBJ_44 /* main.swift in Sources */,
-				AA3DA1E72009A72900A7CA1B /* Array2D.swift in Sources */,
-				AAC7B3CD200591A5005D33AE /* SpriteSheet.swift in Sources */,
-				AAC7B3BE20033223005D33AE /* REXPaintImage.swift in Sources */,
-				OBJ_45 /* test.swift in Sources */,
-				AA3DA1DE2006942E00A7CA1B /* RKRNG.swift in Sources */,
-				AA3DA1E02006967E00A7CA1B /* PurePrefabGenerator.swift in Sources */,
-				AA3DA1E22007021400A7CA1B /* Resources.swift in Sources */,
+				OBJ_115 /* BearLibTerminal+constants.swift in Sources */,
+				OBJ_116 /* BearLibTerminal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,33 +524,86 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_54 /* BearLibTerminal+constants.swift in Sources */,
-				OBJ_55 /* BearLibTerminal.swift in Sources */,
+				AA3DA1F3200BE81300A7CA1B /* Makefile in Sources */,
+				OBJ_54 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_60 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_66 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_72 /* RecursiveShadowcastingFOVProvider.swift in Sources */,
+				OBJ_73 /* Prefab.swift in Sources */,
+				OBJ_74 /* PurePrefabGenerator.swift in Sources */,
+				OBJ_75 /* Resources.swift in Sources */,
+				OBJ_76 /* Array2D.swift in Sources */,
+				OBJ_77 /* BearLibTerminal+Geometry.swift in Sources */,
+				OBJ_78 /* CP437.swift in Sources */,
+				OBJ_79 /* DistanceField.swift in Sources */,
+				OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */,
+				OBJ_81 /* REXPaintImage.swift in Sources */,
+				OBJ_82 /* RKRNG.swift in Sources */,
+				OBJ_83 /* SpriteSheet.swift in Sources */,
+				OBJ_84 /* fovTest.swift in Sources */,
+				OBJ_85 /* main.swift in Sources */,
+				OBJ_86 /* test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AAC7B3D42005950B005D33AE /* PBXTargetDependency */ = {
+		AA3DA1F9200BE89E00A7CA1B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AAC7B3CF20059504005D33AE /* Sync Resources */;
-			targetProxy = AAC7B3D32005950B005D33AE /* PBXContainerItemProxy */;
+			target = AA3DA1F4200BE88A00A7CA1B /* Sync Resources */;
+			targetProxy = AA3DA1F8200BE89E00A7CA1B /* PBXContainerItemProxy */;
 		};
-		OBJ_48 /* PBXTargetDependency */ = {
+		OBJ_104 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = "BearLibTerminal::BearLibTerminal" /* BearLibTerminal */;
-			targetProxy = AA07AFDC2001A3330014788E /* PBXContainerItemProxy */;
+			target = "Gzip::system-zlib" /* system-zlib */;
+			targetProxy = AA3DA1EB200BE66800A7CA1B /* PBXContainerItemProxy */;
 		};
-		OBJ_61 /* PBXTargetDependency */ = {
+		OBJ_122 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "RogueKit::RogueKit" /* RogueKit */;
-			targetProxy = AA07AFDD2001A3330014788E /* PBXContainerItemProxy */;
+			targetProxy = AA3DA1EE200BE66800A7CA1B /* PBXContainerItemProxy */;
+		};
+		OBJ_91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Gzip::Gzip" /* Gzip */;
+			targetProxy = AA3DA1EA200BE66800A7CA1B /* PBXContainerItemProxy */;
+		};
+		OBJ_93 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Gzip::system-zlib" /* system-zlib */;
+			targetProxy = AA3DA1EC200BE66800A7CA1B /* PBXContainerItemProxy */;
+		};
+		OBJ_95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "BearLibTerminal::BearLibTerminal" /* BearLibTerminal */;
+			targetProxy = AA3DA1ED200BE66800A7CA1B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		AAC7B3C520033699005D33AE /* Debug */ = {
+		AA3DA1F6200BE88A00A7CA1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -546,7 +659,7 @@
 			};
 			name = Debug;
 		};
-		AAC7B3C620033699005D33AE /* Release */ = {
+		AA3DA1F7200BE88A00A7CA1B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -595,126 +708,115 @@
 			};
 			name = Release;
 		};
-		AAC7B3D120059504005D33AE /* Debug */ = {
+		OBJ_106 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUGGING_SYMBOLS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 9TC4EP6SEE;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				DEFINES_MODULE = NO;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/system_zlib_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "system-zlib";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGET_NAME = "system-zlib";
 			};
 			name = Debug;
 		};
-		AAC7B3D220059504005D33AE /* Release */ = {
+		OBJ_107 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 9TC4EP6SEE;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				DEFINES_MODULE = NO;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/system_zlib_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "system-zlib";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGET_NAME = "system-zlib";
 			};
 			name = Release;
 		};
-		OBJ_27 /* Debug */ = {
+		OBJ_112 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/BearLibTerminal_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = BearLibTerminal;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
+				TARGET_NAME = BearLibTerminal;
 			};
 			name = Debug;
 		};
-		OBJ_28 /* Release */ = {
+		OBJ_113 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/BearLibTerminal_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = BearLibTerminal;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
+				TARGET_NAME = BearLibTerminal;
+			};
+			name = Release;
+		};
+		OBJ_120 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		OBJ_121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 			};
 			name = Release;
 		};
@@ -740,53 +842,6 @@
 			};
 			name = Debug;
 		};
-		OBJ_33 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		OBJ_34 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		OBJ_39 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
-					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187",
-					"$(SRCROOT)/.build/checkouts/CZlib.git-516057984387857014",
-				);
-				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Binaries",
-				);
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
-				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/.build/debug";
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = RogueKit;
-			};
-			name = Debug;
-		};
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -807,67 +862,109 @@
 			};
 			name = Release;
 		};
-		OBJ_40 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
-					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187",
-					"$(SRCROOT)/.build/checkouts/CZlib.git-516057984387857014",
-				);
-				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Binaries",
-				);
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
-				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/.build/debug";
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = RogueKit;
-			};
-			name = Release;
-		};
 		OBJ_51 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
-				);
-				INFOPLIST_FILE = RogueKit.xcodeproj/BearLibTerminal_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Binaries",
-				);
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = BearLibTerminal;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
 				SWIFT_VERSION = 4.0;
-				TARGET_NAME = BearLibTerminal;
 			};
 			name = Debug;
 		};
 		OBJ_52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_58 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_69 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include/module.modulemap";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = RogueKit;
+			};
+			name = Debug;
+		};
+		OBJ_70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include",
+					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/RogueKit_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include/module.modulemap";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = RogueKit;
+			};
+			name = Release;
+		};
+		OBJ_98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -875,54 +972,81 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CBearLibTerminal.git-8135638892736904310",
+					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include",
 				);
-				INFOPLIST_FILE = RogueKit.xcodeproj/BearLibTerminal_Info.plist;
+				INFOPLIST_FILE = RogueKit.xcodeproj/Gzip_Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Binaries",
-				);
 				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = BearLibTerminal;
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include/module.modulemap";
+				PRODUCT_BUNDLE_IDENTIFIER = Gzip;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
-				TARGET_NAME = BearLibTerminal;
-			};
-			name = Release;
-		};
-		OBJ_59 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
+				TARGET_NAME = Gzip;
 			};
 			name = Debug;
 		};
-		OBJ_60 /* Release */ = {
+		OBJ_99 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include",
+				);
+				INFOPLIST_FILE = RogueKit.xcodeproj/Gzip_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include/module.modulemap";
+				PRODUCT_BUNDLE_IDENTIFIER = Gzip;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = Gzip;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AAC7B3C420033699005D33AE /* Build configuration list for PBXLegacyTarget "SwiftPM" */ = {
+		AA3DA1F5200BE88A00A7CA1B /* Build configuration list for PBXLegacyTarget "Sync Resources" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AAC7B3C520033699005D33AE /* Debug */,
-				AAC7B3C620033699005D33AE /* Release */,
+				AA3DA1F6200BE88A00A7CA1B /* Debug */,
+				AA3DA1F7200BE88A00A7CA1B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		AAC7B3D020059504005D33AE /* Build configuration list for PBXLegacyTarget "Sync Resources" */ = {
+		OBJ_105 /* Build configuration list for PBXNativeTarget "system-zlib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AAC7B3D120059504005D33AE /* Debug */,
-				AAC7B3D220059504005D33AE /* Release */,
+				OBJ_106 /* Debug */,
+				OBJ_107 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_111 /* Build configuration list for PBXNativeTarget "BearLibTerminal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_112 /* Debug */,
+				OBJ_113 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_119 /* Build configuration list for PBXAggregateTarget "RogueKit Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_120 /* Debug */,
+				OBJ_121 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -936,34 +1060,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_26 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_27 /* Debug */,
-				OBJ_28 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_32 /* Build configuration list for PBXNativeTarget "BearLibTerminalPackageDescription" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_33 /* Debug */,
-				OBJ_34 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_38 /* Build configuration list for PBXNativeTarget "RogueKit" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_39 /* Debug */,
-				OBJ_40 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_50 /* Build configuration list for PBXNativeTarget "BearLibTerminal" */ = {
+		OBJ_50 /* Build configuration list for PBXNativeTarget "RogueKitPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				OBJ_51 /* Debug */,
@@ -972,11 +1069,38 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_58 /* Build configuration list for PBXAggregateTarget "RogueKit Demo" */ = {
+		OBJ_56 /* Build configuration list for PBXNativeTarget "GzipPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_59 /* Debug */,
-				OBJ_60 /* Release */,
+				OBJ_57 /* Debug */,
+				OBJ_58 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_62 /* Build configuration list for PBXNativeTarget "BearLibTerminalPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_63 /* Debug */,
+				OBJ_64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_68 /* Build configuration list for PBXNativeTarget "RogueKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_69 /* Debug */,
+				OBJ_70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_97 /* Build configuration list for PBXNativeTarget "Gzip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_98 /* Debug */,
+				OBJ_99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

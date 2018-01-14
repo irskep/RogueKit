@@ -28,6 +28,34 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Gzip::Gzip"
+               BuildableName = "Gzip.framework"
+               BlueprintName = "Gzip"
+               ReferencedContainer = "container:RogueKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Gzip::system-zlib"
+               BuildableName = "system_zlib.framework"
+               BlueprintName = "system-zlib"
+               ReferencedContainer = "container:RogueKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "BearLibTerminal::BearLibTerminal"
                BuildableName = "BearLibTerminal.framework"
                BlueprintName = "BearLibTerminal"

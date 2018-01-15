@@ -186,7 +186,7 @@ class PurePrefabGenerator {
 
     var numIterationsLeft = numIterations
     var numIterationsUsed = 0
-    while numIterationsLeft > 0 && numIterationsUsed < numIterations * 10 {
+    while numIterationsLeft > 0 && numIterationsUsed < numIterations * 6 {
       numIterationsUsed += 1
       if let hallwayStart = field.findMaximum(where: {
         if !self.cells[$0].flags.contains(.portUnused) { return false }

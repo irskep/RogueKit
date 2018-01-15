@@ -38,13 +38,14 @@ func testEverything() throws {
   try reader.run(id: "basic", rng: RKGetRNG(seed: seed)) {
     gen, status, result in
     print(status)
-//    if result == nil && false {
-//      terminal.foregroundColor = terminal.getColor(name: "white")
-//      terminal.backgroundColor = terminal.getColor(name: "black")
-//      terminal.print(point: BLPoint(x: 0, y: loadingY), string: status)
-//      terminal.refresh()
-//      loadingY += 1
-//    } else {
+    if result == nil {
+      terminal.layer = 0
+      terminal.foregroundColor = terminal.getColor(name: "white")
+      terminal.backgroundColor = terminal.getColor(a: 255, r: 0, g: 0, b: 0)
+      terminal.print(point: BLPoint(x: 0, y: loadingY), string: status)
+      terminal.refresh()
+      loadingY += 1
+    } else {
       terminal.clear()
       terminal.layer = 0
       gen.draw(in: terminal, at: BLPoint.zero)
@@ -52,7 +53,7 @@ func testEverything() throws {
       gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
 //      (gen as! PurePrefabGenerator).drawOpenPorts(in: terminal)
       terminal.refresh()
-//    }
+    }
   }
 }
 
@@ -109,4 +110,18 @@ func testGenerator() {
 
 try testEverything()
 
-terminal.waitForExit()
+outer: while true {
+  let val = terminal.read()
+  switch val {
+  case BLConstant.CLOSE:
+    break outer
+  case BLConstant.LEFT:
+    seed -= 1
+    try testEverything()
+  case BLConstant.RIGHT:
+    seed += 1
+    try testEverything()
+  default: break
+  }
+}
+terminal.close()

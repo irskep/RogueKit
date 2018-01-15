@@ -263,6 +263,27 @@ class PurePrefabGenerator {
     }
   }
 
+  func addWallsNextToBareFloor() {
+    for point in rect {
+      if self.cells[point].basicType == .empty {
+        for neighbor in point.getNeighbors(bounds: rect, diagonals: true) {
+          if self.cells[neighbor].isPassable {
+            self.cells[point].basicType = .wall
+            break
+          }
+        }
+      } else if self.cells[point].flags.contains(.portUsed) {
+        let numFloorNeighbors = point.getNeighbors(bounds: rect, diagonals: false)
+          .filter({ self.cells[$0].isPassable })
+          .count
+        if numFloorNeighbors < 2 {
+          self.cells[point].flags.remove(.portUsed)
+          self.cells[point].flags.insert(.portUnused)
+        }
+      }
+    }
+  }
+
   func tryPrefab(_ prefab: Prefab, portPoint: BLPoint, newPortDirection: BLPoint, counterpart: PrefabInstance) -> PrefabInstance? {
     let validPorts = prefab.ports.filter({ (p: PrefabPort) -> Bool in p.direction == newPortDirection })
     guard validPorts.count > 0 else {
@@ -375,6 +396,7 @@ extension PurePrefabGenerator: GeneratorProtocol {
     case connectAdjacentPorts
     case removeDeadEndHallways
     case addHallwaysToRemoteAreas
+    case addWallsNextToBareFloor
   }
 
   func runCommand(cmd: String, args: [String]) {
@@ -394,6 +416,8 @@ extension PurePrefabGenerator: GeneratorProtocol {
       for _ in 0..<intArgs[0] {
         self.addHallwayToPortFurthestFromACycle(numIterations: intArgs[1])
       }
+    case .addWallsNextToBareFloor:
+      self.addWallsNextToBareFloor()
     default:
       fatalError("Not enough arguments to \(cmd)")
     }

@@ -25,6 +25,7 @@
 		AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */; };
 		AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */; };
 		AA3DA228200BF72100A7CA1B /* GeneratorReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */; };
+		AA3DA22A200C37BF00A7CA1B /* RKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA229200C37BF00A7CA1B /* RKColor.swift */; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -106,6 +107,7 @@
 		AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSeedStore.swift; sourceTree = "<group>"; };
 		AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorProtocol.swift; sourceTree = "<group>"; };
 		AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorReader.swift; sourceTree = "<group>"; };
+		AA3DA229200C37BF00A7CA1B /* RKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKColor.swift; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +206,7 @@
 				OBJ_21 /* REXPaintImage.swift */,
 				OBJ_22 /* RKRNG.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
+				AA3DA229200C37BF00A7CA1B /* RKColor.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				OBJ_81 /* REXPaintImage.swift in Sources */,
 				OBJ_82 /* RKRNG.swift in Sources */,
+				AA3DA22A200C37BF00A7CA1B /* RKColor.swift in Sources */,
 				OBJ_83 /* SpriteSheet.swift in Sources */,
 				AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */,
 				OBJ_84 /* fovTest.swift in Sources */,

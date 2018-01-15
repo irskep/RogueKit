@@ -74,7 +74,8 @@ extension DistanceField: REXPaintDrawable {
 
   func get(layer: Int, x: Int, y: Int) -> REXPaintCell {
     if let val = getNormalizedValue(at: BLPoint(x: Int32(x), y: Int32(y))) {
-      return REXPaintCell(code: CP437.BLOCK, foregroundColor: (UInt8(255 * max(val, 0)), 0, 0), backgroundColor: (0, 0, 0))
+      let fg = RKColor(h: 0.9 - val * 0.9, s: 1, l: 0.5).tuple
+      return REXPaintCell(code: CP437.BLOCK, foregroundColor: fg, backgroundColor: (0, 0, 0))
     } else {
       return REXPaintCell.transparent
     }

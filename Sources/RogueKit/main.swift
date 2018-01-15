@@ -31,10 +31,11 @@ let result = terminal.configure("""
   """)
 assert(result == true)
 
+var seed: UInt32 = 135205160
 func testEverything() throws {
   let reader = GeneratorReader(resources: resources)
   var loadingY: Int32 = 0
-  try reader.run(id: "basic", rng: RKGetRNG(seed: 135205161)) {
+  try reader.run(id: "basic", rng: RKGetRNG(seed: seed)) {
     gen, status, result in
     print(status)
 //    if result == nil && false {
@@ -45,10 +46,10 @@ func testEverything() throws {
 //      loadingY += 1
 //    } else {
       terminal.clear()
+      terminal.layer = 0
       gen.draw(in: terminal, at: BLPoint.zero)
       terminal.layer = 2
       gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
-      terminal.layer = 1
 //      (gen as! PurePrefabGenerator).drawOpenPorts(in: terminal)
       terminal.refresh()
 //    }

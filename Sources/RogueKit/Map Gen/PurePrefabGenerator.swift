@@ -74,7 +74,7 @@ class PurePrefabGenerator {
         return
     }
     self.register(prefabInstance: newInstance)
-    instance.connect(to: newInstance, with: port)
+    self.usePort(instance: instance, port: port, counterpart: newInstance)
   }
 
   func connectAdjacentPorts(maxNewCycles: Int = 10) {
@@ -94,6 +94,7 @@ class PurePrefabGenerator {
     for (instance, port) in openPorts {
       guard numCycles < maxNewCycles else { break }
       guard rect.contains(point: port.point + port.direction) else { continue }
+//      guard port.direction != BLPoint.zero else { continue }
       portMap[port.point] = (instance, port)
 
       var neighborPair: (PrefabInstance, PrefabPort)? = nil
@@ -106,8 +107,8 @@ class PurePrefabGenerator {
       portMap[port.point] = nil
       newlyUsedPorts.append((instance, port))
       newlyUsedPorts.append((neighborInstance, neighborPort))
-      instance.connect(to: neighborInstance, with: port)
-      neighborInstance.connect(to: instance, with: neighborPort)
+      self.usePort(instance: instance, port: port, counterpart: neighborInstance)
+      self.usePort(instance: neighborInstance, port: neighborPort, counterpart: instance)
 
       var cell1 = instance.generatorCell(at: port.point)
       cell1.flags.insert(.createdToAddCycle)
@@ -117,6 +118,10 @@ class PurePrefabGenerator {
       cell2.flags.insert(.createdToAddCycle)
       neighborInstance.replaceGeneratorCell(at: neighborPort.point, with: cell2)
     }
+
+    openPorts = openPorts.filter({
+      return !self.cells[$0.1.point].flags.contains(.portUsed)
+    })
   }
 
   func removeDeadEnds() {
@@ -135,12 +140,25 @@ class PurePrefabGenerator {
     while deadEnds.count > 0 {
       for instance in deadEnds {
         instance.disconnectFromAll()
+        for point in instance.livePoints {
+          if self.cells[point].flags.contains(.portUsed) {
+            self.cells[point].flags.remove(.portUsed)
+            self.cells[point].flags.insert(.portUnused)
+          }
+        }
       }
       update()
     }
     openPorts = []
+    zeroPorts = []
     for i in prefabInstances {
-      openPorts.append(contentsOf: i.unusedPorts.map({ (i, $0) }))
+      for port in i.unusedPorts {
+        if port.direction == BLPoint.zero {
+          zeroPorts.append((i, port))
+        } else {
+          openPorts.append((i, port))
+        }
+      }
     }
     recommitEverything()
   }
@@ -264,11 +282,12 @@ class PurePrefabGenerator {
   }
 
   func addWallsNextToBareFloor() {
+    var newWallPoints = [BLPoint]()
     for point in rect {
       if self.cells[point].basicType == .empty {
         for neighbor in point.getNeighbors(bounds: rect, diagonals: true) {
           if self.cells[neighbor].isPassable {
-            self.cells[point].basicType = .wall
+            newWallPoints.append(point)
             break
           }
         }
@@ -281,6 +300,10 @@ class PurePrefabGenerator {
           self.cells[point].flags.insert(.portUnused)
         }
       }
+    }
+
+    for point in newWallPoints {
+      self.cells[point].basicType = .wall
     }
   }
 
@@ -323,6 +346,12 @@ class PurePrefabGenerator {
     self.commit(instance: instance)
   }
 
+  func usePort(instance: PrefabInstance, port: PrefabPort, counterpart: PrefabInstance) {
+    instance.connect(to: counterpart, with: port)
+    self.cells[port.point].flags.remove(.portUnused)
+    self.cells[port.point].flags.insert(.portUsed)
+  }
+
   func commit(instance: PrefabInstance) {
     for point in instance.livePoints {
       self.cells[point] = instance.generatorCell(at: point)
@@ -354,7 +383,7 @@ class PurePrefabGenerator {
   func drawOpenPorts(in terminal: BLTerminalInterface) {
     for (_, port) in openPorts {
       guard rect.contains(point: port.point + port.direction) else { continue }
-      terminal.foregroundColor = terminal.getColor(name: "black")
+      terminal.foregroundColor = terminal.getColor(name: "red")
       terminal.backgroundColor = terminal.getColor(name: "white")
       terminal.put(point: port.point, code: 120)
       terminal.backgroundColor = terminal.getColor(name: "black")

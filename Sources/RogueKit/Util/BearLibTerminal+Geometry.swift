@@ -54,7 +54,7 @@ private let _xDeltas: [BLPoint] = { return [
   BLPoint(x: -1, y: -1),
   BLPoint(x: 1, y: 1),
   BLPoint(x: 1, y: -1),
-  BLPoint(x: -2, y: 1),
+  BLPoint(x: -1, y: 1),
   ] }()
 public extension BLPoint {
   func getNeighbors(bounds: BLRect, diagonals: Bool) -> [BLPoint] {

@@ -20,7 +20,7 @@ print("Launched")
 //
 //runTest(rexPaintImage: REXPaintImage(name: "xptest")!, fontPath: "\(RESOURES_PATH)/cp437_10x10.png")
 
-let resources = ResourceCollection()
+let resources = ResourceCollection(path: CommandLine.arguments[1])
 let terminal = BLTerminal.main
 terminal.open()
 

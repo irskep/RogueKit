@@ -28,7 +28,11 @@ extension REXPaintImage {
 
 
 class ResourceCollection: ResourceCollectionProtocol {
-  let path = "/Users/steve/_d/games/RogueKit/Resources"
+  let path: String
+  
+  init(path: String) {
+    self.path = path
+  }
 
   lazy var prefabs: [String : Prefab] = {
     guard let image = self.rexPaintImage(named: "fabs") else { return [:] }

@@ -13,6 +13,7 @@ struct Terrain {
   let name: String
   let char: Int
   let color: BLColor
+  let canSeeThrough: Bool
 }
 
 
@@ -21,6 +22,7 @@ struct Feature {
   let name: String
   let char: Int
   let color: BLColor
+  let canSeeThrough: Bool
 }
 
 struct MapCell {
@@ -66,7 +68,8 @@ class LevelMap {
         id: row["ID"],
         name: row["Name"],
         char: row["Character"],
-        color: terminal.getColor(name: row["Color"]))
+        color: terminal.getColor(name: row["Color"]),
+        canSeeThrough: row["See thru?"])
       return (id, terrain)
     }
     self.features = try resources.csvMap(name: "features") {
@@ -76,7 +79,8 @@ class LevelMap {
         id: row["ID"],
         name: row["Name"],
         char: row["Character"],
-        color: terminal.getColor(name: row["Color"]))
+        color: terminal.getColor(name: row["Color"]),
+        canSeeThrough: row["See thru?"])
       return (id, feature)
     }
     self.cells = Array2D<MapCell>(size: size, emptyValue: MapCell.zero)

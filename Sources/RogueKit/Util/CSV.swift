@@ -23,6 +23,7 @@ class StringBox {
 
   subscript(index: String) -> Int { return self.int(index) }
   subscript(index: String) -> String { return self.string(index) }
+  subscript(index: String) -> Bool { return self.bool(index) }
 
   func int(_ index: String) -> Int {
     return Int(values[labelToIndex[index]!])!
@@ -30,6 +31,10 @@ class StringBox {
 
   func string(_ index: String) -> String {
     return values[labelToIndex[index]!]
+  }
+
+  func bool(_ index: String) -> Bool {
+    return values[labelToIndex[index]!].lowercased() == "true"
   }
 }
 

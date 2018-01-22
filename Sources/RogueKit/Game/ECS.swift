@@ -34,6 +34,7 @@ private func binarySearch<T: Comparable>(_ a: [T], key: T, range: Range<Int>) ->
 
 class ECSComponent {
   var entity: Int?
+  init(entity: Int?) { self.entity = entity }
 }
 extension ECSComponent: Comparable {
   static func <(lhs: ECSComponent, rhs: ECSComponent) -> Bool {
@@ -54,7 +55,9 @@ class ECSSystem<T: ECSComponent> {
   // keep 'em sorted by entity ID for logn-time removal.
   var all = [T]()
 
-  subscript(index: Int) -> T? { return e2c[index] }
+  subscript(index: Int) -> T? { return self.get(index) }
+
+  func get(_ index: Int) -> T? { return e2c[index] }
 
   func add(entity: Int, component: T) {
     guard e2c[entity] == nil else { fatalError("Trying to double-register a \(T.self)") }

@@ -1,4 +1,4 @@
-ID,Name,Character,Color
-0,void,0,#000000
-1,floor,7,#444444
-2,wall,219,#ffffff
+ID,Name,Character,Color,See thru?
+0,void,0,#000000,false
+1,floor,7,#444444,true
+2,wall,219,#ffffff,false

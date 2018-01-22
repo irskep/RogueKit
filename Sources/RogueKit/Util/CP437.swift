@@ -26,4 +26,5 @@ internal struct CP437 {
   static let BLOCK: Int32 = 219
   static let SPACE: Int32 = 32
   static let NULL: Int32 = 0
+  static let AT: Int32 = 64
 }

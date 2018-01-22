@@ -22,9 +22,9 @@ let result = terminal.configure("""
   """)
 assert(result == true)
 
-func load(seed: UInt32, id: String, onComplete: (LevelMap) -> Void) throws {
+func load(rng: RKRNGProtocol, id: String, onComplete: (LevelMap) -> Void) throws {
   let reader = GeneratorReader(resources: resources)
-  try reader.run(id: id, rng: RKGetRNG(seed: seed)) {
+  try reader.run(id: id, rng: rng) {
     gen, status, result in
     terminal.clear()
     terminal.layer = 0
@@ -43,17 +43,19 @@ func load(seed: UInt32, id: String, onComplete: (LevelMap) -> Void) throws {
   }
 }
 
-func play(map: LevelMap) {
+func play(world: WorldModel) {
   terminal.layer = 0
   terminal.clear()
-  map.draw(in: terminal, at: BLPoint.zero)
+  world.draw(in: terminal, at: BLPoint.zero)
   terminal.refresh()
 }
 
 var delta = 0
 func run() throws {
-  try load(seed: UInt32(delta + 135205160), id: "basic") {
-    play(map: $0)
+  let rng = RKGetRNG(seed: UInt32(delta + 135205160))
+  try load(rng: rng, id: "basic") {
+    let world = WorldModel(random: rng, map: $0)
+    play(world: world)
   }
 }
 

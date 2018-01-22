@@ -17,3 +17,4 @@ addHallwaysToRemoteAreas,1,2
 #removeDeadEndHallways
 
 addWallsNextToBareFloor
+removeDoubleDoors

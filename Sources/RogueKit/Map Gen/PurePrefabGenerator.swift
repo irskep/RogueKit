@@ -307,6 +307,18 @@ class PurePrefabGenerator {
     }
   }
 
+  func removeDoubleDoors() {
+    for point in rect {
+      guard self.cells[point].flags.contains(.portUsed) else { continue }
+      inner: for neighbor in point.getNeighbors(bounds: rect, diagonals: false) {
+        if self.cells[neighbor].flags.contains(.portUsed) {
+          self.cells[point].flags.insert(.invisibleDoor)
+          break inner
+        }
+      }
+    }
+  }
+
   func tryPrefab(_ prefab: Prefab, portPoint: BLPoint, newPortDirection: BLPoint, counterpart: PrefabInstance) -> PrefabInstance? {
     let validPorts = prefab.ports.filter({ (p: PrefabPort) -> Bool in p.direction == newPortDirection })
     guard validPorts.count > 0 else {
@@ -376,6 +388,11 @@ class PurePrefabGenerator {
             self.cells[point].flags.insert(.createdToAddCycle)
           }
         }
+        if instance.prefab.sprite.metadata.contains("h") {
+          self.cells[point].flags.insert(.hallway)
+        } else {
+          self.cells[point].flags.insert(.room)
+        }
       }
     }
   }
@@ -426,6 +443,7 @@ extension PurePrefabGenerator: GeneratorProtocol {
     case removeDeadEndHallways
     case addHallwaysToRemoteAreas
     case addWallsNextToBareFloor
+    case removeDoubleDoors
   }
 
   func runCommand(cmd: String, args: [String]) {
@@ -447,6 +465,8 @@ extension PurePrefabGenerator: GeneratorProtocol {
       }
     case .addWallsNextToBareFloor:
       self.addWallsNextToBareFloor()
+    case .removeDoubleDoors:
+      self.removeDoubleDoors()
     default:
       fatalError("Not enough arguments to \(cmd)")
     }

@@ -32,17 +32,20 @@ struct MapCell {
 
 extension MapCell {
   init(generatorCell: GeneratorCell) {
-    if generatorCell.flags.contains(.portUsed) {
+    if generatorCell.flags.contains(.portUsed) &&
+       !generatorCell.flags.contains(.invisibleDoor) &&
+       generatorCell.flags.contains(.room) {
       self.terrain = 1
       self.feature = 2
       return
     }
     self.feature = 0
     switch generatorCell.basicType {
+    case .floor,
+         _ where generatorCell.flags.contains(.portUsed):
+      self.terrain = 1
     case .empty:
       self.terrain = 0
-    case .floor:
-      self.terrain = 1
     case .wall:
       self.terrain = 2
     }
@@ -92,9 +95,6 @@ class LevelMap {
         self.cells[point] = MapCell(generatorCell: generator.cells[point])
       }
     }
-    print(terrains)
-    print(features)
-    print(self.cells)
   }
 }
 
@@ -119,11 +119,9 @@ extension LevelMap: BLTDrawable {
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface) {
     let cell = self.cells[point]
     if let feature = features[cell.feature] {
-      print("f", feature)
       terminal.foregroundColor = feature.color
       terminal.put(point: point + offset, code: BLInt(feature.char))
     } else if let terrain = terrains[cell.terrain] {
-      print("t", terrain)
       terminal.foregroundColor = terrain.color
       terminal.put(point: point + offset, code: BLInt(terrain.char))
     }

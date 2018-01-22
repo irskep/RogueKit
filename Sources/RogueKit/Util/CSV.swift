@@ -47,6 +47,7 @@ func readCSV<T>(url: URL, mapper: @escaping (StringBox) -> T) throws -> [T] {
     guard values.count > 0 else { return }
     guard i > 0 else {
       labels = values
+      i += 1
       return
     }
     results.append(mapper(StringBox(labels: labels, values: values)))

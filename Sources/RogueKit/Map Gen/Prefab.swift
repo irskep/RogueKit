@@ -228,6 +228,11 @@ struct GeneratorCell {
     case createdToAddCycle
     case debugPoint
     case lateStageHallway
+    case invisibleDoor
+
+    // prefab origins
+    case hallway
+    case room
   }
 
   var isPassable: Bool {

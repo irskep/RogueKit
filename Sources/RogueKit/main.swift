@@ -44,6 +44,17 @@ func testEverything() throws {
 //      (gen as! PurePrefabGenerator).drawOpenPorts(in: terminal)
     terminal.refresh()
 //    _ = terminal.read()
+
+    if result != nil {
+      terminal.clear()
+      let map = try! LevelMap(
+        size: gen.cells.size,
+        resources: resources,
+        terminal: terminal,
+        generator: gen)
+      map.draw(in: terminal, at: BLPoint.zero)
+      terminal.refresh()
+    }
   }
 }
 

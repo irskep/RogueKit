@@ -8,6 +8,11 @@
 import Foundation
 
 
+enum ResourceError: Error {
+  case NotFoundError
+}
+
+
 protocol ResourceCollectionProtocol {
   var prefabs: [String: Prefab] { get }
   func path(for name: String) -> String
@@ -42,6 +47,19 @@ class ResourceCollection: ResourceCollectionProtocol {
       .map({ Prefab(sprite: $0) })
       .map({ (p: Prefab) -> (String, Prefab) in (p.sprite.name, p) }))
   }()
+
+  func csv<T>(name: String, mapper: @escaping (StringBox) -> T) throws -> [T] {
+    guard let url = self.url(for: name + ".csv") else {
+      throw ResourceError.NotFoundError
+    }
+    return try readCSV(url: url, mapper: mapper)
+  }
+
+  func csvMap<K, T>(name: String, mapper: @escaping (StringBox) -> (K, T)) throws -> [K: T] {
+    var results = [K: T]()
+    try self.csv(name: name, mapper: mapper).forEach({ results[$0.0] = $0.1 })
+    return results
+  }
 
   func path(for name: String) -> String {
     return "\(path)/\(name)"

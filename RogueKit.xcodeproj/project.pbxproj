@@ -21,6 +21,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
+		AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
+		AA0DE9052015723A00CCF61F /* CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9042015723A00CCF61F /* CSV.swift */; };
+		AA0DE9062015723A00CCF61F /* CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9042015723A00CCF61F /* CSV.swift */; };
 		AA3DA1F3200BE81300A7CA1B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1F1200BE81200A7CA1B /* Makefile */; };
 		AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */; };
 		AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */; };
@@ -207,6 +211,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA0DE9012013C87400CCF61F /* LevelMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMap.swift; sourceTree = "<group>"; };
+		AA0DE9042015723A00CCF61F /* CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSV.swift; sourceTree = "<group>"; };
 		AA3DA1EF200BE81200A7CA1B /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		AA3DA1F0200BE81200A7CA1B /* Package.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Package.resolved; sourceTree = "<group>"; };
 		AA3DA1F1200BE81200A7CA1B /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -352,6 +358,7 @@
 				OBJ_22 /* RKRNG.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
 				AA3DA229200C37BF00A7CA1B /* RKColor.swift */,
+				AA0DE9042015723A00CCF61F /* CSV.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -474,6 +481,7 @@
 				AA3DA221200BEC7F00A7CA1B /* Game */,
 				OBJ_9 /* Algorithms */,
 				OBJ_11 /* Map Gen */,
+				AA0DE9012013C87400CCF61F /* LevelMap.swift */,
 				OBJ_14 /* Resources.swift */,
 				OBJ_15 /* Util */,
 				OBJ_24 /* fovTest.swift */,
@@ -736,6 +744,7 @@
 				AA3DA2652012DE0300A7CA1B /* Array2D.swift in Sources */,
 				AA3DA26E2012DE0300A7CA1B /* main.swift in Sources */,
 				AA3DA25E2012DE0300A7CA1B /* RandomSeedStore.swift in Sources */,
+				AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */,
 				AA3DA26D2012DE0300A7CA1B /* RKColor.swift in Sources */,
 				AA3DA2632012DE0300A7CA1B /* PurePrefabGenerator.swift in Sources */,
 				AA3DA2692012DE0300A7CA1B /* REXPaintImage+BearLibTerminal.swift in Sources */,
@@ -743,6 +752,7 @@
 				AA3DA2602012DE0300A7CA1B /* GeneratorReader.swift in Sources */,
 				AA3DA2662012DE0300A7CA1B /* BearLibTerminal+Geometry.swift in Sources */,
 				AA3DA2622012DE0300A7CA1B /* Prefab.swift in Sources */,
+				AA0DE9062015723A00CCF61F /* CSV.swift in Sources */,
 				AA3DA2642012DE0300A7CA1B /* Resources.swift in Sources */,
 				AA3DA2672012DE0300A7CA1B /* CP437.swift in Sources */,
 				AA3DA2682012DE0300A7CA1B /* DistanceField.swift in Sources */,
@@ -812,12 +822,14 @@
 				OBJ_74 /* PurePrefabGenerator.swift in Sources */,
 				OBJ_75 /* Resources.swift in Sources */,
 				OBJ_76 /* Array2D.swift in Sources */,
+				AA0DE9052015723A00CCF61F /* CSV.swift in Sources */,
 				OBJ_77 /* BearLibTerminal+Geometry.swift in Sources */,
 				AA3DA228200BF72100A7CA1B /* GeneratorReader.swift in Sources */,
 				OBJ_78 /* CP437.swift in Sources */,
 				OBJ_79 /* DistanceField.swift in Sources */,
 				OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				OBJ_81 /* REXPaintImage.swift in Sources */,
+				AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */,
 				OBJ_82 /* RKRNG.swift in Sources */,
 				AA3DA22A200C37BF00A7CA1B /* RKColor.swift in Sources */,
 				OBJ_83 /* SpriteSheet.swift in Sources */,

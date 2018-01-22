@@ -9,7 +9,7 @@
 import Foundation
 import BearLibTerminal
 
-
+/*
 let DUNGEON: [String] = [
     "###########################################################",
     "#...........#.............................................#",
@@ -110,3 +110,4 @@ func fovTest() {
     terminal.close()
 }
 
+*/

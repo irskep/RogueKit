@@ -16,7 +16,7 @@ class GeneratorReader {
     self.resources = resources
   }
 
-  func run(id: String, rng: RKRNGProtocol, callback: (GeneratorProtocol, String, Array2D<GeneratorCell>?) -> Void) throws {
+  func run(id: String, rng: RKRNGProtocol, callback: (GeneratorProtocol, String, Array2D<GeneratorCell>?) throws -> Void) throws {
     let string = try String(contentsOf: resources.url(for: "levelscripts/\(id).csv")!)
 
     var gen: GeneratorProtocol?
@@ -45,17 +45,17 @@ class GeneratorReader {
     }
 
     guard let generator = gen else { fatalError("No generator loaded") }
-    callback(generator, "Starting", nil)
+    try callback(generator, "Starting", nil)
     var i = 0
     for (cmd, args) in commands {
       i += 1
       generator.runCommand(cmd: cmd, args: args.map({ String($0) }))
       if cmd == "debug" {
-        callback(generator, "\(i)/\(commands.count): \(cmd) \(args)", nil)
+        try callback(generator, "\(i)/\(commands.count): \(cmd) \(args)", nil)
         continue
       }
-      callback(generator, "\(i)/\(commands.count): \(cmd) \(args)", nil)
+      try callback(generator, "\(i)/\(commands.count): \(cmd) \(args)", nil)
     }
-    callback(generator, "Done", generator.cells)
+    try callback(generator, "Done", generator.cells)
   }
 }

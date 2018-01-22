@@ -63,6 +63,10 @@
 		AA3DA2782013055A00A7CA1B /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; };
 		AA3DA27A2013057400A7CA1B /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA3DA27C2013059100A7CA1B /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AA3DA27E2015B1E300A7CA1B /* WorldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */; };
+		AA3DA27F2015B1E300A7CA1B /* WorldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */; };
+		AA3DA2812015B20C00A7CA1B /* ECS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA2802015B20C00A7CA1B /* ECS.swift */; };
+		AA3DA2822015B20C00A7CA1B /* ECS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA2802015B20C00A7CA1B /* ECS.swift */; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -228,6 +232,8 @@
 		AA3DA2382012DD2600A7CA1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3DA2392012DD2600A7CA1B /* RogueKitApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RogueKitApp.entitlements; sourceTree = "<group>"; };
 		AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
+		AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldModel.swift; sourceTree = "<group>"; };
+		AA3DA2802015B20C00A7CA1B /* ECS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECS.swift; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,7 +316,9 @@
 		AA3DA221200BEC7F00A7CA1B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				AA3DA2802015B20C00A7CA1B /* ECS.swift */,
 				AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */,
+				AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */,
 			);
 			name = Game;
 			path = Sources/RogueKit/Game;
@@ -751,11 +759,13 @@
 				AA3DA26B2012DE0300A7CA1B /* RKRNG.swift in Sources */,
 				AA3DA2602012DE0300A7CA1B /* GeneratorReader.swift in Sources */,
 				AA3DA2662012DE0300A7CA1B /* BearLibTerminal+Geometry.swift in Sources */,
+				AA3DA2822015B20C00A7CA1B /* ECS.swift in Sources */,
 				AA3DA2622012DE0300A7CA1B /* Prefab.swift in Sources */,
 				AA0DE9062015723A00CCF61F /* CSV.swift in Sources */,
 				AA3DA2642012DE0300A7CA1B /* Resources.swift in Sources */,
 				AA3DA2672012DE0300A7CA1B /* CP437.swift in Sources */,
 				AA3DA2682012DE0300A7CA1B /* DistanceField.swift in Sources */,
+				AA3DA27F2015B1E300A7CA1B /* WorldModel.swift in Sources */,
 				AA3DA26C2012DE0300A7CA1B /* SpriteSheet.swift in Sources */,
 				AA3DA2612012DE0300A7CA1B /* GeneratorProtocol.swift in Sources */,
 				AA3DA26A2012DE0300A7CA1B /* REXPaintImage.swift in Sources */,
@@ -821,6 +831,7 @@
 				OBJ_73 /* Prefab.swift in Sources */,
 				OBJ_74 /* PurePrefabGenerator.swift in Sources */,
 				OBJ_75 /* Resources.swift in Sources */,
+				AA3DA27E2015B1E300A7CA1B /* WorldModel.swift in Sources */,
 				OBJ_76 /* Array2D.swift in Sources */,
 				AA0DE9052015723A00CCF61F /* CSV.swift in Sources */,
 				OBJ_77 /* BearLibTerminal+Geometry.swift in Sources */,
@@ -836,6 +847,7 @@
 				AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */,
 				OBJ_84 /* fovTest.swift in Sources */,
 				OBJ_85 /* main.swift in Sources */,
+				AA3DA2812015B20C00A7CA1B /* ECS.swift in Sources */,
 				OBJ_86 /* test.swift in Sources */,
 				AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */,
 			);

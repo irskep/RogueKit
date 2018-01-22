@@ -22,43 +22,42 @@ let result = terminal.configure("""
   """)
 assert(result == true)
 
-var seed: UInt32 = 135205160
-func testEverything() throws {
+func load(seed: UInt32, id: String, onComplete: (LevelMap) -> Void) throws {
   let reader = GeneratorReader(resources: resources)
-  try reader.run(id: "basic", rng: RKGetRNG(seed: seed)) {
+  try reader.run(id: id, rng: RKGetRNG(seed: seed)) {
     gen, status, result in
-    print(status)
-//    if result == nil {
-//      terminal.layer = 0
-//      terminal.foregroundColor = terminal.getColor(name: "white")
-//      terminal.backgroundColor = terminal.getColor(a: 255, r: 0, g: 0, b: 0)
-//      terminal.print(point: BLPoint(x: 0, y: loadingY), string: status)
-//      terminal.refresh()
-//      loadingY += 1
-//    } else {
     terminal.clear()
     terminal.layer = 0
     gen.draw(in: terminal, at: BLPoint.zero)
     terminal.layer = 2
     gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
-//      (gen as! PurePrefabGenerator).drawOpenPorts(in: terminal)
     terminal.refresh()
-//    _ = terminal.read()
 
     if result != nil {
-      terminal.clear()
-      let map = try! LevelMap(
+      onComplete(try LevelMap(
         size: gen.cells.size,
         resources: resources,
         terminal: terminal,
-        generator: gen)
-      map.draw(in: terminal, at: BLPoint.zero)
-      terminal.refresh()
+        generator: gen))
     }
   }
 }
 
-try testEverything()
+func play(map: LevelMap) {
+  terminal.layer = 0
+  terminal.clear()
+  map.draw(in: terminal, at: BLPoint.zero)
+  terminal.refresh()
+}
+
+var delta = 0
+func run() throws {
+  try load(seed: UInt32(delta + 135205160), id: "basic") {
+    play(map: $0)
+  }
+}
+
+try run()
 
 outer: while true {
   let val = terminal.read()
@@ -66,11 +65,11 @@ outer: while true {
   case BLConstant.CLOSE:
     break outer
   case BLConstant.LEFT:
-    seed -= 1
-    try testEverything()
+    delta -= 1
+    try run()
   case BLConstant.RIGHT:
-    seed += 1
-    try testEverything()
+    delta += 1
+    try run()
   default: break
   }
 }

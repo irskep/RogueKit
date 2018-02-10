@@ -8,12 +8,16 @@
 import Foundation
 import BearLibTerminal
 
+typealias FeatureID = Int
+typealias TerrainID = Int
+
 struct Terrain {
   let id: Int
   let name: String
   let char: Int
   let color: BLColor
   let canSeeThrough: Bool
+  let walkable: Bool
 }
 
 
@@ -23,6 +27,7 @@ struct Feature {
   let char: Int
   let color: BLColor
   let canSeeThrough: Bool
+  let walkable: Bool
 }
 
 struct MapCell {
@@ -69,7 +74,8 @@ class LevelMap {
         name: row["Name"],
         char: row["Character"],
         color: terminal.getColor(name: row["Color"]),
-        canSeeThrough: row["See thru?"])
+        canSeeThrough: row["See thru?"],
+        walkable: row["Walkable?"])
       return (id, terrain)
     }
     self.features = try resources.csvMap(name: "features") {
@@ -80,7 +86,8 @@ class LevelMap {
         name: row["Name"],
         char: row["Character"],
         color: terminal.getColor(name: row["Color"]),
-        canSeeThrough: row["See thru?"])
+        canSeeThrough: row["See thru?"],
+        walkable: row["Walkable?"])
       return (id, feature)
     }
     self.cells = Array2D<MapCell>(size: size, emptyValue: MapCell.zero)
@@ -99,6 +106,16 @@ class LevelMap {
         self.cells[point] = MapCell(generatorCell: generator.cells[point])
       }
     }
+  }
+
+  func getIsPassable(entity: Entity, point: BLPoint) -> Bool {
+    let cell = self.cells[point]
+    return self.terrains[cell.terrain]?.walkable == true &&
+      (self.features[cell.feature] == nil || self.features[cell.feature]?.walkable == true)
+  }
+
+  func openDoor(at point: BLPoint) {
+    self.cells[point].feature = 1  // TODO: de-hack
   }
 }
 

@@ -9,9 +9,13 @@ import Foundation
 import BearLibTerminal
 
 
+typealias Entity = Int
+
+
 class WorldModel {
   let map: LevelMap
   let random: RKRNGProtocol
+  var interactions: [FeatureID: (WorldModel, BLPoint) -> Void] = [:]
 
   lazy var floors: [BLPoint] = {
     var points = [BLPoint]()
@@ -42,16 +46,20 @@ class WorldModel {
     self.random = random
     self.map = map
 
+    self.interactions = [
+      2: { $0.map.openDoor(at: $1) },
+    ]
+
     let playerPoint = random.choice(floors)
     sightS.add(entity: player, component: SightC(entity: player))
     positionS.add(entity: player, component: PositionC(entity: player, point: playerPoint))
-    self.playerDidMove()
+    self.playerDidTakeAction()
   }
 
   subscript(index: Int) -> PositionC? { return positionS[index] }
   subscript(index: Int) -> SightC? { return sightS[index] }
 
-  func playerDidMove() {
+  func playerDidTakeAction() {
     _fovCache = nil
   }
 
@@ -66,6 +74,41 @@ class WorldModel {
           return playerSight.getCanSeeThrough(level: self.map, self.map.cells[$0])
         })
     return newCache
+  }
+}
+
+extension WorldModel {
+  func movePlayer(by delta: BLPoint) {
+    if self.move(entity: player, by: delta) {
+      self.playerDidTakeAction()
+    }
+  }
+
+  func move(entity: Entity, by delta: BLPoint) -> Bool {
+    guard let point = positionS.get(player)?.point else { return false }
+    let newPoint = point + delta
+
+    if may(entity: entity, moveTo: newPoint) {
+      positionS.get(player)?.point = newPoint
+      return true
+    } else if may(entity: entity, interactAt: newPoint) {
+      self.interact(entity: entity, with: newPoint)
+      return true
+    } else {
+      return false
+    }
+  }
+
+  func may(entity: Entity, moveTo point: BLPoint) -> Bool {
+    return map.getIsPassable(entity: entity, point: point)
+  }
+
+  func may(entity: Entity, interactAt point: BLPoint) -> Bool {
+    return self.interactions[map.cells[point].feature] != nil
+  }
+
+  func interact(entity: Entity, with point: BLPoint) {
+    interactions[map.cells[point].feature]?(self, point)
   }
 }
 

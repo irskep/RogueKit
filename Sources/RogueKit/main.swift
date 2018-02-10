@@ -1,6 +1,16 @@
 import Foundation
 import BearLibTerminal
 
+struct Config: Codable {
+  var keyLeft: Int32 = BLConstant.LEFT
+  var keyRight: Int32 = BLConstant.RIGHT
+  var keyUp: Int32 = BLConstant.UP
+  var keyDown: Int32 = BLConstant.DOWN
+
+  var keyDebugLeft: Int32 = BLConstant.MINUS
+  var keyDebugRight: Int32 = BLConstant.EQUALS
+}
+
 print("Launched")
 
 var path = ""
@@ -43,36 +53,50 @@ func load(rng: RKRNGProtocol, id: String, onComplete: (LevelMap) -> Void) throws
   }
 }
 
-func play(world: WorldModel) {
-  terminal.layer = 0
-  terminal.clear()
-  world.draw(in: terminal, at: BLPoint.zero)
-  terminal.refresh()
-}
+func run(config: Config) throws {
+  var delta = 0
 
-var delta = 0
-func run() throws {
-  let rng = RKGetRNG(seed: UInt32(delta + 135205160))
-  try load(rng: rng, id: "basic") {
-    let world = WorldModel(random: rng, map: $0)
-    play(world: world)
+  var rng: RKRNGProtocol! = nil
+  var world: WorldModel! = nil
+
+  let reload = {
+    rng = RKGetRNG(seed: UInt32(delta + 135205160))
+    try load(rng: rng, id: "basic") {
+      world = WorldModel(random: rng, map: $0)
+    }
+  }
+
+  try reload()
+
+  var isDirty = true
+  while true {
+    if isDirty {
+      terminal.layer = 0
+      terminal.clear()
+      world.draw(in: terminal, at: BLPoint.zero)
+      terminal.refresh()
+    }
+    isDirty = true
+
+    switch terminal.read() {
+    case config.keyLeft: world.movePlayer(by: BLPoint(x: -1, y: 0))
+    case config.keyRight: world.movePlayer(by: BLPoint(x: 1, y: 0))
+    case config.keyUp: world.movePlayer(by: BLPoint(x: 0, y: -1))
+    case config.keyDown: world.movePlayer(by: BLPoint(x: 0, y: 1))
+    case config.keyDebugLeft:
+      delta -= 1
+      try reload()
+    case config.keyDebugRight:
+      delta += 1
+      try reload()
+    case BLConstant.CLOSE:
+      return
+    default:
+      isDirty = false
+      continue
+    }
   }
 }
 
-try run()
-
-outer: while true {
-  let val = terminal.read()
-  switch val {
-  case BLConstant.CLOSE:
-    break outer
-  case BLConstant.LEFT:
-    delta -= 1
-    try run()
-  case BLConstant.RIGHT:
-    delta += 1
-    try run()
-  default: break
-  }
-}
+try run(config: Config())
 terminal.close()

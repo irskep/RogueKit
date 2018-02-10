@@ -1,3 +1,3 @@
-ID,Name,Character,Color,See thru?
-1,door_open,7,#996633,true
-2,door_closed,43,#996633,false
+ID,Name,Character,Color,See thru?,Walkable?
+1,door_open,7,#996633,true,true
+2,door_closed,43,#996633,false,false

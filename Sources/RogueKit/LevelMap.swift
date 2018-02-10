@@ -11,7 +11,7 @@ import BearLibTerminal
 typealias FeatureID = Int
 typealias TerrainID = Int
 
-struct Terrain {
+struct Terrain: Codable {
   let id: Int
   let name: String
   let char: Int
@@ -21,7 +21,7 @@ struct Terrain {
 }
 
 
-struct Feature {
+struct Feature: Codable {
   let id: Int
   let name: String
   let char: Int
@@ -30,7 +30,7 @@ struct Feature {
   let walkable: Bool
 }
 
-struct MapCell {
+struct MapCell: Codable {
   var terrain: Int
   var feature: Int
 
@@ -60,10 +60,10 @@ extension MapCell {
 }
 
 
-class LevelMap {
+class LevelMap: Codable {
   let terrains: [Int: Terrain]
   let features: [Int: Feature]
-  var cells: Array2D<MapCell>
+  var cells: CodableArray2D<MapCell>
 
   init(size: BLSize, resources: ResourceCollection, terminal: BLTerminalInterface) throws {
     self.terrains = try resources.csvMap(name: "terrain") {
@@ -90,7 +90,7 @@ class LevelMap {
         walkable: row["Walkable?"])
       return (id, feature)
     }
-    self.cells = Array2D<MapCell>(size: size, emptyValue: MapCell.zero)
+    self.cells = CodableArray2D<MapCell>(size: size, emptyValue: MapCell.zero)
   }
 
   convenience init(

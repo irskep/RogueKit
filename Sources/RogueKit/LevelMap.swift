@@ -134,16 +134,25 @@ extension BLTDrawable {
     }
   }
 }
+private var _deadGray: BLColor! = nil
 extension LevelMap: BLTDrawable {
   var size: BLSize { return cells.size }
   var layerIndices: [Int] { return [0] }
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface) {
+    self.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: true)
+  }
+
+  func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface, live: Bool) {
+    if _deadGray == nil {
+      _deadGray = terminal.getColor(a: 255, r: 40, g: 40, b: 40)
+    }
+
     let cell = self.cells[point]
     if let feature = features[cell.feature] {
-      terminal.foregroundColor = feature.color
+      terminal.foregroundColor = live ? feature.color : _deadGray
       terminal.put(point: point + offset, code: BLInt(feature.char))
     } else if let terrain = terrains[cell.terrain] {
-      terminal.foregroundColor = terrain.color
+      terminal.foregroundColor = live ? terrain.color : _deadGray
       terminal.put(point: point + offset, code: BLInt(terrain.char))
     }
   }

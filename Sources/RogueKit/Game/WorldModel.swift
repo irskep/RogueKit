@@ -60,6 +60,7 @@ class WorldModel {
   subscript(index: Int) -> SightC? { return sightS[index] }
 
   func playerDidTakeAction() {
+    if let cache = _fovCache { mapMemory.formUnion(cache) }
     _fovCache = nil
   }
 
@@ -115,7 +116,9 @@ extension WorldModel {
 extension WorldModel: BLTDrawable {
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface) {
     if fovCache.contains(point) {
-      map.draw(layer: layer, offset: offset, point: point, terminal: terminal)
+      map.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: true)
+    } else if mapMemory.contains(point) {
+      map.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: false)
     } else {
       terminal.foregroundColor = terminal.getColor(a: 255, r: 0, g: 0, b: 0)
       terminal.backgroundColor = terminal.getColor(a: 255, r: 0, g: 0, b: 0)
@@ -124,8 +127,8 @@ extension WorldModel: BLTDrawable {
 
     // TODO: use a cache
     terminal.foregroundColor = terminal.getColor(a: 255, r: 0, g: 255, b: 0)
-    for point in positionS.all {
-      terminal.put(point: point.point, code: CP437.AT)
+    for posC in positionS.all where fovCache.contains(posC.point) {
+      terminal.put(point: posC.point, code: CP437.AT)
     }
   }
 

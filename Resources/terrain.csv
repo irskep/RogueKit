@@ -1,4 +1,4 @@
 ID,Name,Character,Color,See thru?,Walkable?
-0,void,0,#000000,false,false
-1,floor,7,#444444,true,true
-2,wall,219,#ffffff,false,false
+0,void,0,void,false,false
+1,floor,7,floor,true,true
+2,wall,219,wall,false,false

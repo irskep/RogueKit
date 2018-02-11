@@ -138,13 +138,13 @@ extension WorldModel: BLTDrawable {
     } else if mapMemory.contains(point) {
       map.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: false)
     } else {
-      terminal.foregroundColor = terminal.getColor(a: 255, r: 0, g: 0, b: 0)
-      terminal.backgroundColor = terminal.getColor(a: 255, r: 0, g: 0, b: 0)
+      terminal.foregroundColor = map.palette["void"]
+      terminal.backgroundColor = map.palette["void"]
       terminal.put(point: point, code: 0)
     }
 
     // TODO: use a cache
-    terminal.foregroundColor = terminal.getColor(a: 255, r: 0, g: 255, b: 0)
+    terminal.foregroundColor = map.palette["lightgreen"]
     for posC in positionS.all where fovCache.contains(posC.point) {
       terminal.put(point: posC.point, code: CP437.AT)
     }

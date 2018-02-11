@@ -15,7 +15,7 @@ struct Terrain: Codable {
   let id: Int
   let name: String
   let char: Int
-  let color: BLColor
+  let color: String
   let canSeeThrough: Bool
   let walkable: Bool
 }
@@ -25,7 +25,7 @@ struct Feature: Codable {
   let id: Int
   let name: String
   let char: Int
-  let color: BLColor
+  let color: String
   let canSeeThrough: Bool
   let walkable: Bool
 }
@@ -72,8 +72,10 @@ class LevelMap: Codable {
   let featureIdsByName: [String: Int]
   let interactions: [Int: Interaction]
   var cells: CodableArray2D<MapCell>
+  var palette: PaletteStore
 
-  init(size: BLSize, resources: ResourceCollection, terminal: BLTerminalInterface) throws {
+  init(size: BLSize, paletteName: String, resources: ResourceCollection, terminal: BLTerminalInterface) throws {
+    self.palette = try PaletteStore(terminal: terminal, resources: resources, name: paletteName)
 
     self.terrains = try resources.csvMap(name: "terrain") {
       (row: StringBox) -> (Int, Terrain) in
@@ -82,7 +84,7 @@ class LevelMap: Codable {
         id: row["ID"],
         name: row["Name"],
         char: row["Character"],
-        color: terminal.getColor(name: row["Color"]),
+        color: row["Color"],
         canSeeThrough: row["See thru?"],
         walkable: row["Walkable?"])
       return (id, terrain)
@@ -95,7 +97,7 @@ class LevelMap: Codable {
         id: row["ID"],
         name: row["Name"],
         char: row["Character"],
-        color: terminal.getColor(name: row["Color"]),
+        color: row["Color"],
         canSeeThrough: row["See thru?"],
         walkable: row["Walkable?"])
       return (id, feature)
@@ -125,11 +127,12 @@ class LevelMap: Codable {
 
   convenience init(
     size: BLSize,
+    paletteName: String,
     resources: ResourceCollection,
     terminal: BLTerminalInterface,
     generator: GeneratorProtocol) throws
   {
-    try self.init(size: size, resources: resources, terminal: terminal)
+    try self.init(size: size, paletteName: paletteName, resources: resources, terminal: terminal)
     for y in 0..<generator.cells.size.h {
       for x in 0..<generator.cells.size.w {
         let point = BLPoint(x: x, y: y)
@@ -160,7 +163,7 @@ extension BLTDrawable {
     }
   }
 }
-private var _deadGray: BLColor! = nil
+
 extension LevelMap: BLTDrawable {
   var size: BLSize { return cells.size }
   var layerIndices: [Int] { return [0] }
@@ -169,16 +172,12 @@ extension LevelMap: BLTDrawable {
   }
 
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface, live: Bool) {
-    if _deadGray == nil {
-      _deadGray = terminal.getColor(a: 255, r: 40, g: 40, b: 40)
-    }
-
     let cell = self.cells[point]
     if let feature = features[cell.feature] {
-      terminal.foregroundColor = live ? feature.color : _deadGray
+      terminal.foregroundColor = live ? palette[feature.color] : palette["level_memory"]
       terminal.put(point: point + offset, code: BLInt(feature.char))
     } else if let terrain = terrains[cell.terrain] {
-      terminal.foregroundColor = live ? terrain.color : _deadGray
+      terminal.foregroundColor = live ? palette[terrain.color] : palette["level_memory"]
       terminal.put(point: point + offset, code: BLInt(terrain.char))
     }
   }

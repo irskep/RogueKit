@@ -70,7 +70,6 @@ func parseQuotedColumn(_ line: String, _ left: String.Index) -> (String, String.
 
 
 func parseLine(_ line: String) -> [String] {
-  print(line)
   var values = [String]()
 
   var left = line.startIndex
@@ -101,7 +100,6 @@ func parseLine(_ line: String) -> [String] {
     }
   }
 
-  print(values)
   return values
 }
 

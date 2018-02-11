@@ -46,6 +46,7 @@ func load(rng: RKRNGProtocol, id: String, onComplete: (LevelMap) -> Void) throws
     if result != nil {
       onComplete(try LevelMap(
         size: gen.cells.size,
+        paletteName: "default",
         resources: resources,
         terminal: terminal,
         generator: gen))

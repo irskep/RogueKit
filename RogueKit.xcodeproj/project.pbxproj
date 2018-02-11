@@ -25,6 +25,8 @@
 		AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
 		AA0DE9052015723A00CCF61F /* CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9042015723A00CCF61F /* CSV.swift */; };
 		AA0DE9062015723A00CCF61F /* CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9042015723A00CCF61F /* CSV.swift */; };
+		AA1CCC8A2030CF6100BFA85A /* PaletteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1CCC892030CF6100BFA85A /* PaletteStore.swift */; };
+		AA1CCC8B2030CF6100BFA85A /* PaletteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1CCC892030CF6100BFA85A /* PaletteStore.swift */; };
 		AA3DA1F3200BE81300A7CA1B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1F1200BE81200A7CA1B /* Makefile */; };
 		AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */; };
 		AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */; };
@@ -219,6 +221,7 @@
 /* Begin PBXFileReference section */
 		AA0DE9012013C87400CCF61F /* LevelMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMap.swift; sourceTree = "<group>"; };
 		AA0DE9042015723A00CCF61F /* CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSV.swift; sourceTree = "<group>"; };
+		AA1CCC892030CF6100BFA85A /* PaletteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteStore.swift; sourceTree = "<group>"; };
 		AA3DA1EF200BE81200A7CA1B /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		AA3DA1F0200BE81200A7CA1B /* Package.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Package.resolved; sourceTree = "<group>"; };
 		AA3DA1F1200BE81200A7CA1B /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -371,6 +374,7 @@
 				AA3DA229200C37BF00A7CA1B /* RKColor.swift */,
 				OBJ_22 /* RKRNG.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
+				AA1CCC892030CF6100BFA85A /* PaletteStore.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -753,6 +757,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA3DA2322012DD2600A7CA1B /* AppDelegate.swift in Sources */,
+				AA1CCC8B2030CF6100BFA85A /* PaletteStore.swift in Sources */,
 				AA3DA2652012DE0300A7CA1B /* Array2D.swift in Sources */,
 				AA3DA26E2012DE0300A7CA1B /* main.swift in Sources */,
 				AA3DA25E2012DE0300A7CA1B /* RandomSeedStore.swift in Sources */,
@@ -848,6 +853,7 @@
 				AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */,
 				OBJ_82 /* RKRNG.swift in Sources */,
 				AA3DA22A200C37BF00A7CA1B /* RKColor.swift in Sources */,
+				AA1CCC8A2030CF6100BFA85A /* PaletteStore.swift in Sources */,
 				OBJ_83 /* SpriteSheet.swift in Sources */,
 				AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */,
 				AA3DA28420163C3700A7CA1B /* ECS+Scratch.swift in Sources */,

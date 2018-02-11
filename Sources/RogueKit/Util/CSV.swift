@@ -39,6 +39,73 @@ class StringBox {
 }
 
 
+private let QUOTE: Character = "\""
+func parseQuotedColumn(_ line: String, _ left: String.Index) -> (String, String.Index) {
+  let left = line.index(after: left)  // skip initial quote
+  var right = left
+
+  var chars = [Character]()
+  var numQuotes = 0
+  while right < line.endIndex {
+    switch line[right] {
+    case "," where numQuotes == 1:
+      let s = String(line[left..<line.index(before: right)])
+      return (s, line.index(after: right))
+    case QUOTE where numQuotes == 1:
+      chars.append(QUOTE)
+      numQuotes = 0
+    case QUOTE:
+      numQuotes += 1
+    default:
+      chars.append(line[right])
+    }
+    right = line.index(after: right)
+  }
+
+  guard numQuotes == 1 else {
+    fatalError("Missing closing quote in: \(line)")
+  }
+  return (String(chars), right)
+}
+
+
+func parseLine(_ line: String) -> [String] {
+  print(line)
+  var values = [String]()
+
+  var left = line.startIndex
+  var right = left
+
+  while true {
+    guard left < line.endIndex else { break }
+    if line[left] == QUOTE {
+      let (value, newLeft) = parseQuotedColumn(line, left)
+      values.append(value)
+      left = newLeft
+      right = left
+      if right == line.endIndex { break }
+      continue
+    }
+
+    if right == line.endIndex || line[right] == "," {
+      values.append(String(line[left..<right]))
+
+      if right == line.endIndex {
+        break
+      } else {
+        left = line.index(after: right)
+        right = left
+      }
+    } else {
+      right = line.index(after: right)
+    }
+  }
+
+  print(values)
+  return values
+}
+
+
 func readCSV<T>(url: URL, mapper: @escaping (StringBox) -> T) throws -> [T] {
   let string = try String(contentsOf: url)
   var results = [T]()
@@ -48,7 +115,8 @@ func readCSV<T>(url: URL, mapper: @escaping (StringBox) -> T) throws -> [T] {
   string.enumerateLines {
     (line: String, stop: inout Bool) in
     guard !line.isEmpty && !line.starts(with: "#") else { return }
-    let values = line.split(separator: ",").map({ String($0) })
+
+    let values = parseLine(line)
     guard values.count > 0 else { return }
     guard i > 0 else {
       labels = values

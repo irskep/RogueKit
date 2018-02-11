@@ -1,0 +1,2 @@
+Name,Blocks Movement?,Script
+door_closed,true,replace_feature_with door_open

@@ -15,7 +15,6 @@ typealias Entity = Int
 class WorldModel {
   let map: LevelMap
   let random: RKRNGProtocol
-  var interactions: [FeatureID: (WorldModel, BLPoint) -> Void] = [:]
 
   lazy var floors: [BLPoint] = {
     var points = [BLPoint]()
@@ -45,10 +44,6 @@ class WorldModel {
   init(random: RKRNGProtocol, map: LevelMap) {
     self.random = random
     self.map = map
-
-    self.interactions = [
-      2: { $0.map.openDoor(at: $1) },
-    ]
 
     let playerPoint = random.choice(floors)
     sightS.add(entity: player, component: SightC(entity: player))
@@ -80,17 +75,17 @@ class WorldModel {
 
 extension WorldModel {
   func movePlayer(by delta: BLPoint) {
-    if self.move(entity: player, by: delta) {
+    if self.push(entity: player, by: delta) {
       self.playerDidTakeAction()
     }
   }
 
-  func move(entity: Entity, by delta: BLPoint) -> Bool {
-    guard let point = positionS.get(player)?.point else { return false }
+  func push(entity: Entity, by delta: BLPoint) -> Bool {
+    guard let point = positionS.get(entity)?.point else { return false }
     let newPoint = point + delta
 
     if may(entity: entity, moveTo: newPoint) {
-      positionS.get(player)?.point = newPoint
+      self.move(entity: entity, by: delta)
       return true
     } else if may(entity: entity, interactAt: newPoint) {
       self.interact(entity: entity, with: newPoint)
@@ -100,16 +95,39 @@ extension WorldModel {
     }
   }
 
+  func move(entity: Entity, by delta: BLPoint) {
+    guard let point = positionS.get(entity)?.point else { return }
+    let newPoint = point + delta
+    positionS.get(entity)?.point = newPoint
+  }
+
   func may(entity: Entity, moveTo point: BLPoint) -> Bool {
     return map.getIsPassable(entity: entity, point: point)
   }
 
   func may(entity: Entity, interactAt point: BLPoint) -> Bool {
-    return self.interactions[map.cells[point].feature] != nil
+    return self.map.interactions[map.cells[point].feature] != nil
   }
 
   func interact(entity: Entity, with point: BLPoint) {
-    interactions[map.cells[point].feature]?(self, point)
+    if let interaction = map.interactions[map.cells[point].feature] {
+      run(interaction: interaction, entity: entity, point: point)
+    }
+  }
+
+  func run(interaction: Interaction, entity: Entity, point: BLPoint) {
+    let items = interaction.script.split(separator: " ")
+    switch items[0] {
+    case "replace_feature_with":
+      let targetName = String(items[1])
+      let targetId = map.featureIdsByName[targetName]!
+      map.cells[point].feature = targetId
+    default:
+      fatalError("Can't figure out line: \(interaction.script)")
+    }
+    if !interaction.blocksMovement {
+      positionS.get(entity)?.point = point
+    }
   }
 }
 

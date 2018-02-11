@@ -30,6 +30,12 @@ struct Feature: Codable {
   let walkable: Bool
 }
 
+struct Interaction: Codable {
+  let name: String
+  let blocksMovement: Bool
+  let script: String
+}
+
 struct MapCell: Codable {
   var terrain: Int
   var feature: Int
@@ -63,9 +69,12 @@ extension MapCell {
 class LevelMap: Codable {
   let terrains: [Int: Terrain]
   let features: [Int: Feature]
+  let featureIdsByName: [String: Int]
+  let interactions: [Int: Interaction]
   var cells: CodableArray2D<MapCell>
 
   init(size: BLSize, resources: ResourceCollection, terminal: BLTerminalInterface) throws {
+
     self.terrains = try resources.csvMap(name: "terrain") {
       (row: StringBox) -> (Int, Terrain) in
       let id: Int = row["ID"]
@@ -78,6 +87,7 @@ class LevelMap: Codable {
         walkable: row["Walkable?"])
       return (id, terrain)
     }
+
     self.features = try resources.csvMap(name: "features") {
       (row: StringBox) -> (Int, Feature) in
       let id: Int = row["ID"]
@@ -90,6 +100,26 @@ class LevelMap: Codable {
         walkable: row["Walkable?"])
       return (id, feature)
     }
+
+    var featureIdsByName = [String: Int]()
+    for feature in features.values {
+      featureIdsByName[feature.name] = feature.id
+    }
+    self.featureIdsByName = featureIdsByName
+
+    self.interactions = try resources.csvMap(name: "interactions") {
+      (row: StringBox) -> (Int, Interaction) in
+      let name: String = row["Name"]
+      guard let id = featureIdsByName[name] else {
+        fatalError("Unknown feature name: \(name)")
+      }
+      let interaction = Interaction(
+        name: row["Name"],
+        blocksMovement: row["Blocks Movement?"],
+        script: row["Script"])
+      return (id, interaction)
+    }
+
     self.cells = CodableArray2D<MapCell>(size: size, emptyValue: MapCell.zero)
   }
 
@@ -112,10 +142,6 @@ class LevelMap: Codable {
     let cell = self.cells[point]
     return self.terrains[cell.terrain]?.walkable == true &&
       (self.features[cell.feature] == nil || self.features[cell.feature]?.walkable == true)
-  }
-
-  func openDoor(at point: BLPoint) {
-    self.cells[point].feature = 1  // TODO: de-hack
   }
 }
 

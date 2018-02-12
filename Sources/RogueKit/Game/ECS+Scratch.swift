@@ -9,18 +9,26 @@ import Foundation
 import BearLibTerminal
 
 
-class PositionC: ECSComponent {
+class PositionC: ECSComponent, Codable {
   var point: BLPoint
-  init(entity: Int?, point: BLPoint) {
+  var entity: Entity?
+  init(entity: Entity?) { self.entity = entity; self.point = BLPoint.zero }
+  convenience init(entity: Entity?, point: BLPoint) {
+    self.init(entity: entity)
     self.point = point
-    super.init(entity: entity)
   }
 }
-class PositionS: ECSSystem<PositionC> { }
+class PositionS: ECSSystem<PositionC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
 
 
-class SightC: ECSComponent {
+class SightC: ECSComponent, Codable {
   var isBlind = false
+  var entity: Entity?
+  init(entity: Entity?) { self.entity = entity }
 
   func getCanSeeThrough(level: LevelMap, _ cell: MapCell) -> Bool {
     guard !isBlind else { return false }
@@ -29,20 +37,26 @@ class SightC: ECSComponent {
     )
   }
 }
-class SightS: ECSSystem<SightC> { }
+class SightS: ECSSystem<SightC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
 
 
-class FOVC: ECSComponent {
-  private var _fovCache: Set<BLPoint>?
+class FOVC: ECSComponent, Codable {
+  private var fovCache: Set<BLPoint>?
+  var entity: Entity?
+  init(entity: Entity?) { self.entity = entity }
 
   func reset() {
-    _fovCache = nil
+    fovCache = nil
   }
 
   func getFovCache(map: LevelMap, positionS: PositionS, sightS: SightS) -> Set<BLPoint> {
-    guard let cache = _fovCache else {
+    guard let cache = fovCache else {
       let newCache = _createFOVMap(map: map, positionS: positionS, sightS: sightS)
-      _fovCache = newCache
+      fovCache = newCache
       return newCache
     }
     return cache
@@ -62,4 +76,8 @@ class FOVC: ECSComponent {
     return newCache
   }
 }
-class FOVS: ECSSystem<FOVC> { }
+class FOVS: ECSSystem<FOVC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}

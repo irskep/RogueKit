@@ -12,11 +12,11 @@ import BearLibTerminal
 class PaletteStore: Codable {
   private var _terminal: BLTerminalInterface?
 
+  var colors: [String: BLColor]
+
   enum CodingKeys: String, CodingKey {
     case colors
   }
-
-  var colors: [String: BLColor]
 
   required init(from decoder: Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)

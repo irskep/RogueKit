@@ -12,7 +12,7 @@ import BearLibTerminal
 typealias Entity = Int
 
 
-class WorldModel {
+class WorldModel: Codable {
   let map: LevelMap
   let random: RKRNGProtocol
 
@@ -28,12 +28,53 @@ class WorldModel {
 
   var mapMemory = Set<BLPoint>()
 
-  let positionS = PositionS()
-  let sightS = SightS()
-  let fovS = FOVS()
+  var positionS = PositionS()
+  var sightS = SightS()
+  var fovS = FOVS()
 
-  let player: Entity = 1
+  var player: Entity = 1
   var povEntity: Entity { return player }
+
+  enum CodingKeys: String, CodingKey {
+    case map
+    case random
+    case mapMemory
+    case positionS
+    case sightS
+    case fovS
+    case player
+  }
+
+  required init(from decoder: Decoder) throws {
+    let values = try decoder.container(keyedBy: CodingKeys.self)
+    map = try values.decode(LevelMap.self, forKey: .map)
+    if #available(OSX 10.11, *) {
+      random = try values.decode(RKGameKitRNG.self, forKey: .random)
+    } else {
+      random = try values.decode(RKRNG.self, forKey: .random)
+    }
+    mapMemory = try values.decode(Set<BLPoint>.self, forKey: .mapMemory)
+    positionS = try values.decode(PositionS.self, forKey: .positionS)
+    sightS = try values.decode(SightS.self, forKey: .sightS)
+    fovS = try values.decode(FOVS.self, forKey: .fovS)
+    player = try values.decode(Entity.self, forKey: .player)
+
+  }
+
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(map, forKey: .map)
+    if let random = random as? RKRNG {
+      try container.encode(random, forKey: .random)
+    } else if #available(OSX 10.11, *), let random = random as? RKGameKitRNG {
+      try container.encode(random, forKey: .random)
+    }
+    try container.encode(mapMemory, forKey: .mapMemory)
+    try container.encode(positionS, forKey: .positionS)
+    try container.encode(sightS, forKey: .sightS)
+    try container.encode(fovS, forKey: .fovS)
+    try container.encode(player, forKey: .player)
+  }
 
   init(random: RKRNGProtocol, map: LevelMap) {
     self.random = random
@@ -52,8 +93,8 @@ class WorldModel {
 
   func playerDidTakeAction() {
     if let fovC = fovS[player] {
-      mapMemory.formUnion(fovC.getFovCache(map: map, positionS: positionS, sightS: sightS))
       fovC.reset()
+      mapMemory.formUnion(fovC.getFovCache(map: map, positionS: positionS, sightS: sightS))
     }
   }
 }

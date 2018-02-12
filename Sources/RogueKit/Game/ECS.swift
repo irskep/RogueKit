@@ -32,28 +32,47 @@ private func binarySearch<T: Comparable>(_ a: [T], key: T, range: Range<Int>) ->
 }
 
 
-class ECSComponent {
-  var entity: Int?
-  init(entity: Int?) { self.entity = entity }
+protocol ECSComponent: class, Comparable {
+  var entity: Int? { get set }
 }
-extension ECSComponent: Comparable {
-  static func <(lhs: ECSComponent, rhs: ECSComponent) -> Bool {
+extension ECSComponent {
+  static func <(lhs: Self, rhs: Self) -> Bool {
     guard let a = lhs.entity, let b = rhs.entity else { return false }
     return a < b
   }
 
-  static func ==(lhs: ECSComponent, rhs: ECSComponent) -> Bool {
+  static func ==(lhs: Self, rhs: Self) -> Bool {
     return lhs.entity == rhs.entity
   }
 }
 
 
-class ECSSystem<T: ECSComponent> {
+class ECSSystem<T: ECSComponent & Codable> {
   private var e2c = [Int: T]()
 
   // It would be more efficient to use a linked list here, but for now we just
-  // keep 'em sorted by entity ID for logn-time removal.
-  var all = [T]()
+  // keep 'em sorted by entity ID for long-time removal.
+  var _all = [T]()
+  var all: [T] { return _all }
+
+  enum CodingKeys: String, CodingKey {
+    case e2c
+    case all  
+  }
+
+  required init() { }
+
+  required init(from decoder: Decoder) throws {
+    let values = try decoder.container(keyedBy: CodingKeys.self)
+    e2c = try values.decode([Int: T].self, forKey: .e2c)
+    _all = e2c.values.sorted(by: { ($0.entity ?? -1) < ($1.entity ?? -1) })
+  }
+
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(e2c, forKey: .e2c)
+    try container.encode(all, forKey: .all)
+  }
 
   subscript(index: Int) -> T? { return self.get(index) }
 
@@ -63,8 +82,8 @@ class ECSSystem<T: ECSComponent> {
     guard e2c[entity] == nil else { fatalError("Trying to double-register a \(T.self)") }
     e2c[entity] = component
     component.entity = entity
-    all.append(component)
-    all.sort(by: {
+    _all.append(component)
+    _all.sort(by: {
       guard let a = $0.entity, let b = $1.entity else { return false }
       return a < b
     })
@@ -74,7 +93,7 @@ class ECSSystem<T: ECSComponent> {
     guard let c = e2c[entity] else { return }
     e2c[entity] = nil
     if let pos = binarySearch(all, key: c, range: 0..<all.count) {
-      all.remove(at: pos)
+      _all.remove(at: pos)
     }
   }
 }

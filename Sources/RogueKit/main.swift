@@ -55,6 +55,11 @@ func load(rng: RKRNGProtocol, id: String, onComplete: (LevelMap) -> Void) throws
 }
 
 func run(config: Config) throws {
+  var gameURL: URL? = nil
+  if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+    gameURL = appSupportURL.appendingPathComponent("game.json")
+  }
+
   var delta = 0
 
   var rng: RKRNGProtocol! = nil
@@ -67,10 +72,26 @@ func run(config: Config) throws {
     }
   }
 
-  try reload()
+  if let gameURL = gameURL, FileManager.default.fileExists(atPath: gameURL.path) {
+    rng = RKGetRNG(seed: UInt32(delta + 135205160))
+    let data: Data = try Data(contentsOf: gameURL)
+    world = try JSONDecoder().decode(WorldModel.self, from: data)
+  } else {
+    try reload()
+  }
 
   var isDirty = true
   while true {
+    if let gameURL = gameURL {
+      do {
+        let data = try JSONEncoder().encode(world)
+        try data.write(to: gameURL)
+      } catch {
+        print(error)
+        fatalError()
+      }
+    }
+
     if isDirty {
       terminal.layer = 0
       terminal.clear()

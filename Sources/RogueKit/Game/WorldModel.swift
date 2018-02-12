@@ -26,20 +26,14 @@ class WorldModel {
     return points
   }()
 
-  private var _fovCache: Set<BLPoint>?
-  var fovCache: Set<BLPoint> {
-    guard let cache = _fovCache else {
-      let newCache = _createFOVMap()
-      _fovCache = newCache
-      return newCache
-    }
-    return cache
-  }
   var mapMemory = Set<BLPoint>()
 
   let positionS = PositionS()
   let sightS = SightS()
-  let player: Int = 1
+  let fovS = FOVS()
+
+  let player: Entity = 1
+  var povEntity: Entity { return player }
 
   init(random: RKRNGProtocol, map: LevelMap) {
     self.random = random
@@ -48,6 +42,8 @@ class WorldModel {
     let playerPoint = random.choice(floors)
     sightS.add(entity: player, component: SightC(entity: player))
     positionS.add(entity: player, component: PositionC(entity: player, point: playerPoint))
+    fovS.add(entity: player, component: FOVC(entity: player))
+
     self.playerDidTakeAction()
   }
 
@@ -55,21 +51,10 @@ class WorldModel {
   subscript(index: Int) -> SightC? { return sightS[index] }
 
   func playerDidTakeAction() {
-    if let cache = _fovCache { mapMemory.formUnion(cache) }
-    _fovCache = nil
-  }
-
-  private func _createFOVMap() -> Set<BLPoint> {
-    let playerPos = positionS[player]!.point
-    let playerSight = sightS[player]!
-    let newCache = RecursiveShadowcastingFOVProvider()
-      .getVisiblePoints(
-        vantagePoint: playerPos,
-        maxDistance: 30,
-        getAllowsLight: {
-          return playerSight.getCanSeeThrough(level: self.map, self.map.cells[$0])
-        })
-    return newCache
+    if let fovC = fovS[player] {
+      mapMemory.formUnion(fovC.getFovCache(map: map, positionS: positionS, sightS: sightS))
+      fovC.reset()
+    }
   }
 }
 
@@ -133,6 +118,7 @@ extension WorldModel {
 
 extension WorldModel: BLTDrawable {
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface) {
+    let fovCache = fovS[player]?.getFovCache(map: map, positionS: positionS, sightS: sightS) ?? Set()
     if fovCache.contains(point) {
       map.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: true)
     } else if mapMemory.contains(point) {

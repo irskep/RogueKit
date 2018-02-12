@@ -62,6 +62,7 @@ class ECSSystem<T: ECSComponent> {
   func add(entity: Int, component: T) {
     guard e2c[entity] == nil else { fatalError("Trying to double-register a \(T.self)") }
     e2c[entity] = component
+    component.entity = entity
     all.append(component)
     all.sort(by: {
       guard let a = $0.entity, let b = $1.entity else { return false }

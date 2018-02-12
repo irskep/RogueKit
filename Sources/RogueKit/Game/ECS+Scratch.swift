@@ -30,3 +30,36 @@ class SightC: ECSComponent {
   }
 }
 class SightS: ECSSystem<SightC> { }
+
+
+class FOVC: ECSComponent {
+  private var _fovCache: Set<BLPoint>?
+
+  func reset() {
+    _fovCache = nil
+  }
+
+  func getFovCache(map: LevelMap, positionS: PositionS, sightS: SightS) -> Set<BLPoint> {
+    guard let cache = _fovCache else {
+      let newCache = _createFOVMap(map: map, positionS: positionS, sightS: sightS)
+      _fovCache = newCache
+      return newCache
+    }
+    return cache
+  }
+
+  private func _createFOVMap(map: LevelMap, positionS: PositionS, sightS: SightS) -> Set<BLPoint> {
+    guard let entity = entity else { return Set() }
+    let playerPos = positionS[entity]!.point
+    let playerSight = sightS[entity]!
+    let newCache = RecursiveShadowcastingFOVProvider()
+      .getVisiblePoints(
+        vantagePoint: playerPos,
+        maxDistance: 30,
+        getAllowsLight: {
+          return playerSight.getCanSeeThrough(level: map, map.cells[$0])
+      })
+    return newCache
+  }
+}
+class FOVS: ECSSystem<FOVC> { }

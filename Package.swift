@@ -11,11 +11,12 @@ let package = Package(
     dependencies: [
          .package(url: "https://github.com/irskep/BearLibTerminal-Swift.git", from: "1.0.2"),
          .package(url: "https://github.com/1024jp/GzipSwift.git", from: "4.0.4"),
+	 .package(url: "https://github.com/davecom/SwiftPriorityQueue.git", from: "1.2.1"),
     ],
     targets: [
         .target(
             name: "RogueKit",
-            dependencies: ["BearLibTerminal", "Gzip"]),
+            dependencies: ["BearLibTerminal", "Gzip", "SwiftPriorityQueue"]),
 
     ]
 )

@@ -8,15 +8,15 @@
 	mkdir -p ./.build/release
 	cp Binaries/libBearLibTerminal.dylib ./.build/release/
 
-.build/debug/Resources:
+.build/debug/Resources: Resources
 	mkdir -p ./.build/debug
-	cp -r Resources ./.build/debug/Resources
+	rsync --recursive Resources/ ./.build/debug/Resources
 
-.build/release/Resources:
+.build/release/Resources: Resources
 	mkdir -p ./.build/release
-	cp -r Resources ./.build/release/Resources
+	rsync --recursive Resources/ ./.build/release/Resources
 
-build: .build/debug/libBearLibTerminal.dylib .build/debug/Resources
+build: .build/debug/libBearLibTerminal.dylib .build/debug/Resources Sources
 	swift build -Xlinker -L./Binaries
 
 build-release: .build/release/libBearLibTerminal.dylib .build/release/Resources

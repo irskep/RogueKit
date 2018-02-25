@@ -57,7 +57,7 @@ class ECSSystem<T: ECSComponent & Codable> {
 
   enum CodingKeys: String, CodingKey {
     case e2c
-    case all  
+    case all
   }
 
   required init() { }

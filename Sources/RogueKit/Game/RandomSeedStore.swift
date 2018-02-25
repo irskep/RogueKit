@@ -16,6 +16,6 @@ class RandomSeedStore: Codable {
   }
 
   func getLevelSeed(_ i: Int) -> RKRNGProtocol {
-    return RKGetRNG(seed: levelSeeds[i])
+    return RKGetRNG(seed: UInt64(levelSeeds[i]))
   }
 }

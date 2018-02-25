@@ -37,11 +37,16 @@ struct CodableArray2D<T: Codable>: Codable {
     self.array = [T](repeating: emptyValue, count: Int(size.w * size.h))
   }
 
-  subscript(index: BLPoint) -> T {
+  subscript(index: BLPoint) -> T? {
     get {
+      guard index.x >= 0 && index.x < size.w && index.y >= 0 && index.y < size.h else {
+        return nil
+      }
       return self.array[Int(index.y * size.w + index.x)]
     }
     set {
+      guard let newValue = newValue else { return }
+      guard index.x >= 0 && index.x < size.w && index.y >= 0 && index.y < size.h else { return }
       self.array[Int(index.y * size.w + index.x)] = newValue
     }
   }

@@ -71,7 +71,8 @@ class FOVC: ECSComponent, Codable {
         vantagePoint: playerPos,
         maxDistance: 30,
         getAllowsLight: {
-          return playerSight.getCanSeeThrough(level: map, map.cells[$0])
+          guard let cell = map.cells[$0] else { return false }
+          return playerSight.getCanSeeThrough(level: map, cell)
       })
     return newCache
   }

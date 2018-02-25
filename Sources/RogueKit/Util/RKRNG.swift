@@ -83,16 +83,6 @@ public class RKRNG: RKRNGProtocol {
   }
 #endif
 
-public func RKGetRNG(seed: UInt32) -> RKRNGProtocol {
-  #if os(OSX) || os(iOS)
-    if #available(OSX 10.11, iOS 10, *) {
-      return RKGameKitRNG(rng: GKMersenneTwisterRandomSource(seed: UInt64(seed)))
-    } else {
-      print("WARNING: ignoring all random seeds")
-      return RKRNG()
-    }
-  #else
-    print("WARNING: ignoring all random seeds")
-    return RKRNG()
-  #endif
+public func RKGetRNG(seed: UInt64) -> RKRNGProtocol {
+  return PCG32Generator(seed: seed, seq: 0)
 }

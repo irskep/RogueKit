@@ -142,7 +142,7 @@ class LevelMap: Codable {
   }
 
   func getIsPassable(entity: Entity, point: BLPoint) -> Bool {
-    let cell = self.cells[point]
+    guard let cell = self.cells[point] else { return false }
     return self.terrains[cell.terrain]?.walkable == true &&
       (self.features[cell.feature] == nil || self.features[cell.feature]?.walkable == true)
   }
@@ -172,7 +172,7 @@ extension LevelMap: BLTDrawable {
   }
 
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface, live: Bool) {
-    let cell = self.cells[point]
+    guard let cell = self.cells[point] else { return }
     if let feature = features[cell.feature] {
       terminal.foregroundColor = live ? palette[feature.color] : palette["level_memory"]
       terminal.put(point: point + offset, code: BLInt(feature.char))

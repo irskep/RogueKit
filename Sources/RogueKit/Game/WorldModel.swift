@@ -19,7 +19,7 @@ class WorldModel: Codable {
   lazy var floors: [BLPoint] = {
     var points = [BLPoint]()
     for point in BLRect(size: map.size) {
-      if map.cells[point].terrain == 1 {
+      if map.cells[point]?.terrain == 1 {
         points.append(point)
       }
     }
@@ -132,11 +132,13 @@ extension WorldModel {
   }
 
   func may(entity: Entity, interactAt point: BLPoint) -> Bool {
-    return self.map.interactions[map.cells[point].feature] != nil
+    guard let cell = map.cells[point] else { return false }
+    return self.map.interactions[cell.feature] != nil
   }
 
   func interact(entity: Entity, with point: BLPoint) {
-    if let interaction = map.interactions[map.cells[point].feature] {
+    guard let cell = map.cells[point] else { return }
+    if let interaction = map.interactions[cell.feature] {
       run(interaction: interaction, entity: entity, point: point)
     }
   }
@@ -147,7 +149,7 @@ extension WorldModel {
     case "replace_feature_with":
       let targetName = String(items[1])
       let targetId = map.featureIdsByName[targetName]!
-      map.cells[point].feature = targetId
+      map.cells[point]?.feature = targetId
     default:
       fatalError("Can't figure out line: \(interaction.script)")
     }

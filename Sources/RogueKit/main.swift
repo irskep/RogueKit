@@ -73,14 +73,14 @@ func run(config: Config) throws {
   var world: WorldModel! = nil
 
   let reload = {
-    rng = RKGetRNG(seed: UInt32(delta + 135205160))
+    rng = RKGetRNG(seed: UInt64(delta + 135205160))
     try load(rng: rng, id: "basic") {
       world = WorldModel(random: rng, map: $0)
     }
   }
 
-  if let gameURL = gameURL, FileManager.default.fileExists(atPath: gameURL.path) {
-    rng = RKGetRNG(seed: UInt32(delta + 135205160))
+  if false, let gameURL = gameURL, FileManager.default.fileExists(atPath: gameURL.path) {
+    rng = RKGetRNG(seed: UInt64(delta + 135205160))
     let data: Data = try Data(contentsOf: gameURL)
     world = try JSONDecoder().decode(WorldModel.self, from: data)
   } else {

@@ -11,6 +11,13 @@ struct Config: Codable {
   var keyDebugRight: Int32 = BLConstant.EQUALS
 }
 
+let rng = PCG32Generator(seed: 42, seq: 54)
+for _ in 1...5 {
+    for _ in 0..<6 {
+        print(String(format: " 0x%08x", rng.get(upperBound: UInt32.max)))
+    }
+}
+
 print("Launched")
 
 var path = ""

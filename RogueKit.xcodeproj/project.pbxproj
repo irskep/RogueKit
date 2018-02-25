@@ -71,6 +71,8 @@
 		AA3DA2822015B20C00A7CA1B /* ECS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA2802015B20C00A7CA1B /* ECS.swift */; };
 		AA3DA28420163C3700A7CA1B /* ECS+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */; };
 		AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */; };
+		AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
+		AAC6A4E720433B71008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -240,6 +242,7 @@
 		AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldModel.swift; sourceTree = "<group>"; };
 		AA3DA2802015B20C00A7CA1B /* ECS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECS.swift; sourceTree = "<group>"; };
 		AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECS+Scratch.swift"; sourceTree = "<group>"; };
+		AAC6A4E420433B5F008D971B /* PCG32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCG32.swift; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -375,6 +378,7 @@
 				OBJ_22 /* RKRNG.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
 				AA1CCC892030CF6100BFA85A /* PaletteStore.swift */,
+				AAC6A4E420433B5F008D971B /* PCG32.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -761,6 +765,7 @@
 				AA3DA2652012DE0300A7CA1B /* Array2D.swift in Sources */,
 				AA3DA26E2012DE0300A7CA1B /* main.swift in Sources */,
 				AA3DA25E2012DE0300A7CA1B /* RandomSeedStore.swift in Sources */,
+				AAC6A4E720433B71008D971B /* PCG32.swift in Sources */,
 				AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */,
 				AA3DA26D2012DE0300A7CA1B /* RKColor.swift in Sources */,
 				AA3DA2632012DE0300A7CA1B /* PurePrefabGenerator.swift in Sources */,
@@ -848,6 +853,7 @@
 				AA3DA228200BF72100A7CA1B /* GeneratorReader.swift in Sources */,
 				OBJ_78 /* CP437.swift in Sources */,
 				OBJ_79 /* DistanceField.swift in Sources */,
+				AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */,
 				OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				OBJ_81 /* REXPaintImage.swift in Sources */,
 				AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */,

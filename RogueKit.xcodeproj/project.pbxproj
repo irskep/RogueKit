@@ -372,13 +372,13 @@
 				OBJ_18 /* CP437.swift */,
 				AA0DE9042015723A00CCF61F /* CSV.swift */,
 				OBJ_19 /* DistanceField.swift */,
+				AA1CCC892030CF6100BFA85A /* PaletteStore.swift */,
+				AAC6A4E420433B5F008D971B /* PCG32.swift */,
 				OBJ_20 /* REXPaintImage+BearLibTerminal.swift */,
 				OBJ_21 /* REXPaintImage.swift */,
 				AA3DA229200C37BF00A7CA1B /* RKColor.swift */,
 				OBJ_22 /* RKRNG.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
-				AA1CCC892030CF6100BFA85A /* PaletteStore.swift */,
-				AAC6A4E420433B5F008D971B /* PCG32.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";

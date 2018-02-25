@@ -14,7 +14,7 @@ typealias Entity = Int
 
 class WorldModel: Codable {
   let map: LevelMap
-  let random: RKRNGProtocol
+  let rngStore: RandomSeedStore
 
   lazy var floors: [BLPoint] = {
     var points = [BLPoint]()
@@ -37,7 +37,7 @@ class WorldModel: Codable {
 
   enum CodingKeys: String, CodingKey {
     case map
-    case random
+    case rngStore
     case mapMemory
     case positionS
     case sightS
@@ -48,11 +48,7 @@ class WorldModel: Codable {
   required init(from decoder: Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)
     map = try values.decode(LevelMap.self, forKey: .map)
-    if #available(OSX 10.11, *) {
-      random = try values.decode(RKGameKitRNG.self, forKey: .random)
-    } else {
-      random = try values.decode(RKRNG.self, forKey: .random)
-    }
+    rngStore = try values.decode(RandomSeedStore.self, forKey: .rngStore)
     mapMemory = try values.decode(Set<BLPoint>.self, forKey: .mapMemory)
     positionS = try values.decode(PositionS.self, forKey: .positionS)
     sightS = try values.decode(SightS.self, forKey: .sightS)
@@ -64,11 +60,7 @@ class WorldModel: Codable {
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(map, forKey: .map)
-    if let random = random as? RKRNG {
-      try container.encode(random, forKey: .random)
-    } else if #available(OSX 10.11, *), let random = random as? RKGameKitRNG {
-      try container.encode(random, forKey: .random)
-    }
+    try container.encode(rngStore, forKey: .rngStore)
     try container.encode(mapMemory, forKey: .mapMemory)
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)
@@ -76,11 +68,11 @@ class WorldModel: Codable {
     try container.encode(player, forKey: .player)
   }
 
-  init(random: RKRNGProtocol, map: LevelMap) {
-    self.random = random
+  init(rngStore: RandomSeedStore, map: LevelMap) {
+    self.rngStore = rngStore
     self.map = map
 
-    let playerPoint = random.choice(floors)
+    let playerPoint = rngStore["world"].choice(floors)
     sightS.add(entity: player, component: SightC(entity: player))
     positionS.add(entity: player, component: PositionC(entity: player, point: playerPoint))
     fovS.add(entity: player, component: FOVC(entity: player))

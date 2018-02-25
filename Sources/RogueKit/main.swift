@@ -11,13 +11,6 @@ struct Config: Codable {
   var keyDebugRight: Int32 = BLConstant.EQUALS
 }
 
-let rng = PCG32Generator(seed: 42, seq: 54)
-for _ in 1...5 {
-    for _ in 0..<6 {
-        print(String(format: " 0x%08x", rng.get(upperBound: UInt32.max)))
-    }
-}
-
 print("Launched")
 
 var path = ""
@@ -27,19 +20,23 @@ if CommandLine.arguments.count > 1 {
 if !FileManager.default.fileExists(atPath: path) {
   path = Bundle.main.resourcePath! + "/Resources"
 }
-NSLog("\(path)")
+NSLog("Path to Resources/: \(path)")
+
 let resources = ResourceCollection(path: path)
 let terminal = BLTerminal.main
 terminal.open()
 
-let result = terminal.configure("""
+let bltConfig = """
   window.title='RogueKit Test';
   font: \(resources.path(for: "fonts/cp437_10x10.png")), size=10x10;
   window.size=80x40;
-  """)
+  """
+print(bltConfig)
+let result = terminal.configure(bltConfig)
 assert(result == true)
 
-func load(rng: RKRNGProtocol, id: String, onComplete: (LevelMap) -> Void) throws {
+func load(rngStore: RandomSeedStore, id: String, onComplete: (LevelMap) -> Void) throws {
+  let rng = rngStore[id]
   let reader = GeneratorReader(resources: resources)
   try reader.run(id: id, rng: rng) {
     gen, status, result in
@@ -69,18 +66,17 @@ func run(config: Config) throws {
 
   var delta = 0
 
-  var rng: RKRNGProtocol! = nil
+  var rngStore: RandomSeedStore! = nil
   var world: WorldModel! = nil
 
   let reload = {
-    rng = RKGetRNG(seed: UInt64(delta + 135205160))
-    try load(rng: rng, id: "basic") {
-      world = WorldModel(random: rng, map: $0)
+    let rngStore = RandomSeedStore(seed: UInt64(delta + 135205160))
+    try load(rngStore: rngStore, id: "basic") {
+      world = WorldModel(rngStore: rngStore, map: $0)
     }
   }
 
   if false, let gameURL = gameURL, FileManager.default.fileExists(atPath: gameURL.path) {
-    rng = RKGetRNG(seed: UInt64(delta + 135205160))
     let data: Data = try Data(contentsOf: gameURL)
     world = try JSONDecoder().decode(WorldModel.self, from: data)
   } else {

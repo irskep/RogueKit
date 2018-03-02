@@ -89,6 +89,10 @@
 		AAC6A4FD2049CC60008D971B /* BLConstant+Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4FB2049CC60008D971B /* BLConstant+Labels.swift */; };
 		AAC6A4FF2049CF8C008D971B /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4FE2049CF8C008D971B /* URLs.swift */; };
 		AAC6A5002049CF8C008D971B /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4FE2049CF8C008D971B /* URLs.swift */; };
+		AAC6A50E2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A50D2049EF1A008D971B /* SwiftPriorityQueue.swift */; };
+		AAC6A50F2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A50D2049EF1A008D971B /* SwiftPriorityQueue.swift */; };
+		AAC6A5112049EF24008D971B /* AStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A5102049EF24008D971B /* AStar.swift */; };
+		AAC6A5122049EF24008D971B /* AStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A5102049EF24008D971B /* AStar.swift */; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -267,6 +271,8 @@
 		AAC6A4F82049C447008D971B /* BearLibTerminalContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearLibTerminalContext.swift; sourceTree = "<group>"; };
 		AAC6A4FB2049CC60008D971B /* BLConstant+Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BLConstant+Labels.swift"; sourceTree = "<group>"; };
 		AAC6A4FE2049CF8C008D971B /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		AAC6A50D2049EF1A008D971B /* SwiftPriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPriorityQueue.swift; sourceTree = "<group>"; };
+		AAC6A5102049EF24008D971B /* AStar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AStar.swift; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -388,6 +394,16 @@
 			);
 			name = Scenes;
 			path = Sources/RogueKit/Game/Scenes;
+			sourceTree = SOURCE_ROOT;
+		};
+		AAC6A50C2049EED9008D971B /* SwiftPriorityQueue */ = {
+			isa = PBXGroup;
+			children = (
+				AAC6A5102049EF24008D971B /* AStar.swift */,
+				AAC6A50D2049EF1A008D971B /* SwiftPriorityQueue.swift */,
+			);
+			name = SwiftPriorityQueue;
+			path = Sources/SwiftPriorityQueue;
 			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_11 /* Map Gen */ = {
@@ -531,6 +547,7 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AAC6A50C2049EED9008D971B /* SwiftPriorityQueue */,
 				OBJ_8 /* RogueKit */,
 			);
 			name = Sources;
@@ -808,6 +825,7 @@
 				AA3DA2652012DE0300A7CA1B /* Array2D.swift in Sources */,
 				AA3DA26E2012DE0300A7CA1B /* main.swift in Sources */,
 				AA3DA25E2012DE0300A7CA1B /* RandomSeedStore.swift in Sources */,
+				AAC6A50F2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */,
 				AAC6A4E720433B71008D971B /* PCG32.swift in Sources */,
 				AAC6A4FD2049CC60008D971B /* BLConstant+Labels.swift in Sources */,
 				AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */,
@@ -817,6 +835,7 @@
 				AAC6A4FA2049C447008D971B /* BearLibTerminalContext.swift in Sources */,
 				AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */,
 				AAC6A4F12049C1C2008D971B /* LoadScene.swift in Sources */,
+				AAC6A5122049EF24008D971B /* AStar.swift in Sources */,
 				AA3DA26B2012DE0300A7CA1B /* RKRNG.swift in Sources */,
 				AA3DA2602012DE0300A7CA1B /* GeneratorReader.swift in Sources */,
 				AAC6A4EA20488916008D971B /* Director.swift in Sources */,
@@ -916,6 +935,7 @@
 				AAC6A4E920488916008D971B /* Director.swift in Sources */,
 				AA3DA22A200C37BF00A7CA1B /* RKColor.swift in Sources */,
 				AA1CCC8A2030CF6100BFA85A /* PaletteStore.swift in Sources */,
+				AAC6A5112049EF24008D971B /* AStar.swift in Sources */,
 				OBJ_83 /* SpriteSheet.swift in Sources */,
 				AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */,
 				AA3DA28420163C3700A7CA1B /* ECS+Scratch.swift in Sources */,
@@ -925,6 +945,7 @@
 				OBJ_86 /* test.swift in Sources */,
 				AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */,
 				AAC6A4EC20489374008D971B /* RunLoop.swift in Sources */,
+				AAC6A50E2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

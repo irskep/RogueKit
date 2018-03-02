@@ -62,6 +62,12 @@ public extension BLPoint {
       .map({ self + $0 })
       .filter({ bounds.contains(point: $0) })
   }
+
+  func manhattanDistance(to point: BLPoint) -> BLInt {
+    let xdist = abs(x - point.x)
+    let ydist = abs(y - point.y)
+    return xdist + ydist
+  }
 }
 extension BLPoint: CustomDebugStringConvertible {
   var rotatedClockwise: BLPoint {

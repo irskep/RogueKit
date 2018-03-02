@@ -161,6 +161,15 @@ extension WorldModel {
     return self.activeMap.interactions[cell.feature] != nil
   }
 
+  func can(entity: Entity, see point: BLPoint) -> Bool {
+    let fovCache = fovS[player]?.getFovCache(map: activeMap, positionS: positionS, sightS: sightS)
+    return fovCache?.contains(point) == true
+  }
+
+  func can(entity: Entity, remember point: BLPoint) -> Bool {
+    return activeMap.mapMemory.contains(point)
+  }
+
   func interact(entity: Entity, with point: BLPoint) {
     guard let cell = activeMap.cells[point] else { return }
     if let interaction = activeMap.interactions[cell.feature] {
@@ -186,8 +195,7 @@ extension WorldModel {
 
 extension WorldModel: BLTDrawable {
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface) {
-    let fovCache = fovS[player]?.getFovCache(map: activeMap, positionS: positionS, sightS: sightS) ?? Set()
-    if fovCache.contains(point) {
+    if self.can(entity: player, see: point) {
       activeMap.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: true)
     } else if activeMap.mapMemory.contains(point) {
       activeMap.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: false)
@@ -198,7 +206,7 @@ extension WorldModel: BLTDrawable {
     }
 
     terminal.foregroundColor = activeMap.palette["lightgreen"]
-    for posC in positionS.all where fovCache.contains(posC.point) {
+    for posC in positionS.all where self.can(entity: player, see: posC.point) {
       terminal.put(point: posC.point, code: CP437.AT)
     }
   }

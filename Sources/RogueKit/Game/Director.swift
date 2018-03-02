@@ -19,6 +19,7 @@ class Director {
   var shouldExit = false
 
   var activeScene: Scene?
+  var nextScene: Scene?
 
   init(
     terminal: BLTerminalInterface, configBlock: @escaping (BLTerminalInterface) -> Void) {
@@ -34,6 +35,10 @@ class Director {
   }
 
   func iterate() {
+    if let nextScene = nextScene {
+      self.nextScene = nil
+      _transition(to: nextScene)
+    }
     guard let activeScene = self.activeScene, !self.shouldExit else {
       self.quit()
       return
@@ -45,6 +50,10 @@ class Director {
   }
 
   func transition(to newScene: Scene) {
+    nextScene = newScene
+  }
+
+  func _transition(to newScene: Scene) {
     print("transition to", newScene)
     let oldScene = activeScene
     oldScene?.willExit()

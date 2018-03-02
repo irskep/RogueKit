@@ -75,6 +75,21 @@ class LevelMap: Codable {
   var cells: CodableArray2D<MapCell>
   var palette: PaletteStore
 
+  lazy var floors: [BLPoint] = {
+    var points = [BLPoint]()
+    for point in BLRect(size: size) {
+      if cells[point]?.terrain == 1 {
+        points.append(point)
+      }
+    }
+    return points
+  }()
+
+  var mapMemory = Set<BLPoint>()
+
+  var pointsOfInterest = [String: BLPoint]()
+  var isPopulated = false
+
   init(
     id: String,
     size: BLSize,

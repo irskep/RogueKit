@@ -407,6 +407,7 @@
 				OBJ_16 /* Array2D.swift */,
 				OBJ_17 /* BearLibTerminal+Geometry.swift */,
 				AAC6A4F82049C447008D971B /* BearLibTerminalContext.swift */,
+				AAC6A4FB2049CC60008D971B /* BLConstant+Labels.swift */,
 				OBJ_18 /* CP437.swift */,
 				AA0DE9042015723A00CCF61F /* CSV.swift */,
 				OBJ_19 /* DistanceField.swift */,
@@ -418,7 +419,6 @@
 				OBJ_22 /* RKRNG.swift */,
 				AAC6A4EB20489374008D971B /* RunLoop.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
-				AAC6A4FB2049CC60008D971B /* BLConstant+Labels.swift */,
 				AAC6A4FE2049CF8C008D971B /* URLs.swift */,
 			);
 			path = Util;

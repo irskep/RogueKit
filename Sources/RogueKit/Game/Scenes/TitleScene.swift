@@ -73,10 +73,17 @@ class TitleScene: Scene {
   }
 
   func actionStartGame() {
-    director?.transition(to: LoadScene(
+    let worldModel = WorldModel(
       rngStore: RandomSeedStore(seed: 135205160),
-      resources: resources,
-      id: "basic"))
+      mapDefinitions: [
+        MapDefinition(id: "1", generatorId: "basic", exits: ["next": "2"]),
+        MapDefinition(id: "2", generatorId: "basic", exits: ["next": "3", "previous": "1"]),
+        MapDefinition(id: "3", generatorId: "basic", exits: ["next": "4", "previous": "2"]),
+        MapDefinition(id: "4", generatorId: "basic", exits: ["next": "5", "previous": "3"]),
+        MapDefinition(id: "5", generatorId: "basic", exits: ["previous": "4"]),
+      ],
+      activeMapId: "1")
+    director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: "1"))
   }
 
   func actionLoadGame() {

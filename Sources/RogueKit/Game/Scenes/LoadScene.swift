@@ -10,14 +10,14 @@ import BearLibTerminal
 
 
 class LoadScene: Scene {
-  let rngStore: RandomSeedStore
+  let worldModel: WorldModel
   let id: String
   let resources: ResourceCollection
 
   var terminal: BLTerminalInterface? { return director?.terminal }
 
-  init(rngStore: RandomSeedStore, resources: ResourceCollection, id: String) {
-    self.rngStore = rngStore
+  init(worldModel: WorldModel, resources: ResourceCollection, id: String) {
+    self.worldModel = worldModel
     self.id = id
     self.resources = resources
   }
@@ -25,14 +25,16 @@ class LoadScene: Scene {
   var nextScene: Scene?
 
   override func update(terminal: BLTerminalInterface) {
-    if let nextScene = nextScene {
-      director?.transition(to: nextScene)
+    print("Loading map \(id) using generator \(worldModel.mapDefinitions[id]!.generatorId)")
+    guard worldModel.maps[self.id] == nil else {
+      worldModel.travel(to: self.id)
+      self.director?.transition(to: LevelScene(resources: self.resources, worldModel: self.worldModel))
       return
     }
 
-    let rng = rngStore[id]
+    let rng = worldModel.rngStore[id]
     let reader = GeneratorReader(resources: resources)
-    try! reader.run(id: id, rng: rng) {
+    try! reader.run(id: worldModel.mapDefinitions[id]!.generatorId, rng: rng) {
       gen, status, result in
       print(status)
 
@@ -47,14 +49,17 @@ class LoadScene: Scene {
 
       if result != nil {
         let levelMap = try LevelMap(
-          id: "\(rngStore.seed)",
+          id: self.id,
           size: gen.cells.size,
           paletteName: "default",
           resources: resources,
           terminal: terminal,
           generator: gen)
-        let world = WorldModel(rngStore: rngStore, map: levelMap)
-        self.nextScene = LevelScene(resources: self.resources, worldModel: world)
+        levelMap.pointsOfInterest["playerStart"] = rng.choice(levelMap.floors)
+        levelMap.isPopulated = true
+        self.worldModel.maps[self.id] = levelMap
+        self.worldModel.travel(to: self.id)
+        self.director?.transition(to: LevelScene(resources: self.resources, worldModel: self.worldModel))
       }
     }
   }

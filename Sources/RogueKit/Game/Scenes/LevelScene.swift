@@ -24,14 +24,19 @@ class LevelScene: Scene {
     isDirty = true
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
       switch terminal.read() {
+      case config.menu: director?.transition(to: TitleScene(resources: resources))
       case config.keyLeft: worldModel.movePlayer(by: BLPoint(x: -1, y: 0))
       case config.keyRight: worldModel.movePlayer(by: BLPoint(x: 1, y: 0))
       case config.keyUp: worldModel.movePlayer(by: BLPoint(x: 0, y: -1))
       case config.keyDown: worldModel.movePlayer(by: BLPoint(x: 0, y: 1))
       case config.keyDebugLeft:
-        director?.transition(to: LoadScene(rngStore: RandomSeedStore(seed: worldModel.rngStore.seed - 1), resources: resources, id: "basic"))
+        if let id = worldModel.exits["previous"] {
+          director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))
+        }
       case config.keyDebugRight:
-        director?.transition(to: LoadScene(rngStore: RandomSeedStore(seed: worldModel.rngStore.seed + 1), resources: resources, id: "basic"))
+        if let id = worldModel.exits["next"] {
+          director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))
+        }
       default:
         isDirty = false
       }

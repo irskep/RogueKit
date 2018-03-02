@@ -9,6 +9,8 @@ struct Config: Codable {
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS
+
+  var menu: Int32 = BLConstant.ESCAPE
 }
 
 NSLog("Launched")

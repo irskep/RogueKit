@@ -24,104 +24,129 @@ NSLog("Path to Resources/: \(path)")
 
 let resources = ResourceCollection(path: path)
 let terminal = BLTerminal.main
-terminal.open()
 
-let bltConfig = """
+
+class SteveRLDirector: Director {
+  let config = Config()
+}
+
+let director = SteveRLDirector(terminal: terminal, configBlock: {
+  let config = """
   window.title='RogueKit Test';
   font: \(resources.path(for: "fonts/cp437_10x10.png")), size=10x10;
   window.size=80x40;
   """
-print(bltConfig)
-let result = terminal.configure(bltConfig)
-assert(result == true)
+  print(config)
+  let result = $0.configure(config)
+  assert(result == true)
+})
 
-func load(rngStore: RandomSeedStore, id: String, onComplete: (LevelMap) -> Void) throws {
-  let rng = rngStore[id]
-  let reader = GeneratorReader(resources: resources)
-  try reader.run(id: id, rng: rng) {
-    gen, status, result in
-    terminal.clear()
-    terminal.layer = 0
-    gen.draw(in: terminal, at: BLPoint.zero)
-    terminal.layer = 2
-    gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
-    terminal.refresh()
 
-    if result != nil {
-      onComplete(try LevelMap(
-        size: gen.cells.size,
-        paletteName: "default",
-        resources: resources,
-        terminal: terminal,
-        generator: gen))
+class LoadScene: Scene {
+  let rngStore: RandomSeedStore
+  let id: String
+  let resources: ResourceCollection
+
+  var terminal: BLTerminalInterface? { return director?.terminal }
+
+  init(rngStore: RandomSeedStore, resources: ResourceCollection, id: String) {
+    self.rngStore = rngStore
+    self.id = id
+    self.resources = resources
+  }
+
+  var nextScene: Scene?
+
+  override func update(terminal: BLTerminalInterface) {
+    if let nextScene = nextScene {
+      director?.transition(to: nextScene)
+      return
+    }
+
+    let rng = rngStore[id]
+    let reader = GeneratorReader(resources: resources)
+    try! reader.run(id: id, rng: rng) {
+      gen, status, result in
+      print(status)
+
+      guard self.director?.activeScene === self else { return }
+
+      terminal.clear()
+      terminal.layer = 0
+      gen.draw(in: terminal, at: BLPoint.zero)
+      terminal.layer = 2
+      gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
+      terminal.refresh()
+
+      if result != nil {
+        let levelMap = try LevelMap(
+          size: gen.cells.size,
+          paletteName: "default",
+          resources: resources,
+          terminal: terminal,
+          generator: gen)
+        let world = WorldModel(rngStore: rngStore, map: levelMap)
+        self.nextScene = LevelScene(resources: self.resources, worldModel: world)
+      }
     }
   }
 }
 
-func run(config: Config) throws {
-  var gameURL: URL? = nil
-  if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
-    gameURL = appSupportURL.appendingPathComponent("game.json")
+
+class LevelScene: Scene {
+  let worldModel: WorldModel
+  let resources: ResourceCollection
+
+  var isDirty = false
+  
+  init(resources: ResourceCollection, worldModel: WorldModel) {
+    self.worldModel = worldModel
+    self.resources = resources
   }
 
-  var delta = 0
-
-  var rngStore: RandomSeedStore! = nil
-  var world: WorldModel! = nil
-
-  let reload = {
-    let rngStore = RandomSeedStore(seed: UInt64(delta + 135205160))
-    try load(rngStore: rngStore, id: "basic") {
-      world = WorldModel(rngStore: rngStore, map: $0)
-    }
-  }
-
-  if false, let gameURL = gameURL, FileManager.default.fileExists(atPath: gameURL.path) {
-    let data: Data = try Data(contentsOf: gameURL)
-    world = try JSONDecoder().decode(WorldModel.self, from: data)
-  } else {
-    try reload()
-  }
-
-  var isDirty = true
-  while true {
-    if let gameURL = gameURL {
-      do {
-        let data = try JSONEncoder().encode(world)
-        try data.write(to: gameURL)
-      } catch {
-        print(error)
-        fatalError()
+  override func update(terminal: BLTerminalInterface) {
+    isDirty = true
+    if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
+      switch terminal.read() {
+      case config.keyLeft: worldModel.movePlayer(by: BLPoint(x: -1, y: 0))
+      case config.keyRight: worldModel.movePlayer(by: BLPoint(x: 1, y: 0))
+      case config.keyUp: worldModel.movePlayer(by: BLPoint(x: 0, y: -1))
+      case config.keyDown: worldModel.movePlayer(by: BLPoint(x: 0, y: 1))
+      case config.keyDebugLeft:
+        director?.transition(to: LoadScene(rngStore: RandomSeedStore(seed: worldModel.rngStore.seed - 1), resources: resources, id: "basic"))
+      case config.keyDebugRight:
+        director?.transition(to: LoadScene(rngStore: RandomSeedStore(seed: worldModel.rngStore.seed + 1), resources: resources, id: "basic"))
+      case BLConstant.CLOSE:
+        director?.quit()
+      default:
+        isDirty = false
       }
     }
 
     if isDirty {
       terminal.layer = 0
       terminal.clear()
-      world.draw(in: terminal, at: BLPoint.zero)
+      worldModel.draw(in: terminal, at: BLPoint.zero)
       terminal.refresh()
-    }
-    isDirty = true
-
-    switch terminal.read() {
-    case config.keyLeft: world.movePlayer(by: BLPoint(x: -1, y: 0))
-    case config.keyRight: world.movePlayer(by: BLPoint(x: 1, y: 0))
-    case config.keyUp: world.movePlayer(by: BLPoint(x: 0, y: -1))
-    case config.keyDown: world.movePlayer(by: BLPoint(x: 0, y: 1))
-    case config.keyDebugLeft:
-      delta -= 1
-      try reload()
-    case config.keyDebugRight:
-      delta += 1
-      try reload()
-    case BLConstant.CLOSE:
-      return
-    default:
-      isDirty = false
-      continue
     }
   }
 }
 
-try run(config: Config())
+
+director.run(initialScene: LoadScene(
+  rngStore: RandomSeedStore(seed: 135205160),
+  resources: resources,
+  id: "basic"))
+while !director.shouldExit {
+  director.iterate()
+  Thread.sleep(forTimeInterval: 0.0125)
+}
 terminal.close()
+print("exit")
+
+//#if os(OSX)
+//  import AppKit
+//  AppKit.RunLoop.main.run()
+//  NSApp.run()
+//#endif
+

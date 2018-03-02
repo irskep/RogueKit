@@ -73,6 +73,10 @@
 		AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */; };
 		AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
 		AAC6A4E720433B71008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
+		AAC6A4E920488916008D971B /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E820488916008D971B /* Director.swift */; };
+		AAC6A4EA20488916008D971B /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E820488916008D971B /* Director.swift */; };
+		AAC6A4EC20489374008D971B /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EB20489374008D971B /* RunLoop.swift */; };
+		AAC6A4ED20489374008D971B /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EB20489374008D971B /* RunLoop.swift */; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -243,6 +247,8 @@
 		AA3DA2802015B20C00A7CA1B /* ECS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECS.swift; sourceTree = "<group>"; };
 		AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECS+Scratch.swift"; sourceTree = "<group>"; };
 		AAC6A4E420433B5F008D971B /* PCG32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCG32.swift; sourceTree = "<group>"; };
+		AAC6A4E820488916008D971B /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
+		AAC6A4EB20489374008D971B /* RunLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoop.swift; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -329,6 +335,7 @@
 				AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */,
 				AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */,
 				AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */,
+				AAC6A4E820488916008D971B /* Director.swift */,
 			);
 			name = Game;
 			path = Sources/RogueKit/Game;
@@ -378,6 +385,7 @@
 				OBJ_21 /* REXPaintImage.swift */,
 				AA3DA229200C37BF00A7CA1B /* RKColor.swift */,
 				OBJ_22 /* RKRNG.swift */,
+				AAC6A4EB20489374008D971B /* RunLoop.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
 			);
 			path = Util;
@@ -761,6 +769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA3DA2322012DD2600A7CA1B /* AppDelegate.swift in Sources */,
+				AAC6A4ED20489374008D971B /* RunLoop.swift in Sources */,
 				AA1CCC8B2030CF6100BFA85A /* PaletteStore.swift in Sources */,
 				AA3DA2652012DE0300A7CA1B /* Array2D.swift in Sources */,
 				AA3DA26E2012DE0300A7CA1B /* main.swift in Sources */,
@@ -773,6 +782,7 @@
 				AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */,
 				AA3DA26B2012DE0300A7CA1B /* RKRNG.swift in Sources */,
 				AA3DA2602012DE0300A7CA1B /* GeneratorReader.swift in Sources */,
+				AAC6A4EA20488916008D971B /* Director.swift in Sources */,
 				AA3DA2662012DE0300A7CA1B /* BearLibTerminal+Geometry.swift in Sources */,
 				AA3DA2822015B20C00A7CA1B /* ECS.swift in Sources */,
 				AA3DA2622012DE0300A7CA1B /* Prefab.swift in Sources */,
@@ -858,6 +868,7 @@
 				OBJ_81 /* REXPaintImage.swift in Sources */,
 				AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */,
 				OBJ_82 /* RKRNG.swift in Sources */,
+				AAC6A4E920488916008D971B /* Director.swift in Sources */,
 				AA3DA22A200C37BF00A7CA1B /* RKColor.swift in Sources */,
 				AA1CCC8A2030CF6100BFA85A /* PaletteStore.swift in Sources */,
 				OBJ_83 /* SpriteSheet.swift in Sources */,
@@ -868,6 +879,7 @@
 				AA3DA2812015B20C00A7CA1B /* ECS.swift in Sources */,
 				OBJ_86 /* test.swift in Sources */,
 				AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */,
+				AAC6A4EC20489374008D971B /* RunLoop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

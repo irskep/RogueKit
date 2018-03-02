@@ -32,8 +32,6 @@ class LevelScene: Scene {
         director?.transition(to: LoadScene(rngStore: RandomSeedStore(seed: worldModel.rngStore.seed - 1), resources: resources, id: "basic"))
       case config.keyDebugRight:
         director?.transition(to: LoadScene(rngStore: RandomSeedStore(seed: worldModel.rngStore.seed + 1), resources: resources, id: "basic"))
-      case BLConstant.CLOSE:
-        director?.quit()
       default:
         isDirty = false
       }
@@ -44,6 +42,16 @@ class LevelScene: Scene {
       terminal.clear()
       worldModel.draw(in: terminal, at: BLPoint.zero)
       terminal.refresh()
+
+      if let gameURL = URLs.gameURL {
+        do {
+          let data = try JSONEncoder().encode(worldModel)
+          try data.write(to: gameURL)
+        } catch {
+          NSLog(error.localizedDescription)
+          NSLog("WARNING: SAVE FILE IS NOT WORKING")
+        }
+      }
     }
   }
 }

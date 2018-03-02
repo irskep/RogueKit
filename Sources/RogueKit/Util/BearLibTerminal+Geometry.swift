@@ -136,6 +136,10 @@ extension BLRect: Sequence {
     return BLRect(x: point.x, y: point.y, w: w, h: h)
   }
 
+  public func moved(by delta: BLPoint) -> BLRect {
+    return BLRect(x: origin.x + delta.x, y: origin.y + delta.y, w: w, h: h)
+  }
+
   public func contains(point: BLPoint) -> Bool {
     return point.x >= x && point.y >= y && point.x <= max.x && point.y <= max.y
   }

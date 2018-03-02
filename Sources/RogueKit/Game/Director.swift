@@ -35,9 +35,11 @@ class Director {
 
   func iterate() {
     guard let activeScene = self.activeScene, !self.shouldExit else {
-      self.shouldExit = true
-      self.terminate()
+      self.quit()
       return
+    }
+    if terminal.hasInput && terminal.peek() == BLConstant.CLOSE {
+      self.quit()
     }
     activeScene.update(terminal: self.terminal)
   }
@@ -54,15 +56,9 @@ class Director {
   }
 
   func quit() {
+    guard !shouldExit else { return }
     print("quit")
     shouldExit = true
-  }
-
-  func terminate() {
-    print("terminate")
-    #if os(OSX)
-      NSApp.stop(nil)
-    #endif
   }
 }
 

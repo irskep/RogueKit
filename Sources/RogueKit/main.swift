@@ -11,7 +11,7 @@ struct Config: Codable {
   var keyDebugRight: Int32 = BLConstant.EQUALS
 }
 
-print("Launched")
+NSLog("Launched")
 
 var path = ""
 if CommandLine.arguments.count > 1 {
@@ -36,7 +36,7 @@ let director = SteveRLDirector(terminal: terminal, configBlock: {
   font: \(resources.path(for: "fonts/cp437_10x10.png")), size=10x10;
   window.size=80x40;
   """
-  print(config)
+  NSLog(config)
   let result = $0.configure(config)
   assert(result == true)
 })
@@ -53,14 +53,16 @@ let director = SteveRLDirector(terminal: terminal, configBlock: {
   }
 #endif
 
-director.run(initialScene: LoadScene(
-  rngStore: RandomSeedStore(seed: 135205160),
-  resources: resources,
-  id: "basic"))
+//director.run(initialScene: LoadScene(
+//  rngStore: RandomSeedStore(seed: 135205160),
+//  resources: resources,
+//  id: "basic"))
+director.run(initialScene: TitleScene(resources: resources))
 while !director.shouldExit {
   director.iterate()
-  Thread.sleep(forTimeInterval: 0.0125)
+  terminal.delay(milliseconds: 12)
+//  Thread.sleep(forTimeInterval: 0.0125)
 }
 terminal.close()
-print("exit")
+NSLog("exit")
 

@@ -71,7 +71,6 @@ class ECSSystem<T: ECSComponent & Codable> {
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(e2c, forKey: .e2c)
-    try container.encode(all, forKey: .all)
   }
 
   subscript(index: Int) -> T? { return self.get(index) }

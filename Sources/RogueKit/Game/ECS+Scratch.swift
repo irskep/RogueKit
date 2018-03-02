@@ -35,6 +35,7 @@ class PositionS: ECSSystem<PositionC>, Codable {
   required init(from decoder: Decoder) throws {
     try super.init(from: decoder)
 
+    cache = [String: [BLPoint: [PositionC]]]()
     for c in _all {
       _insert(c)
     }

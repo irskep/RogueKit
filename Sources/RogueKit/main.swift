@@ -1,5 +1,8 @@
 import Foundation
 import BearLibTerminal
+#if os(OSX)
+  import AppKit
+#endif
 
 struct Config: Codable {
   var keyLeft: Int32 = BLConstant.LEFT
@@ -32,11 +35,24 @@ class SteveRLDirector: Director {
   let config = Config()
 }
 
+#if os(OSX)
+  import AppKit
+  let isScreenBigEnough = (NSScreen.main?.frame.size.height ?? 1000) > 720
+#else
+  let isScreenBigEnough = false
+#endif
+
+let FONT = "fonts/Alloy_curses_12x12.png"
+//let FONT = "fonts/cp437_10x10.png"
+let FONT_SIZE = FONT[FONT.index(FONT.endIndex, offsetBy: -9)..<FONT.index(FONT.endIndex, offsetBy: -4)]
+
 let director = SteveRLDirector(terminal: terminal, configBlock: {
   let config = """
   window.title='RogueKit Test';
-  font: \(resources.path(for: "fonts/cp437_10x10.png")), size=10x10;
-  window.size=80x40;
+  font: \(resources.path(for: FONT)), size=\(FONT_SIZE);
+  window.size=106x60;
+  window.resizeable=true;
+  window.fullscreen=\(isScreenBigEnough ? false : true);
   """
   NSLog(config)
   let result = $0.configure(config)
@@ -46,7 +62,6 @@ let director = SteveRLDirector(terminal: terminal, configBlock: {
 #if os(OSX)
   // Move the window to the upper right corner of the screen so it doesn't
   // block Xcode
-  import AppKit
   terminal.refresh()
   if let window = NSApp.windows.first, let screen = window.screen {
     window.setFrameOrigin(NSPoint(

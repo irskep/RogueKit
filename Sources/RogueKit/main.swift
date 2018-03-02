@@ -41,97 +41,17 @@ let director = SteveRLDirector(terminal: terminal, configBlock: {
   assert(result == true)
 })
 
-
-class LoadScene: Scene {
-  let rngStore: RandomSeedStore
-  let id: String
-  let resources: ResourceCollection
-
-  var terminal: BLTerminalInterface? { return director?.terminal }
-
-  init(rngStore: RandomSeedStore, resources: ResourceCollection, id: String) {
-    self.rngStore = rngStore
-    self.id = id
-    self.resources = resources
+#if os(OSX)
+  // Move the window to the upper right corner of the screen so it doesn't
+  // block Xcode
+  import AppKit
+  terminal.refresh()
+  if let window = NSApp.windows.first, let screen = window.screen {
+    window.setFrameOrigin(NSPoint(
+      x: screen.frame.size.width - window.frame.size.width,
+      y: screen.frame.size.height - (NSApp.mainMenu?.menuBarHeight ?? 20)))
   }
-
-  var nextScene: Scene?
-
-  override func update(terminal: BLTerminalInterface) {
-    if let nextScene = nextScene {
-      director?.transition(to: nextScene)
-      return
-    }
-
-    let rng = rngStore[id]
-    let reader = GeneratorReader(resources: resources)
-    try! reader.run(id: id, rng: rng) {
-      gen, status, result in
-      print(status)
-
-      guard self.director?.activeScene === self else { return }
-
-      terminal.clear()
-      terminal.layer = 0
-      gen.draw(in: terminal, at: BLPoint.zero)
-      terminal.layer = 2
-      gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
-      terminal.refresh()
-
-      if result != nil {
-        let levelMap = try LevelMap(
-          size: gen.cells.size,
-          paletteName: "default",
-          resources: resources,
-          terminal: terminal,
-          generator: gen)
-        let world = WorldModel(rngStore: rngStore, map: levelMap)
-        self.nextScene = LevelScene(resources: self.resources, worldModel: world)
-      }
-    }
-  }
-}
-
-
-class LevelScene: Scene {
-  let worldModel: WorldModel
-  let resources: ResourceCollection
-
-  var isDirty = false
-  
-  init(resources: ResourceCollection, worldModel: WorldModel) {
-    self.worldModel = worldModel
-    self.resources = resources
-  }
-
-  override func update(terminal: BLTerminalInterface) {
-    isDirty = true
-    if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
-      switch terminal.read() {
-      case config.keyLeft: worldModel.movePlayer(by: BLPoint(x: -1, y: 0))
-      case config.keyRight: worldModel.movePlayer(by: BLPoint(x: 1, y: 0))
-      case config.keyUp: worldModel.movePlayer(by: BLPoint(x: 0, y: -1))
-      case config.keyDown: worldModel.movePlayer(by: BLPoint(x: 0, y: 1))
-      case config.keyDebugLeft:
-        director?.transition(to: LoadScene(rngStore: RandomSeedStore(seed: worldModel.rngStore.seed - 1), resources: resources, id: "basic"))
-      case config.keyDebugRight:
-        director?.transition(to: LoadScene(rngStore: RandomSeedStore(seed: worldModel.rngStore.seed + 1), resources: resources, id: "basic"))
-      case BLConstant.CLOSE:
-        director?.quit()
-      default:
-        isDirty = false
-      }
-    }
-
-    if isDirty {
-      terminal.layer = 0
-      terminal.clear()
-      worldModel.draw(in: terminal, at: BLPoint.zero)
-      terminal.refresh()
-    }
-  }
-}
-
+#endif
 
 director.run(initialScene: LoadScene(
   rngStore: RandomSeedStore(seed: 135205160),
@@ -143,10 +63,4 @@ while !director.shouldExit {
 }
 terminal.close()
 print("exit")
-
-//#if os(OSX)
-//  import AppKit
-//  AppKit.RunLoop.main.run()
-//  NSApp.run()
-//#endif
 

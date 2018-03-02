@@ -74,7 +74,7 @@ class WorldModel: Codable {
 
     let playerPoint = rngStore["world"].choice(floors)
     sightS.add(entity: player, component: SightC(entity: player))
-    positionS.add(entity: player, component: PositionC(entity: player, point: playerPoint))
+    positionS.add(entity: player, component: PositionC(entity: player, point: playerPoint, levelId: map.id))
     fovS.add(entity: player, component: FOVC(entity: player))
 
     self.playerDidTakeAction()

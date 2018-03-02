@@ -67,6 +67,7 @@ extension MapCell {
 
 
 class LevelMap: Codable {
+  let id: String
   let terrains: [Int: Terrain]
   let features: [Int: Feature]
   let featureIdsByName: [String: Int]
@@ -74,7 +75,14 @@ class LevelMap: Codable {
   var cells: CodableArray2D<MapCell>
   var palette: PaletteStore
 
-  init(size: BLSize, paletteName: String, resources: ResourceCollection, terminal: BLTerminalInterface) throws {
+  init(
+    id: String,
+    size: BLSize,
+    paletteName: String,
+    resources: ResourceCollection,
+    terminal: BLTerminalInterface) throws
+  {
+    self.id = id
     self.palette = try PaletteStore(terminal: terminal, resources: resources, name: paletteName)
 
     self.terrains = try resources.csvMap(name: "terrain") {
@@ -126,13 +134,14 @@ class LevelMap: Codable {
   }
 
   convenience init(
+    id: String,
     size: BLSize,
     paletteName: String,
     resources: ResourceCollection,
     terminal: BLTerminalInterface,
     generator: GeneratorProtocol) throws
   {
-    try self.init(size: size, paletteName: paletteName, resources: resources, terminal: terminal)
+    try self.init(id: id, size: size, paletteName: paletteName, resources: resources, terminal: terminal)
     for y in 0..<generator.cells.size.h {
       for x in 0..<generator.cells.size.w {
         let point = BLPoint(x: x, y: y)

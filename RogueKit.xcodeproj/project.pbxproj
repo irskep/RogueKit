@@ -77,6 +77,10 @@
 		AAC6A4EA20488916008D971B /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E820488916008D971B /* Director.swift */; };
 		AAC6A4EC20489374008D971B /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EB20489374008D971B /* RunLoop.swift */; };
 		AAC6A4ED20489374008D971B /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EB20489374008D971B /* RunLoop.swift */; };
+		AAC6A4F02049C1C2008D971B /* LoadScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EF2049C1C2008D971B /* LoadScene.swift */; };
+		AAC6A4F12049C1C2008D971B /* LoadScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EF2049C1C2008D971B /* LoadScene.swift */; };
+		AAC6A4F32049C1C9008D971B /* LevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4F22049C1C9008D971B /* LevelScene.swift */; };
+		AAC6A4F42049C1C9008D971B /* LevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4F22049C1C9008D971B /* LevelScene.swift */; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -249,6 +253,8 @@
 		AAC6A4E420433B5F008D971B /* PCG32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCG32.swift; sourceTree = "<group>"; };
 		AAC6A4E820488916008D971B /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
 		AAC6A4EB20489374008D971B /* RunLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoop.swift; sourceTree = "<group>"; };
+		AAC6A4EF2049C1C2008D971B /* LoadScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadScene.swift; sourceTree = "<group>"; };
+		AAC6A4F22049C1C9008D971B /* LevelScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelScene.swift; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -331,6 +337,7 @@
 		AA3DA221200BEC7F00A7CA1B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				AAC6A4EE2049C19C008D971B /* Scenes */,
 				AA3DA2802015B20C00A7CA1B /* ECS.swift */,
 				AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */,
 				AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */,
@@ -359,6 +366,16 @@
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
+		};
+		AAC6A4EE2049C19C008D971B /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				AAC6A4EF2049C1C2008D971B /* LoadScene.swift */,
+				AAC6A4F22049C1C9008D971B /* LevelScene.swift */,
+			);
+			name = Scenes;
+			path = Sources/RogueKit/Game/Scenes;
+			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_11 /* Map Gen */ = {
 			isa = PBXGroup;
@@ -768,6 +785,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAC6A4F42049C1C9008D971B /* LevelScene.swift in Sources */,
 				AA3DA2322012DD2600A7CA1B /* AppDelegate.swift in Sources */,
 				AAC6A4ED20489374008D971B /* RunLoop.swift in Sources */,
 				AA1CCC8B2030CF6100BFA85A /* PaletteStore.swift in Sources */,
@@ -780,6 +798,7 @@
 				AA3DA2632012DE0300A7CA1B /* PurePrefabGenerator.swift in Sources */,
 				AA3DA2692012DE0300A7CA1B /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */,
+				AAC6A4F12049C1C2008D971B /* LoadScene.swift in Sources */,
 				AA3DA26B2012DE0300A7CA1B /* RKRNG.swift in Sources */,
 				AA3DA2602012DE0300A7CA1B /* GeneratorReader.swift in Sources */,
 				AAC6A4EA20488916008D971B /* Director.swift in Sources */,
@@ -861,11 +880,13 @@
 				AA0DE9052015723A00CCF61F /* CSV.swift in Sources */,
 				OBJ_77 /* BearLibTerminal+Geometry.swift in Sources */,
 				AA3DA228200BF72100A7CA1B /* GeneratorReader.swift in Sources */,
+				AAC6A4F32049C1C9008D971B /* LevelScene.swift in Sources */,
 				OBJ_78 /* CP437.swift in Sources */,
 				OBJ_79 /* DistanceField.swift in Sources */,
 				AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */,
 				OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				OBJ_81 /* REXPaintImage.swift in Sources */,
+				AAC6A4F02049C1C2008D971B /* LoadScene.swift in Sources */,
 				AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */,
 				OBJ_82 /* RKRNG.swift in Sources */,
 				AAC6A4E920488916008D971B /* Director.swift in Sources */,

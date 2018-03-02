@@ -24,14 +24,12 @@ class Director {
     terminal: BLTerminalInterface, configBlock: @escaping (BLTerminalInterface) -> Void) {
     self.terminal = terminal
     self.configBlock = configBlock
+    terminal.open()
+    configBlock(terminal)
   }
 
   func run(initialScene: Scene) {
-    terminal.open()
-    configBlock(terminal)
-
     transition(to: initialScene)
-
     terminal.refresh()
   }
 
@@ -62,7 +60,6 @@ class Director {
 
   func terminate() {
     print("terminate")
-    runLoopReference?.stop()
     #if os(OSX)
       NSApp.stop(nil)
     #endif

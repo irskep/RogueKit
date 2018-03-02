@@ -48,7 +48,7 @@ extension ECSComponent {
 
 
 class ECSSystem<T: ECSComponent & Codable> {
-  private var e2c = [Int: T]()
+  private var e2c = [Entity: T]()
 
   // It would be more efficient to use a linked list here, but for now we just
   // keep 'em sorted by entity ID for long-time removal.
@@ -64,7 +64,7 @@ class ECSSystem<T: ECSComponent & Codable> {
 
   required init(from decoder: Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)
-    e2c = try values.decode([Int: T].self, forKey: .e2c)
+    e2c = try values.decode([Entity: T].self, forKey: .e2c)
     _all = e2c.values.sorted(by: { ($0.entity ?? -1) < ($1.entity ?? -1) })
   }
 
@@ -76,9 +76,9 @@ class ECSSystem<T: ECSComponent & Codable> {
 
   subscript(index: Int) -> T? { return self.get(index) }
 
-  func get(_ index: Int) -> T? { return e2c[index] }
+  func get(_ entity: Int) -> T? { return e2c[entity] }
 
-  func add(entity: Int, component: T) {
+  func add(entity: Entity, component: T) {
     guard e2c[entity] == nil else { fatalError("Trying to double-register a \(T.self)") }
     e2c[entity] = component
     component.entity = entity
@@ -89,7 +89,7 @@ class ECSSystem<T: ECSComponent & Codable> {
     })
   }
 
-  func remove(entity: Int) {
+  func remove(entity: Entity) {
     guard let c = e2c[entity] else { return }
     e2c[entity] = nil
     if let pos = binarySearch(all, key: c, range: 0..<all.count) {

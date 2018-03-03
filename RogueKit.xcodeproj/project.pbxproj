@@ -359,6 +359,8 @@
 				AA3DA2802015B20C00A7CA1B /* ECS.swift */,
 				AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */,
 				AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */,
+				AA0DE9012013C87400CCF61F /* LevelMap.swift */,
+				OBJ_14 /* Resources.swift */,
 				AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */,
 				AAC6A4E820488916008D971B /* Director.swift */,
 			);
@@ -556,14 +558,12 @@
 		OBJ_8 /* RogueKit */ = {
 			isa = PBXGroup;
 			children = (
+				OBJ_25 /* main.swift */,
 				AA3DA221200BEC7F00A7CA1B /* Game */,
 				OBJ_9 /* Algorithms */,
 				OBJ_11 /* Map Gen */,
 				OBJ_15 /* Util */,
-				AA0DE9012013C87400CCF61F /* LevelMap.swift */,
-				OBJ_14 /* Resources.swift */,
 				OBJ_24 /* fovTest.swift */,
-				OBJ_25 /* main.swift */,
 				OBJ_26 /* test.swift */,
 			);
 			name = RogueKit;

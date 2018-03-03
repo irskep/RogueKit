@@ -8,7 +8,7 @@
 import Foundation
 import BearLibTerminal
 
-let SAVE_FILE_VERSION: String = "1"
+let SAVE_FILE_VERSION: String = "2"
 
 
 typealias Entity = Int
@@ -38,8 +38,10 @@ class WorldModel: Codable {
   var positionS = PositionS()
   var sightS = SightS()
   var fovS = FOVS()
+  var spriteS = SpriteS()
 
   var player: Entity = 1
+  var nextEntityId: Entity = 2
   var povEntity: Entity { return player }
 
   subscript(index: Entity) -> PositionC? { return positionS[index] }
@@ -48,16 +50,20 @@ class WorldModel: Codable {
   var exits: [String: String] { return mapDefinitions[activeMapId]?.exits ?? [:] }
 
   enum CodingKeys: String, CodingKey {
+    case version
+    case rngStore
     case maps
     case mapDefinitions
+    case player
+
     case activeMapId
-    case rngStore
     case mapMemory
+    case nextEntityId
+
     case positionS
     case sightS
     case fovS
-    case player
-    case version
+    case spriteS
   }
 
   required init(from decoder: Decoder) throws {
@@ -70,10 +76,13 @@ class WorldModel: Codable {
     mapDefinitions = try values.decode([String: MapDefinition].self, forKey: .mapDefinitions)
     activeMapId = try values.decode(String.self, forKey: .activeMapId)
     rngStore = try values.decode(RandomSeedStore.self, forKey: .rngStore)
+    player = try values.decode(Entity.self, forKey: .player)
+    nextEntityId = try values.decode(Entity.self, forKey: .nextEntityId)
+
     positionS = try values.decode(PositionS.self, forKey: .positionS)
     sightS = try values.decode(SightS.self, forKey: .sightS)
     fovS = try values.decode(FOVS.self, forKey: .fovS)
-    player = try values.decode(Entity.self, forKey: .player)
+    spriteS = try values.decode(SpriteS.self, forKey: .spriteS)
 
   }
 
@@ -84,10 +93,13 @@ class WorldModel: Codable {
     try container.encode(mapDefinitions, forKey: .mapDefinitions)
     try container.encode(activeMapId, forKey: .activeMapId)
     try container.encode(rngStore, forKey: .rngStore)
+    try container.encode(player, forKey: .player)
+    try container.encode(nextEntityId, forKey: .nextEntityId)
+
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)
     try container.encode(fovS, forKey: .fovS)
-    try container.encode(player, forKey: .player)
+    try container.encode(spriteS, forKey: .spriteS)
   }
 
   init(rngStore: RandomSeedStore, mapDefinitions: [MapDefinition], activeMapId: String) {
@@ -98,15 +110,20 @@ class WorldModel: Codable {
     self.maps = [:]
 
     self.activeMapId = activeMapId
-    sightS.add(entity: player, component: SightC(entity: player))
-    positionS.add(entity: player, component: PositionC(entity: player, point: BLPoint.zero, levelId: "UNSET"))
-    fovS.add(entity: player, component: FOVC(entity: player))
+    sightS
+      .add(entity: player, component: SightC(entity: player))
+    positionS
+      .add(entity: player, component: PositionC(entity: player, point: BLPoint.zero, levelId: nil))
+    fovS
+      .add(entity: player, component: FOVC(entity: player))
+    spriteS
+      .add(entity: player, component: SpriteC(entity: player, int: nil, str: "@"))
   }
 
   func travel(to newLevelMapId: String) {
     activeMapId = newLevelMapId
     positionS[player]!.point = activeMap.pointsOfInterest["playerStart"]!
-    positionS[player]!.levelId = newLevelMapId
+    positionS.move(entity: player, toLevel: newLevelMapId)
     updateFOV()
   }
 
@@ -195,7 +212,7 @@ extension WorldModel {
 
 extension WorldModel: BLTDrawable {
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface) {
-    if self.can(entity: player, see: point) {
+    if self.can(entity: povEntity, see: point) {
       activeMap.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: true)
     } else if activeMap.mapMemory.contains(point) {
       activeMap.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: false)
@@ -206,8 +223,17 @@ extension WorldModel: BLTDrawable {
     }
 
     terminal.foregroundColor = activeMap.palette["lightgreen"]
-    for posC in positionS.all where self.can(entity: player, see: posC.point) {
-      terminal.put(point: posC.point, code: CP437.AT)
+    for posC in positionS.allInLevel(levelId: self.activeMapId)
+      where self.can(entity: povEntity, see: posC.point)
+    {
+      guard let entity = posC.entity,
+        let spriteC = spriteS[entity]
+        else { continue }
+      if let int = spriteC.int {
+        terminal.put(point: posC.point, code: int)
+      } else if let str = spriteC.str {
+        terminal.print(point: posC.point, string: str)
+      }
     }
   }
 

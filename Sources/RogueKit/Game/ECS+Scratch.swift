@@ -9,6 +9,30 @@ import Foundation
 import BearLibTerminal
 
 
+class SpriteC: ECSComponent, Codable {
+  var entity: Entity?
+  var int: BLInt?
+  var str: String?
+
+  init(entity: Entity?) {
+    self.entity = entity
+    self.int = 0
+    self.str = "?"
+  }
+
+  convenience init(entity: Entity?, int: BLInt?, str: String?) {
+    self.init(entity: entity)
+    self.int = int
+    self.str = str
+  }
+}
+class SpriteS: ECSSystem<SpriteC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
 class PositionC: ECSComponent, Codable, Equatable {
   var point: BLPoint
   var levelId: String?
@@ -60,11 +84,31 @@ class PositionS: ECSSystem<PositionC>, Codable {
     _insert(component)
   }
 
+  func move(entity: Entity, toLevel levelId: String) {
+    guard let c = self[entity] else {
+      assertionFailure("Missing component")
+      return
+    }
+    if let levelId = c.levelId {
+      cache[levelId]?[c.point] = cache[levelId]?[c.point]?.filter({ $0 != c })
+    }
+    c.levelId = levelId
+    _insert(c)
+  }
+
   override func remove(entity: Entity) {
     if let c = self.get(entity), let levelId = c.levelId {
       cache[levelId]?[c.point] = cache[levelId]?[c.point]?.filter({ $0 != c })
     }
     super.remove(entity: entity)
+  }
+
+  func allInLevel(levelId: String) -> [PositionC] {
+    if let values = cache[levelId]?.values {
+      return Array(values.flatMap({ $0 }))
+    } else {
+      return []
+    }
   }
 }
 

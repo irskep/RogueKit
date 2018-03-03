@@ -41,6 +41,7 @@ class WorldModel: Codable {
   var spriteS = SpriteS()
   var moveAfterPlayerS = MoveAfterPlayerS()
   var collectibleS = CollectibleS()
+  var inventoryS = InventoryS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -75,6 +76,7 @@ class WorldModel: Codable {
     case spriteS
     case moveAfterPlayerS
     case collectibleS
+    case inventoryS
 
     case debugFlags
   }
@@ -100,6 +102,7 @@ class WorldModel: Codable {
     spriteS = try values.decode(SpriteS.self, forKey: .spriteS)
     moveAfterPlayerS = try values.decode(MoveAfterPlayerS.self, forKey: .moveAfterPlayerS)
     collectibleS = try values.decode(CollectibleS.self, forKey: .collectibleS)
+    inventoryS = try values.decode(InventoryS.self, forKey: .inventoryS)
 
   }
 
@@ -121,6 +124,7 @@ class WorldModel: Codable {
     try container.encode(spriteS, forKey: .spriteS)
     try container.encode(moveAfterPlayerS, forKey: .moveAfterPlayerS)
     try container.encode(collectibleS, forKey: .collectibleS)
+    try container.encode(inventoryS, forKey: .inventoryS)
   }
 
   var _allSystems: [ECSRemovable] {
@@ -131,6 +135,7 @@ class WorldModel: Codable {
       spriteS,
       moveAfterPlayerS,
       collectibleS,
+      inventoryS,
     ]
   }
 
@@ -182,15 +187,23 @@ class WorldModel: Codable {
   func playerDidTakeAction() {
     updateFOV()
 
-    let playerPoint = positionS[player]!.point
-
+    // Update playerStart point of interest to reflect player's current position
+    // so if they go up/down stairs they end up in the same spot again
     for i in 0..<activeMap.pointsOfInterest.count {
       if activeMap.pointsOfInterest[i].kind == "playerStart" {
-        // if we return here, player ends up in the same spot
-        activeMap.pointsOfInterest[i].point = playerPoint
+        activeMap.pointsOfInterest[i].point = playerPos
       }
     }
 
+    // Pick up any items on the ground
+    for posC in positionS.all(in: activeMapId, at: playerPos) where posC.entity != nil {
+      guard let entity = posC.entity, collectibleS[entity] != nil else { continue }
+      // Remove item from map; add to player's inventory
+      positionS.remove(entity: entity)
+      inventoryS[player]?.add(entity: entity)
+    }
+
+    // Move all enemies on this level
     for c in moveAfterPlayerS.all {
       if let entity = c.entity, !isOnActiveMap(entity: entity) { continue }
       switch c.behaviorType {

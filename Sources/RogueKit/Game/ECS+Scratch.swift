@@ -9,24 +9,62 @@ import Foundation
 import BearLibTerminal
 
 
+// MARK: Inventory
+
+
+class InventoryC: ECSComponent, Codable {
+  var entity: Entity?
+
+  var contents: [Entity]
+
+  init(entity: Entity?) {
+    self.entity = entity
+    self.contents = []
+  }
+
+  func add(entity: Entity) {
+    contents.append(entity)
+  }
+
+  func remove(entity: Entity) {
+    contents = contents.filter({ $0 != entity })
+  }
+
+  func volume(collectibleS: CollectibleS) -> Double {
+    return contents
+      .reduce(0, {
+        (prev: Double, e: Entity) -> Double in
+        return prev + (collectibleS[e]?.liters ?? 0)
+      })
+  }
+
+  func mass(collectibleS: CollectibleS) -> Double {
+    return contents
+      .reduce(0, {
+        (prev: Double, e: Entity) -> Double in
+        return prev + (collectibleS[e]?.grams ?? 0)
+      })
+  }
+}
+class InventoryS: ECSSystem<InventoryC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
 // MARK: Items
 
 
 class CollectibleC: ECSComponent, Codable {
   var entity: Entity?
-  var grams: Int = 0
-  var liters: Int = 0
-
-  enum BehaviorType: String {
-    case standStill = "standStill"
-    case walkRandomly = "walkRandomly"
-  }
-
+  var grams: Double = 0
+  var liters: Double = 0
   init(entity: Entity?) {
     self.entity = entity
   }
 
-  convenience init(entity: Entity?, grams: Int, liters: Int) {
+  convenience init(entity: Entity?, grams: Double, liters: Double) {
     self.init(entity: entity)
     self.grams = grams
     self.liters = liters

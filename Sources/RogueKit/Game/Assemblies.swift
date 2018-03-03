@@ -24,6 +24,8 @@ class PlayerAssembly: EntityAssemblyProtocol {
       FOVC(entity: entity))
     worldModel.spriteS.add(component:
       SpriteC(entity: entity, int: nil, str: "@", z: 100))
+    worldModel.inventoryS.add(component:
+      InventoryC(entity: entity))
   }
 }
 

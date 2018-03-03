@@ -118,8 +118,8 @@ extension BLRect: Sequence {
   public var size: BLSize { return BLSize(w: w, h: h) }
   var max: BLPoint { return BLPoint(x: x + w - 1, y: y + h - 1)}
 
-  init(size: BLSize) {
-    self.init(x: 0, y: 0, w: size.w, h: size.h)
+  init(origin: BLPoint = BLPoint.zero, size: BLSize? = nil) {
+    self.init(x: origin.x, y: origin.y, w: size?.w ?? 0, h: size?.h ?? 0)
   }
 
   public func makeIterator() -> BLRectIterator {

@@ -9,14 +9,13 @@ import Foundation
 import BearLibTerminal
 
 let TITLE = """
- _____                        _ _ _
-|  __ \\                      | (_) |
-| |__) |___   __ _ _   _  ___| |_| | _____
-|  _  // _ \\ / _` | | | |/ _ \\ | | |/ / _ \\
-| | \\ \\ (_) | (_| | |_| |  __/ | |   <  __/
-|_|  \\_\\___/ \\__, |\\__,_|\\___|_|_|_|\\_\\___|
-              __/ |
-             |___/
+██▄   █▄▄▄▄       ▄  █ ██   █    █     ▄███▄   █▄▄▄▄    ▄   ████▄ █▄▄▄▄ ██▄   ▄███▄      ▄
+█  █  █  ▄▀      █   █ █ █  █    █     █▀   ▀  █  ▄▀     █  █   █ █  ▄▀ █  █  █▀   ▀      █
+█   █ █▀▀▌       ██▀▀█ █▄▄█ █    █     ██▄▄    █▀▀▌ █     █ █   █ █▀▀▌  █   █ ██▄▄    ██   █
+█  █  █  █       █   █ █  █ ███▄ ███▄  █▄   ▄▀ █  █  █    █ ▀████ █  █  █  █  █▄   ▄▀ █ █  █
+███▀    █ ██        █     █     ▀    ▀ ▀███▀     █    █  █          █   ███▀  ▀███▀   █  █ █
+       ▀           ▀     █                      ▀      █▐          ▀                  █   ██
+                        ▀                              ▐
 """
 
 
@@ -50,19 +49,20 @@ class TitleScene: Scene {
   }
 
   override func update(terminal: BLTerminalInterface) {
+    terminal.backgroundColor = resources.defaultPalette["black"]
     terminal.clear()
 
-    let stringSize = terminal.measure(string: TITLE)
-    terminal.foregroundColor = terminal.getColor(a: 255, r: 255, g: 255, b: 255)
-    let rect = BLRect(x: 0, y: 0, w: terminal.state(BLConstant.WIDTH), h: stringSize.h)
-    drawCenteredString(terminal, rect, TITLE)
-
+    terminal.foregroundColor = resources.defaultPalette["white"]
     menu.rect = BLRect(
       x: terminal.state(BLConstant.WIDTH) / 2 - 10,
       y: terminal.state(BLConstant.HEIGHT) / 2 - 1,
       w: 20,
       h: 2)
     menu.draw(in: terminal)
+
+    terminal.foregroundColor = resources.defaultPalette["green"]
+    let rect = BLRect(x: 0, y: 0, w: terminal.state(BLConstant.WIDTH), h: menu.rect.origin.y)
+    drawCenteredString(terminal, rect, TITLE)
 
     terminal.refresh()
 

@@ -70,8 +70,20 @@ class LevelScene: Scene {
     self.resources = resources
   }
 
+  override func willExit() {
+    if let gameURL = URLs.gameURL {
+      do {
+        let data = try JSONEncoder().encode(worldModel)
+        try data.write(to: gameURL)
+      } catch {
+        NSLog(error.localizedDescription)
+        NSLog("WARNING: SAVE FILE IS NOT WORKING")
+      }
+    }
+  }
+
+  var isDirty = true
   override func update(terminal: BLTerminalInterface) {
-    var isDirty = true
     var didMove = false
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
       switch terminal.read() {
@@ -111,6 +123,7 @@ class LevelScene: Scene {
         if terminal.check(BLConstant.SHIFT) {
           worldModel.debugFlags["omniscient"] = worldModel.debugFlags["omniscient"] == 1 ? nil : 1
         }
+        isDirty = true
 
       case BLConstant.MOUSE_MOVE:
         cursorPoint.x = terminal.state(BLConstant.MOUSE_X)
@@ -121,8 +134,7 @@ class LevelScene: Scene {
           worldModel.movePlayer(by: mover.points.last! - worldModel.positionS[worldModel.player]!.point)
           mover.update(cursorPoint: mover.cursorPoint)
         }
-      default:
-        isDirty = false
+      default: break
       }
     }
     if let nextLevelId = worldModel.waitingToTransitionToLevelId {
@@ -132,23 +144,13 @@ class LevelScene: Scene {
     }
 
     if isDirty || didMove {
+      isDirty = false
       terminal.layer = 0
+      terminal.backgroundColor = resources.defaultPalette["void"]
       terminal.clear()
       worldModel.draw(in: terminal, at: BLPoint.zero)
       mover.draw(in: terminal)
       terminal.refresh()
-    }
-
-    if didMove {
-      if let gameURL = URLs.gameURL {
-        do {
-          let data = try JSONEncoder().encode(worldModel)
-          try data.write(to: gameURL)
-        } catch {
-          NSLog(error.localizedDescription)
-          NSLog("WARNING: SAVE FILE IS NOT WORKING")
-        }
-      }
     }
   }
 }

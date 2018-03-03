@@ -370,9 +370,8 @@ extension WorldModel: BLTDrawable {
     } else if activeMap.mapMemory.contains(point) {
       activeMap.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: false)
     } else {
-      terminal.foregroundColor = activeMap.palette["void"]
       terminal.backgroundColor = activeMap.palette["void"]
-      terminal.put(point: point, code: 0)
+      terminal.clear(area: BLRect(origin: point + offset))
     }
 
     terminal.foregroundColor = activeMap.palette["lightgreen"]

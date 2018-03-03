@@ -32,9 +32,18 @@ class PaletteStore: Codable {
   init(terminal: BLTerminalInterface, resources: ResourceCollection, name: String) throws {
     _terminal = terminal
 
+    var aliases = [String: String]()
     self.colors = try resources.csvMap(name: "palettes/\(name)") {
       (row: StringBox) -> (String, BLColor) in
+      let val: String = row["Value"]
+      if val.starts(with: "@") {
+        aliases[row["Name"]] = String(val.dropFirst())
+      }
       return (row["Name"], terminal.getColor(name: row["Value"]))
+    }
+
+    for (k, v) in aliases {
+      colors[k] = colors[v]
     }
   }
 

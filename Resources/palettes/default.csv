@@ -1,6 +1,6 @@
 Name,Value
-white,white
-black,black
+white,#FBFBF4
+black,#0A0646
 yellow,#FFC312
 orange,#F79F1F
 sunset,#EE5A24
@@ -21,9 +21,9 @@ salmon,#ED4C67
 wine,#B53471
 magenta,#833471
 darkmagenta,#6F1E51
-#
+#,
 level_memory,#333333
 brown,#996633
-void,#000000
+void,@black
 floor,#444444
-wall,#ffffff
+wall,@white

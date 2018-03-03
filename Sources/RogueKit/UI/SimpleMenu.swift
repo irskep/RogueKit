@@ -49,7 +49,6 @@ class SimpleMenu {
 
   func draw(in terminal: BLTerminalInterface) {
     var y = rect.y
-    terminal.foregroundColor = terminal.getColor(a: 255, r: 255, g: 255, b: 255)
     for (key, label, _) in items {
       terminal.print(
         point: BLPoint(x: rect.x, y: y),

@@ -326,6 +326,15 @@ extension WorldModel {
     return activeMap.mapMemory.contains(point)
   }
 
+  func drop(item: Entity, fromInventoryOf entity: Entity) {
+    guard let inventoryC: InventoryC = inventoryS[entity],
+      let entityPositionC: PositionC = positionS[entity]
+      else { return }
+    inventoryC.remove(entity: item)
+    self.positionS.add(component: PositionC(
+      entity: item, point: entityPositionC.point, levelId: entityPositionC.levelId))
+  }
+
   func interact(entity: Entity, with point: BLPoint) {
     guard let cell = activeMap.cells[point] else { return }
     if let mob = _mob(at: point) {
@@ -367,18 +376,23 @@ extension WorldModel: BLTDrawable {
     }
 
     terminal.foregroundColor = activeMap.palette["lightgreen"]
-    for posC in positionS.all(in: self.activeMapId)
-      where (self.can(entity: povEntity, see: posC.point) || isOmniscient)
-    {
-      guard let entity = posC.entity,
-        let spriteC = spriteS[entity]
-        else { continue }
-      if let int = spriteC.int {
-        terminal.put(point: posC.point, code: int)
-      } else if let str = spriteC.str {
-        terminal.print(point: posC.point, string: str)
-      }
-    }
+    positionS.all(in: activeMapId)
+      .filter({ isOmniscient || self.can(entity: povEntity, see: $0.point) })
+      .flatMap({
+        (posC: PositionC) -> (PositionC, SpriteC)? in
+        guard let e = posC.entity else { return nil }
+        guard let spriteC = self.spriteS[e] else { return nil }
+        return (posC, spriteC)
+      })
+      .sorted(by: { $0.1.z < $1.1.z })
+      .forEach({
+        (posC, spriteC) in
+        if let int = spriteC.int {
+          terminal.put(point: posC.point, code: int)
+        } else if let str = spriteC.str {
+          terminal.print(point: posC.point, string: str)
+        }
+      })
   }
 
   var size: BLSize { return activeMap.size }

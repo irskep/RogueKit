@@ -58,6 +58,7 @@ class InventoryScene: Scene {
   }
 
   func selectItem(entity: Entity) {
+    worldModel.drop(item: entity, fromInventoryOf: worldModel.player)
     director?.transition(to: LevelScene(resources: resources, worldModel: worldModel))
   }
 }

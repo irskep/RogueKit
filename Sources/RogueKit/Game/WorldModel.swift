@@ -8,7 +8,7 @@
 import Foundation
 import BearLibTerminal
 
-let SAVE_FILE_VERSION: String = "3"
+let SAVE_FILE_VERSION: String = "4"
 
 
 typealias Entity = Int
@@ -39,6 +39,7 @@ class WorldModel: Codable {
   var sightS = SightS()
   var fovS = FOVS()
   var spriteS = SpriteS()
+  var moveAfterPlayerS = MoveAfterPlayerS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -53,6 +54,7 @@ class WorldModel: Codable {
   subscript(index: Entity) -> SightC? { return sightS[index] }
 
   var exits: [String: String] { return mapDefinitions[activeMapId]?.exits ?? [:] }
+  var mapRNG: RKRNGProtocol { return rngStore[activeMapId] }
 
   enum CodingKeys: String, CodingKey {
     case version
@@ -70,6 +72,8 @@ class WorldModel: Codable {
     case sightS
     case fovS
     case spriteS
+    case moveAfterPlayerS
+
     case debugFlags
   }
 
@@ -92,6 +96,7 @@ class WorldModel: Codable {
     sightS = try values.decode(SightS.self, forKey: .sightS)
     fovS = try values.decode(FOVS.self, forKey: .fovS)
     spriteS = try values.decode(SpriteS.self, forKey: .spriteS)
+    moveAfterPlayerS = try values.decode(MoveAfterPlayerS.self, forKey: .moveAfterPlayerS)
 
   }
 
@@ -111,6 +116,7 @@ class WorldModel: Codable {
     try container.encode(sightS, forKey: .sightS)
     try container.encode(fovS, forKey: .fovS)
     try container.encode(spriteS, forKey: .spriteS)
+    try container.encode(moveAfterPlayerS, forKey: .moveAfterPlayerS)
   }
 
   init(rngStore: RandomSeedStore, mapDefinitions: [MapDefinition], activeMapId: String) {
@@ -121,14 +127,8 @@ class WorldModel: Codable {
     self.maps = [:]
 
     self.activeMapId = activeMapId
-    sightS
-      .add(entity: player, component: SightC(entity: player))
-    positionS
-      .add(entity: player, component: PositionC(entity: player, point: BLPoint.zero, levelId: nil))
-    fovS
-      .add(entity: player, component: FOVC(entity: player))
-    spriteS
-      .add(entity: player, component: SpriteC(entity: player, int: nil, str: "@"))
+
+    PlayerAssembly().assemble(entity: player, worldModel: self, point: nil, levelId: nil)
   }
 
   func applyPOIs() {
@@ -138,7 +138,14 @@ class WorldModel: Codable {
         activeMap.cells[poi.point]?.feature = activeMap.featureIdsByName["entrance"]!
       case "exit":
         activeMap.cells[poi.point]?.feature = activeMap.featureIdsByName["exit"]!
-      default: break
+      default:
+        if let assembly = ASSEMBLIES[poi.kind] {
+          assembly.assemble(
+            entity: addEntity(),
+            worldModel: self,
+            point: poi.point,
+            levelId: activeMapId)
+        }
       }
     }
   }
@@ -168,6 +175,16 @@ class WorldModel: Codable {
         activeMap.pointsOfInterest[i].point = playerPoint
       }
     }
+
+    for c in moveAfterPlayerS.all {
+      switch c.behaviorType {
+      case .standStill: break
+      case .walkRandomly where c.entity != nil:
+        _ = AI.walkRandomly(in: self, entity: c.entity!)
+      default:
+        assertionFailure("Can't handle this case")
+      }
+    }
   }
 
   func addEntity() -> Entity {
@@ -180,7 +197,8 @@ class WorldModel: Codable {
     guard maps[activeMapId] != nil else { return }
     if let fovC = fovS[player] {
       fovC.reset()
-      activeMap.mapMemory.formUnion(fovC.getFovCache(map: activeMap, positionS: positionS, sightS: sightS))
+      activeMap.mapMemory.formUnion(
+        fovC.getFovCache(map: activeMap, positionS: positionS, sightS: sightS))
     }
   }
 }

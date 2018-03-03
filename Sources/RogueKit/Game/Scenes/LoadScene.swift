@@ -58,6 +58,7 @@ class LoadScene: Scene {
 
         var playerStart = rng.choice(levelMap.floors)
         var entrance: BLPoint? = nil
+        
         while entrance == nil {
           let entranceOptions = playerStart
             .getNeighbors(bounds: BLRect(size: levelMap.size), diagonals: false)
@@ -72,14 +73,19 @@ class LoadScene: Scene {
             entrance = rng.choice(entranceOptions)
           }
         }
+
+        var floors = levelMap.floors
+        rng.shuffleInPlace(&floors)
         
         levelMap.pointsOfInterest = [
           PointOfInterest(kind: "playerStart", point: playerStart),
-          PointOfInterest(kind: "enemy", point: rng.choice(levelMap.floors)),
-          PointOfInterest(kind: "exit", point: rng.choice(levelMap.floors)),
           PointOfInterest(kind: "entrance", point: entrance!),
+          PointOfInterest(kind: "exit", point: floors[0]),
+          PointOfInterest(kind: "enemy", point: floors[1]),
         ]
+
         levelMap.isPopulated = true
+
         self.worldModel.maps[self.id] = levelMap
         self.worldModel.travel(to: self.id)
         self.worldModel.applyPOIs()

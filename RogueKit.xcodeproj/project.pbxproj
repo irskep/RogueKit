@@ -73,6 +73,8 @@
 		AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */; };
 		AA90B097204A234400A59645 /* Assemblies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B095204A230F00A59645 /* Assemblies.swift */; };
 		AA90B098204A234500A59645 /* Assemblies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B095204A230F00A59645 /* Assemblies.swift */; };
+		AA90B09C204A689000A59645 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B09A204A684400A59645 /* AI.swift */; };
+		AA90B09D204A689000A59645 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B09A204A684400A59645 /* AI.swift */; };
 		AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
 		AAC6A4E720433B71008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
 		AAC6A4E920488916008D971B /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E820488916008D971B /* Director.swift */; };
@@ -266,6 +268,7 @@
 		AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECS+Scratch.swift"; sourceTree = "<group>"; };
 		AA90B095204A230F00A59645 /* Assemblies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assemblies.swift; sourceTree = "<group>"; };
 		AA90B099204A305D00A59645 /* itch_mac.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = itch_mac.sh; sourceTree = "<group>"; };
+		AA90B09A204A684400A59645 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
 		AAC6A4E420433B5F008D971B /* PCG32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCG32.swift; sourceTree = "<group>"; };
 		AAC6A4E820488916008D971B /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
 		AAC6A4EB20489374008D971B /* RunLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoop.swift; sourceTree = "<group>"; };
@@ -368,6 +371,7 @@
 				AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */,
 				AAC6A4E820488916008D971B /* Director.swift */,
 				AA90B095204A230F00A59645 /* Assemblies.swift */,
+				AA90B09A204A684400A59645 /* AI.swift */,
 			);
 			name = Game;
 			path = Sources/RogueKit/Game;
@@ -857,6 +861,7 @@
 				AA3DA27F2015B1E300A7CA1B /* WorldModel.swift in Sources */,
 				AA3DA26C2012DE0300A7CA1B /* SpriteSheet.swift in Sources */,
 				AA3DA2612012DE0300A7CA1B /* GeneratorProtocol.swift in Sources */,
+				AA90B09D204A689000A59645 /* AI.swift in Sources */,
 				AA3DA26A2012DE0300A7CA1B /* REXPaintImage.swift in Sources */,
 				AA3DA25F2012DE0300A7CA1B /* RecursiveShadowcastingFOVProvider.swift in Sources */,
 				AAC6A4F72049C3F1008D971B /* TitleScene.swift in Sources */,
@@ -934,6 +939,7 @@
 				OBJ_78 /* CP437.swift in Sources */,
 				AAC6A4F62049C3F1008D971B /* TitleScene.swift in Sources */,
 				OBJ_79 /* DistanceField.swift in Sources */,
+				AA90B09C204A689000A59645 /* AI.swift in Sources */,
 				AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */,
 				OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				OBJ_81 /* REXPaintImage.swift in Sources */,

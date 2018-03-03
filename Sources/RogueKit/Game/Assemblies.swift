@@ -51,7 +51,7 @@ class ItemAssembly: EntityAssemblyProtocol {
     worldModel.spriteS.add(component:
       SpriteC(entity: entity, int: nil, str: "i", z: 1))
     worldModel.collectibleS.add(component:
-      CollectibleC(entity: entity, grams: 1000, liters: 1))
+      CollectibleC(entity: entity, grams: 1000, liters: 1, title: "an item"))
   }
 }
 

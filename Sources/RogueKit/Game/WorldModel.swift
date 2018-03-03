@@ -47,6 +47,7 @@ class WorldModel: Codable {
   var nextEntityId: Entity = 2
   var povEntity: Entity { return player }
   var playerPos: BLPoint { return positionS[player]!.point }
+  var playerInventory: [Entity] { return inventoryS[player]?.contents ?? [] }
 
   var debugFlags = [String: Int]()
 

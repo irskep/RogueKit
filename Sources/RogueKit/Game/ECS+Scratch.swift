@@ -60,14 +60,16 @@ class CollectibleC: ECSComponent, Codable {
   var entity: Entity?
   var grams: Double = 0
   var liters: Double = 0
+  var title: String = "UNINITIALIZED"
   init(entity: Entity?) {
     self.entity = entity
   }
 
-  convenience init(entity: Entity?, grams: Double, liters: Double) {
+  convenience init(entity: Entity?, grams: Double, liters: Double, title: String) {
     self.init(entity: entity)
     self.grams = grams
     self.liters = liters
+    self.title = title
   }
 }
 class CollectibleS: ECSSystem<CollectibleC>, Codable {

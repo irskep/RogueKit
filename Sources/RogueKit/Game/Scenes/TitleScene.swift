@@ -105,34 +105,3 @@ class TitleScene: Scene {
   }
 }
 
-class SimpleMenu {
-  var rect: BLRect
-  let items: [(Int32, String, () -> Void)]
-
-  init(rect: BLRect, items: [(Int32, String, () -> Void)]) {
-    self.rect = rect
-    self.items = items
-  }
-
-  func draw(in terminal: BLTerminalInterface) {
-    var y = rect.y
-    terminal.foregroundColor = terminal.getColor(a: 255, r: 255, g: 255, b: 255)
-    for (key, label, _) in items {
-      terminal.print(
-        point: BLPoint(x: rect.x, y: y),
-        string: "(\(BLConstant.label(for: key) ?? "???")) \(label)")
-      y += 1
-    }
-  }
-
-  func handle(char: Int32) -> Bool {
-    for (key, _, callback) in items {
-      if key == char {
-        callback()
-        return true
-      }
-    }
-    return false
-  }
-}
-

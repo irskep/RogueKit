@@ -21,6 +21,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AA072D73204B2B9700479A94 /* InventoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D72204B2B9700479A94 /* InventoryScene.swift */; };
+		AA072D74204B2B9700479A94 /* InventoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D72204B2B9700479A94 /* InventoryScene.swift */; };
+		AA072D77204B2CB400479A94 /* SimpleMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D76204B2CB400479A94 /* SimpleMenu.swift */; };
+		AA072D78204B2CB400479A94 /* SimpleMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D76204B2CB400479A94 /* SimpleMenu.swift */; };
 		AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
 		AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
 		AA0DE9052015723A00CCF61F /* CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9042015723A00CCF61F /* CSV.swift */; };
@@ -245,6 +249,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA072D72204B2B9700479A94 /* InventoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryScene.swift; sourceTree = "<group>"; };
+		AA072D76204B2CB400479A94 /* SimpleMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMenu.swift; sourceTree = "<group>"; };
 		AA0DE9012013C87400CCF61F /* LevelMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMap.swift; sourceTree = "<group>"; };
 		AA0DE9042015723A00CCF61F /* CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSV.swift; sourceTree = "<group>"; };
 		AA1CCC892030CF6100BFA85A /* PaletteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteStore.swift; sourceTree = "<group>"; };
@@ -359,9 +365,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA072D75204B2C9600479A94 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				AA072D76204B2CB400479A94 /* SimpleMenu.swift */,
+			);
+			name = UI;
+			path = Sources/RogueKit/UI;
+			sourceTree = SOURCE_ROOT;
+		};
 		AA3DA221200BEC7F00A7CA1B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				AA072D75204B2C9600479A94 /* UI */,
 				AAC6A4EE2049C19C008D971B /* Scenes */,
 				AA3DA2802015B20C00A7CA1B /* ECS.swift */,
 				AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */,
@@ -402,6 +418,7 @@
 				AAC6A4F52049C3F1008D971B /* TitleScene.swift */,
 				AAC6A4EF2049C1C2008D971B /* LoadScene.swift */,
 				AAC6A4F22049C1C9008D971B /* LevelScene.swift */,
+				AA072D72204B2B9700479A94 /* InventoryScene.swift */,
 			);
 			name = Scenes;
 			path = Sources/RogueKit/Game/Scenes;
@@ -844,6 +861,7 @@
 				AA3DA2632012DE0300A7CA1B /* PurePrefabGenerator.swift in Sources */,
 				AA3DA2692012DE0300A7CA1B /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				AAC6A4FA2049C447008D971B /* BearLibTerminalContext.swift in Sources */,
+				AA072D78204B2CB400479A94 /* SimpleMenu.swift in Sources */,
 				AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */,
 				AAC6A4F12049C1C2008D971B /* LoadScene.swift in Sources */,
 				AAC6A5122049EF24008D971B /* AStar.swift in Sources */,
@@ -855,6 +873,7 @@
 				AA3DA2622012DE0300A7CA1B /* Prefab.swift in Sources */,
 				AA0DE9062015723A00CCF61F /* CSV.swift in Sources */,
 				AA3DA2642012DE0300A7CA1B /* Resources.swift in Sources */,
+				AA072D74204B2B9700479A94 /* InventoryScene.swift in Sources */,
 				AA3DA2672012DE0300A7CA1B /* CP437.swift in Sources */,
 				AAC6A5002049CF8C008D971B /* URLs.swift in Sources */,
 				AA3DA2682012DE0300A7CA1B /* DistanceField.swift in Sources */,
@@ -928,9 +947,11 @@
 				OBJ_74 /* PurePrefabGenerator.swift in Sources */,
 				AAC6A4FF2049CF8C008D971B /* URLs.swift in Sources */,
 				AAC6A4FC2049CC60008D971B /* BLConstant+Labels.swift in Sources */,
+				AA072D73204B2B9700479A94 /* InventoryScene.swift in Sources */,
 				OBJ_75 /* Resources.swift in Sources */,
 				AA3DA27E2015B1E300A7CA1B /* WorldModel.swift in Sources */,
 				OBJ_76 /* Array2D.swift in Sources */,
+				AA072D77204B2CB400479A94 /* SimpleMenu.swift in Sources */,
 				AA0DE9052015723A00CCF61F /* CSV.swift in Sources */,
 				OBJ_77 /* BearLibTerminal+Geometry.swift in Sources */,
 				AA3DA228200BF72100A7CA1B /* GeneratorReader.swift in Sources */,

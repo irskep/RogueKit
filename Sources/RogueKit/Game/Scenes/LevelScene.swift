@@ -75,7 +75,8 @@ class LevelScene: Scene {
     var didMove = false
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
       switch terminal.read() {
-      case config.menu: director?.transition(to: TitleScene(resources: resources))
+      case config.keyMenu:
+        director?.transition(to: TitleScene(resources: resources))
       case config.keyLeft:
         worldModel.movePlayer(by: BLPoint(x: -1, y: 0))
         mover.update(cursorPoint: nil)
@@ -95,6 +96,8 @@ class LevelScene: Scene {
       case config.keyWait:
         worldModel.waitPlayer()
         didMove = true
+      case config.keyInventoryOpen:
+        director?.transition(to: InventoryScene(resources: resources, worldModel: worldModel))
 
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {

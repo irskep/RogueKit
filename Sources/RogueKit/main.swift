@@ -1,3 +1,8 @@
+/*
+ Screen is 106x60
+ Map is 80x50
+ */
+
 import Foundation
 import BearLibTerminal
 #if os(OSX)
@@ -10,12 +15,13 @@ struct Config: Codable {
   var keyUp: Int32 = BLConstant.UP
   var keyDown: Int32 = BLConstant.DOWN
   var keyWait: Int32 = BLConstant.SPACE
+  var keyInventoryOpen: Int32 = BLConstant.I
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS
   var keyDebugOmniscience: Int32 = BLConstant._1
 
-  var menu: Int32 = BLConstant.ESCAPE
+  var keyMenu: Int32 = BLConstant.ESCAPE
 }
 
 NSLog("Launched")

@@ -8,7 +8,7 @@
 import Foundation
 import BearLibTerminal
 
-let SAVE_FILE_VERSION: String = "2"
+let SAVE_FILE_VERSION: String = "3"
 
 
 typealias Entity = Int
@@ -43,6 +43,9 @@ class WorldModel: Codable {
   var player: Entity = 1
   var nextEntityId: Entity = 2
   var povEntity: Entity { return player }
+  var playerPos: BLPoint { return positionS[player]!.point }
+
+  var waitingToTransitionToLevelId: String?
 
   subscript(index: Entity) -> PositionC? { return positionS[index] }
   subscript(index: Entity) -> SightC? { return sightS[index] }
@@ -59,6 +62,7 @@ class WorldModel: Codable {
     case activeMapId
     case mapMemory
     case nextEntityId
+    case waitingToTransitionToLevelId
 
     case positionS
     case sightS
@@ -78,6 +82,7 @@ class WorldModel: Codable {
     rngStore = try values.decode(RandomSeedStore.self, forKey: .rngStore)
     player = try values.decode(Entity.self, forKey: .player)
     nextEntityId = try values.decode(Entity.self, forKey: .nextEntityId)
+    waitingToTransitionToLevelId = try values.decode(String.self, forKey: .waitingToTransitionToLevelId)
 
     positionS = try values.decode(PositionS.self, forKey: .positionS)
     sightS = try values.decode(SightS.self, forKey: .sightS)
@@ -95,6 +100,7 @@ class WorldModel: Codable {
     try container.encode(rngStore, forKey: .rngStore)
     try container.encode(player, forKey: .player)
     try container.encode(nextEntityId, forKey: .nextEntityId)
+    try container.encode(waitingToTransitionToLevelId, forKey: .waitingToTransitionToLevelId)
 
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)
@@ -133,6 +139,7 @@ class WorldModel: Codable {
   }
 
   func travel(to newLevelMapId: String) {
+    waitingToTransitionToLevelId = nil
     activeMapId = newLevelMapId
 
     for poi in activeMap.pointsOfInterest {
@@ -148,10 +155,12 @@ class WorldModel: Codable {
   func playerDidTakeAction() {
     updateFOV()
 
+    let playerPoint = positionS[player]!.point
+
     for i in 0..<activeMap.pointsOfInterest.count {
       if activeMap.pointsOfInterest[i].kind == "playerStart" {
         // if we return here, player ends up in the same spot
-        activeMap.pointsOfInterest[i].point = positionS[player]!.point
+        activeMap.pointsOfInterest[i].point = playerPoint
       }
     }
   }
@@ -173,6 +182,22 @@ class WorldModel: Codable {
 
 extension WorldModel {
   func movePlayer(by delta: BLPoint) {
+    let newPoint = playerPos + delta
+
+    if activeMap.cells[newPoint]?.feature == activeMap.featureIdsByName["entrance"],
+      let previousLevel = activeMap.definition.exits["previous"]
+    {
+      self.waitingToTransitionToLevelId = previousLevel
+      return
+    }
+
+    if activeMap.cells[newPoint]?.feature == activeMap.featureIdsByName["exit"],
+      let nextLevel = activeMap.definition.exits["next"]
+    {
+      self.waitingToTransitionToLevelId = nextLevel
+      return
+    }
+
     if self.push(entity: player, by: delta) {
       self.playerDidTakeAction()
     }

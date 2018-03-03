@@ -73,11 +73,11 @@ struct PointOfInterest: Codable {
 
 
 class LevelMap: Codable {
-  let id: String
   let terrains: [Int: Terrain]
   let features: [Int: Feature]
   let featureIdsByName: [String: Int]
   let interactions: [Int: Interaction]
+  let definition: MapDefinition
   var cells: CodableArray2D<MapCell>
   var palette: PaletteStore
 
@@ -97,13 +97,13 @@ class LevelMap: Codable {
   var isPopulated = false
 
   init(
-    id: String,
+    definition: MapDefinition,
     size: BLSize,
     paletteName: String,
     resources: ResourceCollection,
     terminal: BLTerminalInterface) throws
   {
-    self.id = id
+    self.definition = definition
     self.palette = try PaletteStore(terminal: terminal, resources: resources, name: paletteName)
 
     self.terrains = try resources.csvMap(name: "terrain") {
@@ -155,14 +155,19 @@ class LevelMap: Codable {
   }
 
   convenience init(
-    id: String,
+    definition: MapDefinition,
     size: BLSize,
     paletteName: String,
     resources: ResourceCollection,
     terminal: BLTerminalInterface,
     generator: GeneratorProtocol) throws
   {
-    try self.init(id: id, size: size, paletteName: paletteName, resources: resources, terminal: terminal)
+    try self.init(
+      definition: definition,
+      size: size,
+      paletteName: paletteName,
+      resources: resources,
+      terminal: terminal)
     for y in 0..<generator.cells.size.h {
       for x in 0..<generator.cells.size.w {
         let point = BLPoint(x: x, y: y)

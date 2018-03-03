@@ -90,7 +90,8 @@ class PositionS: ECSSystem<PositionC>, Codable {
       return
     }
     if let levelId = c.levelId {
-      cache[levelId]?[c.point] = cache[levelId]?[c.point]?.filter({ $0 != c })
+      let newValue = cache[levelId]?[c.point]?.filter({ $0 != c })
+      cache[levelId]?[c.point] = newValue
     }
     c.levelId = levelId
     c.point = point
@@ -99,7 +100,8 @@ class PositionS: ECSSystem<PositionC>, Codable {
 
   override func remove(entity: Entity) {
     if let c = self.get(entity), let levelId = c.levelId {
-      cache[levelId]?[c.point] = cache[levelId]?[c.point]?.filter({ $0 != c })
+      let newValue = cache[levelId]?[c.point]?.filter({ $0 != c })
+      cache[levelId]?[c.point] = newValue
     }
     super.remove(entity: entity)
   }

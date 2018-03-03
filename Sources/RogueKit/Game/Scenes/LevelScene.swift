@@ -112,6 +112,10 @@ class LevelScene: Scene {
     }
 
     if isDirty {
+      if let nextLevelId = worldModel.waitingToTransitionToLevelId {
+        director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: nextLevelId))
+      }
+
       terminal.layer = 0
       terminal.clear()
       worldModel.draw(in: terminal, at: BLPoint.zero)

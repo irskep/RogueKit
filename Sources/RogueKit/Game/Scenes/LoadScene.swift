@@ -49,7 +49,7 @@ class LoadScene: Scene {
 
       if result != nil {
         let levelMap = try LevelMap(
-          id: self.id,
+          definition: worldModel.mapDefinitions[self.id]!,
           size: gen.cells.size,
           paletteName: "default",
           resources: resources,

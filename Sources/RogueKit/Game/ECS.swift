@@ -32,6 +32,11 @@ private func binarySearch<T: Comparable>(_ a: [T], key: T, range: Range<Int>) ->
 }
 
 
+protocol ECSRemovable {
+  func remove(entity: Entity)
+}
+
+
 protocol ECSComponent: class, Comparable {
   var entity: Int? { get set }
 }
@@ -47,7 +52,7 @@ extension ECSComponent {
 }
 
 
-class ECSSystem<T: ECSComponent & Codable> {
+class ECSSystem<T: ECSComponent & Codable>: ECSRemovable {
   private var e2c = [Entity: T]()
 
   // It would be more efficient to use a linked list here, but for now we just

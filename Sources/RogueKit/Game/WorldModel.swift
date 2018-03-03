@@ -119,6 +119,16 @@ class WorldModel: Codable {
     try container.encode(moveAfterPlayerS, forKey: .moveAfterPlayerS)
   }
 
+  var _allSystems: [ECSRemovable] {
+    return [
+      positionS,
+      sightS,
+      fovS,
+      spriteS,
+      moveAfterPlayerS,
+    ]
+  }
+
   init(rngStore: RandomSeedStore, mapDefinitions: [MapDefinition], activeMapId: String) {
     self.rngStore = rngStore
     for md in mapDefinitions {
@@ -193,6 +203,13 @@ class WorldModel: Codable {
     return val
   }
 
+  func remove(entity: Entity) {
+    print("remove", entity)
+    for s in _allSystems {
+      s.remove(entity: entity)
+    }
+  }
+
   func updateFOV() {
     guard maps[activeMapId] != nil else { return }
     if let fovC = fovS[player] {
@@ -204,6 +221,19 @@ class WorldModel: Codable {
 }
 
 extension WorldModel {
+  private func _mob(at point: BLPoint) -> Entity? {
+    return positionS
+      .all(in: activeMapId, at: point)
+      .flatMap({ $0.entity })
+      .flatMap({ self.moveAfterPlayerS[$0] })
+      .first?
+      .entity
+  }
+
+  func waitPlayer() {
+    self.playerDidTakeAction()
+  }
+
   func movePlayer(by delta: BLPoint) {
     let newPoint = playerPos + delta
 
@@ -230,11 +260,11 @@ extension WorldModel {
     guard let point = positionS.get(entity)?.point else { return false }
     let newPoint = point + delta
 
-    if may(entity: entity, moveTo: newPoint) {
-      self.move(entity: entity, by: delta)
-      return true
-    } else if may(entity: entity, interactAt: newPoint) {
+    if may(entity: entity, interactAt: newPoint) {
       self.interact(entity: entity, with: newPoint)
+      return true
+    } else if may(entity: entity, moveTo: newPoint) {
+      self.move(entity: entity, by: delta)
       return true
     } else {
       return false
@@ -244,7 +274,7 @@ extension WorldModel {
   func move(entity: Entity, by delta: BLPoint) {
     guard let point = positionS.get(entity)?.point else { return }
     let newPoint = point + delta
-    positionS.get(entity)?.point = newPoint
+    positionS.move(entity: entity, toPoint: newPoint, onLevel: activeMapId)
   }
 
   func may(entity: Entity, moveTo point: BLPoint) -> Bool {
@@ -253,7 +283,14 @@ extension WorldModel {
 
   func may(entity: Entity, interactAt point: BLPoint) -> Bool {
     guard let cell = activeMap.cells[point] else { return false }
-    return self.activeMap.interactions[cell.feature] != nil
+
+    // feature we can interact with?
+    if self.activeMap.interactions[cell.feature] != nil { return true }
+
+    // mob we can interact with?
+    if _mob(at: point) != nil { return true}
+
+    return false
   }
 
   func can(entity: Entity, see point: BLPoint) -> Bool {
@@ -267,7 +304,10 @@ extension WorldModel {
 
   func interact(entity: Entity, with point: BLPoint) {
     guard let cell = activeMap.cells[point] else { return }
-    if let interaction = activeMap.interactions[cell.feature] {
+    if let mob = _mob(at: point) {
+      // TODO: real interaction system
+      self.remove(entity: mob)
+    } else if let interaction = activeMap.interactions[cell.feature] {
       run(interaction: interaction, entity: entity, point: point)
     }
   }
@@ -283,7 +323,7 @@ extension WorldModel {
       fatalError("Can't figure out line: \(interaction.script)")
     }
     if !interaction.blocksMovement {
-      positionS.get(entity)?.point = point
+      positionS.move(entity: entity, toPoint: point, onLevel: activeMapId)
     }
   }
 }
@@ -303,7 +343,7 @@ extension WorldModel: BLTDrawable {
     }
 
     terminal.foregroundColor = activeMap.palette["lightgreen"]
-    for posC in positionS.allInLevel(levelId: self.activeMapId)
+    for posC in positionS.all(in: self.activeMapId)
       where (self.can(entity: povEntity, see: posC.point) || isOmniscient)
     {
       guard let entity = posC.entity,

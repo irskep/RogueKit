@@ -9,6 +9,7 @@ struct Config: Codable {
   var keyRight: Int32 = BLConstant.RIGHT
   var keyUp: Int32 = BLConstant.UP
   var keyDown: Int32 = BLConstant.DOWN
+  var keyWait: Int32 = BLConstant.SPACE
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS

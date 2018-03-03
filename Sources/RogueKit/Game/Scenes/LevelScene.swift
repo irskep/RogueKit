@@ -92,6 +92,9 @@ class LevelScene: Scene {
         worldModel.movePlayer(by: BLPoint(x: 0, y: 1))
         mover.update(cursorPoint: nil)
         didMove = true
+      case config.keyWait:
+        worldModel.waitPlayer()
+        didMove = true
 
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {
@@ -125,7 +128,7 @@ class LevelScene: Scene {
       return
     }
 
-    if isDirty {
+    if isDirty || didMove {
       terminal.layer = 0
       terminal.clear()
       worldModel.draw(in: terminal, at: BLPoint.zero)

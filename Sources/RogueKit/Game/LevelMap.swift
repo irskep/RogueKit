@@ -177,9 +177,18 @@ class LevelMap: Codable {
   }
 
   func getIsPassable(entity: Entity, point: BLPoint) -> Bool {
-    guard let cell = self.cells[point] else { return false }
-    return self.terrains[cell.terrain]?.walkable == true &&
-      (self.features[cell.feature] == nil || self.features[cell.feature]?.walkable == true)
+    return self.terrain(at: point)?.walkable == true &&
+      (self.feature(at: point) == nil || self.feature(at: point)?.walkable == true)
+  }
+
+  func terrain(at point: BLPoint) -> Terrain? {
+    guard let cell = self.cells[point] else { return nil }
+    return self.terrains[cell.terrain]
+  }
+
+  func feature(at point: BLPoint) -> Feature? {
+    guard let cell = self.cells[point] else { return nil }
+    return self.features[cell.feature]
   }
 }
 

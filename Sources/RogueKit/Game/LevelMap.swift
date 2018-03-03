@@ -66,6 +66,12 @@ extension MapCell {
 }
 
 
+struct PointOfInterest: Codable {
+  let kind: String
+  var point: BLPoint
+}
+
+
 class LevelMap: Codable {
   let id: String
   let terrains: [Int: Terrain]
@@ -87,7 +93,7 @@ class LevelMap: Codable {
 
   var mapMemory = Set<BLPoint>()
 
-  var pointsOfInterest = [String: BLPoint]()
+  var pointsOfInterest = [PointOfInterest]()
   var isPopulated = false
 
   init(

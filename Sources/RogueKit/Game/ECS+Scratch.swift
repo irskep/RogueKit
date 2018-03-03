@@ -84,7 +84,7 @@ class PositionS: ECSSystem<PositionC>, Codable {
     _insert(component)
   }
 
-  func move(entity: Entity, toLevel levelId: String) {
+  func move(entity: Entity, toPoint point: BLPoint, onLevel levelId: String) {
     guard let c = self[entity] else {
       assertionFailure("Missing component")
       return
@@ -93,6 +93,7 @@ class PositionS: ECSSystem<PositionC>, Codable {
       cache[levelId]?[c.point] = cache[levelId]?[c.point]?.filter({ $0 != c })
     }
     c.levelId = levelId
+    c.point = point
     _insert(c)
   }
 

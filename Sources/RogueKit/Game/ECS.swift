@@ -88,6 +88,13 @@ class ECSSystem<T: ECSComponent & Codable> {
     })
   }
 
+  func add(component: T) {
+    guard let entity = component.entity else {
+      fatalError("Can't add a component this way w/o an entity on it")
+    }
+    self.add(entity: entity, component: component)
+  }
+
   func remove(entity: Entity) {
     guard let c = e2c[entity] else { return }
     e2c[entity] = nil

@@ -120,16 +120,46 @@ class WorldModel: Codable {
       .add(entity: player, component: SpriteC(entity: player, int: nil, str: "@"))
   }
 
+  func applyPOIs() {
+    for poi in activeMap.pointsOfInterest {
+      switch poi.kind {
+      case "entrance":
+        activeMap.cells[poi.point]?.feature = activeMap.featureIdsByName["entrance"]!
+      case "exit":
+        activeMap.cells[poi.point]?.feature = activeMap.featureIdsByName["exit"]!
+      default: break
+      }
+    }
+  }
+
   func travel(to newLevelMapId: String) {
     activeMapId = newLevelMapId
-    positionS[player]!.point = activeMap.pointsOfInterest["playerStart"]!
-    positionS.move(entity: player, toLevel: newLevelMapId)
+
+    for poi in activeMap.pointsOfInterest {
+      switch poi.kind {
+      case "playerStart":
+        positionS.move(entity: player, toPoint: poi.point, onLevel: newLevelMapId)
+      default: break
+      }
+    }
     updateFOV()
   }
 
   func playerDidTakeAction() {
     updateFOV()
-    activeMap.pointsOfInterest["playerStart"] = positionS[player]!.point
+
+    for i in 0..<activeMap.pointsOfInterest.count {
+      if activeMap.pointsOfInterest[i].kind == "playerStart" {
+        // if we return here, player ends up in the same spot
+        activeMap.pointsOfInterest[i].point = positionS[player]!.point
+      }
+    }
+  }
+
+  func addEntity() -> Entity {
+    let val = nextEntityId
+    nextEntityId += 1
+    return val
   }
 
   func updateFOV() {

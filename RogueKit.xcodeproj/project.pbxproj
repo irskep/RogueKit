@@ -71,6 +71,8 @@
 		AA3DA2822015B20C00A7CA1B /* ECS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA2802015B20C00A7CA1B /* ECS.swift */; };
 		AA3DA28420163C3700A7CA1B /* ECS+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */; };
 		AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */; };
+		AA90B097204A234400A59645 /* Assemblies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B095204A230F00A59645 /* Assemblies.swift */; };
+		AA90B098204A234500A59645 /* Assemblies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B095204A230F00A59645 /* Assemblies.swift */; };
 		AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
 		AAC6A4E720433B71008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
 		AAC6A4E920488916008D971B /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E820488916008D971B /* Director.swift */; };
@@ -262,6 +264,7 @@
 		AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldModel.swift; sourceTree = "<group>"; };
 		AA3DA2802015B20C00A7CA1B /* ECS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECS.swift; sourceTree = "<group>"; };
 		AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECS+Scratch.swift"; sourceTree = "<group>"; };
+		AA90B095204A230F00A59645 /* Assemblies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assemblies.swift; sourceTree = "<group>"; };
 		AAC6A4E420433B5F008D971B /* PCG32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCG32.swift; sourceTree = "<group>"; };
 		AAC6A4E820488916008D971B /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
 		AAC6A4EB20489374008D971B /* RunLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoop.swift; sourceTree = "<group>"; };
@@ -363,6 +366,7 @@
 				OBJ_14 /* Resources.swift */,
 				AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */,
 				AAC6A4E820488916008D971B /* Director.swift */,
+				AA90B095204A230F00A59645 /* Assemblies.swift */,
 			);
 			name = Game;
 			path = Sources/RogueKit/Game;
@@ -829,6 +833,7 @@
 				AAC6A4E720433B71008D971B /* PCG32.swift in Sources */,
 				AAC6A4FD2049CC60008D971B /* BLConstant+Labels.swift in Sources */,
 				AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */,
+				AA90B098204A234500A59645 /* Assemblies.swift in Sources */,
 				AA3DA26D2012DE0300A7CA1B /* RKColor.swift in Sources */,
 				AA3DA2632012DE0300A7CA1B /* PurePrefabGenerator.swift in Sources */,
 				AA3DA2692012DE0300A7CA1B /* REXPaintImage+BearLibTerminal.swift in Sources */,
@@ -912,6 +917,7 @@
 			files = (
 				OBJ_72 /* RecursiveShadowcastingFOVProvider.swift in Sources */,
 				OBJ_73 /* Prefab.swift in Sources */,
+				AA90B097204A234400A59645 /* Assemblies.swift in Sources */,
 				OBJ_74 /* PurePrefabGenerator.swift in Sources */,
 				AAC6A4FF2049CF8C008D971B /* URLs.swift in Sources */,
 				AAC6A4FC2049CC60008D971B /* BLConstant+Labels.swift in Sources */,

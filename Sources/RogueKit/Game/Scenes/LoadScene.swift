@@ -55,10 +55,34 @@ class LoadScene: Scene {
           resources: resources,
           terminal: terminal,
           generator: gen)
-        levelMap.pointsOfInterest["playerStart"] = rng.choice(levelMap.floors)
+
+        var playerStart = rng.choice(levelMap.floors)
+        var entrance: BLPoint? = nil
+        while entrance == nil {
+          let entranceOptions = playerStart
+            .getNeighbors(bounds: BLRect(size: levelMap.size), diagonals: false)
+            .filter({
+              guard let cell = levelMap.cells[$0] else { return false }
+              return levelMap.features[cell.feature]?.walkable != false &&
+                levelMap.terrains[cell.terrain]?.walkable == true
+            })
+          if entranceOptions.isEmpty {
+            playerStart = rng.choice(levelMap.floors)
+          } else {
+            entrance = rng.choice(entranceOptions)
+          }
+        }
+        
+        levelMap.pointsOfInterest = [
+          PointOfInterest(kind: "playerStart", point: playerStart),
+          PointOfInterest(kind: "enemy", point: rng.choice(levelMap.floors)),
+          PointOfInterest(kind: "exit", point: rng.choice(levelMap.floors)),
+          PointOfInterest(kind: "entrance", point: entrance!),
+        ]
         levelMap.isPopulated = true
         self.worldModel.maps[self.id] = levelMap
         self.worldModel.travel(to: self.id)
+        self.worldModel.applyPOIs()
         self.director?.transition(to: LevelScene(resources: self.resources, worldModel: self.worldModel))
       }
     }

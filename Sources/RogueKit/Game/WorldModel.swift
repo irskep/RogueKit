@@ -376,23 +376,27 @@ extension WorldModel: BLTDrawable {
     }
 
     terminal.foregroundColor = activeMap.palette["lightgreen"]
-    positionS.all(in: activeMapId)
-      .filter({ isOmniscient || self.can(entity: povEntity, see: $0.point) })
-      .flatMap({
-        (posC: PositionC) -> (PositionC, SpriteC)? in
-        guard let e = posC.entity else { return nil }
-        guard let spriteC = self.spriteS[e] else { return nil }
-        return (posC, spriteC)
-      })
-      .sorted(by: { $0.1.z < $1.1.z })
-      .forEach({
-        (posC, spriteC) in
-        if let int = spriteC.int {
-          terminal.put(point: posC.point, code: int)
-        } else if let str = spriteC.str {
-          terminal.print(point: posC.point, string: str)
-        }
-      })
+
+    let positionCs = positionS.all(in: activeMapId, at: point)
+    guard positionCs.count > 0 else { return }
+    var toDraw = [SpriteC]()
+    for posC in positionCs {
+      guard isOmniscient || self.can(entity: povEntity, see: point),
+        let e = posC.entity,
+        let spriteC = spriteS[e]
+        else { continue }
+      toDraw.append(spriteC)
+    }
+    if toDraw.count > 1 {
+      toDraw.sort(by: { $0.z < $1.z })
+    }
+    for spriteC in toDraw {
+      if let int = spriteC.int {
+        terminal.put(point: point, code: int)
+      } else if let str = spriteC.str {
+        terminal.print(point: point, string: str)
+      }
+    }
   }
 
   var size: BLSize { return activeMap.size }

@@ -213,12 +213,8 @@ class PositionS: ECSSystem<PositionC>, Codable {
     super.remove(entity: entity)
   }
 
-  func all(in levelId: String) -> [PositionC] {
-    if let values = cache[levelId]?.values {
-      return Array(values.flatMap({ $0 }))
-    } else {
-      return []
-    }
+  func all(in levelId: String) -> [BLPoint: [PositionC]]? {
+    return cache[levelId]
   }
 
   func all(in levelId: String, at point: BLPoint) -> [PositionC] {

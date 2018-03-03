@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BearLibTerminal
 
 
 enum ResourceError: Error {
@@ -46,6 +47,10 @@ class ResourceCollection: ResourceCollectionProtocol {
       .sprites
       .map({ Prefab(sprite: $0) })
       .map({ (p: Prefab) -> (String, Prefab) in (p.sprite.name, p) }))
+  }()
+
+  lazy var defaultPalette: PaletteStore = {
+    try! PaletteStore(terminal: BLTerminal.main, resources: self, name: "default")
   }()
 
   func csv<T>(name: String, mapper: @escaping (StringBox) -> T) throws -> [T] {

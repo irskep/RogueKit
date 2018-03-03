@@ -12,6 +12,7 @@ struct Config: Codable {
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS
+  var keyDebugOmniscience: Int32 = BLConstant._1
 
   var menu: Int32 = BLConstant.ESCAPE
 }
@@ -64,10 +65,14 @@ let director = SteveRLDirector(terminal: terminal, configBlock: {
   // Move the window to the upper right corner of the screen so it doesn't
   // block Xcode
   terminal.refresh()
-  if let window = NSApp.windows.first, let screen = window.screen {
+  if let window = NSApp.windows.first,
+    let screen = window.screen,
+    // ...but only do that if we're probably on my computer
+    FileManager.default.fileExists(atPath: "/Users/steve/_d/games/RogueKit/Readme.md")
+  {
     window.setFrameOrigin(NSPoint(
-      x: screen.frame.size.width - window.frame.size.width,
-      y: screen.frame.size.height - (NSApp.mainMenu?.menuBarHeight ?? 20)))
+      x: screen.frame.size.width - window.frame.size.width - 11,
+      y: screen.frame.size.height - window.frame.size.height - 9 - (NSApp.mainMenu?.menuBarHeight ?? 20)))
   }
 #endif
 

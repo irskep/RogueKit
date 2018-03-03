@@ -265,6 +265,7 @@
 		AA3DA2802015B20C00A7CA1B /* ECS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECS.swift; sourceTree = "<group>"; };
 		AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECS+Scratch.swift"; sourceTree = "<group>"; };
 		AA90B095204A230F00A59645 /* Assemblies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assemblies.swift; sourceTree = "<group>"; };
+		AA90B099204A305D00A59645 /* itch_mac.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = itch_mac.sh; sourceTree = "<group>"; };
 		AAC6A4E420433B5F008D971B /* PCG32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCG32.swift; sourceTree = "<group>"; };
 		AAC6A4E820488916008D971B /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
 		AAC6A4EB20489374008D971B /* RunLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoop.swift; sourceTree = "<group>"; };
@@ -533,6 +534,7 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				AA90B099204A305D00A59645 /* itch_mac.sh */,
 				AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */,
 				AA3DA1F1200BE81200A7CA1B /* Makefile */,
 				AA3DA1F0200BE81200A7CA1B /* Package.resolved */,

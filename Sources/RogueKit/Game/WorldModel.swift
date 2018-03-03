@@ -45,6 +45,8 @@ class WorldModel: Codable {
   var povEntity: Entity { return player }
   var playerPos: BLPoint { return positionS[player]!.point }
 
+  var debugFlags = [String: Int]()
+
   var waitingToTransitionToLevelId: String?
 
   subscript(index: Entity) -> PositionC? { return positionS[index] }
@@ -68,6 +70,7 @@ class WorldModel: Codable {
     case sightS
     case fovS
     case spriteS
+    case debugFlags
   }
 
   required init(from decoder: Decoder) throws {
@@ -82,7 +85,8 @@ class WorldModel: Codable {
     rngStore = try values.decode(RandomSeedStore.self, forKey: .rngStore)
     player = try values.decode(Entity.self, forKey: .player)
     nextEntityId = try values.decode(Entity.self, forKey: .nextEntityId)
-    waitingToTransitionToLevelId = try values.decode(String.self, forKey: .waitingToTransitionToLevelId)
+    waitingToTransitionToLevelId = try? values.decode(String.self, forKey: .waitingToTransitionToLevelId)
+    debugFlags = try values.decode([String: Int].self, forKey: .debugFlags)
 
     positionS = try values.decode(PositionS.self, forKey: .positionS)
     sightS = try values.decode(SightS.self, forKey: .sightS)
@@ -101,6 +105,7 @@ class WorldModel: Codable {
     try container.encode(player, forKey: .player)
     try container.encode(nextEntityId, forKey: .nextEntityId)
     try container.encode(waitingToTransitionToLevelId, forKey: .waitingToTransitionToLevelId)
+    try container.encode(debugFlags, forKey: .debugFlags)
 
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)
@@ -267,7 +272,9 @@ extension WorldModel {
 
 extension WorldModel: BLTDrawable {
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface) {
-    if self.can(entity: povEntity, see: point) {
+    let isOmniscient = debugFlags["omniscient"] == 1
+
+    if self.can(entity: povEntity, see: point) || isOmniscient {
       activeMap.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: true)
     } else if activeMap.mapMemory.contains(point) {
       activeMap.draw(layer: layer, offset: offset, point: point, terminal: terminal, live: false)
@@ -279,7 +286,7 @@ extension WorldModel: BLTDrawable {
 
     terminal.foregroundColor = activeMap.palette["lightgreen"]
     for posC in positionS.allInLevel(levelId: self.activeMapId)
-      where self.can(entity: povEntity, see: posC.point)
+      where (self.can(entity: povEntity, see: posC.point) || isOmniscient)
     {
       guard let entity = posC.entity,
         let spriteC = spriteS[entity]

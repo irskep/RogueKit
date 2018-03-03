@@ -62,8 +62,6 @@ class LevelScene: Scene {
   let worldModel: WorldModel
   let resources: ResourceCollection
 
-  var isDirty = false
-
   lazy var mover: AStarMover = { return AStarMover(worldModel: self.worldModel) }()
   var cursorPoint: BLPoint = BLPoint.zero
 
@@ -73,22 +71,28 @@ class LevelScene: Scene {
   }
 
   override func update(terminal: BLTerminalInterface) {
-    isDirty = true
+    var isDirty = true
+    var didMove = false
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
       switch terminal.read() {
       case config.menu: director?.transition(to: TitleScene(resources: resources))
       case config.keyLeft:
         worldModel.movePlayer(by: BLPoint(x: -1, y: 0))
         mover.update(cursorPoint: nil)
+        didMove = true
       case config.keyRight:
         worldModel.movePlayer(by: BLPoint(x: 1, y: 0))
         mover.update(cursorPoint: nil)
+        didMove = true
       case config.keyUp:
         worldModel.movePlayer(by: BLPoint(x: 0, y: -1))
         mover.update(cursorPoint: nil)
+        didMove = true
       case config.keyDown:
         worldModel.movePlayer(by: BLPoint(x: 0, y: 1))
         mover.update(cursorPoint: nil)
+        didMove = true
+
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {
           director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))
@@ -97,6 +101,11 @@ class LevelScene: Scene {
         if let id = worldModel.exits["next"] {
           director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))
         }
+      case config.keyDebugOmniscience:
+        if terminal.check(BLConstant.SHIFT) {
+          worldModel.debugFlags["omniscient"] = worldModel.debugFlags["omniscient"] == 1 ? nil : 1
+        }
+
       case BLConstant.MOUSE_MOVE:
         cursorPoint.x = terminal.state(BLConstant.MOUSE_X)
         cursorPoint.y = terminal.state(BLConstant.MOUSE_Y)
@@ -110,18 +119,21 @@ class LevelScene: Scene {
         isDirty = false
       }
     }
+    if let nextLevelId = worldModel.waitingToTransitionToLevelId {
+      didMove = true
+      director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: nextLevelId))
+      return
+    }
 
     if isDirty {
-      if let nextLevelId = worldModel.waitingToTransitionToLevelId {
-        director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: nextLevelId))
-      }
-
       terminal.layer = 0
       terminal.clear()
       worldModel.draw(in: terminal, at: BLPoint.zero)
       mover.draw(in: terminal)
       terminal.refresh()
+    }
 
+    if didMove {
       if let gameURL = URLs.gameURL {
         do {
           let data = try JSONEncoder().encode(worldModel)

@@ -9,6 +9,9 @@ import Foundation
 import BearLibTerminal
 
 
+// MARK: Sprite
+
+
 class SpriteC: ECSComponent, Codable {
   var entity: Entity?
   var int: BLInt?
@@ -31,6 +34,9 @@ class SpriteS: ECSSystem<SpriteC>, Codable {
   required init() { super.init() }
   override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
 }
+
+
+// MARK: Position
 
 
 class PositionC: ECSComponent, Codable, Equatable {
@@ -116,6 +122,9 @@ class PositionS: ECSSystem<PositionC>, Codable {
 }
 
 
+// MARK: Sight
+
+
 class SightC: ECSComponent, Codable {
   var isBlind = false
   var entity: Entity?
@@ -133,6 +142,9 @@ class SightS: ECSSystem<SightC>, Codable {
   required init() { super.init() }
   override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
 }
+
+
+// MARK: FOV
 
 
 class FOVC: ECSComponent, Codable {

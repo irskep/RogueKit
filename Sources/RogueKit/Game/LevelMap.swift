@@ -81,10 +81,22 @@ class LevelMap: Codable {
   var cells: CodableArray2D<MapCell>
   var palette: PaletteStore
 
+  private func _isEmptyFloor(point: BLPoint) -> Bool {
+    return cells[point]?.terrain == 1 && cells[point]?.feature == 0
+  }
+
   lazy var floors: [BLPoint] = {
+    return Array(BLRect(size: size).filter({ self._isEmptyFloor(point: $0) }))
+  }()
+
+  lazy var floorsWithMargins: [BLPoint] = {
     var points = [BLPoint]()
     for point in BLRect(size: size) {
-      if cells[point]?.terrain == 1 {
+      if !_isEmptyFloor(point: point) { continue }
+      let emptyNeighbors = point
+        .getNeighbors(bounds: BLRect(size: cells.size), diagonals: false)
+        .filter({ self._isEmptyFloor(point: $0) })
+      if emptyNeighbors.count == 4 {
         points.append(point)
       }
     }

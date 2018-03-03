@@ -9,6 +9,36 @@ import Foundation
 import BearLibTerminal
 
 
+// MARK: Items
+
+
+class CollectibleC: ECSComponent, Codable {
+  var entity: Entity?
+  var grams: Int = 0
+  var liters: Int = 0
+
+  enum BehaviorType: String {
+    case standStill = "standStill"
+    case walkRandomly = "walkRandomly"
+  }
+
+  init(entity: Entity?) {
+    self.entity = entity
+  }
+
+  convenience init(entity: Entity?, grams: Int, liters: Int) {
+    self.init(entity: entity)
+    self.grams = grams
+    self.liters = liters
+  }
+}
+class CollectibleS: ECSSystem<CollectibleC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
 // MARK: AI or something
 
 
@@ -45,6 +75,7 @@ class SpriteC: ECSComponent, Codable {
   var entity: Entity?
   var int: BLInt?
   var str: String?
+  var z: Int = 0
 
   init(entity: Entity?) {
     self.entity = entity
@@ -52,10 +83,11 @@ class SpriteC: ECSComponent, Codable {
     self.str = "?"
   }
 
-  convenience init(entity: Entity?, int: BLInt?, str: String?) {
+  convenience init(entity: Entity?, int: BLInt?, str: String?, z: Int) {
     self.init(entity: entity)
     self.int = int
     self.str = str
+    self.z = z
   }
 }
 class SpriteS: ECSSystem<SpriteC>, Codable {

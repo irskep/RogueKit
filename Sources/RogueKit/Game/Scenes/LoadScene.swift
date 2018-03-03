@@ -56,33 +56,30 @@ class LoadScene: Scene {
           terminal: terminal,
           generator: gen)
 
-        var playerStart = rng.choice(levelMap.floors)
-        var entrance: BLPoint? = nil
-        
-        while entrance == nil {
-          let entranceOptions = playerStart
-            .getNeighbors(bounds: BLRect(size: levelMap.size), diagonals: false)
-            .filter({
-              guard let cell = levelMap.cells[$0] else { return false }
-              return levelMap.features[cell.feature]?.walkable != false &&
-                levelMap.terrains[cell.terrain]?.walkable == true
-            })
-          if entranceOptions.isEmpty {
-            playerStart = rng.choice(levelMap.floors)
-          } else {
-            entrance = rng.choice(entranceOptions)
-          }
-        }
+        var floorsWithMargins = Array(levelMap.floorsWithMargins)
+        rng.shuffleInPlace(&floorsWithMargins)
+        let entrance = floorsWithMargins[0]
+        let exit = floorsWithMargins[1]
+        let playerStart = rng.choice(Array(floorsWithMargins[0]
+          .getNeighbors(bounds: BLRect(size: levelMap.size), diagonals: false)))
 
-        var floors = levelMap.floors
+        let blacklist = [entrance, exit]
+        var floors = levelMap.floors.filter({ !blacklist.contains($0) })
         rng.shuffleInPlace(&floors)
         
         levelMap.pointsOfInterest = [
           PointOfInterest(kind: "playerStart", point: playerStart),
-          PointOfInterest(kind: "entrance", point: entrance!),
-          PointOfInterest(kind: "exit", point: floors[0]),
-          PointOfInterest(kind: "enemy", point: floors[1]),
+          PointOfInterest(kind: "enemy", point: floors[0]),
+          PointOfInterest(kind: "item", point: floors[1]),
+          PointOfInterest(kind: "item", point: floors[2]),
+          PointOfInterest(kind: "item", point: floors[3]),
         ]
+        if levelMap.definition.exits["previous"] != nil {
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "entrance", point: entrance))
+        }
+        if levelMap.definition.exits["next"] != nil {
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exit))
+        }
 
         levelMap.isPopulated = true
 

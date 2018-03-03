@@ -23,7 +23,7 @@ class PlayerAssembly: EntityAssemblyProtocol {
     worldModel.fovS.add(component:
       FOVC(entity: entity))
     worldModel.spriteS.add(component:
-      SpriteC(entity: entity, int: nil, str: "@"))
+      SpriteC(entity: entity, int: nil, str: "@", z: 100))
   }
 }
 
@@ -35,9 +35,21 @@ class EnemyAssembly: EntityAssemblyProtocol {
     worldModel.positionS.add(component:
       PositionC(entity: entity, point: point ?? BLPoint.zero, levelId: levelId))
     worldModel.spriteS.add(component:
-      SpriteC(entity: entity, int: nil, str: "E"))
+      SpriteC(entity: entity, int: nil, str: "E", z: 2))
     worldModel.moveAfterPlayerS.add(component:
       MoveAfterPlayerC(entity: entity, behaviorType: .walkRandomly))
+  }
+}
+
+
+class ItemAssembly: EntityAssemblyProtocol {
+  func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?) {
+    worldModel.positionS.add(component:
+      PositionC(entity: entity, point: point ?? BLPoint.zero, levelId: levelId))
+    worldModel.spriteS.add(component:
+      SpriteC(entity: entity, int: nil, str: "i", z: 1))
+    worldModel.collectibleS.add(component:
+      CollectibleC(entity: entity, grams: 1000, liters: 1))
   }
 }
 
@@ -45,5 +57,6 @@ class EnemyAssembly: EntityAssemblyProtocol {
 let ASSEMBLIES: [String: EntityAssemblyProtocol] = {
   return [
     "enemy": EnemyAssembly(),
+    "item": ItemAssembly(),
   ]
 }()

@@ -40,6 +40,7 @@ class WorldModel: Codable {
   var fovS = FOVS()
   var spriteS = SpriteS()
   var moveAfterPlayerS = MoveAfterPlayerS()
+  var collectibleS = CollectibleS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -73,6 +74,7 @@ class WorldModel: Codable {
     case fovS
     case spriteS
     case moveAfterPlayerS
+    case collectibleS
 
     case debugFlags
   }
@@ -97,6 +99,7 @@ class WorldModel: Codable {
     fovS = try values.decode(FOVS.self, forKey: .fovS)
     spriteS = try values.decode(SpriteS.self, forKey: .spriteS)
     moveAfterPlayerS = try values.decode(MoveAfterPlayerS.self, forKey: .moveAfterPlayerS)
+    collectibleS = try values.decode(CollectibleS.self, forKey: .collectibleS)
 
   }
 
@@ -117,6 +120,7 @@ class WorldModel: Codable {
     try container.encode(fovS, forKey: .fovS)
     try container.encode(spriteS, forKey: .spriteS)
     try container.encode(moveAfterPlayerS, forKey: .moveAfterPlayerS)
+    try container.encode(collectibleS, forKey: .collectibleS)
   }
 
   var _allSystems: [ECSRemovable] {
@@ -126,6 +130,7 @@ class WorldModel: Codable {
       fovS,
       spriteS,
       moveAfterPlayerS,
+      collectibleS,
     ]
   }
 
@@ -187,6 +192,7 @@ class WorldModel: Codable {
     }
 
     for c in moveAfterPlayerS.all {
+      if let entity = c.entity, !isOnActiveMap(entity: entity) { continue }
       switch c.behaviorType {
       case .standStill: break
       case .walkRandomly where c.entity != nil:
@@ -195,6 +201,10 @@ class WorldModel: Codable {
         assertionFailure("Can't handle this case")
       }
     }
+  }
+
+  func isOnActiveMap(entity: Entity) -> Bool {
+    return positionS[entity]?.levelId == activeMapId
   }
 
   func addEntity() -> Entity {

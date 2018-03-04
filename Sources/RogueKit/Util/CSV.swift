@@ -27,19 +27,30 @@ class StringBox {
   subscript(index: String) -> Bool { return self.bool(index) }
 
   func int(_ index: String) -> Int {
-    return Int(values[labelToIndex[index]!])!
+    let s = self.string(index)
+    if s.isEmpty { return 0 }
+    return Int(s) ?? 0
   }
 
   func double(_ index: String) -> Double {
-    return Double(values[labelToIndex[index]!])!
+    let s = self.string(index)
+    if s.isEmpty { return 0 }
+    return Double(s) ?? 0
   }
 
   func string(_ index: String) -> String {
-    return values[labelToIndex[index]!]
+    guard let valueIndex = labelToIndex[index] else { fatalError("Index out of range") }
+    if valueIndex >= values.count {
+      return ""
+    } else {
+      return values[labelToIndex[index]!]
+    }
   }
 
   func bool(_ index: String) -> Bool {
-    return values[labelToIndex[index]!].lowercased() == "true"
+    let s = self.string(index)
+    if s.isEmpty { return false }
+    return s.lowercased() == "true"
   }
 }
 

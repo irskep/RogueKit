@@ -23,7 +23,7 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
           let e = worldModel.playerInventory[$0]
           return (
             key,
-            self.worldModel.collectibleS[e]?.title ?? "NOT FOUND",
+            self.worldModel.nameS[e]?.name ?? "NOT FOUND",
             { self.selectItem(entity: e) })
         }))
   }()

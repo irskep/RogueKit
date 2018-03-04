@@ -12,14 +12,12 @@ let MENU_W: BLInt = 26
 
 
 private extension StatBucket {
-  func draw(in terminal: BLTerminalInterface, at point: BLPoint) {
-    let ctx = terminal.transform(offset: point)
-    ctx.print(point: BLPoint(x: 0, y: 0), string: """
+  var description: String { return """
       HP: \(Int(hp))
       Fatigue: \(Int(fatigue))
       Reflex: \(Int(reflex))
       Strength: \(Int(strength))
-      """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
+      """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
   }
 }
 
@@ -39,18 +37,23 @@ extension WorldDrawingSceneProtocol {
 
     let menuCtx = terminal.transform(offset: BLPoint(x: terminal.width - MENU_W, y: 0))
     menuCtx.foregroundColor = resources.defaultPalette["ui_text"]
-    menuCtx.print(point: BLPoint(x: 1, y: 1), string: "Stats:")
-    worldModel.statsS[worldModel.player]?.currentStats.draw(
-      in: menuCtx,
-      at: BLPoint(x: 1, y: 2))
 
-    if let inspectedEntity = inspectedEntity {
-      if let nameC = worldModel.nameS[inspectedEntity] {
-        menuCtx.print(point: BLPoint(x: 1, y: terminal.height - 6), string: nameC.name)
+    var strings = ["Stats:"]
+    if let myStatsString = worldModel.statsS[worldModel.player]?.currentStats.description {
+      strings.append(myStatsString)
+    }
+    menuCtx.print(point: BLPoint(x: 1, y: 1), string: strings.joined(separator: "\n"))
+
+    if let inspectedEntity = inspectedEntity,
+      let nameC = worldModel.nameS[inspectedEntity]
+    {
+      var strings = [nameC.name, nameC.description]
+      if let statsString = worldModel.statsS[inspectedEntity]?.currentStats.description {
+        strings.append(statsString)
       }
-      worldModel.statsS[inspectedEntity]?.currentStats.draw(
-        in: menuCtx,
-        at: BLPoint(x: 1, y: terminal.height - 5))
+      menuCtx.print(
+        point: BLPoint(x: 1, y: terminal.height - 6),
+        string: strings.joined(separator: "\n"))
     }
 
     menuCtx.foregroundColor = resources.defaultPalette["ui_accent"]

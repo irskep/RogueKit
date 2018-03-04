@@ -66,22 +66,27 @@ class LoadScene: Scene {
         let blacklist = [entrance, exit]
         var floors = levelMap.floors.filter({ !blacklist.contains($0) })
         rng.shuffleInPlace(&floors)
+        var floorIndex = 0
+        let getFloor: () -> BLPoint = {
+          let val = floors[floorIndex]
+          floorIndex += 1
+          return val
+        }
         
         levelMap.pointsOfInterest = [
           PointOfInterest(kind: "playerStart", point: playerStart),
-          PointOfInterest(kind: "enemy", point: floors[0]),
-          PointOfInterest(kind: "item", point: floors[1]),
-          PointOfInterest(kind: "item", point: floors[2]),
-          PointOfInterest(kind: "item", point: floors[3]),
-          PointOfInterest(kind: "enemy", point: floors[4]),
-          PointOfInterest(kind: "enemy", point: floors[5]),
-          PointOfInterest(kind: "enemy", point: floors[6]),
         ]
         if levelMap.definition.exits["previous"] != nil {
           levelMap.pointsOfInterest.append(PointOfInterest(kind: "entrance", point: entrance))
         }
         if levelMap.definition.exits["next"] != nil {
           levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exit))
+        }
+        for _ in 0..<10 {
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy", point: getFloor()))
+        }
+        for _ in 0..<10 {
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "weapon", point: getFloor()))
         }
 
         levelMap.isPopulated = true

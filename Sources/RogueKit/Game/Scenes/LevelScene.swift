@@ -47,11 +47,11 @@ class AStarMover {
 
   func draw(in terminal: BLTerminalInterface) {
     let oldLayer = terminal.layer
-    terminal.layer = 100
+    terminal.layer = BLInt(ZValues.hud)
     terminal.clear(area: BLRect(x: 0, y: 0, w: terminal.state(BLConstant.WIDTH), h: terminal.state(BLConstant.HEIGHT)))
-    terminal.foregroundColor = terminal.getColor(a: 255, r: 255, g: 0, b: 0)
+    terminal.foregroundColor = terminal.getColor(a: 50, r: 255, g: 255, b: 255)
     for point in points {
-      terminal.print(point: point, string: "X")
+      terminal.put(point: point, code: CP437.BLOCK)
     }
     terminal.layer = oldLayer
   }
@@ -64,7 +64,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
 
   lazy var mover: AStarMover = { return AStarMover(worldModel: self.worldModel) }()
   var cursorPoint: BLPoint = BLPoint.zero
-  var inspectedEntity: Entity? { return worldModel.mob(at: cursorPoint) }
+  var inspectedEntity: Entity? {
+    return worldModel.entity(at: cursorPoint, matchingPredicate: {
+      return self.worldModel.nameS[$0] != nil
+    })
+  }
 
   init(resources: ResourceCollectionProtocol, worldModel: WorldModel) {
     self.worldModel = worldModel
@@ -143,6 +147,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
         if !mover.points.isEmpty {
           worldModel.movePlayer(by: mover.points.last! - worldModel.positionS[worldModel.player]!.point)
           mover.update(cursorPoint: mover.cursorPoint)
+          didMove = true
         }
       default: break
       }
@@ -156,7 +161,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
     if isDirty || didMove {
       isDirty = false
       self.drawWorld(in: terminal)
-//      mover.draw(in: terminal)
+      mover.draw(in: terminal)
       terminal.refresh()
     }
 

@@ -102,16 +102,14 @@ class CollectibleC: ECSComponent, Codable {
   var entity: Entity?
   var grams: Double = 0
   var liters: Double = 0
-  var title: String = "UNINITIALIZED"
   init(entity: Entity?) {
     self.entity = entity
   }
 
-  convenience init(entity: Entity?, grams: Double, liters: Double, title: String) {
+  convenience init(entity: Entity?, grams: Double, liters: Double) {
     self.init(entity: entity)
     self.grams = grams
     self.liters = liters
-    self.title = title
   }
 }
 class CollectibleS: ECSSystem<CollectibleC>, Codable {
@@ -158,18 +156,21 @@ class SpriteC: ECSComponent, Codable {
   var int: BLInt?
   var str: String?
   var z: Int = 0
+  var color: BLColor
 
   init(entity: Entity?) {
     self.entity = entity
     self.int = 0
     self.str = "?"
+    self.color = 0
   }
 
-  convenience init(entity: Entity?, int: BLInt?, str: String?, z: Int) {
+  convenience init(entity: Entity?, int: BLInt?, str: String?, z: Int, color: BLColor) {
     self.init(entity: entity)
     self.int = int
     self.str = str
     self.z = z
+    self.color = color
   }
 }
 class SpriteS: ECSSystem<SpriteC>, Codable {
@@ -293,8 +294,9 @@ class SightS: ECSSystem<SightC>, Codable {
 class NameC: ECSComponent, Codable {
   var entity: Entity?
   var name = "UNNAMED"
+  var description = "UNDESCRIBED"
   init(entity: Entity?) { self.entity = entity }
-  init(entity: Entity?, name: String) { self.entity = entity; self.name = name }
+  init(entity: Entity?, name: String, description: String) { self.entity = entity; self.name = name; self.description = description }
 }
 class NameS: ECSSystem<NameC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }

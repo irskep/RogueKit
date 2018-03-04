@@ -271,6 +271,16 @@ extension WorldModel {
       .entity
   }
 
+  func entity(at point: BLPoint, matchingPredicate predicate: (Entity) -> Bool) -> Entity? {
+    return positionS
+      .all(in: activeMapId, at: point)
+      .flatMap({ $0.entity })
+      .flatMap({ self.spriteS[$0] })
+      .sorted(by: { $0.z > $1.z })
+      .first?
+      .entity
+  }
+
   func waitPlayer() {
     self.playerDidTakeAction()
   }

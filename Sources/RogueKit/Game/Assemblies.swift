@@ -9,6 +9,17 @@ import Foundation
 import BearLibTerminal
 
 
+struct ZValues {
+  static let floor: Int = -1
+  static let feature: Int = 0
+  static let item: Int = 1
+  static let enemy: Int = 2
+  static let player: Int = 3
+  static let hud: Int = 100
+  static let modal: Int = 101
+}
+
+
 protocol EntityAssemblyProtocol {
   func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?)
 }
@@ -17,7 +28,7 @@ protocol EntityAssemblyProtocol {
 class PlayerAssembly: EntityAssemblyProtocol {
   func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?) {
     worldModel.nameS.add(component:
-      NameC(entity: entity, name: "You"))
+      NameC(entity: entity, name: "You", description: "An adventurer of subjective gender"))
     worldModel.sightS.add(component:
       SightC(entity: entity))
     worldModel.positionS.add(component:
@@ -25,7 +36,11 @@ class PlayerAssembly: EntityAssemblyProtocol {
     worldModel.fovS.add(component:
       FOVC(entity: entity))
     worldModel.spriteS.add(component:
-      SpriteC(entity: entity, int: nil, str: "@", z: 100))
+      SpriteC(entity: entity,
+              int: nil,
+              str: "@",
+              z: ZValues.player,
+              color: worldModel.resources!.defaultPalette["white"]))
     worldModel.inventoryS.add(component:
       InventoryC(entity: entity))
     worldModel.statsS.add(component:
@@ -39,13 +54,17 @@ class PlayerAssembly: EntityAssemblyProtocol {
 class EnemyAssembly: EntityAssemblyProtocol {
   func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?) {
     worldModel.nameS.add(component:
-      NameC(entity: entity, name: "An enemy"))
+      NameC(entity: entity, name: "An enemy", description: "I haven't implemented this stuff yet."))
     worldModel.sightS.add(component:
       SightC(entity: entity))
     worldModel.positionS.add(component:
       PositionC(entity: entity, point: point ?? BLPoint.zero, levelId: levelId))
     worldModel.spriteS.add(component:
-      SpriteC(entity: entity, int: nil, str: "E", z: 2))
+      SpriteC(entity: entity,
+              int: nil,
+              str: "E",
+              z: ZValues.enemy,
+              color: worldModel.resources!.defaultPalette["green"]))
     worldModel.moveAfterPlayerS.add(component:
       MoveAfterPlayerC(entity: entity, behaviorType: .walkRandomly))
     worldModel.statsS.add(component:
@@ -56,14 +75,31 @@ class EnemyAssembly: EntityAssemblyProtocol {
 }
 
 
-class ItemAssembly: EntityAssemblyProtocol {
+class WeaponAssembly: EntityAssemblyProtocol {
   func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?) {
+    // TODO: get weapon tag from prefab instead of using a constant
+//    guard let levelId = levelId, let level = worldModel.maps[levelId] else { return }
+    let tag = "basic"
+    let allowedWeapons = worldModel.csvDB.weapons.values.filter({ $0.tags.contains(tag) })
+    let weaponDef = worldModel.mapRNG.choice(allowedWeapons)
+
+    print(weaponDef)
+
+    worldModel.nameS.add(component:
+      NameC(entity: entity,
+            name: weaponDef.name,
+            description: weaponDef.description))
     worldModel.positionS.add(component:
       PositionC(entity: entity, point: point ?? BLPoint.zero, levelId: levelId))
     worldModel.spriteS.add(component:
-      SpriteC(entity: entity, int: nil, str: "i", z: 1))
+      SpriteC(entity: entity,
+              int: weaponDef.char,
+              str: nil, z: ZValues.item,
+              color: worldModel.resources!.defaultPalette[weaponDef.color]))
     worldModel.collectibleS.add(component:
-      CollectibleC(entity: entity, grams: 1000, liters: 1, title: "an item"))
+      CollectibleC(entity: entity,
+                   grams: weaponDef.grams,
+                   liters: weaponDef.liters))
   }
 }
 
@@ -71,6 +107,6 @@ class ItemAssembly: EntityAssemblyProtocol {
 let ASSEMBLIES: [String: EntityAssemblyProtocol] = {
   return [
     "enemy": EnemyAssembly(),
-    "item": ItemAssembly(),
+    "weapon": WeaponAssembly(),
   ]
 }()

@@ -23,6 +23,7 @@ private extension StatBucket {
 
 
 protocol WorldDrawingSceneProtocol {
+  var director: Director? { get }
   var resources: ResourceCollectionProtocol { get }
   var worldModel: WorldModel { get }
   var inspectedEntity: Entity? { get }
@@ -30,13 +31,26 @@ protocol WorldDrawingSceneProtocol {
 
 extension WorldDrawingSceneProtocol {
   func drawWorld(in terminal: BLTerminalInterface) {
+    let config = (director as! SteveRLDirector).config
     terminal.layer = 0
     terminal.backgroundColor = resources.defaultPalette["void"]
     terminal.clear()
     worldModel.draw(in: terminal, at: BLPoint.zero)
 
+    terminal.foregroundColor = resources.defaultPalette["ui_text"]
+
+    let keyString = [
+      (config.keyEquip, "[un]wield/[un]equip"),
+      (config.keyDrop, "drop"),
+      ].map({
+        "(\(BLConstant.label(for: $0.0)!)) \($0.1)"
+      }).joined(separator: " ")
+
+    terminal.print(
+      point: BLPoint(x: 1, y: terminal.height - 2),
+      string: keyString)
+
     let menuCtx = terminal.transform(offset: BLPoint(x: terminal.width - MENU_W, y: 0))
-    menuCtx.foregroundColor = resources.defaultPalette["ui_text"]
 
     var strings = ["Stats:"]
     if let myStatsString = worldModel.statsS[worldModel.player]?.currentStats.description {

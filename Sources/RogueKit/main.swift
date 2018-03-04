@@ -56,7 +56,7 @@ let FONT = "fonts/Alloy_curses_12x12.png"
 //let FONT = "fonts/cp437_10x10.png"
 let FONT_SIZE = FONT[FONT.index(FONT.endIndex, offsetBy: -9)..<FONT.index(FONT.endIndex, offsetBy: -4)]
 
-let director = SteveRLDirector(terminal: terminal, configBlock: {
+private let director = SteveRLDirector(terminal: terminal, configBlock: {
   let config = """
   window.title='RogueKit Test';
   font: \(resources.path(for: FONT)), size=\(FONT_SIZE);

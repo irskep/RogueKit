@@ -49,6 +49,7 @@ class SimpleMenu {
 
   func draw(in terminal: BLTerminalInterface) {
     var y = rect.y
+    terminal.clear(area: rect)
     for (key, label, _) in items {
       terminal.print(
         point: BLPoint(x: rect.x, y: y),

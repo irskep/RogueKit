@@ -16,6 +16,8 @@ struct Config: Codable {
   var keyDown: Int32 = BLConstant.DOWN
   var keyWait: Int32 = BLConstant.SPACE
   var keyInventoryOpen: Int32 = BLConstant.I
+  var keyEquip: Int32 = BLConstant.E
+  var keyDrop: Int32 = BLConstant.D
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS

@@ -76,6 +76,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
     self.resources = resources
   }
 
+  override func willEnter(with director: Director) {
+    super.willEnter(with: director)
+    isDirty = true
+  }
+
   override func willExit() {
     save()
   }
@@ -119,7 +124,23 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
         worldModel.waitPlayer()
         didMove = true
       case config.keyInventoryOpen:
-        director?.transition(to: InventoryScene(resources: resources, worldModel: worldModel))
+        director?.transition(to: InventoryScene(
+          resources: resources,
+          worldModel: worldModel,
+          returnToScene: self,
+          state: .willOpenMenu))
+      case config.keyEquip:
+        director?.transition(to: InventoryScene(
+          resources: resources,
+          worldModel: worldModel,
+          returnToScene: self,
+          state: .willEquip))
+      case config.keyDrop:
+        director?.transition(to: InventoryScene(
+          resources: resources,
+          worldModel: worldModel,
+          returnToScene: self,
+          state: .willDrop))
 
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {

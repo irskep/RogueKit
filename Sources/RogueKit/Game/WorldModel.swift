@@ -296,6 +296,14 @@ extension WorldModel {
   func weapon(wieldedBy entity: Entity) -> WeaponDefinition? {
     return wieldingS[entity]?.weaponDefinition(in: self)
   }
+
+  var playerWeaponC: WeaponC? {
+    guard let wc = wieldingS[player],
+      let we = wc.weaponEntity else {
+        return nil
+    }
+    return weaponS[we]
+  }
 }
 
 // MARK: Actions
@@ -381,6 +389,14 @@ extension WorldModel {
     inventoryC.remove(entity: item)
     self.positionS.add(component: PositionC(
       entity: item, point: entityPositionC.point, levelId: entityPositionC.levelId))
+  }
+
+  func wield(weaponEntity: Entity, on host: Entity) {
+    wieldingS[host]?.weaponEntity = weaponEntity
+  }
+
+  func unwield(weaponEntity: Entity, on host: Entity) {
+    wieldingS[host]?.weaponEntity = nil
   }
 
   func interact(entity: Entity, with point: BLPoint) {

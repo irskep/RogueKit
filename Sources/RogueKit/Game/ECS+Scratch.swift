@@ -64,6 +64,10 @@ class InventoryC: ECSComponent, Codable {
     self.contents = []
   }
 
+  func contains(entity: Entity) -> Bool {
+    return contents.contains(entity)
+  }
+
   func add(entity: Entity) {
     contents.append(entity)
   }

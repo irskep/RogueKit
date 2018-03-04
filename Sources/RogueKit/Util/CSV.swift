@@ -22,11 +22,16 @@ class StringBox {
   }
 
   subscript(index: String) -> Int { return self.int(index) }
+  subscript(index: String) -> Double { return self.double(index) }
   subscript(index: String) -> String { return self.string(index) }
   subscript(index: String) -> Bool { return self.bool(index) }
 
   func int(_ index: String) -> Int {
     return Int(values[labelToIndex[index]!])!
+  }
+
+  func double(_ index: String) -> Double {
+    return Double(values[labelToIndex[index]!])!
   }
 
   func string(_ index: String) -> String {

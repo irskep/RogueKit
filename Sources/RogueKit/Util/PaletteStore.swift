@@ -29,7 +29,7 @@ class PaletteStore: Codable {
     try container.encode(colors, forKey: .colors)
   }
 
-  init(terminal: BLTerminalInterface, resources: ResourceCollection, name: String) throws {
+  init(terminal: BLTerminalInterface, resources: ResourceCollectionProtocol, name: String) throws {
     _terminal = terminal
 
     var aliases = [String: String]()

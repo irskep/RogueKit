@@ -1,6 +1,6 @@
 Name,Value
 white,#FBFBF4
-black,#0A0646
+black,#050323
 yellow,#FFC312
 orange,#F79F1F
 sunset,#EE5A24
@@ -13,7 +13,7 @@ lightblue,#12CBC4
 teal,#1289A7
 blue,#0652DD
 darkblue,#1B1464
-pink,#FDA7DF
+pink,#F01CBB
 lavender,#D980FA
 purple,#9980FA
 darkpurple,#5758BB
@@ -27,3 +27,6 @@ brown,#996633
 void,@black
 floor,#444444
 wall,@white
+ui_text,@white
+ui_bg,@black
+ui_accent,@pink

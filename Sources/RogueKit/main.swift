@@ -60,7 +60,7 @@ let director = SteveRLDirector(terminal: terminal, configBlock: {
   font: \(resources.path(for: FONT)), size=\(FONT_SIZE);
   input.filter=keyboard,mouse;
   window.size=106x60;
-  window.resizeable=true;
+  window.resizeable=false;
   window.fullscreen=\(isScreenBigEnough ? false : true);
   """
   NSLog(config)

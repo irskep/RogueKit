@@ -9,9 +9,10 @@ import Foundation
 import BearLibTerminal
 
 
-class InventoryScene: Scene {
+class InventoryScene: Scene, WorldDrawingSceneProtocol {
   let worldModel: WorldModel
-  let resources: ResourceCollection
+  let resources: ResourceCollectionProtocol
+  var inspectedEntity: Entity? { return nil }
 
   lazy var menu: SimpleMenu = {
     return SimpleMenu(
@@ -27,15 +28,13 @@ class InventoryScene: Scene {
         }))
   }()
 
-  init(resources: ResourceCollection, worldModel: WorldModel) {
+  init(resources: ResourceCollectionProtocol, worldModel: WorldModel) {
     self.worldModel = worldModel
     self.resources = resources
   }
 
   override func update(terminal: BLTerminalInterface) {
-    terminal.layer = 0
-    terminal.clear()
-    worldModel.draw(in: terminal, at: BLPoint.zero)
+    self.drawWorld(in: terminal)
 
     menu.rect = BLRect(
       x: terminal.state(BLConstant.WIDTH) / 2 - 10,

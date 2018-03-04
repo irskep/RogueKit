@@ -29,6 +29,8 @@ struct MapDefinition: Codable {
 class WorldModel: Codable {
   let version: String = SAVE_FILE_VERSION
   let rngStore: RandomSeedStore
+  var resources: ResourceCollectionProtocol?
+  lazy var csvDB: CSVDB = { return CSVDB(resources: resources!) }()
 
   var mapDefinitions = [String: MapDefinition]()
   var maps: [String: LevelMap]
@@ -42,6 +44,8 @@ class WorldModel: Codable {
   var moveAfterPlayerS = MoveAfterPlayerS()
   var collectibleS = CollectibleS()
   var inventoryS = InventoryS()
+  var statsS = StatsS()
+  var nameS = NameS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -78,6 +82,8 @@ class WorldModel: Codable {
     case moveAfterPlayerS
     case collectibleS
     case inventoryS
+    case statsS
+    case nameS
 
     case debugFlags
   }
@@ -104,7 +110,8 @@ class WorldModel: Codable {
     moveAfterPlayerS = try values.decode(MoveAfterPlayerS.self, forKey: .moveAfterPlayerS)
     collectibleS = try values.decode(CollectibleS.self, forKey: .collectibleS)
     inventoryS = try values.decode(InventoryS.self, forKey: .inventoryS)
-
+    statsS = try values.decode(StatsS.self, forKey: .statsS)
+    nameS = try values.decode(NameS.self, forKey: .nameS)
   }
 
   func encode(to encoder: Encoder) throws {
@@ -126,6 +133,8 @@ class WorldModel: Codable {
     try container.encode(moveAfterPlayerS, forKey: .moveAfterPlayerS)
     try container.encode(collectibleS, forKey: .collectibleS)
     try container.encode(inventoryS, forKey: .inventoryS)
+    try container.encode(statsS, forKey: .statsS)
+    try container.encode(nameS, forKey: .nameS)
   }
 
   var _allSystems: [ECSRemovable] {
@@ -137,10 +146,18 @@ class WorldModel: Codable {
       moveAfterPlayerS,
       collectibleS,
       inventoryS,
+      statsS,
+      nameS,
     ]
   }
 
-  init(rngStore: RandomSeedStore, mapDefinitions: [MapDefinition], activeMapId: String) {
+  init(
+    rngStore: RandomSeedStore,
+    resources: ResourceCollectionProtocol,
+    mapDefinitions: [MapDefinition],
+    activeMapId: String)
+  {
+    self.resources = resources
     self.rngStore = rngStore
     for md in mapDefinitions {
       self.mapDefinitions[md.id] = md
@@ -245,7 +262,7 @@ class WorldModel: Codable {
 }
 
 extension WorldModel {
-  private func _mob(at point: BLPoint) -> Entity? {
+  func mob(at point: BLPoint) -> Entity? {
     return positionS
       .all(in: activeMapId, at: point)
       .flatMap({ $0.entity })
@@ -312,7 +329,7 @@ extension WorldModel {
     if self.activeMap.interactions[cell.feature] != nil { return true }
 
     // mob we can interact with?
-    if _mob(at: point) != nil { return true}
+    if mob(at: point) != nil { return true}
 
     return false
   }
@@ -337,7 +354,7 @@ extension WorldModel {
 
   func interact(entity: Entity, with point: BLPoint) {
     guard let cell = activeMap.cells[point] else { return }
-    if let mob = _mob(at: point) {
+    if let mob = mob(at: point) {
       // TODO: real interaction system
       self.remove(entity: mob)
     } else if let interaction = activeMap.interactions[cell.feature] {

@@ -28,7 +28,7 @@ func drawCenteredString(_ terminal: BLTerminalInterface, _ box: BLRect, _ s: Str
 
 
 class TitleScene: Scene {
-  let resources: ResourceCollection
+  let resources: ResourceCollectionProtocol
   lazy var menu: SimpleMenu = {
     if let gameURL = URLs.gameURL, FileManager.default.fileExists(atPath: gameURL.path) {
       return SimpleMenu(rect: BLRect(x: 0, y: 0, w: 0, h: 0), items: [
@@ -44,7 +44,7 @@ class TitleScene: Scene {
     }
   }()
 
-  init(resources: ResourceCollection) {
+  init(resources: ResourceCollectionProtocol) {
     self.resources = resources
   }
 
@@ -75,6 +75,7 @@ class TitleScene: Scene {
   func actionStartGame() {
     let worldModel = WorldModel(
       rngStore: RandomSeedStore(seed: 135205160),
+      resources: resources,
       mapDefinitions: [
         MapDefinition(id: "1", generatorId: "basic", exits: ["next": "2"]),
         MapDefinition(id: "2", generatorId: "basic", exits: ["next": "3", "previous": "1"]),
@@ -93,6 +94,7 @@ class TitleScene: Scene {
     do {
       let data: Data = try Data(contentsOf: gameURL)
       let world = try JSONDecoder().decode(WorldModel.self, from: data)
+      world.resources = resources
       director?.transition(to: LevelScene(resources: resources, worldModel: world))
     } catch {
       NSLog(error.localizedDescription)

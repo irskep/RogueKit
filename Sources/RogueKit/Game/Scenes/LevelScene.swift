@@ -58,19 +58,24 @@ class AStarMover {
 }
 
 
-class LevelScene: Scene {
+class LevelScene: Scene, WorldDrawingSceneProtocol {
   let worldModel: WorldModel
-  let resources: ResourceCollection
+  let resources: ResourceCollectionProtocol
 
   lazy var mover: AStarMover = { return AStarMover(worldModel: self.worldModel) }()
   var cursorPoint: BLPoint = BLPoint.zero
+  var inspectedEntity: Entity? { return worldModel.mob(at: cursorPoint) }
 
-  init(resources: ResourceCollection, worldModel: WorldModel) {
+  init(resources: ResourceCollectionProtocol, worldModel: WorldModel) {
     self.worldModel = worldModel
     self.resources = resources
   }
 
   override func willExit() {
+    save()
+  }
+
+  func save() {
     if let gameURL = URLs.gameURL {
       do {
         let data = try JSONEncoder().encode(worldModel)
@@ -126,9 +131,14 @@ class LevelScene: Scene {
         isDirty = true
 
       case BLConstant.MOUSE_MOVE:
-        cursorPoint.x = terminal.state(BLConstant.MOUSE_X)
-        cursorPoint.y = terminal.state(BLConstant.MOUSE_Y)
-        mover.update(cursorPoint: cursorPoint)
+        let newPoint = BLPoint(
+          x: terminal.state(BLConstant.MOUSE_X),
+          y: terminal.state(BLConstant.MOUSE_Y))
+        if newPoint != cursorPoint {
+          isDirty = true
+          cursorPoint = newPoint
+          mover.update(cursorPoint: cursorPoint)
+        }
       case BLConstant.MOUSE_LEFT:
         if !mover.points.isEmpty {
           worldModel.movePlayer(by: mover.points.last! - worldModel.positionS[worldModel.player]!.point)
@@ -145,12 +155,13 @@ class LevelScene: Scene {
 
     if isDirty || didMove {
       isDirty = false
-      terminal.layer = 0
-      terminal.backgroundColor = resources.defaultPalette["void"]
-      terminal.clear()
-      worldModel.draw(in: terminal, at: BLPoint.zero)
-      mover.draw(in: terminal)
+      self.drawWorld(in: terminal)
+//      mover.draw(in: terminal)
       terminal.refresh()
+    }
+
+    if didMove {
+      save()
     }
   }
 }

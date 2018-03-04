@@ -12,11 +12,11 @@ import BearLibTerminal
 class LoadScene: Scene {
   let worldModel: WorldModel
   let id: String
-  let resources: ResourceCollection
+  let resources: ResourceCollectionProtocol
 
   var terminal: BLTerminalInterface? { return director?.terminal }
 
-  init(worldModel: WorldModel, resources: ResourceCollection, id: String) {
+  init(worldModel: WorldModel, resources: ResourceCollectionProtocol, id: String) {
     self.worldModel = worldModel
     self.id = id
     self.resources = resources
@@ -73,6 +73,9 @@ class LoadScene: Scene {
           PointOfInterest(kind: "item", point: floors[1]),
           PointOfInterest(kind: "item", point: floors[2]),
           PointOfInterest(kind: "item", point: floors[3]),
+          PointOfInterest(kind: "enemy", point: floors[4]),
+          PointOfInterest(kind: "enemy", point: floors[5]),
+          PointOfInterest(kind: "enemy", point: floors[6]),
         ]
         if levelMap.definition.exits["previous"] != nil {
           levelMap.pointsOfInterest.append(PointOfInterest(kind: "entrance", point: entrance))

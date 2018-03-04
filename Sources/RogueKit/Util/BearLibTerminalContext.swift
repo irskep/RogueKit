@@ -9,6 +9,15 @@ import Foundation
 import BearLibTerminal
 
 
+extension BLTerminalInterface {
+  var width: BLInt { return self.state(BLConstant.WIDTH) }
+  var height: BLInt { return self.state(BLConstant.HEIGHT) }
+  var size: BLSize {
+    return BLSize(w: self.width, h: self.height)
+  }
+}
+
+
 class BLTerminalWithOffset: BLTerminalInterface {
   let terminal: BLTerminalInterface
   var offset: BLPoint

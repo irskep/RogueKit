@@ -112,7 +112,7 @@ class LevelMap: Codable {
     definition: MapDefinition,
     size: BLSize,
     paletteName: String,
-    resources: ResourceCollection,
+    resources: ResourceCollectionProtocol,
     terminal: BLTerminalInterface) throws
   {
     self.definition = definition
@@ -170,7 +170,7 @@ class LevelMap: Codable {
     definition: MapDefinition,
     size: BLSize,
     paletteName: String,
-    resources: ResourceCollection,
+    resources: ResourceCollectionProtocol,
     terminal: BLTerminalInterface,
     generator: GeneratorProtocol) throws
   {

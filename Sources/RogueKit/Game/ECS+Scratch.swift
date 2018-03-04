@@ -9,6 +9,48 @@ import Foundation
 import BearLibTerminal
 
 
+// MARK: Stats
+
+
+struct StatBucket: Codable {
+  var hp: Double = 0
+  var fatigue: Double = 0
+  var speed: Double = 0
+  var awareness: Double = 0
+  var reflex: Double = 0
+  var strength: Double = 0
+}
+
+
+class StatsC: ECSComponent, Codable {
+  var entity: Entity?
+
+  var baseStats: StatBucket
+  var currentStats: StatBucket
+
+  init(entity: Entity?) {
+    self.entity = entity
+    baseStats = StatBucket()
+    currentStats = StatBucket()
+  }
+
+  convenience init(
+    entity: Entity?,
+    baseStats: StatBucket,
+    currentStats: StatBucket?)
+  {
+    self.init(entity: entity)
+    self.baseStats = baseStats
+    self.currentStats = currentStats ?? baseStats
+  }
+}
+class StatsS: ECSSystem<StatsC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
 // MARK: Inventory
 
 
@@ -239,6 +281,22 @@ class SightC: ECSComponent, Codable {
   }
 }
 class SightS: ECSSystem<SightC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
+// MARK: Names, descriptions
+
+
+class NameC: ECSComponent, Codable {
+  var entity: Entity?
+  var name = "UNNAMED"
+  init(entity: Entity?) { self.entity = entity }
+  init(entity: Entity?, name: String) { self.entity = entity; self.name = name }
+}
+class NameS: ECSSystem<NameC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }
   required init() { super.init() }
   override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }

@@ -16,6 +16,8 @@ protocol EntityAssemblyProtocol {
 
 class PlayerAssembly: EntityAssemblyProtocol {
   func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?) {
+    worldModel.nameS.add(component:
+      NameC(entity: entity, name: "You"))
     worldModel.sightS.add(component:
       SightC(entity: entity))
     worldModel.positionS.add(component:
@@ -26,12 +28,18 @@ class PlayerAssembly: EntityAssemblyProtocol {
       SpriteC(entity: entity, int: nil, str: "@", z: 100))
     worldModel.inventoryS.add(component:
       InventoryC(entity: entity))
+    worldModel.statsS.add(component:
+      StatsC(entity: entity,
+             baseStats: worldModel.csvDB.stats["player"]!,
+             currentStats: nil))
   }
 }
 
 
 class EnemyAssembly: EntityAssemblyProtocol {
   func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?) {
+    worldModel.nameS.add(component:
+      NameC(entity: entity, name: "An enemy"))
     worldModel.sightS.add(component:
       SightC(entity: entity))
     worldModel.positionS.add(component:
@@ -40,6 +48,10 @@ class EnemyAssembly: EntityAssemblyProtocol {
       SpriteC(entity: entity, int: nil, str: "E", z: 2))
     worldModel.moveAfterPlayerS.add(component:
       MoveAfterPlayerC(entity: entity, behaviorType: .walkRandomly))
+    worldModel.statsS.add(component:
+      StatsC(entity: entity,
+             baseStats: worldModel.csvDB.stats["generic_mob"]!,
+             currentStats: nil))
   }
 }
 

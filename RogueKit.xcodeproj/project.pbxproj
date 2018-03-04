@@ -25,6 +25,12 @@
 		AA072D74204B2B9700479A94 /* InventoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D72204B2B9700479A94 /* InventoryScene.swift */; };
 		AA072D77204B2CB400479A94 /* SimpleMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D76204B2CB400479A94 /* SimpleMenu.swift */; };
 		AA072D78204B2CB400479A94 /* SimpleMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D76204B2CB400479A94 /* SimpleMenu.swift */; };
+		AA072D7A204B5C8900479A94 /* CSVDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D79204B5C8900479A94 /* CSVDB.swift */; };
+		AA072D7B204B5C8900479A94 /* CSVDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D79204B5C8900479A94 /* CSVDB.swift */; };
+		AA072D7D204B60A100479A94 /* WorldDrawingSceneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D7C204B60A100479A94 /* WorldDrawingSceneProtocol.swift */; };
+		AA072D7E204B60A100479A94 /* WorldDrawingSceneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D7C204B60A100479A94 /* WorldDrawingSceneProtocol.swift */; };
+		AA072D80204B66A600479A94 /* DrawUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D7F204B66A600479A94 /* DrawUtils.swift */; };
+		AA072D81204B66A600479A94 /* DrawUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D7F204B66A600479A94 /* DrawUtils.swift */; };
 		AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
 		AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
 		AA0DE9052015723A00CCF61F /* CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9042015723A00CCF61F /* CSV.swift */; };
@@ -251,6 +257,9 @@
 /* Begin PBXFileReference section */
 		AA072D72204B2B9700479A94 /* InventoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryScene.swift; sourceTree = "<group>"; };
 		AA072D76204B2CB400479A94 /* SimpleMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMenu.swift; sourceTree = "<group>"; };
+		AA072D79204B5C8900479A94 /* CSVDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDB.swift; sourceTree = "<group>"; };
+		AA072D7C204B60A100479A94 /* WorldDrawingSceneProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldDrawingSceneProtocol.swift; sourceTree = "<group>"; };
+		AA072D7F204B66A600479A94 /* DrawUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUtils.swift; sourceTree = "<group>"; };
 		AA0DE9012013C87400CCF61F /* LevelMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMap.swift; sourceTree = "<group>"; };
 		AA0DE9042015723A00CCF61F /* CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSV.swift; sourceTree = "<group>"; };
 		AA1CCC892030CF6100BFA85A /* PaletteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteStore.swift; sourceTree = "<group>"; };
@@ -388,6 +397,7 @@
 				AAC6A4E820488916008D971B /* Director.swift */,
 				AA90B095204A230F00A59645 /* Assemblies.swift */,
 				AA90B09A204A684400A59645 /* AI.swift */,
+				AA072D79204B5C8900479A94 /* CSVDB.swift */,
 			);
 			name = Game;
 			path = Sources/RogueKit/Game;
@@ -419,6 +429,7 @@
 				AAC6A4EF2049C1C2008D971B /* LoadScene.swift */,
 				AAC6A4F22049C1C9008D971B /* LevelScene.swift */,
 				AA072D72204B2B9700479A94 /* InventoryScene.swift */,
+				AA072D7C204B60A100479A94 /* WorldDrawingSceneProtocol.swift */,
 			);
 			name = Scenes;
 			path = Sources/RogueKit/Game/Scenes;
@@ -464,6 +475,7 @@
 				AAC6A4EB20489374008D971B /* RunLoop.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
 				AAC6A4FE2049CF8C008D971B /* URLs.swift */,
+				AA072D7F204B66A600479A94 /* DrawUtils.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -863,8 +875,10 @@
 				AAC6A4FA2049C447008D971B /* BearLibTerminalContext.swift in Sources */,
 				AA072D78204B2CB400479A94 /* SimpleMenu.swift in Sources */,
 				AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */,
+				AA072D7E204B60A100479A94 /* WorldDrawingSceneProtocol.swift in Sources */,
 				AAC6A4F12049C1C2008D971B /* LoadScene.swift in Sources */,
 				AAC6A5122049EF24008D971B /* AStar.swift in Sources */,
+				AA072D81204B66A600479A94 /* DrawUtils.swift in Sources */,
 				AA3DA26B2012DE0300A7CA1B /* RKRNG.swift in Sources */,
 				AA3DA2602012DE0300A7CA1B /* GeneratorReader.swift in Sources */,
 				AAC6A4EA20488916008D971B /* Director.swift in Sources */,
@@ -877,6 +891,7 @@
 				AA3DA2672012DE0300A7CA1B /* CP437.swift in Sources */,
 				AAC6A5002049CF8C008D971B /* URLs.swift in Sources */,
 				AA3DA2682012DE0300A7CA1B /* DistanceField.swift in Sources */,
+				AA072D7B204B5C8900479A94 /* CSVDB.swift in Sources */,
 				AA3DA27F2015B1E300A7CA1B /* WorldModel.swift in Sources */,
 				AA3DA26C2012DE0300A7CA1B /* SpriteSheet.swift in Sources */,
 				AA3DA2612012DE0300A7CA1B /* GeneratorProtocol.swift in Sources */,
@@ -958,12 +973,14 @@
 				AAC6A4F92049C447008D971B /* BearLibTerminalContext.swift in Sources */,
 				AAC6A4F32049C1C9008D971B /* LevelScene.swift in Sources */,
 				OBJ_78 /* CP437.swift in Sources */,
+				AA072D7A204B5C8900479A94 /* CSVDB.swift in Sources */,
 				AAC6A4F62049C3F1008D971B /* TitleScene.swift in Sources */,
 				OBJ_79 /* DistanceField.swift in Sources */,
 				AA90B09C204A689000A59645 /* AI.swift in Sources */,
 				AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */,
 				OBJ_80 /* REXPaintImage+BearLibTerminal.swift in Sources */,
 				OBJ_81 /* REXPaintImage.swift in Sources */,
+				AA072D7D204B60A100479A94 /* WorldDrawingSceneProtocol.swift in Sources */,
 				AAC6A4F02049C1C2008D971B /* LoadScene.swift in Sources */,
 				AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */,
 				OBJ_82 /* RKRNG.swift in Sources */,
@@ -981,6 +998,7 @@
 				AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */,
 				AAC6A4EC20489374008D971B /* RunLoop.swift in Sources */,
 				AAC6A50E2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */,
+				AA072D80204B66A600479A94 /* DrawUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

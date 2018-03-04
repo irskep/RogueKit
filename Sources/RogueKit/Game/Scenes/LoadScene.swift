@@ -88,6 +88,9 @@ class LoadScene: Scene {
         for _ in 0..<10 {
           levelMap.pointsOfInterest.append(PointOfInterest(kind: "weapon", point: getFloor()))
         }
+        for _ in 0..<10 {
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "armor", point: getFloor()))
+        }
 
         levelMap.isPopulated = true
 

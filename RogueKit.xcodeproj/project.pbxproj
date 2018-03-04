@@ -31,6 +31,8 @@
 		AA072D7E204B60A100479A94 /* WorldDrawingSceneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D7C204B60A100479A94 /* WorldDrawingSceneProtocol.swift */; };
 		AA072D80204B66A600479A94 /* DrawUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D7F204B66A600479A94 /* DrawUtils.swift */; };
 		AA072D81204B66A600479A94 /* DrawUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D7F204B66A600479A94 /* DrawUtils.swift */; };
+		AA072D83204C817C00479A94 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D82204C817C00479A94 /* StringUtils.swift */; };
+		AA072D84204C817C00479A94 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA072D82204C817C00479A94 /* StringUtils.swift */; };
 		AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
 		AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9012013C87400CCF61F /* LevelMap.swift */; };
 		AA0DE9052015723A00CCF61F /* CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0DE9042015723A00CCF61F /* CSV.swift */; };
@@ -260,6 +262,7 @@
 		AA072D79204B5C8900479A94 /* CSVDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDB.swift; sourceTree = "<group>"; };
 		AA072D7C204B60A100479A94 /* WorldDrawingSceneProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldDrawingSceneProtocol.swift; sourceTree = "<group>"; };
 		AA072D7F204B66A600479A94 /* DrawUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawUtils.swift; sourceTree = "<group>"; };
+		AA072D82204C817C00479A94 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		AA0DE9012013C87400CCF61F /* LevelMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMap.swift; sourceTree = "<group>"; };
 		AA0DE9042015723A00CCF61F /* CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSV.swift; sourceTree = "<group>"; };
 		AA1CCC892030CF6100BFA85A /* PaletteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteStore.swift; sourceTree = "<group>"; };
@@ -378,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				AA072D76204B2CB400479A94 /* SimpleMenu.swift */,
+				AA072D82204C817C00479A94 /* StringUtils.swift */,
 			);
 			name = UI;
 			path = Sources/RogueKit/UI;
@@ -892,6 +896,7 @@
 				AAC6A5002049CF8C008D971B /* URLs.swift in Sources */,
 				AA3DA2682012DE0300A7CA1B /* DistanceField.swift in Sources */,
 				AA072D7B204B5C8900479A94 /* CSVDB.swift in Sources */,
+				AA072D84204C817C00479A94 /* StringUtils.swift in Sources */,
 				AA3DA27F2015B1E300A7CA1B /* WorldModel.swift in Sources */,
 				AA3DA26C2012DE0300A7CA1B /* SpriteSheet.swift in Sources */,
 				AA3DA2612012DE0300A7CA1B /* GeneratorProtocol.swift in Sources */,
@@ -964,6 +969,7 @@
 				AAC6A4FC2049CC60008D971B /* BLConstant+Labels.swift in Sources */,
 				AA072D73204B2B9700479A94 /* InventoryScene.swift in Sources */,
 				OBJ_75 /* Resources.swift in Sources */,
+				AA072D83204C817C00479A94 /* StringUtils.swift in Sources */,
 				AA3DA27E2015B1E300A7CA1B /* WorldModel.swift in Sources */,
 				OBJ_76 /* Array2D.swift in Sources */,
 				AA072D77204B2CB400479A94 /* SimpleMenu.swift in Sources */,

@@ -178,6 +178,62 @@ class WieldingS: ECSSystem<WieldingC>, Codable {
 }
 
 
+// MARK: Armor (equipping & stats-having)
+
+
+class ArmorC: ECSComponent, Codable {
+  var entity: Entity?
+  var armorDefinition: ArmorDefinition
+
+  init(entity: Entity?) {
+    self.entity = entity
+    self.armorDefinition = ArmorDefinition.zero
+  }
+
+  convenience init(entity: Entity?, armorDefinition: ArmorDefinition) {
+    self.init(entity: entity)
+    self.armorDefinition = armorDefinition
+  }
+}
+class ArmorS: ECSSystem<ArmorC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
+class EquipmentC: ECSComponent, Codable {
+  var entity: Entity?
+  var slots = [String: Entity]()
+
+  enum Slot: String {
+    case body = "body"
+    case head = "head"
+    case hands = "hands"
+
+    static var all: [Slot] { return [.head, .body, .hands] }
+  }
+
+  init(entity: Entity?) {
+    self.entity = entity
+  }
+
+  func armor(on slot: Slot, in worldModel: WorldModel) -> ArmorC? {
+    guard let e = slots[slot.rawValue] else { return nil }
+    return worldModel.armorS[e]
+  }
+
+  func put(armor e: Entity, on slot: Slot) {
+    slots[slot.rawValue] = e
+  }
+}
+class EquipmentS: ECSSystem<EquipmentC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
 // MARK: AI or something
 
 

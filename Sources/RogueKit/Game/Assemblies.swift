@@ -21,7 +21,11 @@ struct ZValues {
 
 
 protocol EntityAssemblyProtocol {
-  func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?)
+  func assemble(
+    entity: Entity,
+    worldModel: WorldModel,
+    point: BLPoint?,
+    levelId: String?)
 }
 
 
@@ -53,6 +57,18 @@ class PlayerAssembly: EntityAssemblyProtocol {
       entity: entity,
       weaponEntity: nil,
       defaultWeaponDefinition: worldModel.csvDB.weapons["fist"]!))
+
+    // And a shirt
+    let equipmentC = worldModel.equipmentS.add(
+      component: EquipmentC(entity: entity))
+    let bodyArmorE = worldModel.addEntity()
+    ArmorAssembly().assemble(
+      entity: bodyArmorE,
+      worldModel: worldModel,
+      point: nil,
+      levelId: levelId,
+      id: "cotton_shirt")
+    equipmentC.put(armor: bodyArmorE, on: .body)
   }
 }
 
@@ -78,6 +94,49 @@ class EnemyAssembly: EntityAssemblyProtocol {
              baseStats: worldModel.csvDB.stats["generic_mob"]!,
              currentStats: nil))
 
+    let equipmentC = worldModel.equipmentS.add(
+      component: EquipmentC(entity: entity))
+
+    if worldModel.mapRNG.get(upperBound: 1) == 1 {
+      // Give it some random headgear
+      let headgears = worldModel.csvDB.armors.values
+        .filter({ $0.slot == EquipmentC.Slot.head.rawValue })
+      let headgearE = worldModel.addEntity()
+      ArmorAssembly().assemble(
+        entity: headgearE,
+        worldModel: worldModel,
+        point: nil,
+        levelId: levelId,
+        id: worldModel.mapRNG.choice(headgears).id)
+      equipmentC.put(armor: headgearE, on: .head)
+    }
+
+    if worldModel.mapRNG.get(upperBound: 1) == 1 {
+      // Give it some random gloves
+      let gloves = worldModel.csvDB.armors.values
+        .filter({ $0.slot == EquipmentC.Slot.hands.rawValue })
+      let glovesE = worldModel.addEntity()
+      ArmorAssembly().assemble(
+        entity: glovesE,
+        worldModel: worldModel,
+        point: nil,
+        levelId: levelId,
+        id: worldModel.mapRNG.choice(gloves).id)
+      equipmentC.put(armor: glovesE, on: .hands)
+    }
+
+    // Give it some random body armor
+    let bodyArmors = worldModel.csvDB.armors.values
+      .filter({ $0.slot == EquipmentC.Slot.body.rawValue })
+    let bodyArmorE = worldModel.addEntity()
+    ArmorAssembly().assemble(
+      entity: bodyArmorE,
+      worldModel: worldModel,
+      point: nil,
+      levelId: levelId,
+      id: worldModel.mapRNG.choice(bodyArmors).id)
+    equipmentC.put(armor: bodyArmorE, on: .body)
+
     let weaponE = worldModel.addEntity()
     // Give it a random weapon
     worldModel.wieldingS.add(entity: entity, component: WieldingC(
@@ -101,8 +160,17 @@ class WeaponAssembly: EntityAssemblyProtocol {
     let tag = "basic"
     let allowedWeapons = worldModel.csvDB.weapons.values.filter({ $0.tags.contains(tag) })
     let weaponDef = worldModel.mapRNG.choice(allowedWeapons)
+    self.assemble(entity: entity,
+                  worldModel: worldModel,
+                  point: point,
+                  levelId: levelId,
+                  id: weaponDef.id)
+  }
 
-//    print(weaponDef)
+  func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?, id: String) {
+    let weaponDef = worldModel.csvDB.weapons[id]!
+
+    //    print(weaponDef)
 
     worldModel.nameS.add(component:
       NameC(entity: entity,
@@ -129,9 +197,52 @@ class WeaponAssembly: EntityAssemblyProtocol {
 }
 
 
+class ArmorAssembly: EntityAssemblyProtocol {
+  func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?) {
+    // TODO: get armor tag from prefab instead of using a constant
+    //    guard let levelId = levelId, let level = worldModel.maps[levelId] else { return }
+    let tag = "basic"
+    let allowedArmors = worldModel.csvDB.armors.values.filter({ $0.tags.contains(tag) })
+    let armorDef = worldModel.mapRNG.choice(allowedArmors)
+    self.assemble(entity: entity,
+                  worldModel: worldModel,
+                  point: point,
+                  levelId: levelId,
+                  id: armorDef.id)
+  }
+
+  func assemble(entity: Entity, worldModel: WorldModel, point: BLPoint?, levelId: String?, id: String) {
+    let armorDef = worldModel.csvDB.armors[id]!
+
+    worldModel.nameS.add(component:
+      NameC(entity: entity,
+            name: armorDef.name,
+            description: armorDef.description))
+
+    if let point = point {
+      worldModel.positionS.add(component:
+        PositionC(entity: entity, point: point, levelId: levelId))
+    }
+
+    worldModel.spriteS.add(component:
+      SpriteC(entity: entity,
+              int: armorDef.char,
+              str: nil, z: ZValues.item,
+              color: worldModel.resources!.defaultPalette[armorDef.color]))
+    worldModel.collectibleS.add(component:
+      CollectibleC(entity: entity,
+                   grams: armorDef.grams,
+                   liters: armorDef.liters))
+    worldModel.armorS.add(component:
+      ArmorC(entity: entity, armorDefinition: armorDef))
+  }
+}
+
+
 let ASSEMBLIES: [String: EntityAssemblyProtocol] = {
   return [
     "enemy": EnemyAssembly(),
     "weapon": WeaponAssembly(),
+    "armor": ArmorAssembly(),
   ]
 }()

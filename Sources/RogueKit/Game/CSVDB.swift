@@ -44,12 +44,37 @@ struct WeaponDefinition: Codable {
 }
 
 
+struct ArmorDefinition: Codable {
+  // id  name  char  color  description  liters  grams  tags  slot  protection_physical  flammability  conductiveness  storage_liters
+  let id: String
+  let name: String
+  let char: BLInt
+  let color: String
+  let description: String
+  let liters: Double
+  let grams: Double
+  let tags: [String]
+  let slot: String
+  let protectionPhysical: Double
+  let flammability: Double
+  let conductiveness: Double
+  let storageLiters: Double
+
+  static let zero = {
+    return ArmorDefinition(
+      id: "null", name: "null", char: 0, color: "red", description: "", liters: 0,
+      grams: 0, tags: [], slot: "null", protectionPhysical: 0, flammability: 0,
+      conductiveness: 0, storageLiters: 0)
+  }()
+}
+
+
 class CSVDB {
   let resources: ResourceCollectionProtocol
 
   lazy var stats: [String: StatBucket] = { _createStatsDB() }()
-
   lazy var weapons: [String: WeaponDefinition] = { _createWeaponsDB() }()
+  lazy var armors: [String: ArmorDefinition] = { _createArmorDB() }()
 
   init(resources: ResourceCollectionProtocol) {
     self.resources = resources
@@ -112,6 +137,31 @@ class CSVDB {
       })
     } catch {
       fatalError("Could not load weapons")
+    }
+  }
+
+  private func _createArmorDB() -> [String: ArmorDefinition] {
+    do {
+      return try resources.csvMap(name: "armor", mapper: {
+        (row: StringBox) -> (String, ArmorDefinition) in
+
+        return (row["id"], ArmorDefinition(
+          id: row["id"],
+          name: row["name"],
+          char: BLInt(row.int("char")),
+          color: row["color"],
+          description: row["description"],
+          liters: row["liters"],
+          grams: row["grams"],
+          tags: row.string("tags").split(separator: ",").map({ String($0) }),
+          slot: row["slot"],
+          protectionPhysical: row["protection_physical"],
+          flammability: row["flammability"],
+          conductiveness: row["conductiveness"],
+          storageLiters: row["storage_liters"]))
+      })
+    } catch {
+      fatalError("Could not load armor")
     }
   }
 }

@@ -93,11 +93,13 @@ class ECSSystem<T: ECSComponent & Codable>: ECSRemovable {
     })
   }
 
-  func add(component: T) {
+  @discardableResult
+  func add(component: T) -> T {
     guard let entity = component.entity else {
       fatalError("Can't add a component this way w/o an entity on it")
     }
     self.add(entity: entity, component: component)
+    return component
   }
 
   func remove(entity: Entity) {

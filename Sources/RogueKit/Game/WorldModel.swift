@@ -48,6 +48,8 @@ class WorldModel: Codable {
   var nameS = NameS()
   var weaponS = WeaponS()
   var wieldingS = WieldingS()
+  var armorS = ArmorS()
+  var equipmentS = EquipmentS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -88,6 +90,8 @@ class WorldModel: Codable {
     case nameS
     case weaponS
     case wieldingS
+    case armorS
+    case equipmentS
 
     case debugFlags
   }
@@ -118,6 +122,8 @@ class WorldModel: Codable {
     nameS = try values.decode(NameS.self, forKey: .nameS)
     weaponS = try values.decode(WeaponS.self, forKey: .weaponS)
     wieldingS = try values.decode(WieldingS.self, forKey: .wieldingS)
+    armorS = try values.decode(ArmorS.self, forKey: .armorS)
+    equipmentS = try values.decode(EquipmentS.self, forKey: .equipmentS)
   }
 
   func encode(to encoder: Encoder) throws {
@@ -143,6 +149,8 @@ class WorldModel: Codable {
     try container.encode(nameS, forKey: .nameS)
     try container.encode(weaponS, forKey: .weaponS)
     try container.encode(wieldingS, forKey: .wieldingS)
+    try container.encode(armorS, forKey: .armorS)
+    try container.encode(equipmentS, forKey: .equipmentS)
   }
 
   var _allSystems: [ECSRemovable] {
@@ -158,6 +166,8 @@ class WorldModel: Codable {
       nameS,
       weaponS,
       wieldingS,
+      armorS,
+      equipmentS,
     ]
   }
 

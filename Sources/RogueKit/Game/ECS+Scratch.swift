@@ -218,6 +218,13 @@ class EquipmentC: ECSComponent, Codable {
     self.entity = entity
   }
 
+  func isWearing(_ entity: Entity) -> Bool {
+    for v in slots.values {
+      if v == entity { return true }
+    }
+    return false
+  }
+
   func armor(on slot: Slot, in worldModel: WorldModel) -> ArmorC? {
     guard let e = slots[slot.rawValue] else { return nil }
     return worldModel.armorS[e]
@@ -225,6 +232,15 @@ class EquipmentC: ECSComponent, Codable {
 
   func put(armor e: Entity, on slot: Slot) {
     slots[slot.rawValue] = e
+  }
+
+  func put(armor e: Entity, on slot: String) {
+    self.put(armor: e, on: Slot(rawValue: slot)!)
+  }
+
+  func remove(armor e: Entity, on slot: String) {
+    guard Slot(rawValue: slot) != nil else { fatalError("No such slot") }
+    slots[slot] = nil
   }
 }
 class EquipmentS: ECSSystem<EquipmentC>, Codable {

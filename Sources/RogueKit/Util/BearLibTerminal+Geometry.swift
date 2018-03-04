@@ -84,6 +84,14 @@ extension BLPoint: CustomDebugStringConvertible {
 }
 
 
+// MARK: BLSize
+
+
+public extension BLSize {
+  var asPoint: BLPoint { return BLPoint(x: w, y: h) }
+}
+
+
 // MARK: BLRect
 
 
@@ -144,6 +152,10 @@ extension BLRect: Sequence {
 
   public func moved(by delta: BLPoint) -> BLRect {
     return BLRect(x: origin.x + delta.x, y: origin.y + delta.y, w: w, h: h)
+  }
+
+  public func inset(byX1 x1: BLInt, y1: BLInt, x2: BLInt, y2: BLInt) -> BLRect {
+    return BLRect(x: x + x1, y: y + y1, w: w - (x2 + x1), h: h - (y2 + y1))
   }
 
   public func contains(point: BLPoint) -> Bool {

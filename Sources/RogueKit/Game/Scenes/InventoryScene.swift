@@ -30,7 +30,7 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
     var title: String {
       switch self {
       case .willOpenMenu, .menuIsOpen(_): return "Inventory (broken)"
-      case .willEquip: return "Equip"
+      case .willEquip: return "Equip/Unequip"
       case .willDrop: return "Drop"
       }
     }
@@ -58,6 +58,9 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
           if e == self.worldModel.playerWeaponC?.entity {
             label += " (wielded)"
           }
+          if self.worldModel.equipmentS[self.worldModel.player]!.isWearing(e) {
+            label += "(\(self.worldModel.armorS[e]!.armorDefinition.slot))"
+          }
           return (key, label, { self.selectItem(index: index, entity: e) })
         }))
   }()
@@ -78,29 +81,25 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
     self.drawWorld(in: terminal)
 
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
-    menu.rect = BLRect(
+    let uiRect = BLRect(
       x: terminal.state(BLConstant.WIDTH) / 2 - 20,
-      y: 10,
+      y: terminal.state(BLConstant.HEIGHT) / 2 - 15,
       w: 40,
-      h: 2)
+      h: 30)
+    menu.rect = uiRect.inset(byX1: 1, y1: 3, x2: 1, y2: 1)
+    terminal.clear(area: uiRect)
+    terminal.foregroundColor = resources.defaultPalette["ui_accent"]
+    DrawUtils.drawBox(in: terminal, rect: uiRect)
+    terminal.foregroundColor = resources.defaultPalette["ui_text"]
+
     menu.draw(in: terminal)
 
     terminal.print(
       rect: BLRect(
-        origin: menu.rect.origin - BLPoint(x: 0, y: 1),
-        size: BLSize(w: menu.rect.w, h: 1)),
+        origin: uiRect.origin + BLPoint(x: 1, y: 1),
+        size: BLSize(w: uiRect.size.w - 2, h: 1)),
       align: BLConstant.ALIGN_CENTER,
       string: "\(state.title):")
-
-    terminal.foregroundColor = resources.defaultPalette["ui_accent"]
-    DrawUtils.drawLineVertical(
-      in: terminal,
-      origin: menu.rect.origin + BLPoint(x: -1, y: -1),
-      length: menu.rect.size.h + 1)
-    DrawUtils.drawLineVertical(
-      in: terminal,
-      origin: menu.rect.origin + BLPoint(x: menu.rect.size.w + 1, y: -1),
-      length: menu.rect.size.h + 1)
 
     terminal.refresh()
 
@@ -123,18 +122,19 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
       worldModel.drop(item: entity, fromInventoryOf: worldModel.player)
       exitState()
     case .willEquip:
-      // 1. If item is a weapon and player wields a weapon, unwield the weapon.
-      // 2. If item is a weapon and not wielded, wield it.
-      // 3. If item is equipment and player has equipment in that slot, unequip that.
-      // 4. If item is equipment and not equipped, equip it.
-
-      if worldModel.playerWeaponC?.entity == entity {
-        worldModel.unwield(weaponEntity: entity, on: worldModel.player)
-      } else if let wieldedEntity = worldModel.playerWeaponC?.entity {
-        worldModel.unwield(weaponEntity: wieldedEntity, on: worldModel.player)
-        worldModel.wield(weaponEntity: entity, on: worldModel.player)
-      } else {
-        worldModel.wield(weaponEntity: entity, on: worldModel.player)
+      if worldModel.weaponS[entity] != nil {
+        if worldModel.playerWeaponC?.entity == entity {
+          worldModel.unwield(weaponEntity: entity, on: worldModel.player)
+        } else {
+          worldModel.wield(weaponEntity: entity, on: worldModel.player)
+        }
+      } else if let armorC = worldModel.armorS[entity] {
+        let playerEquipmentC = worldModel.equipmentS[worldModel.player]!
+        if playerEquipmentC.slots[armorC.armorDefinition.slot] == entity {
+          playerEquipmentC.remove(armor: entity, on: armorC.armorDefinition.slot)
+        } else {
+          playerEquipmentC.put(armor: entity, on: armorC.armorDefinition.slot)
+        }
       }
 
       exitState()

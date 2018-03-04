@@ -45,12 +45,13 @@ class PlayerAssembly: EntityAssemblyProtocol {
               str: "@",
               z: ZValues.player,
               color: worldModel.resources!.defaultPalette["white"]))
-    worldModel.inventoryS.add(component:
-      InventoryC(entity: entity))
     worldModel.statsS.add(component:
       StatsC(entity: entity,
              baseStats: worldModel.csvDB.stats["player"]!,
              currentStats: nil))
+
+    let inventoryC = worldModel.inventoryS.add(component:
+      InventoryC(entity: entity))
 
     // Player just starts with their fist
     worldModel.wieldingS.add(entity: entity, component: WieldingC(
@@ -62,6 +63,7 @@ class PlayerAssembly: EntityAssemblyProtocol {
     let equipmentC = worldModel.equipmentS.add(
       component: EquipmentC(entity: entity))
     let bodyArmorE = worldModel.addEntity()
+    inventoryC.add(entity: bodyArmorE)
     ArmorAssembly().assemble(
       entity: bodyArmorE,
       worldModel: worldModel,

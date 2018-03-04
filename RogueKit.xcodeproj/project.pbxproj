@@ -442,7 +442,7 @@
 				AAC6A50D2049EF1A008D971B /* SwiftPriorityQueue.swift */,
 			);
 			name = SwiftPriorityQueue;
-			path = Sources/SwiftPriorityQueue;
+			path = Sources/RogueKit/SwiftPriorityQueue;
 			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_11 /* Map Gen */ = {
@@ -588,7 +588,6 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				AAC6A50C2049EED9008D971B /* SwiftPriorityQueue */,
 				OBJ_8 /* RogueKit */,
 			);
 			name = Sources;
@@ -598,6 +597,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_25 /* main.swift */,
+				AAC6A50C2049EED9008D971B /* SwiftPriorityQueue */,
 				AA3DA221200BEC7F00A7CA1B /* Game */,
 				OBJ_9 /* Algorithms */,
 				OBJ_11 /* Map Gen */,

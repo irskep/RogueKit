@@ -59,12 +59,20 @@ class BLTerminalWithOffset: BLTerminalInterface {
     terminal.delay(milliseconds: milliseconds)
   }
 
+  func measure(size: BLSize, align: BLInt, string: String) -> BLSize {
+    return terminal.measure(size: size, align: align, string: string)
+  }
+
   func measure(string: String) -> BLSize {
     return terminal.measure(string: string)
   }
 
   func print(point: BLPoint, string: String) -> BLSize {
     return terminal.print(point: point + offset, string: string)
+  }
+
+  func print(rect: BLRect, align: BLInt, string: String) -> BLSize {
+    return terminal.print(rect: rect.moved(by: offset), align: align, string: string)
   }
 
   func put(point: BLPoint, code: BLInt) {

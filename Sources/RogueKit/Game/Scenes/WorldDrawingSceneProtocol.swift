@@ -47,13 +47,23 @@ extension WorldDrawingSceneProtocol {
     if let inspectedEntity = inspectedEntity,
       let nameC = worldModel.nameS[inspectedEntity]
     {
-      var strings = [nameC.name, nameC.description]
+      var strings = [nameC.name, "", nameC.description]
       if let statsString = worldModel.statsS[inspectedEntity]?.currentStats.description {
-        strings.append(statsString)
+        strings.append(contentsOf: ["", statsString])
       }
+      let string = strings.joined(separator: "\n")
+      let stringSize = terminal.measure(
+        size: BLSize(w: MENU_W - 2, h: 1000),
+        align: BLConstant.ALIGN_LEFT,
+        string: string)
       menuCtx.print(
-        point: BLPoint(x: 1, y: terminal.height - 6),
-        string: strings.joined(separator: "\n"))
+        rect: BLRect(
+          x: 1,
+          y: terminal.height - stringSize.h - 1,
+          w: MENU_W - 2,
+          h: stringSize.h),
+        align: BLConstant.ALIGN_LEFT,
+        string: string)
     }
 
     menuCtx.foregroundColor = resources.defaultPalette["ui_accent"]

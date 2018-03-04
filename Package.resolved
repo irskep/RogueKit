@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/irskep/BearLibTerminal-Swift.git",
         "state": {
           "branch": null,
-          "revision": "ae1e261ae915240b930f5949b07dabeec5dad272",
-          "version": "1.0.2"
+          "revision": "fd408ad80b7d65bd3ee554c96754a5a8e265fd0f",
+          "version": "1.0.6"
         }
       },
       {
@@ -35,15 +35,6 @@
           "branch": null,
           "revision": "377e8bff2a7c99fb5a588dec351334efa3fd0b94",
           "version": "4.0.4"
-        }
-      },
-      {
-        "package": "SwiftPriorityQueue",
-        "repositoryURL": "https://github.com/davecom/SwiftPriorityQueue.git",
-        "state": {
-          "branch": null,
-          "revision": "c92b5b098a0153cd9660041502e1ed5a5e55bb17",
-          "version": "1.2.1"
         }
       }
     ]

@@ -386,6 +386,9 @@ extension WorldModel {
     guard let inventoryC: InventoryC = inventoryS[entity],
       let entityPositionC: PositionC = positionS[entity]
       else { return }
+    if wieldingS[entity]?.weaponEntity == item {
+      wieldingS[entity]?.weaponEntity = nil
+    }
     inventoryC.remove(entity: item)
     self.positionS.add(component: PositionC(
       entity: item, point: entityPositionC.point, levelId: entityPositionC.levelId))

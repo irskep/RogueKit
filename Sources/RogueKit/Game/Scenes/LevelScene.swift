@@ -65,6 +65,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
   lazy var mover: AStarMover = { return AStarMover(worldModel: self.worldModel) }()
   var cursorPoint: BLPoint = BLPoint.zero
   var inspectedEntity: Entity? {
+    guard worldModel.activeMap.mapMemory.contains(cursorPoint) else { return nil }
     return worldModel.entity(at: cursorPoint, matchingPredicate: {
       return self.worldModel.nameS[$0] != nil
     })

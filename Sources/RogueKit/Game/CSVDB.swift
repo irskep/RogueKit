@@ -9,7 +9,7 @@ import Foundation
 import BearLibTerminal
 
 
-struct WeaponDefinition {
+struct WeaponDefinition: Codable {
   let id: String
   let name: String
   let description: String
@@ -32,6 +32,15 @@ struct WeaponDefinition {
   let rangeDamageHeat: Int
   let rangeFalloff: Int
   let rangeMax: Int
+
+  static let zero = {
+    return WeaponDefinition(
+      id: "null", name: "null", description: "", animationId: "none", tags: [],
+      char: CP437.BLOCK, color: "red", liters: 0, grams: 0,
+      meleeDistance: 0, usesRemaining: 0, meleeDamagePhysical: 0,
+      meleeDamageElectric: 0, meleeDamageHeat: 0, rangeDamagePhysical: 0,
+      rangeDamageElectric: 0, rangeDamageHeat: 0, rangeFalloff: 0, rangeMax: 0)
+  }()
 }
 
 

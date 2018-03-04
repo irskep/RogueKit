@@ -42,7 +42,19 @@ extension WorldDrawingSceneProtocol {
     if let myStatsString = worldModel.statsS[worldModel.player]?.currentStats.description {
       strings.append(myStatsString)
     }
-    menuCtx.print(point: BLPoint(x: 1, y: 1), string: strings.joined(separator: "\n"))
+    if let weaponDef = worldModel.weapon(wieldedBy: worldModel.player) {
+      strings.append(contentsOf: ["", "Wielding: \(weaponDef.name)", "(\(weaponDef.description))"])
+    }
+    let s = strings.joined(separator: "\n")
+    let stringSize = terminal.measure(
+      size: BLSize(w: MENU_W - 2, h: 1000),
+      align: BLConstant.ALIGN_LEFT,
+      string: s)
+    menuCtx.print(
+      rect: BLRect(x: 1, y: 1, w: stringSize.w, h: stringSize.h),
+      align: BLConstant.ALIGN_LEFT,
+      string: strings.joined(separator: "\n"))
+
 
     if let inspectedEntity = inspectedEntity,
       let nameC = worldModel.nameS[inspectedEntity]
@@ -50,6 +62,9 @@ extension WorldDrawingSceneProtocol {
       var strings = [nameC.name, "", nameC.description]
       if let statsString = worldModel.statsS[inspectedEntity]?.currentStats.description {
         strings.append(contentsOf: ["", statsString])
+      }
+      if let weaponDef = worldModel.weapon(wieldedBy: inspectedEntity) {
+        strings.append(contentsOf: ["", "Wielding: \(weaponDef.name)"])
       }
       let string = strings.joined(separator: "\n")
       let stringSize = terminal.measure(

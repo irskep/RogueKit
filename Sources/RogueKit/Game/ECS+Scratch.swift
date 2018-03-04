@@ -119,6 +119,61 @@ class CollectibleS: ECSSystem<CollectibleC>, Codable {
 }
 
 
+// MARK: Weapons (wielding & stats-having)
+
+
+class WeaponC: ECSComponent, Codable {
+  var entity: Entity?
+  var weaponDefinition: WeaponDefinition
+
+  init(entity: Entity?) {
+    self.entity = entity
+    self.weaponDefinition = WeaponDefinition.zero
+  }
+
+  convenience init(entity: Entity?, weaponDefinition: WeaponDefinition) {
+    self.init(entity: entity)
+    self.weaponDefinition = weaponDefinition
+  }
+}
+class WeaponS: ECSSystem<WeaponC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
+class WieldingC: ECSComponent, Codable {
+  var entity: Entity?
+  var weaponEntity: Entity?
+  var defaultWeaponDefinition: WeaponDefinition
+
+  init(entity: Entity?) {
+    self.entity = entity
+    self.defaultWeaponDefinition = WeaponDefinition.zero
+  }
+
+  convenience init(entity: Entity?, weaponEntity: Entity?, defaultWeaponDefinition: WeaponDefinition) {
+    self.init(entity: entity)
+    self.weaponEntity = weaponEntity
+    self.defaultWeaponDefinition = defaultWeaponDefinition
+  }
+
+  func weaponDefinition(in worldModel: WorldModel) -> WeaponDefinition {
+    if let weaponE = weaponEntity {
+      return worldModel.weaponS[weaponE]!.weaponDefinition
+    } else {
+      return defaultWeaponDefinition
+    }
+  }
+}
+class WieldingS: ECSSystem<WieldingC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
 // MARK: AI or something
 
 

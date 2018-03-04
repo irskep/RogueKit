@@ -47,6 +47,12 @@ class PlayerAssembly: EntityAssemblyProtocol {
       StatsC(entity: entity,
              baseStats: worldModel.csvDB.stats["player"]!,
              currentStats: nil))
+
+    // Player just starts with their fist
+    worldModel.wieldingS.add(entity: entity, component: WieldingC(
+      entity: entity,
+      weaponEntity: nil,
+      defaultWeaponDefinition: worldModel.csvDB.weapons["fist"]!))
   }
 }
 
@@ -71,6 +77,19 @@ class EnemyAssembly: EntityAssemblyProtocol {
       StatsC(entity: entity,
              baseStats: worldModel.csvDB.stats["generic_mob"]!,
              currentStats: nil))
+
+    let weaponE = worldModel.addEntity()
+    // Give it a random weapon
+    worldModel.wieldingS.add(entity: entity, component: WieldingC(
+      entity: entity,
+      weaponEntity: weaponE,
+      defaultWeaponDefinition: worldModel.csvDB.weapons["fist"]!))
+
+    WeaponAssembly().assemble(
+      entity: weaponE,
+      worldModel: worldModel,
+      point: nil,
+      levelId: levelId)
   }
 }
 
@@ -83,14 +102,18 @@ class WeaponAssembly: EntityAssemblyProtocol {
     let allowedWeapons = worldModel.csvDB.weapons.values.filter({ $0.tags.contains(tag) })
     let weaponDef = worldModel.mapRNG.choice(allowedWeapons)
 
-    print(weaponDef)
+//    print(weaponDef)
 
     worldModel.nameS.add(component:
       NameC(entity: entity,
             name: weaponDef.name,
             description: weaponDef.description))
-    worldModel.positionS.add(component:
-      PositionC(entity: entity, point: point ?? BLPoint.zero, levelId: levelId))
+
+    if let point = point {
+      worldModel.positionS.add(component:
+        PositionC(entity: entity, point: point, levelId: levelId))
+    }
+
     worldModel.spriteS.add(component:
       SpriteC(entity: entity,
               int: weaponDef.char,
@@ -100,6 +123,8 @@ class WeaponAssembly: EntityAssemblyProtocol {
       CollectibleC(entity: entity,
                    grams: weaponDef.grams,
                    liters: weaponDef.liters))
+    worldModel.weaponS.add(component:
+      WeaponC(entity: entity, weaponDefinition: weaponDef))
   }
 }
 

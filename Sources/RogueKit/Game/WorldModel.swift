@@ -46,6 +46,8 @@ class WorldModel: Codable {
   var inventoryS = InventoryS()
   var statsS = StatsS()
   var nameS = NameS()
+  var weaponS = WeaponS()
+  var wieldingS = WieldingS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -84,6 +86,8 @@ class WorldModel: Codable {
     case inventoryS
     case statsS
     case nameS
+    case weaponS
+    case wieldingS
 
     case debugFlags
   }
@@ -112,6 +116,8 @@ class WorldModel: Codable {
     inventoryS = try values.decode(InventoryS.self, forKey: .inventoryS)
     statsS = try values.decode(StatsS.self, forKey: .statsS)
     nameS = try values.decode(NameS.self, forKey: .nameS)
+    weaponS = try values.decode(WeaponS.self, forKey: .weaponS)
+    wieldingS = try values.decode(WieldingS.self, forKey: .wieldingS)
   }
 
   func encode(to encoder: Encoder) throws {
@@ -135,6 +141,8 @@ class WorldModel: Codable {
     try container.encode(inventoryS, forKey: .inventoryS)
     try container.encode(statsS, forKey: .statsS)
     try container.encode(nameS, forKey: .nameS)
+    try container.encode(weaponS, forKey: .weaponS)
+    try container.encode(wieldingS, forKey: .wieldingS)
   }
 
   var _allSystems: [ECSRemovable] {
@@ -148,6 +156,8 @@ class WorldModel: Codable {
       inventoryS,
       statsS,
       nameS,
+      weaponS,
+      wieldingS,
     ]
   }
 
@@ -261,6 +271,8 @@ class WorldModel: Codable {
   }
 }
 
+// MARK: Convenience accessors
+
 extension WorldModel {
   func mob(at point: BLPoint) -> Entity? {
     return positionS
@@ -280,6 +292,15 @@ extension WorldModel {
       .first?
       .entity
   }
+
+  func weapon(wieldedBy entity: Entity) -> WeaponDefinition? {
+    return wieldingS[entity]?.weaponDefinition(in: self)
+  }
+}
+
+// MARK: Actions
+
+extension WorldModel {
 
   func waitPlayer() {
     self.playerDidTakeAction()
@@ -387,6 +408,8 @@ extension WorldModel {
     }
   }
 }
+
+// MARK: Rendering
 
 extension WorldModel: BLTDrawable {
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface) {

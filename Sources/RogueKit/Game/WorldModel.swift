@@ -406,6 +406,11 @@ extension WorldModel {
   func kill(_ entity: Entity) {
     guard let nameC1 = nameS[entity] else { fatalError("Thou hast tried to kill a nameless thing") }
     self.log("\(nameC1.name) dies")
+    if let inventoryC = inventoryS[entity] {
+      for item in Array(inventoryC.contents) {
+        self.drop(item: item, fromInventoryOf: entity)
+      }
+    }
     self.remove(entity: entity)
   }
 
@@ -503,6 +508,9 @@ extension WorldModel {
     inventoryC.remove(entity: item)
     self.positionS.add(component: PositionC(
       entity: item, point: entityPositionC.point, levelId: entityPositionC.levelId))
+    if let hostNameC = nameS[entity], let itemNameC = nameS[item] {
+      self.log("\(hostNameC.name) drops \(itemNameC.name)")
+    }
   }
 
   func wield(weaponEntity: Entity, on host: Entity) {

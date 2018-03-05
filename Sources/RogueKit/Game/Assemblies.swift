@@ -97,6 +97,7 @@ class EnemyAssembly: EntityAssemblyProtocol {
              baseStats: worldModel.csvDB.stats["generic_mob"]!,
              currentStats: nil)).currentStats.fatigue = 0
     worldModel.factionS.add(component: FactionC(entity: entity, faction: "Guards & Scientists"))
+    let inventoryC = worldModel.inventoryS.add(component: InventoryC(entity: entity))
 
     let equipmentC = worldModel.equipmentS.add(
       component: EquipmentC(entity: entity))
@@ -106,6 +107,7 @@ class EnemyAssembly: EntityAssemblyProtocol {
       let headgears = worldModel.csvDB.armors.values
         .filter({ $0.slot == EquipmentC.Slot.head.rawValue })
       let headgearE = worldModel.addEntity()
+      inventoryC.add(entity: headgearE)
       ArmorAssembly().assemble(
         entity: headgearE,
         worldModel: worldModel,
@@ -120,6 +122,7 @@ class EnemyAssembly: EntityAssemblyProtocol {
       let gloves = worldModel.csvDB.armors.values
         .filter({ $0.slot == EquipmentC.Slot.hands.rawValue })
       let glovesE = worldModel.addEntity()
+      inventoryC.add(entity: glovesE)
       ArmorAssembly().assemble(
         entity: glovesE,
         worldModel: worldModel,
@@ -133,6 +136,7 @@ class EnemyAssembly: EntityAssemblyProtocol {
     let bodyArmors = worldModel.csvDB.armors.values
       .filter({ $0.slot == EquipmentC.Slot.body.rawValue })
     let bodyArmorE = worldModel.addEntity()
+    inventoryC.add(entity: bodyArmorE)
     ArmorAssembly().assemble(
       entity: bodyArmorE,
       worldModel: worldModel,

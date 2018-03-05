@@ -305,8 +305,9 @@ extension WorldModel {
       .entity
   }
 
-  func fighter(at point: BLPoint, attackingFaction: String) -> Entity? {
+  func fighter(at point: BLPoint, forAttacker attacker: Entity) -> Entity? {
     guard
+      let attackingFaction = factionS[attacker]?.faction,
       let maybeFighter = playerPos == point ? player : mob(at: point),
       factionS[maybeFighter]?.faction != attackingFaction
       else { return nil }
@@ -475,7 +476,7 @@ extension WorldModel {
     if self.activeMap.interactions[cell.feature] != nil { return true }
 
     // mob we can interact with?
-    if mob(at: point) != nil { return true}
+    if fighter(at: point, forAttacker: entity) != nil { return true }
 
     return false
   }
@@ -514,7 +515,7 @@ extension WorldModel {
 
   func interact(entity: Entity, with point: BLPoint) {
     guard let cell = activeMap.cells[point] else { return }
-    if let fighter = fighter(at: point, attackingFaction: factionS[entity]?.faction ?? "who cares") {
+    if let fighter = fighter(at: point, forAttacker: entity) {
       self.fight(attacker: entity, defender: fighter)
     } else if let interaction = activeMap.interactions[cell.feature] {
       run(interaction: interaction, entity: entity, point: point)

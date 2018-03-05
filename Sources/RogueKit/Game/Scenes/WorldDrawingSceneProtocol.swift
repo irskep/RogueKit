@@ -35,6 +35,7 @@ extension WorldDrawingSceneProtocol {
         "(\(BLConstant.label(for: $0.0)!)) \($0.1)"
       }).joined(separator: " ")
     keyString += " (arrows) move and attack by bumping"
+    keyString += "\n(tab) select enemies (enter) fire ranged weapon"
 
     terminal.print(
       point: BLPoint(x: 1, y: terminal.height - 2),

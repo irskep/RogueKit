@@ -182,7 +182,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
       case config.keyToggleInspectedEntity:
         self.toggleInspectedEntity()
         isDirty = true
-
+      case config.keyRangedFire:
+        guard let e = inspectedEntity else { break }
+        worldModel.fight(attacker: worldModel.player, defender: e)
+        didMove = true
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {
           director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))
@@ -208,13 +211,19 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
           mover.update(cursorPoint: cursorPoint)
         }
       case BLConstant.MOUSE_LEFT:
-        if !mover.points.isEmpty {
+        if let e = inspectedEntity, worldModel.moveAfterPlayerS[e] != nil {
+          worldModel.fight(attacker: worldModel.player, defender: e)
+          didMove = true
+        } else if !mover.points.isEmpty {
           worldModel.movePlayer(by: mover.points.last! - worldModel.positionS[worldModel.player]!.point)
           mover.update(cursorPoint: mover.cursorPoint)
           didMove = true
         }
       default: break
       }
+    }
+    if didMove {
+      inspectedEntity = nil
     }
     if let nextLevelId = worldModel.waitingToTransitionToLevelId {
       didMove = true
@@ -227,7 +236,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
       self.drawWorld(in: terminal)
       mover.draw(in: terminal)
       terminal.foregroundColor = terminal.getColor(name: "ui_text")
-      terminal.print(point: BLPoint(x: 1, y: terminal.height - 1), string: "\(cursorPoint.debugDescription)")
+//      terminal.print(point: BLPoint(x: 1, y: terminal.height - 1), string: "\(cursorPoint.debugDescription)")
     }
 
     drawInspectedEntityOverlay()

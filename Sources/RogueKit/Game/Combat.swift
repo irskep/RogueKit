@@ -66,7 +66,7 @@ struct CombatStats {
 
 enum CombatOutcome {
   case miss
-  case changeStats(String, StatBucket) // slot hit, stat delta
+  case changeStats(String, StatBucket, String) // slot hit, stat delta, dmg summary string
 //  case equipmentCatchFire(String)  // slot
 //  case combatantCatchFire
 }
@@ -92,15 +92,15 @@ extension CombatStats {
     let defenderReflex: Double = _100(defender.stats.reflex)
     let defenderBaseDodgeChance = 0.05 + (1 - defenderReflex * 0.95)
 
-    let strengthDifference = (
+    stats.strengthDifference = (
       attacker.stats.strength
         - Double(attacker.weapon.strengthRequired))
-    stats.strengthDifference = strengthDifference
 
     if attacker.weapon.isMelee {
       stats.baseHitChance = 1
-      stats.hitChance = defenderBaseDodgeChance * (1 + strengthDifference * 0.3)
+      stats.hitChance = defenderBaseDodgeChance * (1 +  stats.strengthDifference * 0.3)
     } else {
+      stats.strengthDifference = min(0,  stats.strengthDifference)
       if distance > Double(attacker.weapon.rangeMax) &&
         attacker.weapon.rangeMax > 0
       {
@@ -111,7 +111,7 @@ extension CombatStats {
         if distance == 1 {  // "too close" is a special case; 50% nerf
           stats.baseHitChance /= 2
         }
-        stats.hitChance = stats.baseHitChance * defenderBaseDodgeChance
+        stats.hitChance = stats.baseHitChance * defenderBaseDodgeChance * (1 +  stats.strengthDifference * 0.3)
       }
     }
 
@@ -126,7 +126,7 @@ extension CombatStats {
           amt = (
             _100(attacker.weapon.damagePhysical)
             * (1 - protection)
-            * (1 + strengthDifference * 0.3))
+            * (attacker.weapon.isMelee ? (1 + stats.strengthDifference * 0.3) : 1))
         case .electric:
           let conductiveness = _100(
             defender.equipment[slot.rawValue]?.armorDefinition.conductiveness ?? 0)
@@ -143,8 +143,7 @@ extension CombatStats {
     return stats
   }
 
-  static func fight(rng: RKRNGProtocol, attacker: Combatant, defendant: Combatant) -> [CombatOutcome] {
-    let stats = predictFight(attacker: attacker, defender: defendant)
+  static func fight(rng: RKRNGProtocol, stats: CombatStats) -> [CombatOutcome] {
     if rng.get() > stats.hitChance {
       return [.miss]
     } else {
@@ -164,9 +163,16 @@ extension CombatStats {
       }
       let finalAmount = stats.slotDamageAmounts[slot]!.values.reduce(0, +)
       var finalStats = StatBucket()
-      finalStats.hp = -finalAmount * DAMAGE_SCALE
+      finalStats.hp = -finalAmount
+      let damageSummaryStrings: [String] = Array(stats.slotDamageAmounts[slot]!
+        .filter({ $1 > 0 })
+        .map({
+          (arg: (key: CombatStats.DamageType, value: Double)) -> String in
+          let (k, v) = arg
+          return "\(Int(v))\(k.rawValue.first!)"
+        }))
 
-      return [.changeStats(slot.rawValue, finalStats)]
+      return [.changeStats(slot.rawValue, finalStats, damageSummaryStrings.joined(separator: ","))]
     }
   }
 }

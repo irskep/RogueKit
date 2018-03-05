@@ -36,6 +36,7 @@ class WorldModel: Codable {
   var maps: [String: LevelMap]
   var activeMapId: String
   var activeMap: LevelMap { return maps[activeMapId]! }
+  var messageLog = [String]()
 
   var positionS = PositionS()
   var sightS = SightS()
@@ -50,6 +51,7 @@ class WorldModel: Codable {
   var wieldingS = WieldingS()
   var armorS = ArmorS()
   var equipmentS = EquipmentS()
+  var factionS = FactionS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -78,6 +80,7 @@ class WorldModel: Codable {
     case mapMemory
     case nextEntityId
     case waitingToTransitionToLevelId
+    case messageLog
 
     case positionS
     case sightS
@@ -92,6 +95,7 @@ class WorldModel: Codable {
     case wieldingS
     case armorS
     case equipmentS
+    case factionS
 
     case debugFlags
   }
@@ -110,6 +114,7 @@ class WorldModel: Codable {
     nextEntityId = try values.decode(Entity.self, forKey: .nextEntityId)
     waitingToTransitionToLevelId = try? values.decode(String.self, forKey: .waitingToTransitionToLevelId)
     debugFlags = try values.decode([String: Int].self, forKey: .debugFlags)
+    messageLog = try values.decode([String].self, forKey: .messageLog)
 
     positionS = try values.decode(PositionS.self, forKey: .positionS)
     sightS = try values.decode(SightS.self, forKey: .sightS)
@@ -124,6 +129,7 @@ class WorldModel: Codable {
     wieldingS = try values.decode(WieldingS.self, forKey: .wieldingS)
     armorS = try values.decode(ArmorS.self, forKey: .armorS)
     equipmentS = try values.decode(EquipmentS.self, forKey: .equipmentS)
+    factionS = try values.decode(FactionS.self, forKey: .factionS)
   }
 
   func encode(to encoder: Encoder) throws {
@@ -137,6 +143,7 @@ class WorldModel: Codable {
     try container.encode(nextEntityId, forKey: .nextEntityId)
     try container.encode(waitingToTransitionToLevelId, forKey: .waitingToTransitionToLevelId)
     try container.encode(debugFlags, forKey: .debugFlags)
+    try container.encode(messageLog, forKey: .messageLog)
 
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)
@@ -151,6 +158,7 @@ class WorldModel: Codable {
     try container.encode(wieldingS, forKey: .wieldingS)
     try container.encode(armorS, forKey: .armorS)
     try container.encode(equipmentS, forKey: .equipmentS)
+    try container.encode(factionS, forKey: .factionS)
   }
 
   var _allSystems: [ECSRemovable] {
@@ -168,6 +176,7 @@ class WorldModel: Codable {
       wieldingS,
       armorS,
       equipmentS,
+      factionS,
     ]
   }
 
@@ -222,6 +231,11 @@ class WorldModel: Codable {
     updateFOV()
   }
 
+  func log(_ s: String) {
+    print("LOG: \(s)")
+    self.messageLog.append(s)
+  }
+
   func playerDidTakeAction() {
     updateFOV()
 
@@ -236,9 +250,7 @@ class WorldModel: Codable {
     // Pick up any items on the ground
     for posC in positionS.all(in: activeMapId, at: playerPos) where posC.entity != nil {
       guard let entity = posC.entity, collectibleS[entity] != nil else { continue }
-      // Remove item from map; add to player's inventory
-      positionS.remove(entity: entity)
-      inventoryS[player]?.add(entity: entity)
+      self.haveEntity(player, pickUp: entity)
     }
 
     // Move all enemies on this level
@@ -291,6 +303,14 @@ extension WorldModel {
       .flatMap({ self.moveAfterPlayerS[$0] })
       .first?
       .entity
+  }
+
+  func fighter(at point: BLPoint, attackingFaction: String) -> Entity? {
+    guard
+      let maybeFighter = playerPos == point ? player : mob(at: point),
+      factionS[maybeFighter]?.faction != attackingFaction
+      else { return nil }
+    return maybeFighter
   }
 
   func entity(at point: BLPoint, matchingPredicate predicate: (Entity) -> Bool) -> Entity? {
@@ -352,6 +372,49 @@ extension WorldModel {
         weapon: weaponC2,
         equipment: getEquipment(equipmentC2),
         stats: statsC2.currentStats))
+  }
+
+  func fight(attacker: Entity, defender: Entity) {
+    guard
+      let nameC1 = nameS[attacker],
+      let nameC2 = nameS[defender],
+//      let equipmentC1 = equipmentS[attacker],
+//      let statsC1 = statsS[attacker],
+//      let equipmentC2 = equipmentS[defender],
+      let statsC2 = statsS[defender] else {
+        return
+    }
+    guard let stats = predictFight(attacker: attacker, defender: defender) else { return }
+    for outcome in CombatStats.fight(rng: mapRNG, stats: stats) {
+      switch outcome {
+      case .miss:
+        self.log("Miss")
+      case .changeStats(let slot, let statDelta, let damageSummaryString):
+        statsC2.currentStats = statsC2.currentStats + statDelta
+        self.log("\(nameC1.name) hits \(nameC2.name) on the \(slot) for \(damageSummaryString)")
+      }
+    }
+    self.maybeKill(attacker)
+    self.maybeKill(defender)
+  }
+
+  func maybeKill(_ entity: Entity) {
+    if let statsC = statsS[entity], statsC.currentStats.hp <= 0 { self.kill(entity) }
+  }
+
+  func kill(_ entity: Entity) {
+    guard let nameC1 = nameS[entity] else { fatalError("Thou hast tried to kill a nameless thing") }
+    self.log("\(nameC1.name) dies")
+    self.remove(entity: entity)
+  }
+
+  func haveEntity(_ host: Entity, pickUp item: Entity) {
+    // Remove item from map; add to player's inventory
+    positionS.remove(entity: item)
+    inventoryS[host]?.add(entity: item)
+    if let hostNameC = nameS[host], let itemNameC = nameS[item] {
+      self.log("\(hostNameC.name) picks up \(itemNameC.name)")
+    }
   }
 
   func waitPlayer() {
@@ -451,9 +514,8 @@ extension WorldModel {
 
   func interact(entity: Entity, with point: BLPoint) {
     guard let cell = activeMap.cells[point] else { return }
-    if let mob = mob(at: point) {
-      // TODO: real interaction system
-      self.remove(entity: mob)
+    if let fighter = fighter(at: point, attackingFaction: factionS[entity]?.faction ?? "who cares") {
+      self.fight(attacker: entity, defender: fighter)
     } else if let interaction = activeMap.interactions[cell.feature] {
       run(interaction: interaction, entity: entity, point: point)
     }

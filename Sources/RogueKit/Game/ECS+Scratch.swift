@@ -269,6 +269,22 @@ class MoveAfterPlayerS: ECSSystem<MoveAfterPlayerC>, Codable {
 }
 
 
+// MARK: Factions
+
+
+class FactionC: ECSComponent, Codable {
+  var faction: String = "NO FACTION"
+  var entity: Entity?
+  init(entity: Entity?) { self.entity = entity }
+  init(entity: Entity?, faction: String) { self.entity = entity; self.faction = faction }
+}
+class FactionS: ECSSystem<FactionC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
 // MARK: Sprite
 
 

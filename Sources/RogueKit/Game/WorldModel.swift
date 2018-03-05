@@ -320,6 +320,40 @@ extension WorldModel {
 
 extension WorldModel {
 
+  func predictFight(attacker: Entity, defender: Entity) -> CombatStats? {
+    guard
+      let weaponC1 = weapon(wieldedBy: attacker),
+      let equipmentC1 = equipmentS[attacker],
+      let statsC1 = statsS[attacker],
+      let posC1 = positionS[attacker],
+      let weaponC2 = weapon(wieldedBy: defender),
+      let equipmentC2 = equipmentS[defender],
+      let statsC2 = statsS[defender],
+      let posC2 = positionS[defender] else {
+        return nil
+    }
+
+    let getEquipment: (EquipmentC) -> [String: ArmorC] = {
+      var ret = [String: ArmorC]()
+      for (k, v) in $0.slots {
+        ret[k] = self.armorS[v]!
+      }
+      return ret
+    }
+
+    return CombatStats.predictFight(
+      attacker: Combatant(
+        position: posC1.point,
+        weapon: weaponC1,
+        equipment: getEquipment(equipmentC1),
+        stats: statsC1.currentStats),
+      defender: Combatant(
+        position: posC2.point,
+        weapon: weaponC2,
+        equipment: getEquipment(equipmentC2),
+        stats: statsC2.currentStats))
+  }
+
   func waitPlayer() {
     self.playerDidTakeAction()
   }
@@ -398,6 +432,9 @@ extension WorldModel {
       else { return }
     if wieldingS[entity]?.weaponEntity == item {
       wieldingS[entity]?.weaponEntity = nil
+    }
+    if equipmentS[entity]?.isWearing(item) == true, let armorC = armorS[item] {
+      equipmentS[entity]?.remove(armor: item, on: armorC.armorDefinition.slot)
     }
     inventoryC.remove(entity: item)
     self.positionS.add(component: PositionC(

@@ -35,7 +35,7 @@ class StringUtils {
     if let statsString = worldModel.statsS[entity]?.currentStats.description {
       strings.append(contentsOf: ["", statsString])
     }
-    if let weaponDef = worldModel.weapon(wieldedBy: entity) {
+    if let weaponDef: WeaponDefinition = worldModel.weapon(wieldedBy: entity) {
       strings.append(contentsOf: ["", "Wielding: \(weaponDef.name)"])
       if showWeaponDescription {
         strings.append("(\(weaponDef.description))")
@@ -48,6 +48,13 @@ class StringUtils {
         strings.append("\(slot): \(value)")
       }
     }
+
+    if entity != worldModel.player,
+      let prediction = worldModel.predictFight(attacker: worldModel.player, defender: entity)
+    {
+      strings.append(contentsOf: ["", "Fight:", prediction.humanDescription])
+    }
+
     return strings.joined(separator: "\n")
   }
 }

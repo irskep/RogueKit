@@ -13,6 +13,12 @@ public protocol RKRNGProtocol: Codable {
   func shuffleInPlace<T>(_ array: inout [T])
 }
 
+extension RKRNGProtocol {
+  func get() -> Double {
+    return Double(self.get(upperBound: UInt32.max)) / Double(UInt32.max)
+  }
+}
+
 public class RKRNG: RKRNGProtocol {
   public func get(upperBound: UInt32) -> UInt32 {
     return arc4random_uniform(upperBound)

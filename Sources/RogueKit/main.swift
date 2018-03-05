@@ -65,7 +65,7 @@ private let director = SteveRLDirector(terminal: terminal, configBlock: {
   window.resizeable=false;
   window.fullscreen=\(isScreenBigEnough ? false : true);
   """
-  NSLog(config)
+  NSLog("\n" + config + "\n")
   let result = $0.configure(config)
   assert(result == true)
 })

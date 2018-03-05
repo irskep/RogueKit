@@ -12,16 +12,6 @@ import BearLibTerminal
 // MARK: Stats
 
 
-struct StatBucket: Codable {
-  var hp: Double = 0
-  var fatigue: Double = 0
-  var speed: Double = 0
-  var awareness: Double = 0
-  var reflex: Double = 0
-  var strength: Double = 0
-}
-
-
 class StatsC: ECSComponent, Codable {
   var entity: Entity?
 

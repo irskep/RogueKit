@@ -14,6 +14,14 @@ extension Scene {
 }
 
 
+extension String {
+  var bltEscaped: String { return self
+    .replacingOccurrences(of: "]", with: "]]")
+    .replacingOccurrences(of: "[", with: "[[")
+  }
+}
+
+
 class InventoryScene: Scene, WorldDrawingSceneProtocol {
   let worldModel: WorldModel
   let resources: ResourceCollectionProtocol
@@ -55,6 +63,13 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
           let key = self.myDefaultKeys[$0]
           let e = self.worldModel.playerInventory[$0]
           var label = self.worldModel.nameS[e]?.name ?? "NOT FOUND"
+          if let armorC = self.worldModel.armorS[e] {
+            label = "\(CP437.string(for: armorC.armorDefinition.char).bltEscaped) " + label
+          }
+          print(label)
+          if let weaponC = self.worldModel.weaponS[e] {
+            label = "\(CP437.string(for: weaponC.weaponDefinition.char).bltEscaped) " + label
+          }
           if e == self.worldModel.playerWeaponC?.entity {
             label += " (wielded)"
           }

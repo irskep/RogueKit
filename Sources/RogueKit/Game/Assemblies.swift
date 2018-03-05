@@ -235,7 +235,7 @@ class ArmorAssembly: EntityAssemblyProtocol {
       CollectibleC(entity: entity,
                    grams: armorDef.grams,
                    liters: armorDef.liters))
-    worldModel.armorS.add(component:
+    let armorC = worldModel.armorS.add(component:
       ArmorC(entity: entity, armorDefinition: armorDef))
   }
 }

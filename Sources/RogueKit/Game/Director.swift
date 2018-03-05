@@ -54,19 +54,16 @@ class Director {
   }
 
   func _transition(to newScene: Scene?) {
-    print("transition to", newScene ?? "nil")
     let oldScene = activeScene
     oldScene?.willExit()
     newScene?.willEnter(with: self)
     activeScene = newScene
     oldScene?.didExit()
     newScene?.didEnter()
-    print("done transitioning to", newScene ?? "nil")
   }
 
   func quit() {
     guard !shouldExit else { return }
-    print("quit")
     _transition(to: nil)
     shouldExit = true
   }

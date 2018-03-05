@@ -83,6 +83,10 @@
 		AA3DA2822015B20C00A7CA1B /* ECS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA2802015B20C00A7CA1B /* ECS.swift */; };
 		AA3DA28420163C3700A7CA1B /* ECS+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */; };
 		AA3DA28520163C3700A7CA1B /* ECS+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */; };
+		AA46714D204C9C14003A1114 /* Combat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46714C204C9C14003A1114 /* Combat.swift */; };
+		AA46714E204C9C14003A1114 /* Combat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46714C204C9C14003A1114 /* Combat.swift */; };
+		AA467150204C9D2B003A1114 /* Schemas.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46714F204C9D2B003A1114 /* Schemas.swift */; };
+		AA467151204C9D2B003A1114 /* Schemas.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46714F204C9D2B003A1114 /* Schemas.swift */; };
 		AA90B097204A234400A59645 /* Assemblies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B095204A230F00A59645 /* Assemblies.swift */; };
 		AA90B098204A234500A59645 /* Assemblies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B095204A230F00A59645 /* Assemblies.swift */; };
 		AA90B09C204A689000A59645 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B09A204A684400A59645 /* AI.swift */; };
@@ -284,6 +288,8 @@
 		AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldModel.swift; sourceTree = "<group>"; };
 		AA3DA2802015B20C00A7CA1B /* ECS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECS.swift; sourceTree = "<group>"; };
 		AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECS+Scratch.swift"; sourceTree = "<group>"; };
+		AA46714C204C9C14003A1114 /* Combat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combat.swift; sourceTree = "<group>"; };
+		AA46714F204C9D2B003A1114 /* Schemas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schemas.swift; sourceTree = "<group>"; };
 		AA90B095204A230F00A59645 /* Assemblies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assemblies.swift; sourceTree = "<group>"; };
 		AA90B099204A305D00A59645 /* itch_mac.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = itch_mac.sh; sourceTree = "<group>"; };
 		AA90B09A204A684400A59645 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
@@ -402,6 +408,8 @@
 				AA90B095204A230F00A59645 /* Assemblies.swift */,
 				AA90B09A204A684400A59645 /* AI.swift */,
 				AA072D79204B5C8900479A94 /* CSVDB.swift */,
+				AA46714C204C9C14003A1114 /* Combat.swift */,
+				AA46714F204C9D2B003A1114 /* Schemas.swift */,
 			);
 			name = Game;
 			path = Sources/RogueKit/Game;
@@ -862,6 +870,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAC6A4F42049C1C9008D971B /* LevelScene.swift in Sources */,
+				AA467151204C9D2B003A1114 /* Schemas.swift in Sources */,
 				AA3DA2322012DD2600A7CA1B /* AppDelegate.swift in Sources */,
 				AAC6A4ED20489374008D971B /* RunLoop.swift in Sources */,
 				AA1CCC8B2030CF6100BFA85A /* PaletteStore.swift in Sources */,
@@ -870,6 +879,7 @@
 				AA3DA25E2012DE0300A7CA1B /* RandomSeedStore.swift in Sources */,
 				AAC6A50F2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */,
 				AAC6A4E720433B71008D971B /* PCG32.swift in Sources */,
+				AA46714E204C9C14003A1114 /* Combat.swift in Sources */,
 				AAC6A4FD2049CC60008D971B /* BLConstant+Labels.swift in Sources */,
 				AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */,
 				AA90B098204A234500A59645 /* Assemblies.swift in Sources */,
@@ -981,6 +991,7 @@
 				OBJ_78 /* CP437.swift in Sources */,
 				AA072D7A204B5C8900479A94 /* CSVDB.swift in Sources */,
 				AAC6A4F62049C3F1008D971B /* TitleScene.swift in Sources */,
+				AA467150204C9D2B003A1114 /* Schemas.swift in Sources */,
 				OBJ_79 /* DistanceField.swift in Sources */,
 				AA90B09C204A689000A59645 /* AI.swift in Sources */,
 				AAC6A4E620433B6F008D971B /* PCG32.swift in Sources */,
@@ -989,6 +1000,7 @@
 				AA072D7D204B60A100479A94 /* WorldDrawingSceneProtocol.swift in Sources */,
 				AAC6A4F02049C1C2008D971B /* LoadScene.swift in Sources */,
 				AA0DE9022013C87400CCF61F /* LevelMap.swift in Sources */,
+				AA46714D204C9C14003A1114 /* Combat.swift in Sources */,
 				OBJ_82 /* RKRNG.swift in Sources */,
 				AAC6A4E920488916008D971B /* Director.swift in Sources */,
 				AA3DA22A200C37BF00A7CA1B /* RKColor.swift in Sources */,

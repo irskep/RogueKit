@@ -256,7 +256,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
     terminal.refresh()
 
     if didMove {
-      save()
+      if worldModel.gameHasntEnded {
+        save()
+      } else {
+        director?.transition(to: LoseScene(resources: resources))
+      }
     }
   }
 }

@@ -37,6 +37,10 @@ class WorldModel: Codable {
   var activeMapId: String
   var activeMap: LevelMap { return maps[activeMapId]! }
   var messageLog = [String]()
+  var gameHasntEnded: Bool {
+    guard let playerHP = statsS[player]?.currentStats.hp, playerHP > 0 else { return false }
+    return false
+  }
 
   var positionS = PositionS()
   var sightS = SightS()
@@ -255,6 +259,7 @@ class WorldModel: Codable {
 
     // Move all enemies on this level
     for c in moveAfterPlayerS.all {
+      guard gameHasntEnded else { break }
       if let entity = c.entity, !isOnActiveMap(entity: entity) { continue }
       switch c.behaviorType {
       case .standStill: break

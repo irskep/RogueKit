@@ -8,7 +8,7 @@
 import Foundation
 import BearLibTerminal
 
-let TITLE = """
+private let TITLE = """
 ██▄   █▄▄▄▄       ▄  █ ██   █    █     ▄███▄   █▄▄▄▄    ▄   ████▄ █▄▄▄▄ ██▄   ▄███▄      ▄
 █  █  █  ▄▀      █   █ █ █  █    █     █▀   ▀  █  ▄▀     █  █   █ █  ▄▀ █  █  █▀   ▀      █
 █   █ █▀▀▌       ██▀▀█ █▄▄█ █    █     ██▄▄    █▀▀▌ █     █ █   █ █▀▀▌  █   █ ██▄▄    ██   █
@@ -18,7 +18,7 @@ let TITLE = """
                         ▀                              ▐
 """
 
-let INTRO = """
+private let INTRO = """
 You, a retail store employee, were captured by the mad scientist Dr. Hallervorden. For a year, you have been a test subject for his demented experiments. You are stronger and more capable than when you came in, but nothing remains of your mind but rage.
 
 This morning, your cell door swung open on its own. It is time to escape!

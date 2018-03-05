@@ -9,6 +9,13 @@ import Foundation
 import BearLibTerminal
 
 
+extension String {
+  func rightPad(_ n: Int, _ s: String) -> String {
+    return self.padding(toLength: n, withPad: " ", startingAt: s.count - 1)
+  }
+}
+
+
 let DAMAGE_SCALE: Double = 100
 
 
@@ -45,16 +52,17 @@ struct CombatStats {
   var humanDescription: String {
     var strings: [String] = [
       """
-      Base hit chance:  \(_pct(baseHitChance))
+      [color=ui_text_dim]Base hit chance:  \(_pct(baseHitChance))
       Strength diff:    \(Int(strengthDifference))
-      Final hit chance: \(_pct(hitChance))
+      Final hit chance: [color=ui_text]\(_pct(hitChance))
       """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     ]
 
     for slot in EquipmentC.Slot.all {
       let dmgs = slotDamageAmounts[slot]!
       let slotChance = slotChances[slot]!
-      strings.append("\(slot.rawValue) (\(_pct(slotChance))): " + DamageType.all.flatMap({
+      let prefix = "\(slot.rawValue.rightPad(5, " ")) (\(_pct(slotChance))): "
+      strings.append("[color=ui_text_dim]\(prefix)[color=ui_text]" + DamageType.all.flatMap({
         guard dmgs[$0]! > 0 else { return nil }
         return "\(Int(dmgs[.physical]!))\($0.rawValue.first!)"
       }).joined(separator: ","))

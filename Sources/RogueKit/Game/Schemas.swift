@@ -68,6 +68,31 @@ struct WeaponDefinition: Codable {
       meleeDamageElectric: 0, meleeDamageHeat: 0, rangeDamagePhysical: 0,
       rangeDamageElectric: 0, rangeDamageHeat: 0, rangeFalloff: 0, rangeMax: 0)
   }()
+
+  var statsDescription: String {
+    var strings: [String] = [
+      "\(Int(grams))g, \(liters)L",
+      "",
+      isMelee ? "Melee weapon" : "Ranged weapon",
+      "Requires \(strengthRequired) str",
+      ""
+    ]
+    if usesRemaining > -1 {
+      strings.append("\(usesRemaining) uses remaining")
+      strings.append("")
+    }
+    if isRanged {
+      strings.append("Loses \(rangeFalloff)% accuracy per tile of distance")
+      strings.append("Max range of \(rangeMax) tiles")
+      strings.append("")
+    }
+
+    strings.append("Damage:")
+    if damagePhysical > 0 { strings.append("\(damagePhysical) physical") }
+    if damageElectric > 0 { strings.append("\(damageElectric) electric") }
+    if damageHeat > 0 { strings.append("\(damageHeat)h(eat)") }
+    return strings.joined(separator: "\n")
+  }
 }
 
 

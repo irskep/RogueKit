@@ -47,11 +47,16 @@ class StringUtils {
       strings.append(contentsOf: ["", "\(S.dim("Wielding:")) \(weaponDef.name)"])
       if showWeaponDescription {
         strings.append(S.dim("(\(weaponDef.description))"))
+        strings.append(weaponDef.statsDescription)
       }
     }
     if let armor = worldModel.armorS[entity]?.armorDefinition {
       strings.append("")
       strings.append(armor.statsDescription)
+    }
+    if let weapon = worldModel.weaponS[entity]?.weaponDefinition {
+      strings.append("")
+      strings.append(weapon.statsDescription)
     }
     if let equipmentC = worldModel.equipmentS[entity] {
       strings.append("")
@@ -62,10 +67,13 @@ class StringUtils {
       }
     }
 
-    if entity != worldModel.player,
-      let prediction = worldModel.predictFight(attacker: worldModel.player, defender: entity, forUI: true)
-    {
-      strings.append(contentsOf: ["", "Fight:", prediction.humanDescription])
+    if entity != worldModel.player {
+      if let prediction = worldModel.predictFight(attacker: worldModel.player, defender: entity, forUI: true) {
+        strings.append(contentsOf: ["", "You attack them:", prediction.humanDescription])
+      }
+      if let prediction = worldModel.predictFight(attacker: entity, defender: worldModel.player, forUI: true) {
+        strings.append(contentsOf: ["", "They attack you:", prediction.humanDescription])
+      }
     }
 
     return strings.joined(separator: "\n")

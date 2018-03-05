@@ -72,14 +72,14 @@ enum CombatOutcome {
 }
 
 
-private func _100(_ val: Int) -> Double { return Double(val) / 100 }
-private func _100(_ val: Double) -> Double { return val / 100 }
-private func _distance(_ a: BLPoint, _ b: BLPoint) -> Double {
+func _100(_ val: Int) -> Double { return Double(val) / 100 }
+func _100(_ val: Double) -> Double { return val / 100 }
+func _distance(_ a: BLPoint, _ b: BLPoint) -> Double {
   let d1 = Double(a.x - b.x)
   let d2 = Double(a.y - b.y)
   return sqrt(d1 * d1 + d2 * d2)
 }
-private func _pct(_ val: Double) -> String {
+func _pct(_ val: Double) -> String {
   return "\(Int(floor(val * 100)))%"
 }
 

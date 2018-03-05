@@ -27,7 +27,6 @@ class AStarMover {
       points = []
       return
     }
-    points.append(worldModel.positionS[worldModel.player]!.point)
 
     points = Array(astar(
       worldModel.positionS[worldModel.player]!.point,

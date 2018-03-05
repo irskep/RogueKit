@@ -240,35 +240,6 @@ class EquipmentS: ECSSystem<EquipmentC>, Codable {
 }
 
 
-// MARK: AI or something
-
-
-class MoveAfterPlayerC: ECSComponent, Codable {
-  var entity: Entity?
-  var behaviorTypeString: String = "standStill"
-  var behaviorType: BehaviorType { return BehaviorType(rawValue: behaviorTypeString)! }
-
-  enum BehaviorType: String {
-    case standStill = "standStill"
-    case walkRandomly = "walkRandomly"
-  }
-
-  init(entity: Entity?) {
-    self.entity = entity
-  }
-
-  convenience init(entity: Entity?, behaviorType: BehaviorType) {
-    self.init(entity: entity)
-    self.behaviorTypeString = behaviorType.rawValue
-  }
-}
-class MoveAfterPlayerS: ECSSystem<MoveAfterPlayerC>, Codable {
-  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
-  required init() { super.init() }
-  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
-}
-
-
 // MARK: Factions
 
 

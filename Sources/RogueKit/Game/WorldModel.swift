@@ -261,13 +261,7 @@ class WorldModel: Codable {
     for c in moveAfterPlayerS.all {
       guard gameHasntEnded else { break }
       if let entity = c.entity, !isOnActiveMap(entity: entity) { continue }
-      switch c.behaviorType {
-      case .standStill: break
-      case .walkRandomly where c.entity != nil:
-        _ = AI.walkRandomly(in: self, entity: c.entity!)
-      default:
-        assertionFailure("Can't handle this case")
-      }
+      _ = c.execute(in: self)
     }
   }
 
@@ -327,6 +321,10 @@ extension WorldModel {
       .sorted(by: { $0.z > $1.z })
       .first?
       .entity
+  }
+
+  func canMobSeePlayer(_ e: Entity) -> Bool {
+    return self.can(entity: player, see: positionS[e]!.point)  // just use FOV cache for symmetry
   }
 
   func weapon(wieldedBy entity: Entity) -> WeaponDefinition? {
@@ -484,6 +482,14 @@ extension WorldModel {
   }
 
   func may(entity: Entity, moveTo point: BLPoint) -> Bool {
+    // return false if cell contains an entity with the same faction
+    for posC in positionS.all(in: activeMapId, at: point) {
+      guard let e = posC.entity else { continue }
+      guard let f = factionS[entity]?.faction else { continue }
+      if factionS[e]?.faction == f {
+        return false
+      }
+    }
     return activeMap.getIsPassable(entity: entity, point: point)
   }
 
@@ -505,7 +511,11 @@ extension WorldModel {
   }
 
   func can(entity: Entity, remember point: BLPoint) -> Bool {
-    return activeMap.mapMemory.contains(point)
+    if entity == player {
+      return activeMap.mapMemory.contains(point)
+    } else {
+      return true
+    }
   }
 
   func drop(item: Entity, fromInventoryOf entity: Entity) {

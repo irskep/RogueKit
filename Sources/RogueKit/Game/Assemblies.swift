@@ -91,7 +91,7 @@ class EnemyAssembly: EntityAssemblyProtocol {
               z: ZValues.enemy,
               color: worldModel.resources!.defaultPalette["green"]))
     worldModel.moveAfterPlayerS.add(component:
-      MoveAfterPlayerC(entity: entity, behaviorType: .walkRandomly))
+      MoveAfterPlayerC(entity: entity, state: .wandering))
     worldModel.statsS.add(component:
       StatsC(entity: entity,
              baseStats: worldModel.csvDB.stats["generic_mob"]!,

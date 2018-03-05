@@ -39,7 +39,7 @@ class WorldModel: Codable {
   var messageLog = [String]()
   var gameHasntEnded: Bool {
     guard let playerHP = statsS[player]?.currentStats.hp, playerHP > 0 else { return false }
-    return false
+    return true
   }
 
   var positionS = PositionS()

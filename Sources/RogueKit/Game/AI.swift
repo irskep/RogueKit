@@ -16,7 +16,13 @@ class AI {
       .getNeighbors(bounds: BLRect(size: worldModel.size), diagonals: false)
       .filter({ worldModel.may(entity: entity, moveTo: $0) })
     guard !options.isEmpty else { return false }
-    let nextPoint = worldModel.mapRNG.choice(Array(options))
+
+    let nextPoint: BLPoint
+    if options.contains(worldModel.playerPos) {
+      nextPoint = worldModel.playerPos
+    } else {
+      nextPoint = worldModel.mapRNG.choice(Array(options))
+    }
     return worldModel.push(entity: entity, by: nextPoint - posC.point)
   }
 }

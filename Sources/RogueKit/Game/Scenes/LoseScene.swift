@@ -20,6 +20,8 @@ private let TITLE = """
 
 private let INTRO = """
 You are dead.
+
+Press Esc or Enter to continue.
 """
 
 
@@ -37,7 +39,7 @@ class LoseScene: Scene {
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
     terminal.print(
       rect: BLRect(x: terminal.width / 4, y: terminal.height / 3, w: terminal.width / 2, h: 1000),
-      align: BLConstant.ALIGN_LEFT,
+      align: BLConstant.ALIGN_CENTER,
       string: INTRO.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
 
     terminal.foregroundColor = resources.defaultPalette["green"]

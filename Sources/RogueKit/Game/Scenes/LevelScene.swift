@@ -78,6 +78,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
 
   override func willEnter(with director: Director) {
     super.willEnter(with: director)
+    worldModel.activeMap.palette.apply(to: BLTerminal.main)  // cheat
     isDirty = true
   }
 

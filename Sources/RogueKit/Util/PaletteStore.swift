@@ -12,14 +12,17 @@ import BearLibTerminal
 class PaletteStore: Codable {
   private var _terminal: BLTerminalInterface?
 
+  var namedColors: [String: String]
   var colors: [String: BLColor]
 
   enum CodingKeys: String, CodingKey {
     case colors
+    case namedColors
   }
 
   required init(from decoder: Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)
+    namedColors = try values.decode([String: String].self, forKey: .namedColors)
     colors = try values.decode([String: BLColor].self, forKey: .colors)
     _terminal = nil
   }
@@ -27,23 +30,33 @@ class PaletteStore: Codable {
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(colors, forKey: .colors)
+    try container.encode(namedColors, forKey: .namedColors)
   }
 
   init(terminal: BLTerminalInterface, resources: ResourceCollectionProtocol, name: String) throws {
     _terminal = terminal
 
-    var aliases = [String: String]()
-    self.colors = try resources.csvMap(name: "palettes/\(name)") {
-      (row: StringBox) -> (String, BLColor) in
-      let val: String = row["Value"]
-      if val.starts(with: "@") {
-        aliases[row["Name"]] = String(val.dropFirst())
-      }
-      return (row["Name"], terminal.getColor(name: row["Value"]))
+    self.namedColors = try resources.csvMap(name: "palettes/\(name)") {
+      (row: StringBox) -> (String, String) in
+      return (row["Name"], row["Value"])
     }
 
-    for (k, v) in aliases {
-      colors[k] = colors[v]
+    for (k, v) in Array(self.namedColors) {
+      if v.starts(with: "@") {
+        self.namedColors[k] = self.namedColors[String(v.dropFirst())]
+      }
+    }
+
+    var colors = [String: BLColor]()
+    for (k, v) in namedColors {
+      colors[k] = terminal.getColor(name: v)
+    }
+    self.colors = colors
+  }
+
+  func apply(to terminal: BLTerminalInterface) {
+    for (k, v) in namedColors where v.hasPrefix("#") {
+      terminal.configure("palette.\(k) = \(v);")
     }
   }
 

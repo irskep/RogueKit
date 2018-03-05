@@ -29,7 +29,7 @@ extension WorldDrawingSceneProtocol {
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
 
     var keyString = [
-      (config.keyEquip, "\\[un\\]wield/\\[un\\]equip"),
+      (config.keyEquip, "[un]wield/[un]equip".bltEscaped),
       (config.keyDrop, "drop"),
       ].map({
         "(\(BLConstant.label(for: $0.0)!)) \($0.1)"

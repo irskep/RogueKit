@@ -26,8 +26,6 @@ struct Config: Codable {
   var keyMenu: Int32 = BLConstant.ESCAPE
 }
 
-NSLog("Launched")
-
 var path = ""
 if CommandLine.arguments.count > 1 {
   path = CommandLine.arguments[1]
@@ -52,7 +50,8 @@ class SteveRLDirector: Director {
   let isScreenBigEnough = false
 #endif
 
-let FONT = "fonts/Alloy_curses_12x12.png"
+//let FONT = "fonts/Alloy_curses_12x12.png"
+let FONT = "fonts/font_12x12.png"
 //let FONT = "fonts/cp437_10x10.png"
 let FONT_SIZE = FONT[FONT.index(FONT.endIndex, offsetBy: -9)..<FONT.index(FONT.endIndex, offsetBy: -4)]
 
@@ -65,7 +64,7 @@ private let director = SteveRLDirector(terminal: terminal, configBlock: {
   window.resizeable=false;
   window.fullscreen=\(isScreenBigEnough ? false : true);
   """
-  NSLog("\n" + config + "\n")
+  NSLog("\n " + config + "\n")
   let result = $0.configure(config)
   assert(result == true)
 })

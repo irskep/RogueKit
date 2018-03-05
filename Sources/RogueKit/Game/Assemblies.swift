@@ -48,7 +48,7 @@ class PlayerAssembly: EntityAssemblyProtocol {
     worldModel.statsS.add(component:
       StatsC(entity: entity,
              baseStats: worldModel.csvDB.stats["player"]!,
-             currentStats: nil))
+             currentStats: nil)).currentStats.fatigue = 0
 
     let inventoryC = worldModel.inventoryS.add(component:
       InventoryC(entity: entity))
@@ -94,7 +94,7 @@ class EnemyAssembly: EntityAssemblyProtocol {
     worldModel.statsS.add(component:
       StatsC(entity: entity,
              baseStats: worldModel.csvDB.stats["generic_mob"]!,
-             currentStats: nil))
+             currentStats: nil)).currentStats.fatigue = 0
 
     let equipmentC = worldModel.equipmentS.add(
       component: EquipmentC(entity: entity))
@@ -235,7 +235,7 @@ class ArmorAssembly: EntityAssemblyProtocol {
       CollectibleC(entity: entity,
                    grams: armorDef.grams,
                    liters: armorDef.liters))
-    let armorC = worldModel.armorS.add(component:
+    worldModel.armorS.add(component:
       ArmorC(entity: entity, armorDefinition: armorDef))
   }
 }

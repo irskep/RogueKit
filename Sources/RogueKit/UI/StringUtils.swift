@@ -9,13 +9,20 @@ import Foundation
 import BearLibTerminal
 
 
-private extension StatBucket {
+private extension StatsC {
   var description: String { return """
-    HP: \(Int(hp))
-    Fatigue: \(Int(fatigue))
-    Reflex: \(Int(reflex))
-    Strength: \(Int(strength))
+    HP: \(Int(currentStats.hp))/\(Int(baseStats.hp))
+    Fatigue: \(Int(currentStats.fatigue))/\(Int(baseStats.fatigue))
+    Reflex: \(Int(currentStats.reflex))
+    Strength: \(Int(currentStats.strength))
     """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+  }
+}
+
+
+class S {
+  static func dim(_ s: String) -> String {
+    return "[color=ui_text_dim]" + s + "[/color]"
   }
 }
 
@@ -30,22 +37,24 @@ class StringUtils {
   {
     var strings = [String]()
     if showName, let nameC = worldModel.nameS[entity] {
-      strings.append(contentsOf: [nameC.name, "", nameC.description])
+      strings.append(contentsOf: [
+        nameC.name, "", S.dim(nameC.description)])
     }
-    if let statsString = worldModel.statsS[entity]?.currentStats.description {
+    if let statsString = worldModel.statsS[entity]?.description {
       strings.append(contentsOf: ["", statsString])
     }
     if let weaponDef: WeaponDefinition = worldModel.weapon(wieldedBy: entity) {
-      strings.append(contentsOf: ["", "Wielding: \(weaponDef.name)"])
+      strings.append(contentsOf: ["", "\(S.dim("Wielding:")) \(weaponDef.name)"])
       if showWeaponDescription {
-        strings.append("(\(weaponDef.description))")
+        strings.append(S.dim("(\(weaponDef.description))"))
       }
     }
     if let equipmentC = worldModel.equipmentS[entity] {
       strings.append("")
       for slot in EquipmentC.Slot.all {
-        let value = equipmentC.armor(on: slot, in: worldModel)?.armorDefinition.name ?? "none"
-        strings.append("\(slot): \(value)")
+        let value = equipmentC.armor(on: slot, in: worldModel)?.armorDefinition.name
+          ?? S.dim("none")
+        strings.append("\(S.dim("\(slot):")) \(value)")
       }
     }
 

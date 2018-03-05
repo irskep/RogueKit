@@ -21,6 +21,7 @@ salmon,#ED4C67
 wine,#B53471
 magenta,#833471
 darkmagenta,#6F1E51
+gray,#445577
 #,
 level_memory,#333333
 brown,#996633
@@ -30,3 +31,4 @@ wall,@white
 ui_text,@white
 ui_bg,@black
 ui_accent,@pink
+ui_text_dim,@gray

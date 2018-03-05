@@ -45,18 +45,19 @@ struct CombatStats {
   var humanDescription: String {
     var strings: [String] = [
       """
-      Base hit chance:
-        \(_pct(baseHitChance))
-      Hit chance after reflex & strength:
-        \(_pct(hitChance))
-      Strength difference:
-        \(Int(strengthDifference))
+      Base hit chance:  \(_pct(baseHitChance))
+      Strength diff:    \(Int(strengthDifference))
+      Final hit chance: \(_pct(hitChance))
       """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     ]
 
     for slot in EquipmentC.Slot.all {
       let dmgs = slotDamageAmounts[slot]!
-      strings.append("\(slot.rawValue): \(Int(dmgs[.physical]!)),\(Int(dmgs[.electric]!)),\(Int(dmgs[.heat]!))")
+      let slotChance = slotChances[slot]!
+      strings.append("\(slot.rawValue) (\(_pct(slotChance))): " + DamageType.all.flatMap({
+        guard dmgs[$0]! > 0 else { return nil }
+        return "\(Int(dmgs[.physical]!))\($0.rawValue.first!)"
+      }).joined(separator: ","))
     }
 
     return strings.joined(separator: "\n")

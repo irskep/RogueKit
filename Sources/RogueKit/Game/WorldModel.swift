@@ -328,12 +328,20 @@ extension WorldModel {
     return wieldingS[entity]?.weaponDefinition(in: self)
   }
 
+  func position(of entity: Entity) -> BLPoint? {
+    return positionS[entity]?.point
+  }
+
   var playerWeaponC: WeaponC? {
     guard let wc = wieldingS[player],
       let we = wc.weaponEntity else {
         return nil
     }
     return weaponS[we]
+  }
+
+  var playerFOVCache: Set<BLPoint> {
+    return fovS[player]!.getFovCache(map: activeMap, positionS: positionS, sightS: sightS)
   }
 }
 
@@ -515,10 +523,12 @@ extension WorldModel {
 
   func wield(weaponEntity: Entity, on host: Entity) {
     wieldingS[host]?.weaponEntity = weaponEntity
+    if host == player { playerDidTakeAction() }
   }
 
   func unwield(weaponEntity: Entity, on host: Entity) {
     wieldingS[host]?.weaponEntity = nil
+    if host == player { playerDidTakeAction() }
   }
 
   func interact(entity: Entity, with point: BLPoint) {

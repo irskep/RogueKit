@@ -64,12 +64,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
 
   lazy var mover: AStarMover = { return AStarMover(worldModel: self.worldModel) }()
   var cursorPoint: BLPoint = BLPoint.zero
-  var inspectedEntity: Entity? {
-    guard worldModel.activeMap.mapMemory.contains(cursorPoint) else { return nil }
-    return worldModel.entity(at: cursorPoint, matchingPredicate: {
-      return self.worldModel.nameS[$0] != nil
-    })
-  }
+  var inspectedEntity: Entity?
 
   init(resources: ResourceCollectionProtocol, worldModel: WorldModel) {
     self.worldModel = worldModel
@@ -86,6 +81,13 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
     save()
   }
 
+  func inspectedEntity(at point: BLPoint) -> Entity? {
+    guard worldModel.playerFOVCache.contains(point) else { return nil }
+    return worldModel.entity(at: point, matchingPredicate: {
+      return self.worldModel.nameS[$0] != nil
+    })
+  }
+
   func save() {
     if let gameURL = URLs.gameURL {
       do {
@@ -96,6 +98,41 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
         NSLog("WARNING: SAVE FILE IS NOT WORKING")
       }
     }
+  }
+
+  func toggleInspectedEntity() {
+    let inspectablesInRange = worldModel.playerFOVCache
+      .flatMap({
+        (point: BLPoint) -> (BLPoint, Entity)? in
+        // only do mobs for this, not items
+        guard let e = self.inspectedEntity(at: point) else { return nil }
+        guard worldModel.mob(at: point) != nil else { return nil }
+        return (point, e)
+      })
+      .sorted(by: { $0.0.y == $1.0.y ? $0.0.x < $1.0.x : $0.0.y < $1.0.y })
+      .map({ $0.1 })
+    guard !inspectablesInRange.isEmpty else { return }
+    if let inspectedEntity = inspectedEntity,
+      let ix = inspectablesInRange.index(of: inspectedEntity),
+      ix != inspectablesInRange.index(before: inspectablesInRange.endIndex)
+    {
+      self.inspectedEntity = inspectablesInRange[inspectablesInRange.index(after: ix)]
+    } else {
+      self.inspectedEntity = inspectablesInRange.first
+    }
+  }
+
+  func drawInspectedEntityOverlay() {
+    guard let e = inspectedEntity, let p = worldModel.position(of: e) else { return }
+    terminal.layer = BLInt(ZValues.hud)
+    var t: timeval = timeval()
+    gettimeofday(&t, nil)
+    let ms = Int64(t.tv_sec * 1000) + Int64(t.tv_usec / 1000)
+    let normalized = Double(ms % 1500) / 1500
+    let sinified = (sin(normalized * Double.pi)) / 1
+    terminal.foregroundColor = terminal.getColor(a: UInt8(255 * sinified), r: 255, g: 0, b: 0)
+    terminal.put(point: p, code: CP437.BLOCK)
+    terminal.layer = 0
   }
 
   var isDirty = true
@@ -142,6 +179,9 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
           worldModel: worldModel,
           returnToScene: self,
           state: .willDrop))
+      case config.keyToggleInspectedEntity:
+        self.toggleInspectedEntity()
+        isDirty = true
 
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {
@@ -164,6 +204,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
         if newPoint != cursorPoint {
           isDirty = true
           cursorPoint = newPoint
+          inspectedEntity = inspectedEntity(at: cursorPoint)
           mover.update(cursorPoint: cursorPoint)
         }
       case BLConstant.MOUSE_LEFT:
@@ -185,8 +226,12 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
       isDirty = false
       self.drawWorld(in: terminal)
       mover.draw(in: terminal)
-      terminal.refresh()
+      terminal.foregroundColor = terminal.getColor(name: "ui_text")
+      terminal.print(point: BLPoint(x: 1, y: terminal.height - 1), string: "\(cursorPoint.debugDescription)")
     }
+
+    drawInspectedEntityOverlay()
+    terminal.refresh()
 
     if didMove {
       save()

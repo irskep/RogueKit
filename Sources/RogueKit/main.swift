@@ -18,6 +18,7 @@ struct Config: Codable {
   var keyInventoryOpen: Int32 = BLConstant.I
   var keyEquip: Int32 = BLConstant.E
   var keyDrop: Int32 = BLConstant.D
+  var keyToggleInspectedEntity: Int32 = BLConstant.TAB
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS

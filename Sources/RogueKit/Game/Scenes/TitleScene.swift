@@ -18,6 +18,12 @@ let TITLE = """
                         ▀                              ▐
 """
 
+let INTRO = """
+You, a retail store employee, were captured by the mad scientist Dr. Hallervorden. For a year, you have been a test subject for his demented experiments. You are stronger and more capable than when you came in, but nothing remains of your mind but rage.
+
+This morning, your cell door swung open on its own. It is time to escape!
+"""
+
 
 func drawCenteredString(_ terminal: BLTerminalInterface, _ box: BLRect, _ s: String) {
   let stringSize = terminal.measure(string: s)
@@ -49,19 +55,24 @@ class TitleScene: Scene {
   }
 
   override func update(terminal: BLTerminalInterface) {
-    terminal.backgroundColor = resources.defaultPalette["black"]
+    terminal.backgroundColor = resources.defaultPalette["ui_bg"]
     terminal.clear()
 
-    terminal.foregroundColor = resources.defaultPalette["white"]
+    terminal.foregroundColor = resources.defaultPalette["ui_text"]
     menu.rect = BLRect(
-      x: terminal.state(BLConstant.WIDTH) / 2 - 10,
-      y: terminal.state(BLConstant.HEIGHT) / 2 - 1,
+      x: terminal.width / 2 - 10,
+      y: terminal.height * 3 / 4 - 1,
       w: 20,
       h: 2)
     menu.draw(in: terminal)
 
+    terminal.print(
+      rect: BLRect(x: terminal.width / 4, y: terminal.height / 3, w: terminal.width / 2, h: 1000),
+      align: BLConstant.ALIGN_LEFT,
+      string: INTRO.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
+
     terminal.foregroundColor = resources.defaultPalette["green"]
-    let rect = BLRect(x: 0, y: 0, w: terminal.state(BLConstant.WIDTH), h: menu.rect.origin.y)
+    let rect = BLRect(x: 0, y: 0, w: terminal.state(BLConstant.WIDTH), h: 10)
     drawCenteredString(terminal, rect, TITLE)
 
     terminal.refresh()

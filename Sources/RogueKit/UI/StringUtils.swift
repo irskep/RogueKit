@@ -49,6 +49,10 @@ class StringUtils {
         strings.append(S.dim("(\(weaponDef.description))"))
       }
     }
+    if let armor = worldModel.armorS[entity]?.armorDefinition {
+      strings.append("")
+      strings.append(armor.statsDescription)
+    }
     if let equipmentC = worldModel.equipmentS[entity] {
       strings.append("")
       for slot in EquipmentC.Slot.all {
@@ -59,7 +63,7 @@ class StringUtils {
     }
 
     if entity != worldModel.player,
-      let prediction = worldModel.predictFight(attacker: worldModel.player, defender: entity)
+      let prediction = worldModel.predictFight(attacker: worldModel.player, defender: entity, forUI: true)
     {
       strings.append(contentsOf: ["", "Fight:", prediction.humanDescription])
     }

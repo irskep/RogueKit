@@ -27,7 +27,8 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
   let resources: ResourceCollectionProtocol
   var inspectedEntity: Entity? { return nil }
   let returnToScene: Scene
-  var state: State
+  var state: State { didSet { previousState = oldValue } }
+  var previousState: State
 
   enum State {
     case willOpenMenu
@@ -90,6 +91,7 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
     self.resources = resources
     self.returnToScene = returnToScene
     self.state = state
+    self.previousState = state
   }
 
   override func update(terminal: BLTerminalInterface) {
@@ -116,6 +118,12 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
       align: BLConstant.ALIGN_CENTER,
       string: "\(state.title):")
 
+    switch state {
+    case .menuIsOpen(let entity):
+      drawMenu(entity, toLeftOf: uiRect.x, in: terminal)
+    default:break
+    }
+
     terminal.refresh()
 
     if terminal.hasInput {
@@ -137,29 +145,30 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
       worldModel.drop(item: entity, fromInventoryOf: worldModel.player)
       exitState()
     case .willEquip:
-      if worldModel.weaponS[entity] != nil {
-        if worldModel.playerWeaponC?.entity == entity {
-          worldModel.unwield(weaponEntity: entity, on: worldModel.player)
-        } else {
-          worldModel.wield(weaponEntity: entity, on: worldModel.player)
-        }
-      } else if let armorC = worldModel.armorS[entity] {
-        let playerEquipmentC = worldModel.equipmentS[worldModel.player]!
-        if playerEquipmentC.slots[armorC.armorDefinition.slot] == entity {
-          playerEquipmentC.remove(armor: entity, on: armorC.armorDefinition.slot)
-        } else {
-          playerEquipmentC.put(armor: entity, on: armorC.armorDefinition.slot)
-        }
-      }
-
+      worldModel.equipOrWield(host: worldModel.player, item: entity)
       exitState()
     case .menuIsOpen(_):
-      fatalError("Shouldn't be possible")
+      self.state = self.previousState
     }
   }
 
   func exitState() {
     // TODO: close menu if open?
     director?.transition(to: returnToScene)
+  }
+
+  func drawMenu(_ entity: Entity, toLeftOf rightX: BLInt, in terminal: BLTerminalInterface) {
+    let menuRect = BLRect(x: rightX - MENU_W, y: 0, w: MENU_W, h: 50)
+    terminal.clear(area: menuRect)
+    terminal.foregroundColor = resources.defaultPalette["ui_accent"]
+    DrawUtils.drawBox(in: terminal, rect: menuRect)
+    terminal.foregroundColor = resources.defaultPalette["ui_text"]
+
+    let s = StringUtils.describe(
+      entity: entity, in: worldModel,
+      showName: true, showWeaponDescription: true)
+    terminal.print(rect: menuRect.inset(byX1: 1, y1: 1, x2: 1, y2: 1),
+                   align: BLConstant.ALIGN_LEFT,
+                   string: s)
   }
 }

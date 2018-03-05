@@ -352,7 +352,7 @@ extension WorldModel {
 
 extension WorldModel {
 
-  func predictFight(attacker: Entity, defender: Entity) -> CombatStats? {
+  func predictFight(attacker: Entity, defender: Entity, forUI: Bool = false) -> CombatStats? {
     guard
       let weaponC1 = weapon(wieldedBy: attacker),
       let equipmentC1 = equipmentS[attacker],
@@ -383,20 +383,23 @@ extension WorldModel {
         position: posC2.point,
         weapon: weaponC2,
         equipment: getEquipment(equipmentC2),
-        stats: statsC2.currentStats))
+        stats: statsC2.currentStats),
+      forUI: forUI)
   }
 
-  func fight(attacker: Entity, defender: Entity) {
+  @discardableResult
+  func fight(attacker: Entity, defender: Entity) -> Bool {
     guard
       let nameC1 = nameS[attacker],
       let nameC2 = nameS[defender],
 //      let equipmentC1 = equipmentS[attacker],
 //      let statsC1 = statsS[attacker],
 //      let equipmentC2 = equipmentS[defender],
-      let statsC2 = statsS[defender] else {
-        return
+      let statsC2 = statsS[defender],
+      let stats = predictFight(attacker: attacker, defender: defender)
+      else {
+        return false
     }
-    guard let stats = predictFight(attacker: attacker, defender: defender) else { return }
     for outcome in CombatStats.fight(rng: mapRNG, stats: stats) {
       switch outcome {
       case .miss:
@@ -408,6 +411,7 @@ extension WorldModel {
     }
     self.maybeKill(attacker)
     self.maybeKill(defender)
+    return true
   }
 
   func maybeKill(_ entity: Entity) {
@@ -457,6 +461,22 @@ extension WorldModel {
 
     if self.push(entity: player, by: delta) {
       self.playerDidTakeAction()
+    }
+  }
+
+  func equipOrWield(host: Entity, item: Entity) {
+    if weaponS[item] != nil, let wieldingC = wieldingS[host] {
+      if wieldingC.weaponEntity == item {
+        unwield(weaponEntity: item, on: host)
+      } else {
+        wield(weaponEntity: item, on: host)
+      }
+    } else if let armorC = armorS[item], let equipmentC = equipmentS[host] {
+      if equipmentC.slots[armorC.armorDefinition.slot] == item {
+        equipmentC.remove(armor: item, on: armorC.armorDefinition.slot)
+      } else {
+        equipmentC.put(armor: item, on: armorC.armorDefinition.slot)
+      }
     }
   }
 

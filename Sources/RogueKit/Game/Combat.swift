@@ -85,7 +85,7 @@ func _pct(_ val: Double) -> String {
 
 
 extension CombatStats {
-  static func predictFight(attacker: Combatant, defender: Combatant) -> CombatStats {
+  static func predictFight(attacker: Combatant, defender: Combatant, forUI: Bool = false) -> CombatStats {
     var stats = CombatStats()
     let distance = _distance(attacker.position, defender.position)
 
@@ -99,6 +99,9 @@ extension CombatStats {
     if attacker.weapon.isMelee {
       stats.baseHitChance = 1
       stats.hitChance = defenderBaseDodgeChance * (1 +  stats.strengthDifference * 0.3)
+      if distance > 1 && !forUI {
+        stats.hitChance = 0  // too far!
+      }
     } else {
       stats.strengthDifference = min(0,  stats.strengthDifference)
       if distance > Double(attacker.weapon.rangeMax) &&

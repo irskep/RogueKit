@@ -54,6 +54,7 @@ struct WeaponDefinition: Codable {
   let rangeMax: Int // TODO
 
   var isMelee: Bool { return rangeMax <= 0 }
+  var isRanged: Bool { return !isMelee }
   var damagePhysical: Int { return isMelee ? meleeDamagePhysical : rangeDamagePhysical }
   var damageElectric: Int { return isMelee ? meleeDamageElectric : rangeDamageElectric }
   var damageHeat: Int { return isMelee ? meleeDamageHeat : rangeDamageHeat }
@@ -91,4 +92,23 @@ struct ArmorDefinition: Codable {
       grams: 0, tags: [], slot: "null", protectionPhysical: 0, flammability: 0,
       conductiveness: 0, storageLiters: 0)
   }()
+
+  var statsDescription: String {
+    var strings: [String] = [
+      "\(Int(grams))g, \(liters)L",
+      "",
+      "Worn on \(slot)",
+      ""
+    ]
+    if protectionPhysical > 0 {
+      strings.append("\(Int(protectionPhysical))% physical protection")
+    }
+    if conductiveness > 0 {
+      strings.append("\(Int(100 - conductiveness))% electric protection")
+    }
+    if flammability > 0 {
+      strings.append("\(Int(100 - flammability))% fire protection")
+    }
+    return strings.joined(separator: "\n")
+  }
 }

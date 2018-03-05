@@ -26,8 +26,6 @@ extension WorldDrawingSceneProtocol {
     terminal.clear()
     worldModel.draw(in: terminal, at: BLPoint.zero)
 
-    terminal.foregroundColor = resources.defaultPalette["ui_text"]
-
     var keyString = [
       (config.keyEquip, "[un]wield/[un]equip".bltEscaped),
       (config.keyDrop, "drop"),
@@ -37,10 +35,13 @@ extension WorldDrawingSceneProtocol {
     keyString += " (arrows) move and attack by bumping"
     keyString += "\n(tab) select enemies (enter) fire ranged weapon (space) wait"
 
+    terminal.foregroundColor = resources.defaultPalette["ui_text_dim"]
     terminal.print(
       point: BLPoint(x: 1, y: terminal.height - 2),
       string: keyString)
 
+
+    terminal.foregroundColor = resources.defaultPalette["ui_text"]
     let menuCtx = terminal.transform(offset: BLPoint(x: terminal.width - MENU_W, y: 0))
 
     let s = StringUtils.describe(

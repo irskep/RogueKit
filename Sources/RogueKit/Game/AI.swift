@@ -149,6 +149,14 @@ class MoveAfterPlayerC: ECSComponent, Codable {
       self.regenerateIntendedPath(in: worldModel)
     }
     lastTargetPos = targetPos
+
+    // If holding a ranged weapon and have more than 40% chance to hit, fire!
+    if worldModel.weapon(wieldedBy: entity)?.isRanged == true,
+      let outcome = worldModel.predictFight(attacker: entity, defender: target),
+      outcome.hitChance >= 0.4 {
+      return worldModel.fight(attacker: entity, defender: target)
+    }
+
     // If there is a path, move along it by one cell and update the path
     guard let path = intendedPath, let first = path.first else { return false }
     self.intendedPath = Array(path.dropFirst())

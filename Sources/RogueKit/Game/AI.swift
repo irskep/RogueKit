@@ -82,13 +82,6 @@ class MoveAfterPlayerC: ECSComponent, Codable {
         }
       default: break
       }
-    } else {
-      if state == .pursuingPlayer {
-        self.state = .wandering
-        self.intendedPath = nil
-        self.target = nil
-        self.lastTargetPos = nil
-      }
     }
 
     switch state {
@@ -142,6 +135,11 @@ class MoveAfterPlayerC: ECSComponent, Codable {
       let targetPos = worldModel.positionS[target]?.point,
       let entityPos = worldModel.positionS[entity]?.point
       else { return false }
+
+    if targetPos.manhattanDistance(to: entityPos) == 1 {
+      return worldModel.push(entity: entity, by: targetPos - entityPos)
+    }
+
     if targetPos != lastTargetPos || intendedPath == nil {
       // If target has moved or there is an obstacle in the way, regenerate the path
       self.regenerateIntendedPath(in: worldModel)

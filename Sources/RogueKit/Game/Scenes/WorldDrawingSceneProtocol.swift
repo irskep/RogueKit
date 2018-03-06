@@ -63,10 +63,6 @@ extension WorldDrawingSceneProtocol {
     {
       let string = StringUtils.describe(
         entity: inspectedEntity, in: worldModel, showName: true, showWeaponDescription: false)
-      let stringSize = terminal.measure(
-        size: BLSize(w: MENU_W - 2, h: 1000),
-        align: BLConstant.ALIGN_LEFT,
-        string: string)
 
       let menuOrigin: BLPoint
       if point.x < worldModel.activeMap.size.w / 2 {

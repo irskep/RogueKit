@@ -76,7 +76,8 @@ struct CombatStats {
 
 enum CombatOutcome {
   case miss
-  case changeStats(String, StatBucket, String) // slot hit, stat delta, dmg summary string
+  // slot hit, attacker stat delta, defender stat delta, dmg summary string
+  case changeStats(String, StatBucket, StatBucket, String)
 //  case equipmentCatchFire(String)  // slot
 //  case combatantCatchFire
 }
@@ -177,9 +178,10 @@ extension CombatStats {
         fatalError("Problem with weighted choice code")
       }
       let finalAmount = stats.slotDamageAmounts[slot]!.values.reduce(0, +)
-      var finalStats = StatBucket()
-      finalStats.hp = -finalAmount
-      finalStats.fatigue = stats.fatigueDelta
+      let defenderStats = StatBucket(
+        hp: -finalAmount, fatigue: 0, awareness: 0, reflex: 0, strength: 0)
+      let attackerStats = StatBucket(
+        hp: 0, fatigue: stats.fatigueDelta, awareness: 0, reflex: 0, strength: 0)
       let damageSummaryStrings: [String] = Array(stats.slotDamageAmounts[slot]!
         .filter({ $1 > 0 })
         .map({
@@ -190,7 +192,7 @@ extension CombatStats {
 
       return [.changeStats(
         slot.rawValue,
-        finalStats,
+        attackerStats, defenderStats,
         damageSummaryStrings.isEmpty ? "no damage" : damageSummaryStrings.joined(separator: ","))]
     }
   }

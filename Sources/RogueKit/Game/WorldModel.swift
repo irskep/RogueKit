@@ -420,7 +420,7 @@ extension WorldModel {
       let nameC1 = nameS[attacker],
       let nameC2 = nameS[defender],
 //      let equipmentC1 = equipmentS[attacker],
-//      let actorC1 = actorS[attacker],
+      let actorC1 = actorS[attacker],
 //      let equipmentC2 = equipmentS[defender],
       let actorC2 = actorS[defender],
       let stats = predictFight(attacker: attacker, defender: defender)
@@ -431,8 +431,9 @@ extension WorldModel {
       switch outcome {
       case .miss:
         self.log("\(nameC1.name) misses \(nameC2.name)")
-      case .changeStats(let slot, let statDelta, let damageSummaryString):
-        actorC2.currentStats = actorC2.currentStats + statDelta
+      case .changeStats(let slot, let attackerStatDelta, let defenderStatDelta, let damageSummaryString):
+        actorC1.currentStats = actorC1.currentStats + attackerStatDelta
+        actorC2.currentStats = actorC2.currentStats + defenderStatDelta
         self.log("\(nameC1.name) hits \(nameC2.name) on the \(slot) for \(damageSummaryString)")
       }
     }

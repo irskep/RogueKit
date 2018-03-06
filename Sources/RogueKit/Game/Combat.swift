@@ -53,9 +53,9 @@ struct CombatStats {
   var humanDescription: String {
     var strings: [String] = [
       """
-      [color=ui_text_dim]Base hit chance:  \(_pct(baseHitChance))
       Strength diff:    \(Int(strengthDifference))
       Final hit chance: [color=ui_text]\(_pct(hitChance))
+      [color=ui_text_dim]Fatigue:          [color=ui_text]\(Int(fatigueDelta))
       """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     ]
 
@@ -96,7 +96,6 @@ func _pct(_ val: Double) -> String {
 extension CombatStats {
   static func predictFight(attacker: Combatant, defender: Combatant, forUI: Bool = false) -> CombatStats {
     var stats = CombatStats()
-
 
     let distance = _distance(attacker.position, defender.position)
 

@@ -448,6 +448,9 @@ extension WorldModel {
   }
 
   func waitPlayer() {
+    if let statsC = statsS[player] {
+      statsC.currentStats.fatigue = max(0, statsC.currentStats.fatigue - 2)
+    }
     self.playerDidTakeAction()
   }
 
@@ -508,6 +511,10 @@ extension WorldModel {
     guard let point = positionS.get(entity)?.point else { return }
     let newPoint = point + delta
     positionS.move(entity: entity, toPoint: newPoint, onLevel: activeMapId)
+
+    if let statsC = statsS[entity] {
+      statsC.currentStats.fatigue = max(0, statsC.currentStats.fatigue - 1)
+    }
   }
 
   func may(entity: Entity, moveTo point: BLPoint) -> Bool {

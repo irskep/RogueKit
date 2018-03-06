@@ -26,6 +26,7 @@ struct Config: Codable {
   var keyDebugOmniscience: Int32 = BLConstant._1
 
   var keyMenu: Int32 = BLConstant.ESCAPE
+  var keyExit: Int32 = BLConstant.Q
 }
 
 var path = ""

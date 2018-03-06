@@ -54,25 +54,35 @@ extension WorldDrawingSceneProtocol {
       rect: BLRect(x: 1, y: 0, w: stringSize.w, h: stringSize.h),
       align: BLConstant.ALIGN_LEFT,
       string: s)
+    menuCtx.foregroundColor = resources.defaultPalette["ui_accent"]
+    DrawUtils.drawLineVertical(in: menuCtx, origin: BLPoint.zero, length: terminal.height)
 
-    if let inspectedEntity = inspectedEntity, worldModel.nameS[inspectedEntity] != nil {
+    if let inspectedEntity = inspectedEntity,
+      let point = worldModel.positionS[inspectedEntity]?.point,
+      worldModel.nameS[inspectedEntity] != nil
+    {
       let string = StringUtils.describe(
         entity: inspectedEntity, in: worldModel, showName: true, showWeaponDescription: false)
       let stringSize = terminal.measure(
         size: BLSize(w: MENU_W - 2, h: 1000),
         align: BLConstant.ALIGN_LEFT,
         string: string)
-      menuCtx.print(
-        rect: BLRect(
-          x: 1,
-          y: terminal.height - stringSize.h - 1,
-          w: MENU_W - 2,
-          h: stringSize.h),
+
+      let menuOrigin: BLPoint
+      if point.x < worldModel.activeMap.size.w / 2 {
+        menuOrigin = BLPoint(x: terminal.width - MENU_W * 2, y: 0)
+      } else {
+        menuOrigin = BLPoint.zero
+      }
+      let menuRect = BLRect(origin: menuOrigin, size: BLSize(w: MENU_W, h: worldModel.activeMap.size.h))
+      terminal.clear(area: menuRect)
+      terminal.foregroundColor = resources.defaultPalette["ui_accent"]
+      DrawUtils.drawBox(in: terminal, rect: menuRect)
+      terminal.foregroundColor = resources.defaultPalette["ui_text"]
+      terminal.print(
+        rect: menuRect.inset(byX1: 1, y1: 1, x2: 1, y2: 1),
         align: BLConstant.ALIGN_LEFT,
         string: string)
     }
-
-    menuCtx.foregroundColor = resources.defaultPalette["ui_accent"]
-    DrawUtils.drawLineVertical(in: menuCtx, origin: BLPoint.zero, length: terminal.height)
   }
 }

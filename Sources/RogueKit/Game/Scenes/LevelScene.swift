@@ -140,6 +140,12 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
       switch terminal.read() {
       case config.keyMenu:
+        if inspectedEntity != nil {
+          inspectedEntity = nil
+          isDirty = true
+        }
+      case config.keyExit:
+        self.save()
         director?.transition(to: TitleScene(resources: resources))
       case config.keyLeft:
         worldModel.movePlayer(by: BLPoint(x: -1, y: 0))
@@ -248,7 +254,6 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
         align: BLConstant.ALIGN_LEFT,
         string: messages.joined(separator: "\n"))
 
-//      terminal.print(point: BLPoint(x: 1, y: terminal.height - 1), string: "\(cursorPoint.debugDescription)")
     }
 
     drawInspectedEntityOverlay()

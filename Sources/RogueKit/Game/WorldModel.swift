@@ -56,6 +56,7 @@ class WorldModel: Codable {
   var armorS = ArmorS()
   var equipmentS = EquipmentS()
   var factionS = FactionS()
+  var forceWaitS = ForceWaitS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -100,6 +101,7 @@ class WorldModel: Codable {
     case armorS
     case equipmentS
     case factionS
+    case forceWaitS
 
     case debugFlags
   }
@@ -143,6 +145,7 @@ class WorldModel: Codable {
     armorS = try values.decode(ArmorS.self, forKey: .armorS)
     equipmentS = try values.decode(EquipmentS.self, forKey: .equipmentS)
     factionS = try values.decode(FactionS.self, forKey: .factionS)
+    forceWaitS = try values.decode(ForceWaitS.self, forKey: .forceWaitS)
   }
 
   func encode(to encoder: Encoder) throws {
@@ -172,6 +175,7 @@ class WorldModel: Codable {
     try container.encode(armorS, forKey: .armorS)
     try container.encode(equipmentS, forKey: .equipmentS)
     try container.encode(factionS, forKey: .factionS)
+    try container.encode(forceWaitS, forKey: .forceWaitS)
   }
 
   var _allSystems: [ECSRemovable] {
@@ -190,6 +194,7 @@ class WorldModel: Codable {
       armorS,
       equipmentS,
       factionS,
+      forceWaitS,
     ]
   }
 
@@ -250,6 +255,7 @@ class WorldModel: Codable {
   }
 
   func playerDidTakeAction() {
+    guard gameHasntEnded else { return }
     updateFOV()
 
     // Update playerStart point of interest to reflect player's current position
@@ -266,11 +272,21 @@ class WorldModel: Codable {
       self.haveEntity(player, pickUp: entity)
     }
 
+    forceWaitS[player]!.turnsRemaining = statsS[player]!.fatigueLevel
+
     // Move all enemies on this level
-    for c in moveAfterPlayerS.all {
+    var i = 0
+    // 1 normal turn, then 1 or 2 "exhausted" turns if necessary
+    while 1 + (forceWaitS[player]?.turnsRemaining ?? 0) > 0 {
       guard gameHasntEnded else { break }
-      if let entity = c.entity, !isOnActiveMap(entity: entity) { continue }
-      _ = c.execute(in: self)
+      i += 1
+      if i > 1 { log("You stumble from exhaustion (extra turn for enemies)") }
+      forceWaitS[player]?.turnsRemaining -= 1
+      for c in moveAfterPlayerS.all {
+        guard gameHasntEnded else { break }
+        if let entity = c.entity, !isOnActiveMap(entity: entity) { continue }
+        _ = c.execute(in: self)
+      }
     }
   }
 
@@ -387,12 +403,14 @@ extension WorldModel {
         position: posC1.point,
         weapon: weaponC1,
         equipment: getEquipment(equipmentC1),
-        stats: statsC1.currentStats),
+        stats: statsC1.currentStats,
+        isExhausted: (forceWaitS[attacker]?.turnsRemaining ?? 0) > 0),
       defender: Combatant(
         position: posC2.point,
         weapon: weaponC2,
         equipment: getEquipment(equipmentC2),
-        stats: statsC2.currentStats),
+        stats: statsC2.currentStats,
+        isExhausted: (forceWaitS[defender]?.turnsRemaining ?? 0) > 0),
       forUI: forUI)
   }
 
@@ -488,6 +506,9 @@ extension WorldModel {
         equipmentC.remove(armor: item, on: armorC.armorDefinition.slot)
       } else {
         equipmentC.put(armor: item, on: armorC.armorDefinition.slot)
+      }
+      if host == player {
+        playerDidTakeAction()
       }
     }
   }

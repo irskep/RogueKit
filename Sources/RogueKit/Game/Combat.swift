@@ -24,6 +24,7 @@ struct Combatant {
   let weapon: WeaponDefinition
   let equipment: [String: ArmorC]
   let stats: StatBucket
+  let isExhausted: Bool
 }
 
 
@@ -99,14 +100,24 @@ extension CombatStats {
 
     let distance = _distance(attacker.position, defender.position)
 
-    let defenderReflex: Double = _100(defender.stats.reflex)
+    var defenderReflex: Double = _100(defender.stats.reflex)
+    if defender.isExhausted {
+      defenderReflex /= 2
+    }
     let defenderBaseDodgeChance = 0.05 + (1 - defenderReflex * 0.95)
 
     stats.strengthDifference = (
       attacker.stats.strength
         - Double(attacker.weapon.strengthRequired))
 
-    stats.fatigueDelta = 10 - attacker.stats.strength - stats.strengthDifference
+    if attacker.stats.strength == stats.strengthDifference {
+      stats.fatigueDelta = 10
+    } else if attacker.stats.strength > stats.strengthDifference {
+      stats.fatigueDelta = 10 / (attacker.stats.strength - stats.strengthDifference)
+    } else {
+      let d = (stats.strengthDifference - attacker.stats.strength) + 1
+      stats.fatigueDelta = 10 + d * d
+    }
 
     if attacker.weapon.isMelee {
       stats.baseHitChance = 1

@@ -65,9 +65,23 @@ class MoveAfterPlayerC: ECSComponent, Codable {
 
   func execute(in worldModel: WorldModel) -> Bool {
     guard let entity = entity,
-      let stats = worldModel.statsS[entity]?.currentStats,
+      let statsC = worldModel.statsS[entity],
       let nameC = worldModel.nameS[entity]
       else { return false }
+    if let forceWaitC = worldModel.forceWaitS[entity] {
+      if forceWaitC.turnsRemaining > 0 {
+        worldModel.log("\(nameC.name) stumbles from exhaustion")
+        return false
+      }
+
+      if statsC.fatigueLevel > 0 {
+        // we are already taking this turn, but we'll take 1 or 2 more after
+        // this one to recover from exhaustion
+        forceWaitC.turnsRemaining = statsC.fatigueLevel
+      }
+    }
+
+    let stats = statsC.currentStats
     // TODO: have mob notice entities of OTHER FACTIONS as well as just the
     // player!
     if worldModel.canMobSeePlayer(entity) {
@@ -150,6 +164,7 @@ class MoveAfterPlayerC: ECSComponent, Codable {
 
     // If holding a ranged weapon and have more than 40% chance to hit, fire!
     if worldModel.weapon(wieldedBy: entity)?.isRanged == true,
+      worldModel.can(entity: worldModel.player, see: entityPos),
       let outcome = worldModel.predictFight(attacker: entity, defender: target),
       outcome.hitChance >= 0.4 {
       return worldModel.fight(attacker: entity, defender: target)
@@ -157,8 +172,13 @@ class MoveAfterPlayerC: ECSComponent, Codable {
 
     // If there is a path, move along it by one cell and update the path
     guard let path = intendedPath, let first = path.first else { return false }
-    self.intendedPath = Array(path.dropFirst())
-    return worldModel.push(entity: entity, by: first - entityPos)
+
+    if worldModel.push(entity: entity, by: first - entityPos) {
+      self.intendedPath = Array(path.dropFirst())
+      return true
+    } else {
+      return false
+    }
   }
 }
 class MoveAfterPlayerS: ECSSystem<MoveAfterPlayerC>, Codable {

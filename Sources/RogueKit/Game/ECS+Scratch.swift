@@ -18,6 +18,16 @@ class StatsC: ECSComponent, Codable {
   var baseStats: StatBucket
   var currentStats: StatBucket
 
+  var fatigueLevel: Int {
+    if currentStats.fatigue < baseStats.fatigue * 0.75 {
+      return 0
+    } else if currentStats.fatigue < baseStats.fatigue * 0.9 {
+      return 1
+    } else {
+      return 2
+    }
+  }
+
   init(entity: Entity?) {
     self.entity = entity
     baseStats = StatBucket()
@@ -250,6 +260,21 @@ class FactionC: ECSComponent, Codable {
   init(entity: Entity?, faction: String) { self.entity = entity; self.faction = faction }
 }
 class FactionS: ECSSystem<FactionC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
+// MARK: Forced waiting
+
+
+class ForceWaitC: ECSComponent, Codable {
+  var turnsRemaining: Int = 0
+  var entity: Entity?
+  init(entity: Entity?) { self.entity = entity }
+}
+class ForceWaitS: ECSSystem<ForceWaitC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }
   required init() { super.init() }
   override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }

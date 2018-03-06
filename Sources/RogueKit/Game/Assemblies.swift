@@ -50,6 +50,7 @@ class PlayerAssembly: EntityAssemblyProtocol {
              baseStats: worldModel.csvDB.stats["player"]!,
              currentStats: nil)).currentStats.fatigue = 0
     worldModel.factionS.add(component: FactionC(entity: entity, faction: "Test Subjects"))
+    worldModel.forceWaitS.add(component: ForceWaitC(entity: entity))
 
     let inventoryC = worldModel.inventoryS.add(component:
       InventoryC(entity: entity))
@@ -97,6 +98,7 @@ class EnemyAssembly: EntityAssemblyProtocol {
              baseStats: worldModel.csvDB.stats["generic_mob"]!,
              currentStats: nil)).currentStats.fatigue = 0
     worldModel.factionS.add(component: FactionC(entity: entity, faction: "Guards & Scientists"))
+    worldModel.forceWaitS.add(component: ForceWaitC(entity: entity))
     let inventoryC = worldModel.inventoryS.add(component: InventoryC(entity: entity))
 
     let equipmentC = worldModel.equipmentS.add(
@@ -151,6 +153,7 @@ class EnemyAssembly: EntityAssemblyProtocol {
       entity: entity,
       weaponEntity: weaponE,
       defaultWeaponDefinition: worldModel.csvDB.weapons["fist"]!))
+    inventoryC.add(entity: weaponE)
 
     WeaponAssembly().assemble(
       entity: weaponE,

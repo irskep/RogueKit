@@ -21,9 +21,21 @@ private extension ActorC {
         (0.0, "ui_text", "red", "darkpurple"),
         (0.5, "ui_text", "green", "darkgreen"),
       ])
+
+    let fatigueBar = StringUtils.statBar(
+      width: MENU_W - 2,
+      label: "Fatigue",
+      labelColor: "ui_text",
+      barText: "\(Int(currentStats.fatigue))/\(Int(definition.stats.fatigue))",
+      barFraction: currentStats.fatigue / definition.stats.fatigue,
+      barColorThresholds: [
+        (0.0, "ui_text", "teal", "darkblue"),
+        (0.75, "ui_text", "orange", "darkpurple"),
+        (0.9, "ui_text", "red", "darkpurple"),
+        ])
     return """
       \(hpBar)[bkcolor=ui_bg]
-      Fatigue: \(Int(currentStats.fatigue))/\(Int(definition.stats.fatigue))
+      \(fatigueBar)[bkcolor=ui_bg]
       Reflex: \(Int(currentStats.reflex))
       Strength: \(Int(currentStats.strength))
       """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)

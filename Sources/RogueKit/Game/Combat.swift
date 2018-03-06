@@ -106,7 +106,7 @@ extension CombatStats {
 
     if attacker.weapon.isMelee {
       stats.baseHitChance = 1
-      stats.hitChance = defenderBaseDodgeChance * (1 +  stats.strengthDifference * 0.3)
+      stats.hitChance = defenderBaseDodgeChance
       if distance > 1 && !forUI {
         stats.hitChance = 0  // too far!
       }
@@ -122,7 +122,7 @@ extension CombatStats {
         if distance == 1 {  // "too close" is a special case; 50% nerf
           stats.baseHitChance /= 2
         }
-        stats.hitChance = stats.baseHitChance * defenderBaseDodgeChance * (1 +  stats.strengthDifference * 0.3)
+        stats.hitChance = stats.baseHitChance * defenderBaseDodgeChance
       }
     }
 
@@ -134,10 +134,7 @@ extension CombatStats {
         case .physical:
           let protection = _100(
             defender.equipment[slot.rawValue]?.armorDefinition.protectionPhysical ?? 0)
-          amt = (
-            _100(attacker.weapon.damagePhysical)
-            * (1 - protection)
-            * (attacker.weapon.isMelee ? (1 + stats.strengthDifference * 0.3) : 1))
+          amt = _100(attacker.weapon.damagePhysical) * (1 - protection)
         case .electric:
           let conductiveness = _100(
             defender.equipment[slot.rawValue]?.armorDefinition.conductiveness ?? 0)

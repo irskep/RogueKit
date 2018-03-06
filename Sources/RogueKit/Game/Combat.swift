@@ -75,7 +75,8 @@ struct CombatStats {
 }
 
 enum CombatOutcome {
-  case miss
+  // attacker stat delta
+  case miss(StatBucket)
   // slot hit, attacker stat delta, defender stat delta, dmg summary string
   case changeStats(String, StatBucket, StatBucket, String)
 //  case equipmentCatchFire(String)  // slot
@@ -107,16 +108,13 @@ extension CombatStats {
     }
     let defenderBaseDodgeChance = 0.05 + (1 - defenderReflex * 0.95)
 
-    stats.strengthDifference = (
-      attacker.stats.strength
-        - Double(attacker.weapon.strengthRequired))
-
-    if attacker.stats.strength == stats.strengthDifference {
+    let strReq = Double(attacker.weapon.strengthRequired)
+    if attacker.stats.strength == strReq {
       stats.fatigueDelta = 10
-    } else if attacker.stats.strength > stats.strengthDifference {
-      stats.fatigueDelta = 10 / (attacker.stats.strength - stats.strengthDifference)
+    } else if attacker.stats.strength > strReq {
+      stats.fatigueDelta = 10 / (attacker.stats.strength - strReq)
     } else {
-      let d = (stats.strengthDifference - attacker.stats.strength) + 1
+      let d = (strReq - attacker.stats.strength) + 1
       stats.fatigueDelta = 10 + d * d
     }
 
@@ -161,7 +159,8 @@ extension CombatStats {
 
   static func fight(rng: RKRNGProtocol, stats: CombatStats) -> [CombatOutcome] {
     if rng.get() > stats.hitChance {
-      return [.miss]
+      return [.miss(StatBucket(
+        hp: 0, fatigue: stats.fatigueDelta, awareness: 0, reflex: 0, strength: 0))]
     } else {
       // Weighted random choice of slot chances
       var mark: Double = 0

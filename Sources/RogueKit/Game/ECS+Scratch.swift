@@ -44,14 +44,17 @@ class ActorC: ECSComponent, Codable {
     self.currentStats = currentStats ?? definition.stats
   }
 
+  func applyDelta(delta: StatBucket) {
+    currentStats.hp = max(0, min(definition.stats.hp, currentStats.hp + delta.hp))
+    currentStats.fatigue = max(0, min(definition.stats.fatigue, currentStats.fatigue + delta.fatigue))
+  }
+
   func rest(in worldModel: WorldModel) {
-    currentStats.fatigue = max(0, currentStats.fatigue - 2)
-    currentStats.hp = min(definition.stats.hp, currentStats.hp + 1)
+    applyDelta(delta: StatBucket(hp: 1, fatigue: -2, awareness: 0, reflex: 0, strength: 0))
   }
 
   func didMove(in worldModel: WorldModel) {
-    currentStats.fatigue = max(0, currentStats.fatigue - 1)
-    currentStats.hp = min(definition.stats.hp, currentStats.hp + 1)
+    applyDelta(delta: StatBucket(hp: 1, fatigue: -1, awareness: 0, reflex: 0, strength: 0))
   }
 }
 class ActorS: ECSSystem<ActorC>, Codable {

@@ -446,11 +446,12 @@ extension WorldModel {
     }
     for outcome in CombatStats.fight(rng: mapRNG, stats: stats) {
       switch outcome {
-      case .miss:
+      case .miss(let attackerStatDelta):
+        actorC1.applyDelta(delta: attackerStatDelta)
         self.log("\(nameC1.name) misses \(nameC2.name)")
       case .changeStats(let slot, let attackerStatDelta, let defenderStatDelta, let damageSummaryString):
-        actorC1.currentStats = actorC1.currentStats + attackerStatDelta
-        actorC2.currentStats = actorC2.currentStats + defenderStatDelta
+        actorC1.applyDelta(delta: attackerStatDelta)
+        actorC2.applyDelta(delta: defenderStatDelta)
         self.log("\(nameC1.name) hits \(nameC2.name) on the \(slot) for \(damageSummaryString)")
       }
     }

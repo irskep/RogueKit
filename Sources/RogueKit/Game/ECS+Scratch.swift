@@ -12,16 +12,16 @@ import BearLibTerminal
 // MARK: Stats
 
 
-class StatsC: ECSComponent, Codable {
+class ActorC: ECSComponent, Codable {
   var entity: Entity?
 
-  var baseStats: StatBucket
+  var definition: ActorDefinition
   var currentStats: StatBucket
 
   var fatigueLevel: Int {
-    if currentStats.fatigue < baseStats.fatigue * 0.75 {
+    if currentStats.fatigue < definition.stats.fatigue * 0.75 {
       return 0
-    } else if currentStats.fatigue < baseStats.fatigue * 0.9 {
+    } else if currentStats.fatigue < definition.stats.fatigue * 0.9 {
       return 1
     } else {
       return 2
@@ -30,21 +30,21 @@ class StatsC: ECSComponent, Codable {
 
   init(entity: Entity?) {
     self.entity = entity
-    baseStats = StatBucket()
+    definition = ActorDefinition()
     currentStats = StatBucket()
   }
 
   convenience init(
     entity: Entity?,
-    baseStats: StatBucket,
+    definition: ActorDefinition,
     currentStats: StatBucket?)
   {
     self.init(entity: entity)
-    self.baseStats = baseStats
-    self.currentStats = currentStats ?? baseStats
+    self.definition = definition
+    self.currentStats = currentStats ?? definition.stats
   }
 }
-class StatsS: ECSSystem<StatsC>, Codable {
+class ActorS: ECSSystem<ActorC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }
   required init() { super.init() }
   override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }

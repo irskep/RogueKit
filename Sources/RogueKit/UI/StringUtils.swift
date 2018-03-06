@@ -9,13 +9,24 @@ import Foundation
 import BearLibTerminal
 
 
-private extension StatsC {
-  var description: String { return """
-    HP: \(Int(currentStats.hp))/\(Int(baseStats.hp))
-    Fatigue: \(Int(currentStats.fatigue))/\(Int(baseStats.fatigue))
-    Reflex: \(Int(currentStats.reflex))
-    Strength: \(Int(currentStats.strength))
-    """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+private extension ActorC {
+  var description: String {
+    let hpBar = StringUtils.statBar(
+      width: MENU_W - 2,
+      label: "HP",
+      labelColor: "ui_text",
+      barText: "\(Int(currentStats.hp))/\(Int(definition.stats.hp))",
+      barFraction: currentStats.hp / definition.stats.hp,
+      barColorThresholds: [
+        (0.0, "ui_text", "red", "darkpurple"),
+        (0.5, "ui_text", "green", "darkgreen"),
+      ])
+    return """
+      \(hpBar)[bkcolor=ui_bg]
+      Fatigue: \(Int(currentStats.fatigue))/\(Int(definition.stats.fatigue))
+      Reflex: \(Int(currentStats.reflex))
+      Strength: \(Int(currentStats.strength))
+      """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
   }
 }
 
@@ -40,8 +51,8 @@ class StringUtils {
       strings.append(contentsOf: [
         nameC.name, "", S.dim(nameC.description)])
     }
-    if let statsString = worldModel.statsS[entity]?.description {
-      strings.append(contentsOf: ["", statsString])
+    if let actorString = worldModel.actorS[entity]?.description {
+      strings.append(contentsOf: ["", actorString])
     }
     if let weaponDef: WeaponDefinition = worldModel.weapon(wieldedBy: entity) {
       strings.append(contentsOf: ["", "\(S.dim("Wielding:")) \(weaponDef.name)"])
@@ -77,5 +88,39 @@ class StringUtils {
     }
 
     return strings.joined(separator: "\n")
+  }
+
+
+  class func statBar(
+    width: BLInt,
+    label: String,
+    labelColor: String,
+    barText: String,
+    barFraction: Double,
+    barColorThresholds: [(Double, String, String, String)])
+    -> String
+  {
+    var strings: [String] = ["[color=\(labelColor)]", label, ": "]
+    let w = width - BLInt(label.count + 2)
+    let barMaxX = BLInt((Double(w) * barFraction).rounded())
+    var fg = barColorThresholds.last!.1
+    var bg = barColorThresholds.last!.2
+    var bg2 = barColorThresholds.last!.3
+    for i in 0..<(barColorThresholds.count - 1) {
+      if barColorThresholds[i].0 <= barFraction && barColorThresholds[i + 1].0 > barFraction {
+        fg = barColorThresholds[i].1
+        bg = barColorThresholds[i].2
+        bg2 = barColorThresholds[i].3
+        break
+      }
+    }
+    strings.append("[color=\(fg)][bkcolor=\(bg)]")
+    let t = barText.rightPad(Int(w), " ")
+    let partition = t.index(t.startIndex, offsetBy: String.IndexDistance(barMaxX))
+    strings.append(String(t[t.startIndex..<partition]))
+    strings.append("[bkcolor=\(bg2)]")
+    strings.append(String(t[partition..<t.endIndex]))
+    strings.append("[/bkcolor]")
+    return strings.joined()
   }
 }

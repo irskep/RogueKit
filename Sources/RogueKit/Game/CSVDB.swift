@@ -12,7 +12,7 @@ import BearLibTerminal
 class CSVDB {
   let resources: ResourceCollectionProtocol
 
-  lazy var stats: [String: StatBucket] = { _createStatsDB() }()
+  lazy var actors: [String: ActorDefinition] = { _createActorsDB() }()
   lazy var weapons: [String: WeaponDefinition] = { _createWeaponsDB() }()
   lazy var armors: [String: ArmorDefinition] = { _createArmorDB() }()
 
@@ -20,17 +20,26 @@ class CSVDB {
     self.resources = resources
   }
 
-  private func _createStatsDB() -> [String: StatBucket] {
+  private func _createActorsDB() -> [String: ActorDefinition] {
     do {
       return try resources.csvMap(name: "stats_etc", mapper: {
-        (row: StringBox) -> (String, StatBucket) in
-        return (row["id"], StatBucket(
+        (row: StringBox) -> (String, ActorDefinition) in
+        let stats = StatBucket(
           hp: row["hp"],
           fatigue: row["fatigue"],
-          speed: row["speed"],
+          //          speed: row["speed"],
           awareness: row["awareness"],
           reflex: row["reflex"],
-          strength: row["strength"]))
+          strength: row["strength"])
+        return (row["id"], ActorDefinition(
+          id: row["id"],
+          stats: stats,
+          armorHead: WeightedChoice(string: row["armor_head"]),
+          armorBody: WeightedChoice(string: row["armor_body"]),
+          armorHands: WeightedChoice(string: row["armor_hands"]),
+          weapon: WeightedChoice(string: row["weapon"]),
+          defaultWeapon: row["default_weapon"],
+          ai: row["ai"]))
       })
     } catch {
       fatalError("Could not load stats_etc.csv")

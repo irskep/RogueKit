@@ -45,9 +45,9 @@ class PlayerAssembly: EntityAssemblyProtocol {
               str: "@",
               z: ZValues.player,
               color: worldModel.resources!.defaultPalette["white"]))
-    worldModel.statsS.add(component:
-      StatsC(entity: entity,
-             baseStats: worldModel.csvDB.stats["player"]!,
+    worldModel.actorS.add(component:
+      ActorC(entity: entity,
+             definition: worldModel.csvDB.actors["player"]!,
              currentStats: nil)).currentStats.fatigue = 0
     worldModel.factionS.add(component: FactionC(entity: entity, faction: "Test Subjects"))
     worldModel.forceWaitS.add(component: ForceWaitC(entity: entity))
@@ -93,9 +93,9 @@ class EnemyAssembly: EntityAssemblyProtocol {
               color: worldModel.resources!.defaultPalette["green"]))
     worldModel.moveAfterPlayerS.add(component:
       MoveAfterPlayerC(entity: entity, state: .wandering))
-    worldModel.statsS.add(component:
-      StatsC(entity: entity,
-             baseStats: worldModel.csvDB.stats["generic_mob"]!,
+    worldModel.actorS.add(component:
+      ActorC(entity: entity,
+             definition: worldModel.csvDB.actors["weakguard"]!,
              currentStats: nil)).currentStats.fatigue = 0
     worldModel.factionS.add(component: FactionC(entity: entity, faction: "Guards & Scientists"))
     worldModel.forceWaitS.add(component: ForceWaitC(entity: entity))

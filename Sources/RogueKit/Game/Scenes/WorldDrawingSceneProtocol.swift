@@ -47,7 +47,7 @@ extension WorldDrawingSceneProtocol {
     let s = StringUtils.describe(
       entity: worldModel.player, in: worldModel, showName: false, showWeaponDescription: true)
     let stringSize = terminal.measure(
-      size: BLSize(w: MENU_W - 2, h: 1000),
+      size: BLSize(w: MENU_W - 1, h: 1000),
       align: BLConstant.ALIGN_LEFT,
       string: s)
     menuCtx.print(

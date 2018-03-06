@@ -81,7 +81,8 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
   }
 
   func inspectedEntity(at point: BLPoint) -> Entity? {
-    guard worldModel.playerFOVCache.contains(point) else { return nil }
+    guard worldModel.debugFlags["omniscient"] == 1 ||
+      worldModel.playerFOVCache.contains(point) else { return nil }
     return worldModel.entity(at: point, matchingPredicate: {
       return self.worldModel.nameS[$0] != nil
     })

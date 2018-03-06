@@ -20,6 +20,13 @@ class CSVDB {
     self.resources = resources
   }
 
+  func actors(matching t: String) -> [ActorDefinition] { return actors.values.filter({ $0.matches(t) })}
+  func weapons(matching t: String) -> [WeaponDefinition] { return weapons.values.filter({ $0.matches(t) })}
+  func armors(matching t: String) -> [ArmorDefinition] { return armors.values.filter({ $0.matches(t) })}
+  func actors(matching t: [String]) -> [ActorDefinition] { return actors.values.filter({ $0.matches(t) })}
+  func weapons(matching t: [String]) -> [WeaponDefinition] { return weapons.values.filter({ $0.matches(t) })}
+  func armors(matching t: [String]) -> [ArmorDefinition] { return armors.values.filter({ $0.matches(t) })}
+
   private func _createActorsDB() -> [String: ActorDefinition] {
     do {
       return try resources.csvMap(name: "stats_etc", mapper: {
@@ -33,13 +40,20 @@ class CSVDB {
           strength: row["strength"])
         return (row["id"], ActorDefinition(
           id: row["id"],
+          name: row["name"],
+          description: row["description"],
+          char: BLInt(row.int("char")),
+          color: row["color"],
           stats: stats,
           armorHead: WeightedChoice(string: row["armor_head"]),
           armorBody: WeightedChoice(string: row["armor_body"]),
           armorHands: WeightedChoice(string: row["armor_hands"]),
           weapon: WeightedChoice(string: row["weapon"]),
           defaultWeapon: row["default_weapon"],
-          ai: row["ai"]))
+          ai: row["ai"],
+          faction: row["faction"],
+          tags: row.string("tags").split(separator: ",").map({ String($0) }),
+          weight: row["weight"]))
       })
     } catch {
       fatalError("Could not load stats_etc.csv")
@@ -69,6 +83,7 @@ class CSVDB {
           description: row["description"],
           animationId: row["animation_id"],
           tags: row.string("tags").split(separator: ",").map({ String($0) }),
+          weight: row["weight"],
           char: BLInt(row.int("char")),
           color: row["color"],
           liters: row["liters"],
@@ -104,6 +119,7 @@ class CSVDB {
           liters: row["liters"],
           grams: row["grams"],
           tags: row.string("tags").split(separator: ",").map({ String($0) }),
+          weight: row["weight"],
           slot: row["slot"],
           protectionPhysical: row["protection_physical"],
           flammability: row["flammability"],

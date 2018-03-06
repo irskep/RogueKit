@@ -66,6 +66,9 @@ class StringUtils {
     if let actorString = worldModel.actorS[entity]?.description {
       strings.append(contentsOf: ["", actorString])
     }
+    if let faction = worldModel.factionS[entity]?.faction {
+      strings.append(contentsOf: ["", "\(S.dim("Faction:")) \(faction)"])
+    }
     if let weaponDef: WeaponDefinition = worldModel.weapon(wieldedBy: entity) {
       strings.append(contentsOf: ["", "\(S.dim("Wielding:")) \(weaponDef.name)"])
       if showWeaponDescription {

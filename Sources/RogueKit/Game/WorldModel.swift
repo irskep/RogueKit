@@ -213,7 +213,12 @@ class WorldModel: Codable {
 
     self.activeMapId = activeMapId
 
-    PlayerAssembly().assemble(entity: player, worldModel: self, point: nil, levelId: nil)
+    EnemyAssembly().assemble(
+      entity: player,
+      worldModel: self,
+      poiString: "player",
+      point: nil,
+      levelId: nil)
   }
 
   func applyPOIs() {
@@ -224,10 +229,12 @@ class WorldModel: Codable {
       case "exit":
         activeMap.cells[poi.point]?.feature = activeMap.featureIdsByName["exit"]!
       default:
-        if let assembly = ASSEMBLIES[poi.kind] {
+        let poiElements = poi.kind.split(separator: ":")
+        if let assembly = ASSEMBLIES[String(poiElements[0])] {
           assembly.assemble(
             entity: addEntity(),
             worldModel: self,
+            poiString: String(poiElements[1]),
             point: poi.point,
             levelId: activeMapId)
         }

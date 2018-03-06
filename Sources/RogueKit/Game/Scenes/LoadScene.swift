@@ -83,13 +83,13 @@ class LoadScene: Scene {
           levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exit))
         }
         for _ in 0..<10 {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy", point: getFloor()))
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy:early", point: getFloor()))
         }
         for _ in 0..<10 {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "weapon", point: getFloor()))
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "weapon:basic", point: getFloor()))
         }
         for _ in 0..<10 {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "armor", point: getFloor()))
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "armor:basic", point: getFloor()))
         }
 
         levelMap.isPopulated = true

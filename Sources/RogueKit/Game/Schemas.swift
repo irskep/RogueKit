@@ -9,6 +9,21 @@ import Foundation
 import BearLibTerminal
 
 
+protocol Tagged {
+  var tags: [String] { get }
+}
+extension Tagged {
+  func matches(_ t: String) -> Bool { return tags.contains(t) }
+  func matches(_ t: [String]) -> Bool {
+    return tags.contains(where: { t.contains($0) })
+  }
+}
+protocol WeightedChoosable {
+  var id: String { get }
+  var weight: Double { get }
+}
+
+
 struct WeightedChoice: Codable {
   struct Choice: Codable {
     let value: String
@@ -29,7 +44,13 @@ struct WeightedChoice: Codable {
     }
   }
 
+  init(choices: [Choice]) {
+    self.choices = choices
+  }
+
   func choose(rng: RKRNGProtocol) -> String {
+    if choices.count == 1 { return choices[0].value }
+    guard choices.count > 0 else { fatalError("Can't choose between no options") }
     var mark: Double = 0
     let val = rng.get()
     var maybeValue: String?
@@ -44,6 +65,15 @@ struct WeightedChoice: Codable {
       fatalError("Problem with weighted choice code")
     }
     return value
+  }
+
+  static func choose<T: WeightedChoosable>(rng: RKRNGProtocol, items: [T]) -> T {
+    if items.count == 1 { return items[0] }
+    let wc = WeightedChoice(choices: items.map({ Choice(value: $0.id, weight: $0.weight )}))
+    let c = wc.choose(rng: rng)
+    return items
+      .filter({ $0.id == c })
+      .first!
   }
 }
 
@@ -66,12 +96,13 @@ func +(_ a: StatBucket, _ b: StatBucket) -> StatBucket {
 }
 
 
-struct WeaponDefinition: Codable {
+struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
   let id: String
   let name: String
   let description: String
   let animationId: String
   let tags: [String]
+  let weight: Double
 
   let char: BLInt
   let color: String
@@ -101,6 +132,7 @@ struct WeaponDefinition: Codable {
   static let zero = {
     return WeaponDefinition(
       id: "null", name: "null", description: "", animationId: "none", tags: [],
+      weight: 0,
       char: CP437.BLOCK, color: "red", liters: 0, grams: 0, strengthRequired: 0,
 //      meleeDistance: 0,
       usesRemaining: 0, meleeDamagePhysical: 0,
@@ -135,7 +167,7 @@ struct WeaponDefinition: Codable {
 }
 
 
-struct ArmorDefinition: Codable {
+struct ArmorDefinition: Codable, Tagged, WeightedChoosable {
   let id: String
   let name: String
   let char: BLInt
@@ -144,6 +176,7 @@ struct ArmorDefinition: Codable {
   let liters: Double
   let grams: Double
   let tags: [String]
+  let weight: Double
   let slot: String
   let protectionPhysical: Double
   let flammability: Double
@@ -153,7 +186,7 @@ struct ArmorDefinition: Codable {
   static let zero = {
     return ArmorDefinition(
       id: "null", name: "null", char: 0, color: "red", description: "", liters: 0,
-      grams: 0, tags: [], slot: "null", protectionPhysical: 0, flammability: 0,
+      grams: 0, tags: [], weight: 0, slot: "null", protectionPhysical: 0, flammability: 0,
       conductiveness: 0, storageLiters: 0)
   }()
 
@@ -178,8 +211,12 @@ struct ArmorDefinition: Codable {
 }
 
 
-struct ActorDefinition: Codable {
+struct ActorDefinition: Codable, Tagged, WeightedChoosable {
   var id: String = ""
+  var name: String = ""
+  var description: String = ""
+  var char: BLInt = 0
+  var color: String = ""
   var stats: StatBucket = StatBucket()
   var armorHead: WeightedChoice = WeightedChoice()
   var armorBody: WeightedChoice = WeightedChoice()
@@ -187,10 +224,13 @@ struct ActorDefinition: Codable {
   var weapon: WeightedChoice = WeightedChoice()
   var defaultWeapon: String = ""
   var ai: String = ""
+  var faction: String = ""
+  var tags: [String] = []
+  var weight: Double = 0
 }
 
 
-struct PrefabMetadata: Codable {
+struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
   var id: String
   var tags: [String]
   var weight: Double

@@ -287,6 +287,23 @@ class WorldModel: Codable {
         if let entity = c.entity, !isOnActiveMap(entity: entity) { continue }
         _ = c.execute(in: self)
       }
+
+      // this is why doors should be entities, not features.
+      // they should just have a MoveAfterPlayer component.
+      let mapBounds = BLRect(size: activeMap.cells.size)
+      loopPoints: for point in mapBounds {
+        if activeMap.cells[point]?.feature == activeMap.featureIdsByName["door_open"] {
+          let pointAndNeighbors = [point] + point.getNeighbors(bounds: mapBounds, diagonals: false)
+          for p2 in pointAndNeighbors {
+            if self.entity(at: p2, matchingPredicate: {
+              return $0 == self.player || self.moveAfterPlayerS[$0] != nil
+            }) != nil { break loopPoints }
+          }
+          if mapRNG.get() <= 0.2 {
+            activeMap.cells[point]?.feature = activeMap.featureIdsByName["door_closed"] ?? 0
+          }
+        }
+      }
     }
   }
 
@@ -468,7 +485,7 @@ extension WorldModel {
 
   func waitPlayer() {
     if let actorC = actorS[player] {
-      actorC.currentStats.fatigue = max(0, actorC.currentStats.fatigue - 2)
+      actorC.rest(in: self)
     }
     self.playerDidTakeAction()
   }
@@ -535,7 +552,7 @@ extension WorldModel {
     positionS.move(entity: entity, toPoint: newPoint, onLevel: activeMapId)
 
     if let actorC = actorS[entity] {
-      actorC.currentStats.fatigue = max(0, actorC.currentStats.fatigue - 1)
+      actorC.didMove(in: self)
     }
   }
 

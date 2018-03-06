@@ -43,6 +43,16 @@ class ActorC: ECSComponent, Codable {
     self.definition = definition
     self.currentStats = currentStats ?? definition.stats
   }
+
+  func rest(in worldModel: WorldModel) {
+    currentStats.fatigue = max(0, currentStats.fatigue - 2)
+    currentStats.hp = min(definition.stats.hp, currentStats.hp + 1)
+  }
+
+  func didMove(in worldModel: WorldModel) {
+    currentStats.fatigue = max(0, currentStats.fatigue - 1)
+    currentStats.hp = min(definition.stats.hp, currentStats.hp + 1)
+  }
 }
 class ActorS: ECSSystem<ActorC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }

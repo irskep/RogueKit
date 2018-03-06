@@ -130,7 +130,10 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
       let config = gameDirector.config
       let char = terminal.read()
       if char == config.keyMenu || char == config.keyInventoryOpen {
-        director?.transition(to: returnToScene)
+        switch state {
+        case .menuIsOpen(_): state = .willOpenMenu
+        default: director?.transition(to: returnToScene)
+        }
       } else {
         _ = menu.handle(char: char)
       }

@@ -403,7 +403,7 @@ extension WorldModel {
     for outcome in CombatStats.fight(rng: mapRNG, stats: stats) {
       switch outcome {
       case .miss:
-        self.log("Miss")
+        self.log("\(nameC1.name) misses \(nameC2.name)")
       case .changeStats(let slot, let statDelta, let damageSummaryString):
         statsC2.currentStats = statsC2.currentStats + statDelta
         self.log("\(nameC1.name) hits \(nameC2.name) on the \(slot) for \(damageSummaryString)")

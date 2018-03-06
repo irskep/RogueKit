@@ -188,3 +188,62 @@ struct ActorDefinition: Codable {
   var defaultWeapon: String = ""
   var ai: String = ""
 }
+
+
+struct PrefabMetadata: Codable {
+  var id: String
+  var tags: [String]
+  var weight: Double
+  var neighborTags: [String]
+  var poiDefinitions: [POIDefinition]
+
+  struct POIDefinition: Codable {
+    var char: BLInt
+    var kindString: String
+    var kind: Kind {
+      get { return Kind(rawValue: kindString)! }
+      set { kindString = newValue.rawValue }
+    }
+    var tags: [String]
+
+    enum Kind: String {
+      case mob
+      case item
+    }
+  }
+
+  static var data: [PrefabMetadata] = {
+    return [
+      PrefabMetadata(
+        id: "room",
+        tags: ["start", "generic"],
+        weight: 1,
+        neighborTags: ["*"],
+        poiDefinitions: []),
+      PrefabMetadata(
+        id: "oval",
+        tags: ["start", "generic"],
+        weight: 1,
+        neighborTags: ["*"],
+        poiDefinitions: []),
+      PrefabMetadata(
+        id: "jct_+",
+        tags: ["start", "generic", "hall"],
+        weight: 1,
+        neighborTags: ["*"],
+        poiDefinitions: []),
+      PrefabMetadata(
+        id: "jct_-",
+        tags: ["start", "generic", "hall"],
+        weight: 1,
+        neighborTags: ["*"],
+        poiDefinitions: []),
+      PrefabMetadata(
+        id: "jct_|",
+        tags: ["start", "generic", "hall"],
+        weight: 1,
+        neighborTags: ["*"],
+        poiDefinitions: []),
+    ]
+  }()
+}

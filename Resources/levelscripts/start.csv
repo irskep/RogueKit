@@ -1,0 +1,22 @@
+prefabs_and_hallways,80,50
+
+placePrefab,start
+#'generic' tag is implied in all prefab growing
+growPrefabs,500,"start"
+connectAdjacentPorts,10
+removeDeadEnds,"hallway"
+
+growPrefabs,500,"start"
+connectAdjacentPorts,10
+removeDeadEnds,"hallway"
+
+addHallwaysToRemoteAreas,1,2
+addHallwaysToRemoteAreas,1,2
+addHallwaysToRemoteAreas,1,2
+
+#connectAdjacentPorts,10
+#addAnyPrefabToAnyUnusedPort,500
+#removeDeadEndHallways
+
+addWallsNextToBareFloor
+removeDoubleDoors

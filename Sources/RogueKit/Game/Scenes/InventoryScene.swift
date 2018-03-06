@@ -67,7 +67,6 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
           if let armorC = self.worldModel.armorS[e] {
             label = "\(CP437.string(for: armorC.armorDefinition.char).bltEscaped) " + label
           }
-          print(label)
           if let weaponC = self.worldModel.weaponS[e] {
             label = "\(CP437.string(for: weaponC.weaponDefinition.char).bltEscaped) " + label
           }

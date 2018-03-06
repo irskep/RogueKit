@@ -51,7 +51,7 @@ extension WorldDrawingSceneProtocol {
       align: BLConstant.ALIGN_LEFT,
       string: s)
     menuCtx.print(
-      rect: BLRect(x: 1, y: 1, w: stringSize.w, h: stringSize.h),
+      rect: BLRect(x: 1, y: 0, w: stringSize.w, h: stringSize.h),
       align: BLConstant.ALIGN_LEFT,
       string: s)
 

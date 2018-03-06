@@ -53,7 +53,7 @@ struct WeaponDefinition: Codable {
   let rangeFalloff: Int // TODO
   let rangeMax: Int // TODO
 
-  var isMelee: Bool { return rangeMax <= 0 }
+  var isMelee: Bool { return rangeMax == 0 }
   var isRanged: Bool { return !isMelee }
   var damagePhysical: Int { return isMelee ? meleeDamagePhysical : rangeDamagePhysical }
   var damageElectric: Int { return isMelee ? meleeDamageElectric : rangeDamageElectric }
@@ -128,10 +128,10 @@ struct ArmorDefinition: Codable {
     if protectionPhysical > 0 {
       strings.append("\(Int(protectionPhysical))% physical protection")
     }
-    if conductiveness > 0 {
+    if conductiveness < 100 {
       strings.append("\(Int(100 - conductiveness))% electric protection")
     }
-    if flammability > 0 {
+    if flammability < 100 {
       strings.append("\(Int(100 - flammability))% fire protection")
     }
     return strings.joined(separator: "\n")

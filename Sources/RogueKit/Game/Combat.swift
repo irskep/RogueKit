@@ -41,6 +41,7 @@ struct CombatStats {
   var baseHitChance: Double = 0
   var hitChance: Double = 0
   var strengthDifference: Double = 0
+  var fatigueDelta: Double = 0
 
   // sums to 1
   var slotChances: [EquipmentC.Slot: Double] = [.head: 0.25, .hands: 0.1, .body: 1 - 0.35]
@@ -64,7 +65,7 @@ struct CombatStats {
       let prefix = "\(slot.rawValue.rightPad(5, " ")) (\(_pct(slotChance))): "
       strings.append("[color=ui_text_dim]\(prefix)[color=ui_text]" + DamageType.all.flatMap({
         guard dmgs[$0]! > 0 else { return nil }
-        return "\(Int(dmgs[.physical]!))\($0.rawValue.first!)"
+        return "\(Int(dmgs[$0]!))\($0.rawValue.first!)"
       }).joined(separator: ","))
     }
 
@@ -95,6 +96,8 @@ func _pct(_ val: Double) -> String {
 extension CombatStats {
   static func predictFight(attacker: Combatant, defender: Combatant, forUI: Bool = false) -> CombatStats {
     var stats = CombatStats()
+
+
     let distance = _distance(attacker.position, defender.position)
 
     let defenderReflex: Double = _100(defender.stats.reflex)
@@ -103,6 +106,8 @@ extension CombatStats {
     stats.strengthDifference = (
       attacker.stats.strength
         - Double(attacker.weapon.strengthRequired))
+
+    stats.fatigueDelta = 10 - attacker.stats.strength - stats.strengthDifference
 
     if attacker.weapon.isMelee {
       stats.baseHitChance = 1
@@ -127,25 +132,17 @@ extension CombatStats {
     }
 
     for slot in EquipmentC.Slot.all {
-      stats.slotDamageAmounts[slot] = [:]
-      for damageType in CombatStats.DamageType.all {
-        var amt: Double = 0
-        switch damageType {
-        case .physical:
-          let protection = _100(
-            defender.equipment[slot.rawValue]?.armorDefinition.protectionPhysical ?? 0)
-          amt = _100(attacker.weapon.damagePhysical) * (1 - protection)
-        case .electric:
-          let conductiveness = _100(
-            defender.equipment[slot.rawValue]?.armorDefinition.conductiveness ?? 0)
-          amt = _100(attacker.weapon.damageElectric) * conductiveness
-        case .heat:
-          let flammability = _100(
-            defender.equipment[slot.rawValue]?.armorDefinition.flammability ?? 0)
-          amt = _100(attacker.weapon.damageHeat) * flammability
-        }
-        stats.slotDamageAmounts[slot]![damageType] = (amt * DAMAGE_SCALE).rounded()
-      }
+      let protection = _100(
+        defender.equipment[slot.rawValue]?.armorDefinition.protectionPhysical ?? 0)
+      let conductiveness = _100(
+        defender.equipment[slot.rawValue]?.armorDefinition.conductiveness ?? 100)
+      let flammability = _100(
+        defender.equipment[slot.rawValue]?.armorDefinition.flammability ?? 100)
+      stats.slotDamageAmounts[slot] = [
+        CombatStats.DamageType.physical: _100(attacker.weapon.damagePhysical) * (1 - protection) * DAMAGE_SCALE,
+        CombatStats.DamageType.electric: _100(attacker.weapon.damageElectric) * conductiveness * DAMAGE_SCALE,
+        CombatStats.DamageType.heat: _100(attacker.weapon.damageHeat) * flammability * DAMAGE_SCALE,
+      ]
     }
 
     return stats
@@ -172,6 +169,7 @@ extension CombatStats {
       let finalAmount = stats.slotDamageAmounts[slot]!.values.reduce(0, +)
       var finalStats = StatBucket()
       finalStats.hp = -finalAmount
+      finalStats.fatigue = stats.fatigueDelta
       let damageSummaryStrings: [String] = Array(stats.slotDamageAmounts[slot]!
         .filter({ $1 > 0 })
         .map({
@@ -180,7 +178,10 @@ extension CombatStats {
           return "\(Int(v))\(k.rawValue.first!)"
         }))
 
-      return [.changeStats(slot.rawValue, finalStats, damageSummaryStrings.joined(separator: ","))]
+      return [.changeStats(
+        slot.rawValue,
+        finalStats,
+        damageSummaryStrings.isEmpty ? "no damage" : damageSummaryStrings.joined(separator: ","))]
     }
   }
 }

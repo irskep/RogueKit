@@ -107,8 +107,8 @@ class TitleScene: Scene {
       let world = try JSONDecoder().decode(WorldModel.self, from: data)
       world.resources = resources
       director?.transition(to: LevelScene(resources: resources, worldModel: world))
-    } catch {
-      NSLog(error.localizedDescription)
+    } catch let error {
+      print(error)
       NSLog("Unable to load saved game")
     }
   }

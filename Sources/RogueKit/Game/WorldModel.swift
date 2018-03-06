@@ -113,7 +113,16 @@ class WorldModel: Codable {
     maps = try values.decode([String: LevelMap].self, forKey: .maps)
     mapDefinitions = try values.decode([String: MapDefinition].self, forKey: .mapDefinitions)
     activeMapId = try values.decode(String.self, forKey: .activeMapId)
-    rngStore = try values.decode(RandomSeedStore.self, forKey: .rngStore)
+
+    do {
+      rngStore = try values.decode(RandomSeedStore.self, forKey: .rngStore)
+    } catch {
+      print("RNG store wasn't able to load. Giving you a fresh one.")
+      var t: timeval = timeval()
+      gettimeofday(&t, nil)
+      rngStore = RandomSeedStore(seed: UInt64(t.tv_usec))
+    }
+
     player = try values.decode(Entity.self, forKey: .player)
     nextEntityId = try values.decode(Entity.self, forKey: .nextEntityId)
     waitingToTransitionToLevelId = try? values.decode(String.self, forKey: .waitingToTransitionToLevelId)

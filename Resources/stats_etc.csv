@@ -1,3 +1,7 @@
-id,hp,fatigue,speed,awareness,reflex,strength
-player,100,100,1,100,20,3
-generic_mob,30,100,1,100,20,2
+id,hp,fatigue,speed,awareness,reflex,strength,armor_head,armor_body,armor_hands,weapon,default_weapon,ai
+player,100,100,1,50,20,3,playerstart:1,playerstart:1,playerstart:1,playerstart:1,fists,
+weakguard,30,50,1,50,10,1,,weakguard:1,weakguard:1,weakguard:1,fists,wander_chase
+okguard,30,100,1,50,20,2,okguard:1,okguard:1,okguard:1,okguard:1,fists,wander_chase
+beefyguard,30,100,1,50,30,3,"beefyguard:2,okguard:1","beefyguard:2,okguard:1",beefyguard:1,beefyguard:1,fists,wander_chase
+doctor,20,50,1,30,20,2,medical:1,medical:1,medical:1,medical:1,fists,wander_chase
+technician,30,80,1,40,20,2,technician:1,technician:1,technician:1,technician:1,fists,wander_chase

@@ -9,18 +9,57 @@ import Foundation
 import BearLibTerminal
 
 
+struct WeightedChoice: Codable {
+  struct Choice: Codable {
+    let value: String
+    let weight: Double
+  }
+
+  let choices: [Choice]
+
+  init() {
+    self.choices = []
+  }
+
+  init(string: String) {
+    self.choices = string.lowercased().split(separator: ",").map {
+      s in
+      let items = s.split(separator: ":")
+      return Choice(value: String(items[0]), weight: Double(items[1])!)
+    }
+  }
+
+  func choose(rng: RKRNGProtocol) -> String {
+    var mark: Double = 0
+    let val = rng.get()
+    var maybeValue: String?
+    for choice in choices {
+      mark += choice.weight
+      if val <= mark {
+        maybeValue = choice.value
+        break
+      }
+    }
+    guard let value = maybeValue else {
+      fatalError("Problem with weighted choice code")
+    }
+    return value
+  }
+}
+
+
 struct StatBucket: Codable {
   var hp: Double = 0
-  var fatigue: Double = 0 // TODO
-  var speed: Double = 0 // TODO
-  var awareness: Double = 0 // TODO
-  var reflex: Double = 0  // TODO
+  var fatigue: Double = 0
+//  var speed: Double = 0 // TODO
+  var awareness: Double = 0
+  var reflex: Double = 0
   var strength: Double = 0
 }
 func +(_ a: StatBucket, _ b: StatBucket) -> StatBucket {
   return StatBucket(hp: a.hp + b.hp,
                     fatigue: a.fatigue + b.fatigue,
-                    speed: a.speed + b.speed,
+//                    speed: a.speed + b.speed,
                     awareness: a.awareness + b.awareness,
                     reflex: a.reflex + b.reflex,
                     strength: a.strength + b.strength)
@@ -136,4 +175,16 @@ struct ArmorDefinition: Codable {
     }
     return strings.joined(separator: "\n")
   }
+}
+
+
+struct ActorDefinition: Codable {
+  var id: String = ""
+  var stats: StatBucket = StatBucket()
+  var armorHead: WeightedChoice = WeightedChoice()
+  var armorBody: WeightedChoice = WeightedChoice()
+  var armorHands: WeightedChoice = WeightedChoice()
+  var weapon: WeightedChoice = WeightedChoice()
+  var defaultWeapon: String = ""
+  var ai: String = ""
 }

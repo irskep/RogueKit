@@ -9,10 +9,10 @@ import Foundation
 import BearLibTerminal
 
 
-private extension StatsC {
+private extension ActorC {
   var description: String { return """
-    HP: \(Int(currentStats.hp))/\(Int(baseStats.hp))
-    Fatigue: \(Int(currentStats.fatigue))/\(Int(baseStats.fatigue))
+    HP: \(Int(currentStats.hp))/\(Int(definition.stats.hp))
+    Fatigue: \(Int(currentStats.fatigue))/\(Int(definition.stats.fatigue))
     Reflex: \(Int(currentStats.reflex))
     Strength: \(Int(currentStats.strength))
     """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -40,8 +40,8 @@ class StringUtils {
       strings.append(contentsOf: [
         nameC.name, "", S.dim(nameC.description)])
     }
-    if let statsString = worldModel.statsS[entity]?.description {
-      strings.append(contentsOf: ["", statsString])
+    if let actorString = worldModel.actorS[entity]?.description {
+      strings.append(contentsOf: ["", actorString])
     }
     if let weaponDef: WeaponDefinition = worldModel.weapon(wieldedBy: entity) {
       strings.append(contentsOf: ["", "\(S.dim("Wielding:")) \(weaponDef.name)"])

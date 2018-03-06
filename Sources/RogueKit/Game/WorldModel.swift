@@ -38,7 +38,7 @@ class WorldModel: Codable {
   var activeMap: LevelMap { return maps[activeMapId]! }
   var messageLog = [String]()
   var gameHasntEnded: Bool {
-    guard let playerHP = statsS[player]?.currentStats.hp, playerHP > 0 else { return false }
+    guard let playerHP = actorS[player]?.currentStats.hp, playerHP > 0 else { return false }
     return true
   }
 
@@ -49,7 +49,7 @@ class WorldModel: Codable {
   var moveAfterPlayerS = MoveAfterPlayerS()
   var collectibleS = CollectibleS()
   var inventoryS = InventoryS()
-  var statsS = StatsS()
+  var actorS = ActorS()
   var nameS = NameS()
   var weaponS = WeaponS()
   var wieldingS = WieldingS()
@@ -93,7 +93,7 @@ class WorldModel: Codable {
     case moveAfterPlayerS
     case collectibleS
     case inventoryS
-    case statsS
+    case actorS
     case nameS
     case weaponS
     case wieldingS
@@ -127,7 +127,7 @@ class WorldModel: Codable {
     moveAfterPlayerS = try values.decode(MoveAfterPlayerS.self, forKey: .moveAfterPlayerS)
     collectibleS = try values.decode(CollectibleS.self, forKey: .collectibleS)
     inventoryS = try values.decode(InventoryS.self, forKey: .inventoryS)
-    statsS = try values.decode(StatsS.self, forKey: .statsS)
+    actorS = try values.decode(ActorS.self, forKey: .actorS)
     nameS = try values.decode(NameS.self, forKey: .nameS)
     weaponS = try values.decode(WeaponS.self, forKey: .weaponS)
     wieldingS = try values.decode(WieldingS.self, forKey: .wieldingS)
@@ -156,7 +156,7 @@ class WorldModel: Codable {
     try container.encode(moveAfterPlayerS, forKey: .moveAfterPlayerS)
     try container.encode(collectibleS, forKey: .collectibleS)
     try container.encode(inventoryS, forKey: .inventoryS)
-    try container.encode(statsS, forKey: .statsS)
+    try container.encode(actorS, forKey: .actorS)
     try container.encode(nameS, forKey: .nameS)
     try container.encode(weaponS, forKey: .weaponS)
     try container.encode(wieldingS, forKey: .wieldingS)
@@ -174,7 +174,7 @@ class WorldModel: Codable {
       moveAfterPlayerS,
       collectibleS,
       inventoryS,
-      statsS,
+      actorS,
       nameS,
       weaponS,
       wieldingS,
@@ -356,11 +356,11 @@ extension WorldModel {
     guard
       let weaponC1 = weapon(wieldedBy: attacker),
       let equipmentC1 = equipmentS[attacker],
-      let statsC1 = statsS[attacker],
+      let actorC1 = actorS[attacker],
       let posC1 = positionS[attacker],
       let weaponC2 = weapon(wieldedBy: defender),
       let equipmentC2 = equipmentS[defender],
-      let statsC2 = statsS[defender],
+      let actorC2 = actorS[defender],
       let posC2 = positionS[defender] else {
         return nil
     }
@@ -378,12 +378,12 @@ extension WorldModel {
         position: posC1.point,
         weapon: weaponC1,
         equipment: getEquipment(equipmentC1),
-        stats: statsC1.currentStats),
+        stats: actorC1.currentStats),
       defender: Combatant(
         position: posC2.point,
         weapon: weaponC2,
         equipment: getEquipment(equipmentC2),
-        stats: statsC2.currentStats),
+        stats: actorC2.currentStats),
       forUI: forUI)
   }
 
@@ -393,9 +393,9 @@ extension WorldModel {
       let nameC1 = nameS[attacker],
       let nameC2 = nameS[defender],
 //      let equipmentC1 = equipmentS[attacker],
-//      let statsC1 = statsS[attacker],
+//      let actorC1 = actorS[attacker],
 //      let equipmentC2 = equipmentS[defender],
-      let statsC2 = statsS[defender],
+      let actorC2 = actorS[defender],
       let stats = predictFight(attacker: attacker, defender: defender)
       else {
         return false
@@ -405,7 +405,7 @@ extension WorldModel {
       case .miss:
         self.log("\(nameC1.name) misses \(nameC2.name)")
       case .changeStats(let slot, let statDelta, let damageSummaryString):
-        statsC2.currentStats = statsC2.currentStats + statDelta
+        actorC2.currentStats = actorC2.currentStats + statDelta
         self.log("\(nameC1.name) hits \(nameC2.name) on the \(slot) for \(damageSummaryString)")
       }
     }
@@ -415,7 +415,7 @@ extension WorldModel {
   }
 
   func maybeKill(_ entity: Entity) {
-    if let statsC = statsS[entity], statsC.currentStats.hp <= 0 { self.kill(entity) }
+    if let actorC = actorS[entity], actorC.currentStats.hp <= 0 { self.kill(entity) }
   }
 
   func kill(_ entity: Entity) {

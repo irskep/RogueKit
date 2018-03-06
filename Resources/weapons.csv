@@ -1,15 +1,15 @@
 id,name,char,color,strength_required,uses_remaining,melee_damage_types,ranged_damage_types,range_falloff,range_max,animation_id,description,liters,grams,tags
 fist,Your fists,24,white,3,-1,Physical:10,,,,none,"Deadly, given enough repetition",0,0,
-scalpel,Scalpel,24,white,2,20,Physical:15,,,,none,A small surgeon's scalpel,0.01,50,"basic,medical"
+scalpel,Scalpel,24,white,2,20,Physical:15,,,,none,A small surgeon's scalpel,0.01,50,medical
 baton,Baton,24,white,3,-1,Physical:20,,,,none,A heavy stick with a handle,0.5,1000,"basic,guard,armory"
 knife,Utility Knife,24,white,2,-1,Physical:20,,,,none,"A short, sharp knife",0.1,100,"basic,technician"
-rapier,Rapier,24,white,3,-1,Physical:40,,,,none,A stylish 18th-century thrusting sword,4,1100,"basic,shrine"
-sword,Longsword,24,white,4,-1,Physical:50,,,,none,A sweet medieval-looking sword,5,2000,"basic,shrine"
-laser_small,Small Laser Gun,26,red,1,30,,Heat:50,0,-1,laser,A forearm-sized experimental laser gun. Hard to dodge.,2,1400,"basic,armory,beefyguard"
-laser_large,Big Laser Gun,26,red,3,30,,Heat:80,0,-1,laser,"A bulky, powerful experimental laser gun. Does more damage, but is easier to dodge, than its smaller counterpart.",4,4000,"basic,special"
-taser_small,Small TZR,26,teal,1,5,,Electric:50,2,10,shock,A small electroshock weapon,1,500,"basic,armory,beefyguard"
+rapier,Rapier,24,white,3,-1,Physical:40,,,,none,A stylish 18th-century thrusting sword,4,1100,shrine
+sword,Longsword,24,white,4,-1,Physical:50,,,,none,A sweet medieval-looking sword,5,2000,shrine
+laser_small,Small Laser Gun,26,red,1,30,,Heat:50,0,-1,laser,A forearm-sized experimental laser gun. Hard to dodge.,2,1400,"laserguard,goodarmory"
+laser_large,Big Laser Gun,26,red,3,30,,Heat:80,0,-1,laser,"A bulky, powerful experimental laser gun. Does more damage, but is easier to dodge, than its smaller counterpart.",4,4000,special
+taser_small,Small TZR,26,teal,1,5,,Electric:50,2,10,shock,A small electroshock weapon,1,500,"beefyguard,goodarmory"
 taser_large,Big TZR,26,teal,3,10,,Electric:80,2,10,shock,An electroshock weapon with a larger-than-usual battery,1.5,750,"basic,special"
-shock_baton,Shock Baton,24,teal,2,10,"Physical:20,electric:20",,,,,A baton that shocks the victim on contact,0.5,1000,"basic,armory,beefyguard"
-bone_saw,Bone Saw,24,white,3,-1,Physical:20,,,,none,"A bloody saw used for cutting ""meat.""",2,1000,"basic,medical"
-handgun,Handgun,26,white,3,24,,Physical:50,5,30,shoot,A security guard sidearm with 24 rounds. Don't worry about reloading.,1,1400,"basic,armory,beefyguard"
-assault_rifle,AR-15,26,white,3,100,,Physical:80,10,20,shoot,A low-accuracy assault rifle meant for doing a lot of damage at short range,10,5000,"basic,special"
+shock_baton,Shock Baton,24,teal,2,10,"Physical:20,electric:20",,,,,A baton that shocks the victim on contact,0.5,1000,"armory,beefyguard"
+bone_saw,Bone Saw,24,white,3,-1,Physical:20,,,,none,"A bloody saw used for cutting ""meat.""",2,1000,medical
+handgun,Handgun,26,white,3,24,,Physical:50,5,30,shoot,A security guard sidearm with 24 rounds. Don't worry about reloading.,1,1400,"armory,beefyguard"
+assault_rifle,AR-15,26,white,3,100,,Physical:80,10,20,shoot,A low-accuracy assault rifle meant for doing a lot of damage at short range,10,5000,"special,goodarmory"

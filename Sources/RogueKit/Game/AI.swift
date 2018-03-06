@@ -65,7 +65,7 @@ class MoveAfterPlayerC: ECSComponent, Codable {
 
   func execute(in worldModel: WorldModel) -> Bool {
     guard let entity = entity,
-      let stats = worldModel.statsS[entity]?.currentStats,
+      let stats = worldModel.actorS[entity]?.currentStats,
       let nameC = worldModel.nameS[entity]
       else { return false }
     // TODO: have mob notice entities of OTHER FACTIONS as well as just the

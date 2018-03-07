@@ -309,14 +309,14 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         weight: 1,
         hasDoors: true,
         neighborTags: ["*"],
-        poiDefinitions: _standardPOIs(["early"])),
+        poiDefinitions: _standardPOIs(["early", "start"])),
       PrefabMetadata(
         id: "oval",
         tags: ["start", "generic"],
         weight: 1,
         hasDoors: true,
         neighborTags: ["*"],
-        poiDefinitions: _standardPOIs(["early"])),
+        poiDefinitions: _standardPOIs(["early", "start"])),
       PrefabMetadata(
         id: "jct_+",
         tags: ["generic", "hall"],

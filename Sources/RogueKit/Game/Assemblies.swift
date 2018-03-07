@@ -38,9 +38,14 @@ class EnemyAssembly: EntityAssemblyProtocol {
     point: BLPoint?,
     levelId: String?)
   {
-    let actorTags = poiString.split(separator: ",").map { String($0) }
-    let actorDefinition = WeightedChoice.choose(
-      rng: worldModel.mapRNG, items: worldModel.csvDB.actors(matching: actorTags))
+    let actorDefinition: ActorDefinition
+    if poiString.hasPrefix("#") {
+      actorDefinition = worldModel.csvDB.actors[String(poiString.dropFirst())]!
+    } else {
+      let actorTags = poiString.split(separator: ",").map { String($0) }
+      actorDefinition = WeightedChoice.choose(
+        rng: worldModel.mapRNG, items: worldModel.csvDB.actors(matching: actorTags))
+    }
 
     if actorDefinition.ai == "player" {
       worldModel.fovS.add(component: FOVC(entity: entity))

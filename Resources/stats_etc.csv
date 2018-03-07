@@ -1,6 +1,6 @@
 id,name,description,char,color,hp,fatigue,speed,awareness,reflex,strength,armor_head,armor_body,armor_hands,weapon,default_weapon,ai,faction,tags,weight
 player,You,An adventurer of subjective gender,64,green,100,50,1,50,20,3,playerstart:1,playerstart:1,playerstart:1,playerstart:1,fist,player,Test Subjects,player,
-weakguard,Low-Level Henchman,"A dedicated servant of Dr. Hallervorden, but weak and with few skills",103,green,30,50,1,50,10,1,,weakguard:1,weakguard:1,weakguard:1,fist,wander_chase,Evil Lair Staff,early,1
+weakguard,Low-Level Henchman,"A dedicated servant of Dr. Hallervorden, but weak and with few skills",103,green,30,50,1,50,10,1,,weakguard:1,weakguard:1,weakguard:1,fist,wander_chase,Evil Lair Staff,"early,start",1
 okguard,Mid-Grade Henchman,A cut above your average henchman,103,yellow,30,75,1,50,20,2,okguard:1,okguard:1,okguard:1,okguard:1,fist,wander_chase,Evil Lair Staff,mid,1
 beefyguard,Elite Henchman,"An athletic, combat-trained henchman thirsty for blood",103,orange,30,100,1,50,30,3,"beefyguard:2,okguard:1","beefyguard:2,okguard:1",beefyguard:1,beefyguard:1,fist,wander_chase,Evil Lair Staff,late,1
 doctor,Evil Doctor,"A ""researcher"" in Dr. Hallervorden's lab",69,green,20,50,1,30,20,2,medical:1,medical:1,medical:1,medical:1,fist,wander_chase,Evil Lair Staff,early,1

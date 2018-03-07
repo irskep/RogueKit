@@ -92,7 +92,6 @@ class LoadScene: Scene {
 
         var i = 0
         while i < levelMap.definition.numItems && !itemPoints.isEmpty {
-          i += 1
           let p = itemPoints.removeFirst()
           let genCell = gen.cells[p]
           guard let poi = genCell.poi else {
@@ -110,18 +109,46 @@ class LoadScene: Scene {
             guard !weapons.isEmpty else { continue }
             let weapon = WeightedChoice(choices: weapons).choose(rng: rng)
             levelMap.pointsOfInterest.append(PointOfInterest(kind: "weapon:#\(weapon)", point: p))
+            i += 1
           } else if poi.kind == .armor {
             guard !armors.isEmpty else { continue }
             let armor = WeightedChoice(choices: armors).choose(rng: rng)
             levelMap.pointsOfInterest.append(PointOfInterest(kind: "armor:#\(armor)", point: p))
+            i += 1
           } else if poi.kind == .item {
             let allItems = weapons + armors
             guard !allItems.isEmpty else { continue }
             let item = WeightedChoice(choices: allItems).choose(rng: rng)
             levelMap.pointsOfInterest.append(PointOfInterest(kind: "item:\(item)", point: p))
+            i += 1
           } else {
             fatalError("Should not be possible due to earlier filtering")
           }
+        }
+
+        i = 0
+        while i < levelMap.definition.numMobs && !mobPoints.isEmpty {
+          let p = mobPoints.removeFirst()
+          let genCell = gen.cells[p]
+          guard let poi = genCell.poi else {
+            fatalError("How did we even get here?")
+          }
+
+          let mobsFirstPass = worldModel.csvDB.actors(matching: poi.tags)
+          let mobsSecondPass = mobsFirstPass.filter({
+            let m = $0
+            return m.matches(levelMap.definition.tagWhitelist)
+          })
+          let mobs = mobsSecondPass
+            .map({ WeightedChoice.Choice(value: $0.id, weight: $0.weight) })
+          guard !mobs.isEmpty else {
+            print("No mobs match", poi.tags, "and", levelMap.definition.tagWhitelist)
+            continue
+          }
+          let mob = WeightedChoice(choices: mobs).choose(rng: rng)
+          print("Instantiating", mob)
+          levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy:#\(mob)", point: p))
+          i += 1
         }
 
         /*

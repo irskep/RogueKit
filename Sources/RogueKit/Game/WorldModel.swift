@@ -24,6 +24,7 @@ struct MapDefinition: Codable {
   let generatorId: String
   let tagWhitelist: [String]
   var numItems: Int
+  var numMobs: Int
   let exits: [String: String]  // "next"|"previous" -> mapId
 }
 

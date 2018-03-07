@@ -241,20 +241,6 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
       isDirty = false
       self.drawWorld(in: terminal)
       mover.draw(in: terminal)
-      terminal.foregroundColor = terminal.getColor(name: "ui_text")
-
-      let y = worldModel.activeMap.cells.size.h
-      let h = terminal.height - 2 - y
-      let w = terminal.width - MENU_W
-      var messages = worldModel.messageLog
-      if messages.count > h {
-        messages = Array(messages.dropFirst(messages.count - Int(h)))
-      }
-      terminal.print(
-        rect: BLRect(x: 1, y: y, w: w, h: h),
-        align: BLConstant.ALIGN_LEFT,
-        string: messages.joined(separator: "\n"))
-
     }
 
     drawInspectedEntityOverlay()

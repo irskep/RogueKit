@@ -11,16 +11,18 @@ import BearLibTerminal
 
 
 extension WorldModel {
-  func aStar(entity: Entity, start: BLPoint, end: BLPoint) -> [BLPoint]? {
+  func aStar(entity: Entity, start: BLPoint, end: BLPoint, rng: RKRNGProtocol?) -> [BLPoint]? {
     let result = astar(
       start,
       goalTestFn: { (point: BLPoint) -> Bool in point == end },
       successorFn: {
         (point: BLPoint) -> [BLPoint] in
-        return point
+        var results = point
           .getNeighbors(bounds: BLRect(size: self.size), diagonals: false)
           .filter({ self.can(entity: entity, remember: $0) })
           .filter({ self.may(entity: entity, moveTo: $0) })
+        if let rng = rng { rng.shuffleInPlace(&results) }
+        return results
     },
       heuristicFn: {
         (point: BLPoint) -> Float in
@@ -137,7 +139,7 @@ class MoveAfterPlayerC: ECSComponent, Codable {
       let target = target,
       let entityPos = worldModel.position(of: entity),
       let targetPos = worldModel.position(of: target),
-      let path = worldModel.aStar(entity: entity, start: entityPos, end: targetPos)
+      let path = worldModel.aStar(entity: entity, start: entityPos, end: targetPos, rng: worldModel.mapRNG)
       else { return }
     self.intendedPath = path.dropLast().reversed()
     self.target = target

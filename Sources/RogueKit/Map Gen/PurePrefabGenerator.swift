@@ -330,7 +330,7 @@ class PurePrefabGenerator {
     }
   }
 
-  func addWallsNextToBareFloor() {
+  func addWallsNextToBareFloor() {  // Incidentally removes orphan doors
     var newWallPoints = [BLPoint]()
     for point in rect {
       if self.cells[point].basicType == .empty {

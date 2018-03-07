@@ -314,7 +314,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
     return [
       PrefabMetadata(
         id: "cell1",
-        tags: ["start", "cell"],
+        tags: ["cell"],
         weight: 1,
         maxPorts: 1,
         hasDoors: true,
@@ -339,7 +339,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       PrefabMetadata(
         id: "oval",
         tags: ["start", "generic"],
-        weight: 2,
+        weight: 1,
         maxPorts: -1,
         hasDoors: true,
         neighborTags: ["*"],
@@ -347,7 +347,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       PrefabMetadata(
         id: "jct_+",
         tags: ["generic", "hall"],
-        weight: 0.5,
+        weight: 1,
         maxPorts: -1,
         hasDoors: false,
         neighborTags: ["*"],
@@ -359,7 +359,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       PrefabMetadata(
         id: "jct_-",
         tags: ["generic", "hall"],
-        weight: 0.5,
+        weight: 1,
         maxPorts: -1,
         hasDoors: false,
         neighborTags: ["*"],
@@ -367,7 +367,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       PrefabMetadata(
         id: "jct_|",
         tags: ["generic", "hall"],
-        weight: 0.5,
+        weight: 1,
         maxPorts: -1,
         hasDoors: false,
         neighborTags: ["*"],

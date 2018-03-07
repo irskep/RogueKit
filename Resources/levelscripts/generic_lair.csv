@@ -1,11 +1,11 @@
-prefabs_and_hallways,40,25
+prefabs_and_hallways,80,50
 
-placePrefab,cell
-growPrefabs,200
+placePrefab,start
+growPrefabs,500
 connectAdjacentPorts,10
 removeDeadEnds,hall
 
-growPrefabs,200
+growPrefabs,500
 connectAdjacentPorts,10
 removeDeadEnds,hall
 

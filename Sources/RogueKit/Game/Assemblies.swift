@@ -30,59 +30,6 @@ protocol EntityAssemblyProtocol {
 }
 
 
-//class PlayerAssembly: EntityAssemblyProtocol {
-//  func assemble(
-//    entity: Entity,
-//    worldModel: WorldModel,
-//    poiString: String,
-//    point: BLPoint?,
-//    levelId: String?)
-//  {
-//    worldModel.nameS.add(component:
-//      NameC(entity: entity, name: "You", description: "An adventurer of subjective gender"))
-//    worldModel.sightS.add(component:
-//      SightC(entity: entity))
-//    worldModel.positionS.add(component:
-//      PositionC(entity: entity, point: point ?? BLPoint.zero, levelId: levelId))
-//    worldModel.fovS.add(component: FOVC(entity: entity))
-//    worldModel.spriteS.add(component:
-//      SpriteC(entity: entity,
-//              int: nil,
-//              str: "@",
-//              z: ZValues.player,
-//              color: worldModel.resources!.defaultPalette["white"]))
-//    worldModel.actorS.add(component:
-//      ActorC(entity: entity,
-//             definition: worldModel.csvDB.actors["player"]!,
-//             currentStats: nil)).currentStats.fatigue = 0
-//    worldModel.factionS.add(component: FactionC(entity: entity, faction: "Test Subjects"))
-//    worldModel.forceWaitS.add(component: ForceWaitC(entity: entity))
-//
-//    let inventoryC = worldModel.inventoryS.add(component:
-//      InventoryC(entity: entity))
-//
-//    // Player just starts with their fist
-//    worldModel.wieldingS.add(entity: entity, component: WieldingC(
-//      entity: entity,
-//      weaponEntity: nil,
-//      defaultWeaponDefinition: worldModel.csvDB.weapons["fist"]!))
-//
-//    // And a shirt
-//    let equipmentC = worldModel.equipmentS.add(
-//      component: EquipmentC(entity: entity))
-//    let bodyArmorE = worldModel.addEntity()
-//    inventoryC.add(entity: bodyArmorE)
-//    ArmorAssembly().assemble(
-//      entity: bodyArmorE,
-//      worldModel: worldModel,
-//      poiString: "playerstart",
-//      point: nil,
-//      levelId: levelId)
-//    equipmentC.put(armor: bodyArmorE, on: .body)
-//  }
-//}
-
-
 class EnemyAssembly: EntityAssemblyProtocol {
   func assemble(
     entity: Entity,

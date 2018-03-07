@@ -46,6 +46,10 @@ class PurePrefabGenerator {
     BLPoint(x: 0, y: 1): [],
   ]
 
+  func points(where predicate: (GeneratorCell) -> Bool) -> [BLPoint] {
+    return Array(rect.filter({ predicate(self.cells[$0]) }))
+  }
+
   func start() {
     let allPrefabs = Array(resources.prefabs.values)
 
@@ -279,6 +283,8 @@ class PurePrefabGenerator {
         self.cells[p].flags.insert(.createdToAddCycle)
         self.cells[p].flags.insert(.debugPoint)
         self.cells[p].flags.insert(.lateStageHallway)
+        self.cells[p].poi = PrefabMetadata.POIDefinition(
+          code: 0, kind: .mob, tags: ["hall"], isRequired: false)
       }
 
       var lastHallPoint = hallPoints.first
@@ -289,7 +295,8 @@ class PurePrefabGenerator {
         self.cells[hallPoint].flags.insert(.lateStageHallway)
         if let lhp = lastHallPoint {
           let delta = hallPoint - lhp
-          self.cells[hallPoint].portDirection = rng.choice([delta.rotatedCounterClockwise, delta.rotatedClockwise])
+          self.cells[hallPoint].portDirection = rng.choice([
+            delta.rotatedCounterClockwise, delta.rotatedClockwise])
         }
         lastHallPoint = hallPoint
       }

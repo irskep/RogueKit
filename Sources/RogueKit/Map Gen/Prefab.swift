@@ -85,6 +85,7 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
       self.cells[cellPoint] = GeneratorCell(
         layer0Cell: prefab.sprite.get(layer: 0, point: cellPoint),
         layer1Cell: prefab.sprite.get(layer: 1, point: cellPoint),
+        prefabId: prefab.sprite.name,
         metadata: prefab.metadata)
       if let portDirection = self.cells[cellPoint].portDirection {
         let newPort = PrefabPort(point: point + cellPoint, direction: portDirection)
@@ -191,6 +192,7 @@ struct GeneratorCell {
   var flags: Set<GeneratorCellFlag>
   var portDirection: BLPoint?
   var poi: PrefabMetadata.POIDefinition?
+  var prefabId: String
 
   static var zero: GeneratorCell { return GeneratorCell() }
 
@@ -199,9 +201,12 @@ struct GeneratorCell {
     flags = Set()
     portDirection = nil
     poi = nil
+    prefabId = "NO PREFAB"
   }
 
-  init(layer0Cell: REXPaintCell, layer1Cell: REXPaintCell, metadata: PrefabMetadata) {
+  init(layer0Cell: REXPaintCell, layer1Cell: REXPaintCell, prefabId: String, metadata: PrefabMetadata) {
+    self.prefabId = prefabId
+
     switch layer0Cell.code {
     case CP437.BLOCK: self.basicType = .wall
     case CP437.DOT: self.basicType = .floor

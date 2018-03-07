@@ -50,21 +50,22 @@ struct WeightedChoice: Codable {
 
   func choose(rng: RKRNGProtocol) -> String {
     if choices.count == 1 { return choices[0].value }
-    guard choices.count > 0 else { fatalError("Can't choose between no options") }
-    var mark: Double = 0
-    let val = rng.get()
-    var maybeValue: String?
-    for choice in choices {
-      mark += choice.weight
-      if val <= mark {
-        maybeValue = choice.value
-        break
+    let weights = choices.map { $0.weight }
+
+    // Sum of all probabilities (so that we don't have to require that the sum is 1.0):
+    let sum = weights.reduce(0, +)
+    // Random number in the range 0.0 <= rnd < sum :
+    let rnd = sum * rng.get()
+    // Find the first interval of accumulated probabilities into which `rnd` falls:
+    var accum = 0.0
+    for (i, p) in weights.enumerated() {
+      accum += p
+      if rnd < accum {
+        return choices[i].value
       }
     }
-    guard let value = maybeValue else {
-      fatalError("Problem with weighted choice code")
-    }
-    return value
+    print("WARNING: WeightedChoice hit error case")
+    return choices.last!.value
   }
 
   static func choose<T: WeightedChoosable>(rng: RKRNGProtocol, items: [T]) -> T {
@@ -246,25 +247,61 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       set { kindString = newValue.rawValue }
     }
     var tags: [String]
+    var isRequired: Bool
 
     enum Kind: String {
       case mob
       case item
+      case armor
+      case weapon
+      case entrance
+      case exit
     }
 
-    init(code: BLInt, kind: Kind, tags: [String]) {
+    init(code: BLInt, kind: Kind, tags: [String], isRequired: Bool) {
       self.code = code
       self.kindString = kind.rawValue
       self.tags = tags
+      self.isRequired = isRequired
     }
   }
 
   static var zero: PrefabMetadata = {
     return PrefabMetadata(
-      id: "NO METADATA", tags: [], weight: 0, hasDoors: false, neighborTags: ["*"], poiDefinitions: [])
+      id: "NO METADATA",
+      tags: [],
+      weight: 0,
+      hasDoors: false,
+      neighborTags: ["*"],
+      poiDefinitions: [])
   }()
 
   static var data: [PrefabMetadata] = {
+    let _standardPOIs: ([String]) -> [PrefabMetadata.POIDefinition] = {
+      return [
+        POIDefinition(
+          code: BLInt(CP437.char(for: "m")),
+          kind: .mob,
+          tags: $0,
+          isRequired: false),
+        POIDefinition(
+          code: BLInt(CP437.char(for: "i")),
+          kind: .item,
+          tags: $0,
+          isRequired: false),
+        POIDefinition(
+          code: BLInt(CP437.char(for: "e")),
+          kind: .entrance,
+          tags: $0,
+          isRequired: false),
+        POIDefinition(
+          code: BLInt(CP437.char(for: "x")),
+          kind: .exit,
+          tags: $0,
+          isRequired: false),
+      ]
+    }
+
     return [
       PrefabMetadata(
         id: "room",
@@ -272,20 +309,14 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         weight: 1,
         hasDoors: true,
         neighborTags: ["*"],
-        poiDefinitions: [POIDefinition(
-          code: BLInt(CP437.char(for: "m")),
-          kind: .mob,
-          tags: ["early"])]),
+        poiDefinitions: _standardPOIs(["early"])),
       PrefabMetadata(
         id: "oval",
         tags: ["start", "generic"],
         weight: 1,
         hasDoors: true,
         neighborTags: ["*"],
-        poiDefinitions: [POIDefinition(
-          code: BLInt(CP437.char(for: "m")),
-          kind: .mob,
-          tags: ["early"])]),
+        poiDefinitions: _standardPOIs(["early"])),
       PrefabMetadata(
         id: "jct_+",
         tags: ["generic", "hall"],
@@ -295,7 +326,8 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         poiDefinitions: [POIDefinition(
           code: BLInt(CP437.char(for: "m")),
           kind: .mob,
-          tags: ["technician"])]),
+          tags: ["technician"],
+          isRequired: false)]),
       PrefabMetadata(
         id: "jct_-",
         tags: ["generic", "hall"],

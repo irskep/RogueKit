@@ -1,6 +1,6 @@
 id,name,char,color,description,liters,grams,tags,weight,slot,protection_physical,flammability,conductiveness,storage_liters
 #body,,,,,,,,,,,,,
-cotton_shirt,Cotton Shirt,93,white,A short-sleeved shirt,0.5,400,"basic,player",1,body,10,100,70,0
+cotton_shirt,Cotton Shirt,93,white,A short-sleeved shirt,0.5,400,"basic,player,early,start",1,body,10,100,70,0
 lab_coat,Lab Coat,93,white,The basic style of lab coat worn by the evil scientists around here. Has two big pockets.,3,1000,"medical,lab,doctor",1,body,30,80,30,8
 tactical_vest,Tactical Vest,93,white,A tough vest with lots of pockets,3,2000,"armory,beefyguard",1,body,50,20,30,8
 light_jacket,Light Jacket,93,white,A basic jacket with a few big pockets,3,2000,"basic,weakguard,technician",1,body,30,60,50,6

@@ -194,10 +194,30 @@ class ArmorAssembly: EntityAssemblyProtocol {
 }
 
 
+class ItemAssembly: EntityAssemblyProtocol {
+  func assemble(
+    entity: Entity,
+    worldModel: WorldModel,
+    poiString: String,
+    point: BLPoint?,
+    levelId: String?)
+  {
+    if worldModel.csvDB.armors[poiString] != nil {
+      ArmorAssembly().assemble(entity: entity, worldModel: worldModel, poiString: "#" + poiString, point: point, levelId: levelId)
+    } else if worldModel.csvDB.weapons[poiString] != nil {
+      WeaponAssembly().assemble(entity: entity, worldModel: worldModel, poiString: "#" + poiString, point: point, levelId: levelId)
+    } else {
+      fatalError("What is this thing? \(poiString)")
+    }
+  }
+}
+
+
 let ASSEMBLIES: [String: EntityAssemblyProtocol] = {
   return [
     "enemy": EnemyAssembly(),
     "weapon": WeaponAssembly(),
     "armor": ArmorAssembly(),
+    "item": ItemAssembly(),
   ]
 }()

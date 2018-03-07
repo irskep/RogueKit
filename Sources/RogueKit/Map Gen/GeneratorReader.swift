@@ -16,10 +16,15 @@ class GeneratorReader {
     self.resources = resources
   }
 
-  func run(id: String, rng: RKRNGProtocol, callback: (GeneratorProtocol, String, Array2D<GeneratorCell>?) throws -> Void) throws {
+  func run<T: GeneratorProtocol>(
+    id: String,
+    rng: RKRNGProtocol,
+    factory: @escaping (RKRNGProtocol, ResourceCollectionProtocol, BLSize) -> T,
+    callback: (T, String, Array2D<GeneratorCell>?) throws -> Void) throws
+  {
     let string = try String(contentsOf: resources.url(for: "levelscripts/\(id).csv")!)
 
-    var gen: GeneratorProtocol?
+    var gen: T?
     var commands = [(String, [String])]()
 
     string.enumerateLines {
@@ -32,10 +37,7 @@ class GeneratorReader {
       if gen == nil {
         switch cmd {
         case "prefabs_and_hallways":
-          gen = PurePrefabGenerator(
-            rng: rng,
-            resources: self.resources,
-            size: BLSize(w: Int32(args[0])!, h: Int32(args[1])!))
+          gen = factory(rng, self.resources, BLSize(w: Int32(args[0])!, h: Int32(args[1])!))
         default:
           fatalError("Unknown generator: \(values[0])")
         }

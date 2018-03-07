@@ -22,6 +22,8 @@ enum WorldModelError: Error {
 struct MapDefinition: Codable {
   let id: String
   let generatorId: String
+  let tagWhitelist: [String]
+  var numItems: Int
   let exits: [String: String]  // "next"|"previous" -> mapId
 }
 

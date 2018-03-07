@@ -238,7 +238,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
   var poiDefinitions: [POIDefinition]
 
   struct POIDefinition: Codable {
-    var char: BLInt
+    var code: BLInt
     var kindString: String
     var kind: Kind {
       get { return Kind(rawValue: kindString)! }
@@ -250,7 +250,18 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       case mob
       case item
     }
+
+    init(code: BLInt, kind: Kind, tags: [String]) {
+      self.code = code
+      self.kindString = kind.rawValue
+      self.tags = tags
+    }
   }
+
+  static var zero: PrefabMetadata = {
+    return PrefabMetadata(
+      id: "NO METADATA", tags: [], weight: 0, neighborTags: ["*"], poiDefinitions: [])
+  }()
 
   static var data: [PrefabMetadata] = {
     return [
@@ -259,19 +270,28 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         tags: ["start", "generic"],
         weight: 1,
         neighborTags: ["*"],
-        poiDefinitions: []),
+        poiDefinitions: [POIDefinition(
+          code: BLInt(CP437.char(for: "m")),
+          kind: .mob,
+          tags: ["early"])]),
       PrefabMetadata(
         id: "oval",
         tags: ["start", "generic"],
         weight: 1,
         neighborTags: ["*"],
-        poiDefinitions: []),
+        poiDefinitions: [POIDefinition(
+          code: BLInt(CP437.char(for: "m")),
+          kind: .mob,
+          tags: ["early"])]),
       PrefabMetadata(
         id: "jct_+",
         tags: ["start", "generic", "hall"],
         weight: 1,
         neighborTags: ["*"],
-        poiDefinitions: []),
+        poiDefinitions: [POIDefinition(
+          code: BLInt(CP437.char(for: "m")),
+          kind: .mob,
+          tags: ["technician"])]),
       PrefabMetadata(
         id: "jct_-",
         tags: ["start", "generic", "hall"],

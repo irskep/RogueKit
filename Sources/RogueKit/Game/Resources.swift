@@ -74,9 +74,14 @@ class ResourceCollection: ResourceCollectionProtocol {
   lazy var prefabs: [String : Prefab] = {
     guard let image = self.rexPaintImage(named: "fabs") else { return [:] }
 
+    var metadatas = [String: PrefabMetadata]()
+    for m in PrefabMetadata.data {
+      metadatas[m.id] = m
+    }
+
     return [String: Prefab](uniqueKeysWithValues: SpriteSheet(image: image)
       .sprites
-      .map({ Prefab(sprite: $0) })
+      .map({ Prefab(sprite: $0, metadata: metadatas[$0.name] ?? PrefabMetadata.zero) })
       .map({ (p: Prefab) -> (String, Prefab) in (p.sprite.name, p) }))
   }()
 

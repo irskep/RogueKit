@@ -30,8 +30,9 @@ struct PrefabPort: Hashable {
 struct Prefab: Equatable {
   var sprite: REXPaintSprite
   var ports: [PrefabPort]
+  var metadata: PrefabMetadata
 
-  init(sprite: REXPaintSprite) {
+  init(sprite: REXPaintSprite, metadata: PrefabMetadata) {
     var ports = [PrefabPort]()
     for point in sprite.rect.moved(to: BLPoint.zero) {
       switch sprite.get(layer: 1, point: point).code {
@@ -45,6 +46,7 @@ struct Prefab: Equatable {
     }
     self.sprite = sprite
     self.ports = ports
+    self.metadata = metadata
   }
 
   static func ==(_ a: Prefab, _ b: Prefab) -> Bool {
@@ -82,7 +84,8 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
     for cellPoint in prefab.sprite.bounds {
       self.cells[cellPoint] = GeneratorCell(
         layer0Cell: prefab.sprite.get(layer: 0, point: cellPoint),
-        layer1Cell: prefab.sprite.get(layer: 1, point: cellPoint))
+        layer1Cell: prefab.sprite.get(layer: 1, point: cellPoint),
+        metadata: prefab.metadata)
       if let portDirection = self.cells[cellPoint].portDirection {
         let newPort = PrefabPort(point: point + cellPoint, direction: portDirection)
         unusedPorts.append(newPort)
@@ -187,6 +190,7 @@ struct GeneratorCell {
   var basicType: BasicType
   var flags: Set<GeneratorCellFlag>
   var portDirection: BLPoint?
+  var poi: PrefabMetadata.POIDefinition?
 
   static var zero: GeneratorCell { return GeneratorCell() }
 
@@ -194,9 +198,10 @@ struct GeneratorCell {
     basicType = .empty
     flags = Set()
     portDirection = nil
+    poi = nil
   }
 
-  init(layer0Cell: REXPaintCell, layer1Cell: REXPaintCell) {
+  init(layer0Cell: REXPaintCell, layer1Cell: REXPaintCell, metadata: PrefabMetadata) {
     switch layer0Cell.code {
     case CP437.BLOCK: self.basicType = .wall
     case CP437.DOT: self.basicType = .floor
@@ -213,6 +218,14 @@ struct GeneratorCell {
     default:
       self.flags = Set()
       self.portDirection = nil
+    }
+
+    for poi in metadata.poiDefinitions {
+      if poi.code == layer1Cell.code {
+        self.poi = poi
+        print("I got a POI!", poi)
+        break
+      }
     }
   }
 

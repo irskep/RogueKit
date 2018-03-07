@@ -32,6 +32,10 @@ internal struct CP437 {
     return String(Character(Unicode.Scalar(CP437.toCP437[UInt32(char)]!)))
   }
 
+  static func char(for string: String) -> UInt8 {
+    return toCP437[UInt32(string.utf8.first!)]!
+  }
+
   static let toUnicode: [UInt8: UInt32] = [
     0x00:  0x0000,
     0x01:  0x0001,

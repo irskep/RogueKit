@@ -88,11 +88,11 @@ class TitleScene: Scene {
       rngStore: RandomSeedStore(seed: 135205160),
       resources: resources,
       mapDefinitions: [
-        MapDefinition(id: "1", generatorId: "start", tagWhitelist: ["start"], numItems: 4, numMobs: 2, exits: ["next": "2"]),
-        MapDefinition(id: "2", generatorId: "start", tagWhitelist: ["early"], numItems: 40, numMobs: 2, exits: ["next": "3", "previous": "1"]),
-        MapDefinition(id: "3", generatorId: "start", tagWhitelist: ["mid"], numItems: 40, numMobs: 2, exits: ["next": "4", "previous": "2"]),
-        MapDefinition(id: "4", generatorId: "start", tagWhitelist: ["mid"], numItems: 40, numMobs: 2, exits: ["next": "5", "previous": "3"]),
-        MapDefinition(id: "5", generatorId: "start", tagWhitelist: ["late"], numItems: 40, numMobs: 2, exits: ["previous": "4"]),
+        MapDefinition(id: "1", generatorId: "start", tagWhitelist: ["start", "generic"], numItems: 4, numMobs: 2, exits: ["next": "2"]),
+        MapDefinition(id: "2", generatorId: "start", tagWhitelist: ["start", "early", "generic"], numItems: 40, numMobs: 2, exits: ["next": "3", "previous": "1"]),
+        MapDefinition(id: "3", generatorId: "start", tagWhitelist: ["start", "mid", "generic"], numItems: 40, numMobs: 2, exits: ["next": "4", "previous": "2"]),
+        MapDefinition(id: "4", generatorId: "start", tagWhitelist: ["start", "mid", "generic"], numItems: 40, numMobs: 2, exits: ["next": "5", "previous": "3"]),
+        MapDefinition(id: "5", generatorId: "start", tagWhitelist: ["start", "late", "generic"], numItems: 40, numMobs: 2, exits: ["previous": "4"]),
       ],
       activeMapId: "1")
     director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: "1"))

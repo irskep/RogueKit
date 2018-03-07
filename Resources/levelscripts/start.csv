@@ -1,12 +1,12 @@
 prefabs_and_hallways,40,25
 
-placePrefab,start
+placePrefab,cell
 #'generic' tag is implied in all prefab growing
-growPrefabs,500,start
+growPrefabs,500
 connectAdjacentPorts,10
 removeDeadEnds,hall
 
-growPrefabs,500,start
+growPrefabs,500
 connectAdjacentPorts,10
 removeDeadEnds,hall
 

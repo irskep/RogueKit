@@ -9,10 +9,17 @@ import Foundation
 import BearLibTerminal
 
 
+extension Prefab: WeightedChoosable {
+  var id: String { return metadata.id }
+  var weight: Double { return metadata.weight }
+}
+
+
 class PurePrefabGenerator {
   var cells: Array2D<GeneratorCell>
   let rng: RKRNGProtocol
   let resources: ResourceCollectionProtocol
+  let mapDefinition: MapDefinition
   var prefabInstances = [PrefabInstance]()
   var openPorts = [(PrefabInstance, PrefabPort)]()
   var zeroPorts = [(PrefabInstance, PrefabPort)]()
@@ -32,11 +39,20 @@ class PurePrefabGenerator {
     return result
   }()
 
-  init(rng: RKRNGProtocol, resources: ResourceCollectionProtocol, size: BLSize) {
+  init(rng: RKRNGProtocol, resources: ResourceCollectionProtocol, size: BLSize, mapDefinition: MapDefinition) {
     self.rng = rng
     self.resources = resources
     self.cells = Array2D(size: size, emptyValue: GeneratorCell.zero)
-    self.start()
+    self.mapDefinition = mapDefinition
+
+    for p in Array(resources.prefabs.values) {
+      if !p.metadata.matches(mapDefinition.tagWhitelist) {
+        continue
+      }
+      for port in p.ports {
+        _prefabsByDirection[port.direction]?.append(p)
+      }
+    }
   }
 
   private var _prefabsByDirection: [BLPoint: [Prefab]] = [
@@ -50,16 +66,6 @@ class PurePrefabGenerator {
     return Array(rect.filter({ predicate(self.cells[$0]) }))
   }
 
-  func start() {
-    let allPrefabs = Array(resources.prefabs.values)
-
-    for p in allPrefabs {
-      for port in p.ports {
-        _prefabsByDirection[port.direction]?.append(p)
-      }
-    }
-  }
-
   func placePrefab(tag: String) {
     let p = rng.choice(prefabsByTag[tag]!)
     self.register(
@@ -68,26 +74,25 @@ class PurePrefabGenerator {
         point: rect.shrunk(by: p.sprite.rect.size).randomPoint(rng)))
   }
 
-  func growPrefabs(filter: String) {
-    // TODO:
-    // * Avoid prefabs that do not match the arg filter
-    // * Avoid prefabs that do not match the source prefab's filter
-
+  func growPrefabs() {
     rng.shuffleInPlace(&openPorts)
     guard let portPair = openPorts.popLast() else { return }
     let (instance, port) = portPair
     let portDirectionInverse = port.direction * BLPoint(x: -1, y: -1)
     guard
+      instance.prefab.metadata.maxPorts < 0 || instance.usedPorts.count < instance.prefab.metadata.maxPorts,
       let candidates = _prefabsByDirection[portDirectionInverse]?
-        .filter({ instance.prefab.metadata.neighborTags.contains("*") || $0.metadata.tags.contains(where: {
-          let prefabFilter: [String] = instance.prefab.metadata.neighborTags
-          return $0 == "generic" || $0 == filter || prefabFilter.contains($0)
-        }) })
+        .filter({
+          return (
+            $0.metadata.matches(instance.prefab.metadata.neighborTags) &&
+            instance.prefab.metadata.matches($0.metadata.neighborTags))
+        }),
+      !candidates.isEmpty
       else {
       openPorts.append(portPair)
       return
     }
-    let prefab = rng.choice(candidates)
+    let prefab = WeightedChoice.choose(rng: rng, items: candidates)
     let delta = rng.get(upperBound: 2) == 0 ? port.direction : BLPoint.zero
     guard
       let newInstance = self.tryPrefab(
@@ -123,6 +128,10 @@ class PurePrefabGenerator {
       neighborPair = portMap[port.direction + port.point]
       guard let (neighborInstance, neighborPort) = neighborPair else { continue }
       guard neighborInstance.unusedPorts.contains(neighborPort) && instance.unusedPorts.contains(port) else { continue }
+      guard (neighborInstance.prefab.metadata.maxPorts == -1 || neighborInstance.usedPorts.count < neighborInstance.prefab.metadata.maxPorts),
+        (instance.prefab.metadata.maxPorts == -1 || instance.usedPorts.count < neighborInstance.prefab.metadata.maxPorts) else {
+          continue
+      }
 
       numCycles += 1
       portMap[port.direction + port.point] = nil
@@ -193,7 +202,22 @@ class PurePrefabGenerator {
 
     var cyclePoints = self.rect.filter({ self.cells[$0].flags.contains(.createdToAddCycle) })
     if cyclePoints.isEmpty {  // in case there happened to be no cycles
-      cyclePoints = [rng.choice(prefabInstances).usedPorts[0].point]
+      var p = rng.choice(prefabInstances).usedPorts.first?.point
+      if let p = p {
+        cyclePoints = [p]
+      } else {
+        var i = 0
+        while i < 100 && p == nil {
+          p = rng.choice(prefabInstances).usedPorts.first?.point
+          i += 1
+          if let p = p {
+            cyclePoints = [p]
+            break
+          }
+        }
+        print("Couldn't add a cycle-creating hallway")
+        return
+      }
     }
 
     let field = DistanceField(size: self.rect.size)
@@ -320,7 +344,7 @@ class PurePrefabGenerator {
         let numFloorNeighbors = point.getNeighbors(bounds: rect, diagonals: false)
           .filter({ self.cells[$0].isPassable })
           .count
-        if numFloorNeighbors < 2 {
+        if numFloorNeighbors != 2 {
           self.cells[point].flags.remove(.portUsed)
           self.cells[point].flags.insert(.portUnused)
         }
@@ -336,7 +360,7 @@ class PurePrefabGenerator {
     for point in rect {
       guard self.cells[point].flags.contains(.portUsed) else { continue }
       inner: for neighbor in point.getNeighbors(bounds: rect, diagonals: false) {
-        if self.cells[neighbor].flags.contains(.portUsed) {
+        if self.cells[neighbor].flags.contains(.portUsed) && !self.cells[neighbor].flags.contains(.invisibleDoor) {
           self.cells[point].flags.insert(.invisibleDoor)
           break inner
         }
@@ -480,7 +504,7 @@ extension PurePrefabGenerator: GeneratorProtocol {
     case .placePrefab:
       self.placePrefab(tag: args[0])
     case .growPrefabs where intArgs.count >= 1:
-      for _ in 0..<(intArgs[0]) { self.growPrefabs(filter: args[1]) }
+      for _ in 0..<(intArgs[0]) { self.growPrefabs() }
     case .connectAdjacentPorts where intArgs.count >= 1:
       self.connectAdjacentPorts(maxNewCycles: intArgs[0])
     case .removeDeadEnds:

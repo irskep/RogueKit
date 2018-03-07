@@ -37,7 +37,11 @@ class LoadScene: Scene {
     try! reader.run(
       id: worldModel.mapDefinitions[id]!.generatorId,
       rng: rng,
-      factory: { PurePrefabGenerator(rng: $0, resources: $1, size: $2) })
+      factory: { PurePrefabGenerator(
+        rng: $0,
+        resources: $1,
+        size: $2,
+        mapDefinition: self.worldModel.mapDefinitions[self.id]!) })
     {
       gen, status, result in
       print(status)
@@ -67,8 +71,17 @@ class LoadScene: Scene {
         var mobPoints = gen.points(where: { $0.poi?.kind == .mob })
         rng.shuffleInPlace(&mobPoints)
 
-        var entrancePoints = gen.points(where: { $0.poi?.kind == .entrance })
-        var exitPoints = gen.points(where: { $0.poi?.kind == .exit })
+        var entrancePoints = gen.points(where: { $0.poi?.kind == .entrance && $0.poi?.isRequired == true })
+        if entrancePoints.isEmpty {
+          entrancePoints = gen.points(where: { $0.poi?.kind == .entrance })
+        }
+        rng.shuffleInPlace(&entrancePoints)
+
+        var exitPoints = gen.points(where: { $0.poi?.kind == .exit && $0.poi?.isRequired == true })
+        if exitPoints.isEmpty {
+          exitPoints = gen.points(where: { $0.poi?.kind == .exit })
+        }
+        rng.shuffleInPlace(&exitPoints)
 
         if entrancePoints.isEmpty {
           print("ERROR: no entrance points in this map!")
@@ -79,7 +92,7 @@ class LoadScene: Scene {
           exitPoints = [mobPoints.removeFirst()]
         }
 
-        let playerStart = entrancePoints.removeFirst()
+        let playerStart: BLPoint = entrancePoints.removeFirst()
         levelMap.pointsOfInterest = [
           PointOfInterest(kind: "playerStart", point: playerStart),
         ]

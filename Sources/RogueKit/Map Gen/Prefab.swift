@@ -228,7 +228,6 @@ struct GeneratorCell {
     for poi in metadata.poiDefinitions {
       if poi.code == layer1Cell.code {
         self.poi = poi
-        print("I got a POI!", poi)
         break
       }
     }

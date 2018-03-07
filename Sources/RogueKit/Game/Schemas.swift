@@ -15,6 +15,7 @@ protocol Tagged {
 extension Tagged {
   func matches(_ t: String) -> Bool { return tags.contains(t) }
   func matches(_ t: [String]) -> Bool {
+    if t.contains("*") { return true }
     return tags.contains(where: { t.contains($0) })
   }
 }
@@ -49,6 +50,7 @@ struct WeightedChoice: Codable {
   }
 
   func choose(rng: RKRNGProtocol) -> String {
+    guard choices.count > 0 else { fatalError("Can't choose between no choices") }
     if choices.count == 1 { return choices[0].value }
     let weights = choices.map { $0.weight }
 
@@ -235,6 +237,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
   var id: String
   var tags: [String]
   var weight: Double
+  var maxPorts: Int
   var hasDoors: Bool
   var neighborTags: [String]
   var poiDefinitions: [POIDefinition]
@@ -271,6 +274,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       id: "NO METADATA",
       tags: [],
       weight: 0,
+      maxPorts: -1,
       hasDoors: false,
       neighborTags: ["*"],
       poiDefinitions: [])
@@ -295,6 +299,11 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
           tags: $0,
           isRequired: false),
         POIDefinition(
+          code: BLInt(CP437.char(for: "E")),
+          kind: .entrance,
+          tags: $0,
+          isRequired: true),
+        POIDefinition(
           code: BLInt(CP437.char(for: "x")),
           kind: .exit,
           tags: $0,
@@ -304,23 +313,42 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
 
     return [
       PrefabMetadata(
+        id: "cell1",
+        tags: ["start", "cell"],
+        weight: 1,
+        maxPorts: 1,
+        hasDoors: true,
+        neighborTags: ["cross_hall"],
+        poiDefinitions: _standardPOIs(["start"])),
+      PrefabMetadata(
+        id: "xhall",
+        tags: ["start", "cross_hall", "hall"],
+        weight: 0.5,
+        maxPorts: -1,
+        hasDoors: true,
+        neighborTags: ["*"],
+        poiDefinitions: _standardPOIs(["start", "early", "mid", "late"])),
+      PrefabMetadata(
         id: "room",
         tags: ["start", "generic"],
         weight: 1,
+        maxPorts: -1,
         hasDoors: true,
         neighborTags: ["*"],
         poiDefinitions: _standardPOIs(["early", "start"])),
       PrefabMetadata(
         id: "oval",
         tags: ["start", "generic"],
-        weight: 1,
+        weight: 2,
+        maxPorts: -1,
         hasDoors: true,
         neighborTags: ["*"],
         poiDefinitions: _standardPOIs(["early", "start"])),
       PrefabMetadata(
         id: "jct_+",
         tags: ["generic", "hall"],
-        weight: 1,
+        weight: 0.5,
+        maxPorts: -1,
         hasDoors: false,
         neighborTags: ["*"],
         poiDefinitions: [POIDefinition(
@@ -331,14 +359,16 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       PrefabMetadata(
         id: "jct_-",
         tags: ["generic", "hall"],
-        weight: 1,
+        weight: 0.5,
+        maxPorts: -1,
         hasDoors: false,
         neighborTags: ["*"],
         poiDefinitions: []),
       PrefabMetadata(
         id: "jct_|",
         tags: ["generic", "hall"],
-        weight: 1,
+        weight: 0.5,
+        maxPorts: -1,
         hasDoors: false,
         neighborTags: ["*"],
         poiDefinitions: []),

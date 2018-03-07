@@ -47,7 +47,7 @@ extension MapCell {
   init(generatorCell: GeneratorCell) {
     if generatorCell.flags.contains(.portUsed) &&
        !generatorCell.flags.contains(.invisibleDoor) &&
-       generatorCell.flags.contains(.room) {
+       generatorCell.flags.contains(.hasDoors) {
       self.terrain = 1
       self.feature = 2
       return

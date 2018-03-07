@@ -21,6 +21,17 @@ class PurePrefabGenerator {
 
   var rect: BLRect { return BLRect(x: 0, y: 0, w: cells.size.w, h: cells.size.h) }
 
+  lazy var prefabsByTag: [String: [Prefab]] = {
+    var result = [String: [Prefab]]()
+    for p in resources.prefabs.values {
+      for t in p.metadata.tags {
+        if result[t] == nil { result[t] = [] }
+        result[t]?.append(p)
+      }
+    }
+    return result
+  }()
+
   init(rng: RKRNGProtocol, resources: ResourceCollectionProtocol, size: BLSize) {
     self.rng = rng
     self.resources = resources
@@ -43,21 +54,32 @@ class PurePrefabGenerator {
         _prefabsByDirection[port.direction]?.append(p)
       }
     }
-
-    // Pick a random prefab without the 'hallway' marker. Place it randomly.
-    let firstPrefab = rng.choice(allPrefabs.filter({ $0.sprite.metadata != "h" }))
-    self.register(
-      prefabInstance: PrefabInstance(
-        prefab: firstPrefab,
-        point: rect.shrunk(by: firstPrefab.sprite.rect.size).randomPoint(rng)))
   }
 
-  func iterate() {
+  func placePrefab(tag: String) {
+    let p = rng.choice(prefabsByTag[tag]!)
+    self.register(
+      prefabInstance: PrefabInstance(
+        prefab: p,
+        point: rect.shrunk(by: p.sprite.rect.size).randomPoint(rng)))
+  }
+
+  func growPrefabs(filter: String) {
+    // TODO:
+    // * Avoid prefabs that do not match the arg filter
+    // * Avoid prefabs that do not match the source prefab's filter
+
     rng.shuffleInPlace(&openPorts)
     guard let portPair = openPorts.popLast() else { return }
     let (instance, port) = portPair
     let portDirectionInverse = port.direction * BLPoint(x: -1, y: -1)
-    guard let candidates = _prefabsByDirection[portDirectionInverse] else {
+    guard
+      let candidates = _prefabsByDirection[portDirectionInverse]?
+        .filter({ instance.prefab.metadata.neighborTags.contains("*") || $0.metadata.tags.contains(where: {
+          let prefabFilter: [String] = instance.prefab.metadata.neighborTags
+          return $0 == "generic" || $0 == filter || prefabFilter.contains($0)
+        }) })
+      else {
       openPorts.append(portPair)
       return
     }
@@ -81,9 +103,6 @@ class PurePrefabGenerator {
     var portMap = Array2D<(PrefabInstance, PrefabPort)?>(size: rect.size, emptyValue: nil)
     var newlyUsedPorts = [(PrefabInstance, PrefabPort)]()
 
-//    openPorts = openPorts.filter({ i, p in i.unusedPorts.contains(p) })
-//    zeroPorts = zeroPorts.filter({ i, p in i.unusedPorts.contains(p) })
-
     for (instance, port) in zeroPorts {
       guard rect.contains(point: port.point + port.direction) else { continue }
       portMap[port.point] = (instance, port)
@@ -94,7 +113,6 @@ class PurePrefabGenerator {
     for (instance, port) in openPorts {
       guard numCycles < maxNewCycles else { break }
       guard rect.contains(point: port.point + port.direction) else { continue }
-//      guard port.direction != BLPoint.zero else { continue }
       portMap[port.point] = (instance, port)
 
       var neighborPair: (PrefabInstance, PrefabPort)? = nil
@@ -124,15 +142,15 @@ class PurePrefabGenerator {
     })
   }
 
-  func removeDeadEnds() {
+  func removeDeadEnds(mustTerminateWithTagOtherThan hallwayTag: String) {
     var deadEnds = [PrefabInstance]()
     var notDeadEnds = [PrefabInstance]()
     let update: () -> () = {
       deadEnds = self.prefabInstances.filter({
-        return $0.connections.count == 1 && $0.prefab.sprite.metadata.contains("h")
+        return $0.connections.count == 1 && $0.prefab.metadata.tags.contains(hallwayTag)
       })
       notDeadEnds = self.prefabInstances.filter({
-        return $0.connections.count != 1 || !$0.prefab.sprite.metadata.contains("h")
+        return $0.connections.count != 1 || !$0.prefab.metadata.tags.contains(hallwayTag)
       })
       self.prefabInstances = notDeadEnds
     }
@@ -388,10 +406,8 @@ class PurePrefabGenerator {
             self.cells[point].flags.insert(.createdToAddCycle)
           }
         }
-        if instance.prefab.sprite.metadata.contains("h") {
-          self.cells[point].flags.insert(.hallway)
-        } else {
-          self.cells[point].flags.insert(.room)
+        if instance.prefab.metadata.hasDoors {
+          self.cells[point].flags.insert(.hasDoors)
         }
       }
     }
@@ -438,9 +454,10 @@ extension PurePrefabGenerator: REXPaintDrawable {
 
 extension PurePrefabGenerator: GeneratorProtocol {
   enum Command: String {
-    case addAnyPrefabToAnyUnusedPort
+    case placePrefab
+    case growPrefabs
     case connectAdjacentPorts
-    case removeDeadEndHallways
+    case removeDeadEnds
     case addHallwaysToRemoteAreas
     case addWallsNextToBareFloor
     case removeDoubleDoors
@@ -449,16 +466,18 @@ extension PurePrefabGenerator: GeneratorProtocol {
   func runCommand(cmd: String, args: [String]) {
     guard let command = Command(rawValue: cmd) else { fatalError("Unknown command: \(cmd)") }
     let intArgs: [Int] = args.map({
-      guard let int = Int($0) else { fatalError("Bad int: \($0)") }
+      guard let int = Int($0) else { return -1 }
       return int
     })
     switch command {
-    case .addAnyPrefabToAnyUnusedPort where intArgs.count >= 1:
-      for _ in 0..<(intArgs[0]) { self.iterate() }
+    case .placePrefab:
+      self.placePrefab(tag: args[0])
+    case .growPrefabs where intArgs.count >= 1:
+      for _ in 0..<(intArgs[0]) { self.growPrefabs(filter: args[1]) }
     case .connectAdjacentPorts where intArgs.count >= 1:
       self.connectAdjacentPorts(maxNewCycles: intArgs[0])
-    case .removeDeadEndHallways:
-      self.removeDeadEnds()
+    case .removeDeadEnds:
+      self.removeDeadEnds(mustTerminateWithTagOtherThan: args[0])
     case .addHallwaysToRemoteAreas where intArgs.count >= 2:
       for _ in 0..<intArgs[0] {
         self.addHallwayToPortFurthestFromACycle(numIterations: intArgs[1])

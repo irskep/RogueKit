@@ -234,6 +234,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
   var id: String
   var tags: [String]
   var weight: Double
+  var hasDoors: Bool
   var neighborTags: [String]
   var poiDefinitions: [POIDefinition]
 
@@ -260,7 +261,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
 
   static var zero: PrefabMetadata = {
     return PrefabMetadata(
-      id: "NO METADATA", tags: [], weight: 0, neighborTags: ["*"], poiDefinitions: [])
+      id: "NO METADATA", tags: [], weight: 0, hasDoors: false, neighborTags: ["*"], poiDefinitions: [])
   }()
 
   static var data: [PrefabMetadata] = {
@@ -269,6 +270,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         id: "room",
         tags: ["start", "generic"],
         weight: 1,
+        hasDoors: true,
         neighborTags: ["*"],
         poiDefinitions: [POIDefinition(
           code: BLInt(CP437.char(for: "m")),
@@ -278,6 +280,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         id: "oval",
         tags: ["start", "generic"],
         weight: 1,
+        hasDoors: true,
         neighborTags: ["*"],
         poiDefinitions: [POIDefinition(
           code: BLInt(CP437.char(for: "m")),
@@ -285,8 +288,9 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
           tags: ["early"])]),
       PrefabMetadata(
         id: "jct_+",
-        tags: ["start", "generic", "hall"],
+        tags: ["generic", "hall"],
         weight: 1,
+        hasDoors: false,
         neighborTags: ["*"],
         poiDefinitions: [POIDefinition(
           code: BLInt(CP437.char(for: "m")),
@@ -294,14 +298,16 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
           tags: ["technician"])]),
       PrefabMetadata(
         id: "jct_-",
-        tags: ["start", "generic", "hall"],
+        tags: ["generic", "hall"],
         weight: 1,
+        hasDoors: false,
         neighborTags: ["*"],
         poiDefinitions: []),
       PrefabMetadata(
         id: "jct_|",
-        tags: ["start", "generic", "hall"],
+        tags: ["generic", "hall"],
         weight: 1,
+        hasDoors: false,
         neighborTags: ["*"],
         poiDefinitions: []),
     ]

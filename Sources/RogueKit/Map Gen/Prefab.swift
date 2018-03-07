@@ -244,8 +244,7 @@ struct GeneratorCell {
     case invisibleDoor
 
     // prefab origins
-    case hallway
-    case room
+    case hasDoors
   }
 
   var isPassable: Bool {

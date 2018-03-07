@@ -1,4 +1,4 @@
-prefabs_and_hallways,40,25
+prefabs_and_hallways,46,28
 
 placePrefab,cell
 growPrefabs,200
@@ -12,10 +12,6 @@ removeDeadEnds,hall
 addHallwaysToRemoteAreas,1,2
 addHallwaysToRemoteAreas,1,2
 addHallwaysToRemoteAreas,1,2
-
-#connectAdjacentPorts,10
-#addAnyPrefabToAnyUnusedPort,500
-#removeDeadEndHallways
 
 addWallsNextToBareFloor
 removeDoubleDoors

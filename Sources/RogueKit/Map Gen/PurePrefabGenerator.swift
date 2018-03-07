@@ -80,7 +80,7 @@ class PurePrefabGenerator {
     let (instance, port) = portPair
     let portDirectionInverse = port.direction * BLPoint(x: -1, y: -1)
     guard
-      instance.prefab.metadata.maxPorts < 0 || instance.usedPorts.count < instance.prefab.metadata.maxPorts,
+      instance.availablePorts > 0,
       let candidates = _prefabsByDirection[portDirectionInverse]?
         .filter({
           return (
@@ -89,7 +89,7 @@ class PurePrefabGenerator {
         }),
       !candidates.isEmpty
       else {
-      openPorts.append(portPair)
+//      openPorts.append(portPair)
       return
     }
     let prefab = WeightedChoice.choose(rng: rng, items: candidates)
@@ -128,10 +128,7 @@ class PurePrefabGenerator {
       neighborPair = portMap[port.direction + port.point]
       guard let (neighborInstance, neighborPort) = neighborPair else { continue }
       guard neighborInstance.unusedPorts.contains(neighborPort) && instance.unusedPorts.contains(port) else { continue }
-      guard (neighborInstance.prefab.metadata.maxPorts == -1 || neighborInstance.usedPorts.count < neighborInstance.prefab.metadata.maxPorts),
-        (instance.prefab.metadata.maxPorts == -1 || instance.usedPorts.count < neighborInstance.prefab.metadata.maxPorts) else {
-          continue
-      }
+      guard neighborInstance.availablePorts > 0, instance.availablePorts > 0 else { continue }
 
       numCycles += 1
       portMap[port.direction + port.point] = nil
@@ -215,7 +212,7 @@ class PurePrefabGenerator {
             break
           }
         }
-        print("Couldn't add a cycle-creating hallway")
+        print("Couldn't add a cycle-creating hallway because there are no hallways")
         return
       }
     }
@@ -253,6 +250,7 @@ class PurePrefabGenerator {
   func addHallwayToNearestUnusedPort(origin: BLPoint, minExistingDistance: Int = 40) -> Bool {
     var allUnusedPorts = [PrefabPort]()
     for i in prefabInstances {
+      guard i.availablePorts > 0 else { continue }
       allUnusedPorts.append(contentsOf: i.unusedPorts.filter({ $0.direction != BLPoint.zero && $0.point != origin }))
     }
 

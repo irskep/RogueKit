@@ -308,14 +308,19 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
           kind: .exit,
           tags: $0,
           isRequired: false),
+        POIDefinition(
+          code: BLInt(CP437.char(for: "X")),
+          kind: .exit,
+          tags: $0,
+          isRequired: true),
       ]
     }
 
     return [
       PrefabMetadata(
         id: "cell1",
-        tags: ["cell"],
-        weight: 1,
+        tags: ["start", "cell"],
+        weight: 10,
         maxPorts: 1,
         hasDoors: true,
         neighborTags: ["cross_hall"],
@@ -330,7 +335,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         poiDefinitions: _standardPOIs(["start", "early", "mid", "late"])),
       PrefabMetadata(
         id: "room",
-        tags: ["start", "generic"],
+        tags: ["generic", "startingroom"],
         weight: 1,
         maxPorts: -1,
         hasDoors: true,
@@ -338,7 +343,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         poiDefinitions: _standardPOIs(["early", "start"])),
       PrefabMetadata(
         id: "oval",
-        tags: ["start", "generic"],
+        tags: ["generic", "startingroom"],
         weight: 1,
         maxPorts: -1,
         hasDoors: true,

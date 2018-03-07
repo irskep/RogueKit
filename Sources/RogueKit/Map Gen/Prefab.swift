@@ -77,6 +77,14 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
   var unusedPorts = [PrefabPort]()
   var mergedPorts = [PrefabPort]()
 
+  var availablePorts: Int {
+    if prefab.metadata.maxPorts <= 0 { return Int.max }
+    return prefab.metadata.maxPorts - usedPorts.count - mergedPorts.count - numRemovedPorts
+  }
+  var numRemovedPorts: Int = 0
+  var numPorts: Int { return usedPorts.count + unusedPorts.count + mergedPorts.count + numRemovedPorts }
+  var startNumPorts = 0
+
   init(prefab: Prefab, point: BLPoint) {
     self.point = point
     self.prefab = prefab
@@ -92,6 +100,7 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
         unusedPorts.append(newPort)
       }
     }
+    startNumPorts = numPorts
   }
 
   convenience init(prefab: Prefab, point: BLPoint, usingPort usedPort: PrefabPort, toConnectTo counterpart: PrefabInstance) {
@@ -106,6 +115,9 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
   }
 
   func connect(to instance: PrefabInstance, with port: PrefabPort) {
+    if prefab.metadata.maxPorts > 0 && usedPorts.count >= prefab.metadata.maxPorts {
+      fatalError("I'm all out of ports!")
+    }
     let oldPorts = unusedPorts
     self.unusedPorts = oldPorts.filter({ $0 != port })
 //    if self.unusedPorts.count != oldPorts.count {
@@ -117,6 +129,7 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
     let cellPoint = port.point - self.point
     self.cells[cellPoint].flags.remove(.portUnused)
     self.cells[cellPoint].flags.insert(.portUsed)
+    assert(numPorts == startNumPorts)
   }
 
   func disconnect(from instance: PrefabInstance) {
@@ -129,6 +142,7 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
       }
     }
     connections = connections.filter({ $0.neighbor(of: self) != instance })
+    assert(numPorts == startNumPorts)
   }
 
   func disconnectFromAll() {
@@ -138,6 +152,7 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
     self.connections = []
     self.unusedPorts = self.unusedPorts + self.usedPorts
     self.usedPorts = []
+    assert(numPorts == startNumPorts)
   }
 
   func removeCells(at points: [BLPoint]) {
@@ -153,6 +168,9 @@ class PrefabInstance: Hashable, CustomDebugStringConvertible {
 //      mergedCells[p] = self.generatorCell(at: p)
 //      self.replaceGeneratorCell(at: p, with: GeneratorCell.zero)
 //    }
+    // maintain integrity check
+    numRemovedPorts += (startNumPorts - numPorts)
+    assert(startNumPorts == numPorts)
   }
 
   var livePoints: [BLPoint] {

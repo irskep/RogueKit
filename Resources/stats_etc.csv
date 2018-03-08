@@ -8,7 +8,7 @@ nurse,Evil Nurse,"An assistant to the ""researchers"" in Dr. Hallervorden's lab"
 technician,Technician,A hunchbacked servant of Dr. Hallervorden who fixes the lab,164,green,30,80,1,40,20,2,technician:1,technician:1,technician:1,technician:1,fist,wander_chase,Evil Lair Staff,"mid,late",1
 crazy,Insane Test Subject,"A test subject just like you, but no longer able to tell friend from foe",116,green,20,30,1,80,10,1,Playerstart:1,playerstart:1,playerstart:1,,fist,wander_chase,Insane Test Subjects,"start,early,insane_test_subject",1
 laserraptor,Raptor,A raptor cloned from DNA trapped in amber. With a laser attached to its head.,115,orange,30,30,1,50,30,2,,,,Laser:1,talon,wander_chase,Dinosaurs,dinosaurs,1
-pig,Pig,A pig used for illegal medical testing. It isn't happy.,112,pink,30,50,1,15,15,3,,,,,teeth,wander_chase,Animals,"medical,pig",1
-rabbit,Rabbit,A rabbit that has been implanted with assorted experimental chemicals,114,white,20,30,1,50,30,1,,,,,teeth,wander_chase,Animals,"medical,rabbit",1
-beagle,Beagle,A beagle with a surgically enhanced heart. It is relentless.,98,white,30,100,1,15,15,2,,,,,teeth,wander_chase,Animals,"medical,beagle",1
-monkey,Monkey,"A monkey that has been used for testing experimental cosmetics. The monkey's face has a nice blush to it, but it's not pretty when it's angry.",109,white,20,30,1,15,50,1,,,,,poop,wander_chase,Animals,"medical,monkey",1
+pig,Pig,A pig used for illegal medical testing. It isn't happy.,112,pink,30,50,1,15,15,3,,,,,teeth,wander_chase,Animals,"medical,pig,animal",1
+rabbit,Rabbit,A rabbit that has been implanted with assorted experimental chemicals,114,white,20,30,1,50,30,1,,,,,teeth,wander_chase,Animals,"medical,rabbit,animal",1
+beagle,Beagle,A beagle with a surgically enhanced heart. It is relentless.,98,white,30,100,1,15,15,2,,,,,teeth,wander_chase,Animals,"medical,beagle,animal",1
+monkey,Monkey,"A monkey that has been used for testing experimental cosmetics. The monkey's face has a nice blush to it, but it's not pretty when it's angry.",109,white,20,30,1,15,50,1,,,,,poop,wander_chase,Animals,"medical,monkey,animal",1

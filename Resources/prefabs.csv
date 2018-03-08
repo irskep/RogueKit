@@ -21,3 +21,8 @@ cages_pig,"""",medical,"medical,generic","""","""","""",pig,PIG COHORT
 cages_rabb,"""",medical,"medical,generic","""","""","""",rabbit,RABBIT COHORT
 cages_beag,"""",medical,"medical,generic","""","""","""",beagle,BEAGLE COHORT
 cages_craz,"""",medical,"medical,generic","""","""","""",insane_test_subject,HUMAN COHORT
+hive_rm,1,"hivestart,hive,hiveroom",hivehall,"""","""","""","hive,animal",NATURAL SELECTION HIVE
+hive_rm2,1,"""","""","""","""","""","""",NATURAL SELECTION HIVE
+hive_rm3,1,"""","""","""","""","""","""",NATURAL SELECTION HIVE
+hive_|,1,"hive,hall,hivehall",hiveroom,"""","""",FALSE,,NATURAL SELECTION HIVE
+hive_-,1,"hive,hall,hivehall",hiveroom,"""","""",FALSE,,NATURAL SELECTION HIVE

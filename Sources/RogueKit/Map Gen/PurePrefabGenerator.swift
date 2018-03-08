@@ -47,8 +47,10 @@ class PurePrefabGenerator {
 
     for p in Array(resources.prefabs.values) {
       if !p.metadata.matches(mapDefinition.tagWhitelist) {
+        print("Excluding prefab \(p.metadata.id)")
         continue
       }
+      print("Including prefab \(p.metadata.id)")
       for port in p.ports {
         _prefabsByDirection[port.direction]?.append(p)
       }
@@ -380,8 +382,10 @@ class PurePrefabGenerator {
     for point in instance.livePoints {
       let existingCell = self.cells[point]
       if existingCell.basicType == .empty { continue }
-      if existingCell.flags.contains(.portUsed) { return nil }
-      if existingCell.basicType == .wall && instance.generatorCell(at: point).basicType == .wall {
+      if existingCell.flags.contains(.portUsed) { return nil }  // already taken by another PAIR of prefabs
+      if (existingCell.basicType == .wall && instance.generatorCell(at: point).basicType == .wall) ||
+        (existingCell.basicType == .floor && instance.generatorCell(at: point).basicType == .floor)
+        {
         pointsToRemove.append(point)
         continue
       }

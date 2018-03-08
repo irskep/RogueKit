@@ -21,10 +21,11 @@ class ActorC: ECSComponent, Codable {
   var fatigueLevel: Int {
     if currentStats.fatigue < definition.stats.fatigue * 0.75 {
       return 0
-    } else if currentStats.fatigue < definition.stats.fatigue * 0.9 {
-      return 1
     } else {
-      return 2
+//    } else if currentStats.fatigue < definition.stats.fatigue * 0.9 {
+      return 1
+//    } else {
+//      return 2
     }
   }
 

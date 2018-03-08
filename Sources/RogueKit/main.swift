@@ -20,6 +20,7 @@ struct Config: Codable {
   var keyDrop: Int32 = BLConstant.D
   var keyRangedFire: Int32 = BLConstant.ENTER
   var keyToggleInspectedEntity: Int32 = BLConstant.TAB
+  var keyHelp: Int32 = BLConstant.SLASH
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS
@@ -28,6 +29,8 @@ struct Config: Codable {
 
   var keyMenu: Int32 = BLConstant.ESCAPE
   var keyExit: Int32 = BLConstant.Q
+
+  var shiftyKeys: Set<Int32> { return Set([keyHelp]) }
 }
 
 var path = ""

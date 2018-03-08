@@ -158,7 +158,7 @@ extension CombatStats {
   }
 
   static func fight(rng: RKRNGProtocol, stats: CombatStats) -> [CombatOutcome] {
-    if rng.get() > stats.hitChance {
+    if stats.hitChance == 0 || rng.get() <= stats.hitChance {
       return [.miss(StatBucket(
         hp: 0, fatigue: stats.fatigueDelta, awareness: 0, reflex: 0, strength: 0))]
     } else {

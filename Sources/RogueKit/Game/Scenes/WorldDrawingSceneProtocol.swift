@@ -20,25 +20,15 @@ protocol WorldDrawingSceneProtocol {
 
 extension WorldDrawingSceneProtocol {
   func drawWorld(in terminal: BLTerminalInterface) {
-    let config = (director as! SteveRLDirector).config
     terminal.layer = 0
     terminal.backgroundColor = resources.defaultPalette["void"]
     terminal.clear()
     worldModel.draw(in: terminal, at: BLPoint.zero)
 
-    var keyString = [
-      (config.keyEquip, "[un]wield/[un]equip".bltEscaped),
-      (config.keyDrop, "drop"),
-      ].map({
-        "(\(BLConstant.label(for: $0.0)!)) \($0.1)"
-      }).joined(separator: " ")
-    keyString += " (arrows) move and attack by bumping"
-    keyString += "\n(tab) select enemies (enter) fire ranged weapon (space) wait"
-
     terminal.foregroundColor = resources.defaultPalette["ui_text_dim"]
     terminal.print(
-      point: BLPoint(x: 1, y: terminal.height - 2),
-      string: keyString)
+      point: BLPoint(x: 1, y: terminal.height - 1),
+      string: "Press ? for help. Keys are: arrows, tab, enter, E(quip), D(rop)")
 
 
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
@@ -69,7 +59,7 @@ extension WorldDrawingSceneProtocol {
 
     terminal.foregroundColor = terminal.getColor(name: "ui_text")
     let y = worldModel.activeMap.cells.size.h
-    let h = terminal.height - 3 - y
+    let h = terminal.height - 2 - y
     let w = terminal.width - MENU_W
     var messages = worldModel.messageLog
     if messages.count > h {

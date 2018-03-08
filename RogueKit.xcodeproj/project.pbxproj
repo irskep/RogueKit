@@ -89,6 +89,8 @@
 		AA467151204C9D2B003A1114 /* Schemas.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46714F204C9D2B003A1114 /* Schemas.swift */; };
 		AA467153204DDD3C003A1114 /* LoseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA467152204DDD3C003A1114 /* LoseScene.swift */; };
 		AA467154204DDD3C003A1114 /* LoseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA467152204DDD3C003A1114 /* LoseScene.swift */; };
+		AA4671562051F352003A1114 /* HelpScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4671552051F352003A1114 /* HelpScene.swift */; };
+		AA4671572051F352003A1114 /* HelpScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4671552051F352003A1114 /* HelpScene.swift */; };
 		AA90B097204A234400A59645 /* Assemblies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B095204A230F00A59645 /* Assemblies.swift */; };
 		AA90B098204A234500A59645 /* Assemblies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B095204A230F00A59645 /* Assemblies.swift */; };
 		AA90B09C204A689000A59645 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA90B09A204A684400A59645 /* AI.swift */; };
@@ -293,6 +295,7 @@
 		AA46714C204C9C14003A1114 /* Combat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combat.swift; sourceTree = "<group>"; };
 		AA46714F204C9D2B003A1114 /* Schemas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schemas.swift; sourceTree = "<group>"; };
 		AA467152204DDD3C003A1114 /* LoseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoseScene.swift; sourceTree = "<group>"; };
+		AA4671552051F352003A1114 /* HelpScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScene.swift; sourceTree = "<group>"; };
 		AA90B095204A230F00A59645 /* Assemblies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assemblies.swift; sourceTree = "<group>"; };
 		AA90B099204A305D00A59645 /* itch_mac.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = itch_mac.sh; sourceTree = "<group>"; };
 		AA90B09A204A684400A59645 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
@@ -446,6 +449,7 @@
 				AA072D72204B2B9700479A94 /* InventoryScene.swift */,
 				AA072D7C204B60A100479A94 /* WorldDrawingSceneProtocol.swift */,
 				AA467152204DDD3C003A1114 /* LoseScene.swift */,
+				AA4671552051F352003A1114 /* HelpScene.swift */,
 			);
 			name = Scenes;
 			path = Sources/RogueKit/Game/Scenes;
@@ -886,6 +890,7 @@
 				AA46714E204C9C14003A1114 /* Combat.swift in Sources */,
 				AAC6A4FD2049CC60008D971B /* BLConstant+Labels.swift in Sources */,
 				AA0DE9032013C87400CCF61F /* LevelMap.swift in Sources */,
+				AA4671572051F352003A1114 /* HelpScene.swift in Sources */,
 				AA90B098204A234500A59645 /* Assemblies.swift in Sources */,
 				AA3DA26D2012DE0300A7CA1B /* RKColor.swift in Sources */,
 				AA3DA2632012DE0300A7CA1B /* PurePrefabGenerator.swift in Sources */,
@@ -977,6 +982,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_72 /* RecursiveShadowcastingFOVProvider.swift in Sources */,
+				AA4671562051F352003A1114 /* HelpScene.swift in Sources */,
 				OBJ_73 /* Prefab.swift in Sources */,
 				AA90B097204A234400A59645 /* Assemblies.swift in Sources */,
 				OBJ_74 /* PurePrefabGenerator.swift in Sources */,

@@ -188,6 +188,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
           worldModel: worldModel,
           returnToScene: self,
           state: .willDrop))
+      case config.keyHelp where terminal.check(BLConstant.SHIFT):
+        director?.transition(to: HelpScene(
+          resources: resources,
+          worldModel: worldModel,
+          returnToScene: self))
       case config.keyToggleInspectedEntity:
         self.toggleInspectedEntity()
         isDirty = true

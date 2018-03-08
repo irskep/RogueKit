@@ -300,7 +300,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       self.drawWorld(in: terminal)
       self.drawInspectedEntityOverlay()
     }
-    for i: BLInt in [1, 2, 3, 4] {
+    for i: BLInt in [1, 2, 3] {
       drawWorld()
 
       let oldLayer = terminal.layer

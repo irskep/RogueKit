@@ -5,3 +5,4 @@ okguard,Mid-Grade Henchman,A cut above your average henchman,103,yellow,30,75,1,
 beefyguard,Elite Henchman,"An athletic, combat-trained henchman thirsty for blood",103,orange,30,100,1,50,30,3,"beefyguard:2,okguard:1","beefyguard:2,okguard:1",beefyguard:1,beefyguard:1,fist,wander_chase,Evil Lair Staff,late,1
 doctor,Evil Doctor,"A ""researcher"" in Dr. Hallervorden's lab",69,green,20,50,1,30,20,2,medical:1,medical:1,medical:1,medical:1,fist,wander_chase,Evil Lair Staff,early,1
 technician,Technician,A hunchbacked servant of Dr. Hallervorden who fixes the lab,164,green,30,80,1,40,20,2,technician:1,technician:1,technician:1,technician:1,fist,wander_chase,Evil Lair Staff,"mid,late",1
+crazy,Insane Test Subject,"A test subject just like you, but no longer able to tell friend from foe",116,green,20,30,1,80,10,1,Playerstart:1,playerstart:1,playerstart:1,,fist,wander_chase,Insane Test Subjects,"start,early,insane_test_subject",1

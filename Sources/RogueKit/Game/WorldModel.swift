@@ -33,7 +33,7 @@ class WorldModel: Codable {
   let version: String = SAVE_FILE_VERSION
   let rngStore: RandomSeedStore
   var resources: ResourceCollectionProtocol?
-  lazy var csvDB: CSVDB = { return CSVDB(resources: resources!) }()
+  var csvDB: CSVDB { return resources!.csvDB }
 
   var mapDefinitions = [String: MapDefinition]()
   var maps: [String: LevelMap]

@@ -54,7 +54,12 @@ class ActorC: ECSComponent, Codable {
   }
 
   func didMove(in worldModel: WorldModel) {
-    applyDelta(delta: StatBucket(hp: 1, fatigue: -1, awareness: 0, reflex: 0, strength: 0))
+    // CHEATING THE SYSTEM: player regenerates, enemies do not
+    if entity == worldModel.player {
+      applyDelta(delta: StatBucket(hp: 1, fatigue: -1, awareness: 0, reflex: 0, strength: 0))
+    } else {
+      applyDelta(delta: StatBucket(hp: 0, fatigue: -1, awareness: 0, reflex: 0, strength: 0))
+    }
   }
 }
 class ActorS: ECSSystem<ActorC>, Codable {

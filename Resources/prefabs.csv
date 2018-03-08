@@ -1,0 +1,9 @@
+id,weight,tags,neighbor_tags,max_actors,max_ports,has_doors,poi_tags
+cell1,10,"start,cell",cross_hall,1,1,TRUE,insane_test_subject
+xhall,0.5,"start,cross_hall,hall",*,"""",-1,FALSE,"start,early,mid,late"
+room,1,"generic,startingroom",*,"""",-1,TRUE,"start,early,mid,late"
+room5,"""","""","""","""","""","""",""""
+oval,"""","""",*,"""","""","""",""""
+jct_+,1,"generic,hall",*,"""",-1,FALSE,technician
+jct_-,"""","""","""","""","""","""",""""
+jct_|,"""","""","""","""","""","""",""""

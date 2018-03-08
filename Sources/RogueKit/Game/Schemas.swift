@@ -280,103 +280,38 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       poiDefinitions: [])
   }()
 
-  static var data: [PrefabMetadata] = {
-    let _standardPOIs: ([String]) -> [PrefabMetadata.POIDefinition] = {
-      return [
-        POIDefinition(
-          code: BLInt(CP437.char(for: "m")),
-          kind: .mob,
-          tags: $0,
-          isRequired: false),
-        POIDefinition(
-          code: BLInt(CP437.char(for: "i")),
-          kind: .item,
-          tags: $0,
-          isRequired: false),
-        POIDefinition(
-          code: BLInt(CP437.char(for: "e")),
-          kind: .entrance,
-          tags: $0,
-          isRequired: false),
-        POIDefinition(
-          code: BLInt(CP437.char(for: "E")),
-          kind: .entrance,
-          tags: $0,
-          isRequired: true),
-        POIDefinition(
-          code: BLInt(CP437.char(for: "x")),
-          kind: .exit,
-          tags: $0,
-          isRequired: false),
-        POIDefinition(
-          code: BLInt(CP437.char(for: "X")),
-          kind: .exit,
-          tags: $0,
-          isRequired: true),
-      ]
-    }
-
+  static func poiDefs(_ tags: [String]) -> [PrefabMetadata.POIDefinition] {
     return [
-      PrefabMetadata(
-        id: "cell1",
-        tags: ["start", "cell"],
-        weight: 10,
-        maxPorts: 1,
-        hasDoors: true,
-        neighborTags: ["cross_hall"],
-        poiDefinitions: _standardPOIs(["start"])),
-      PrefabMetadata(
-        id: "xhall",
-        tags: ["start", "cross_hall", "hall"],
-        weight: 0.5,
-        maxPorts: -1,
-        hasDoors: true,
-        neighborTags: ["*"],
-        poiDefinitions: _standardPOIs(["start", "early", "mid", "late"])),
-      PrefabMetadata(
-        id: "room",
-        tags: ["generic", "startingroom"],
-        weight: 1,
-        maxPorts: -1,
-        hasDoors: true,
-        neighborTags: ["*"],
-        poiDefinitions: _standardPOIs(["early", "start"])),
-      PrefabMetadata(
-        id: "oval",
-        tags: ["generic", "startingroom"],
-        weight: 1,
-        maxPorts: -1,
-        hasDoors: true,
-        neighborTags: ["*"],
-        poiDefinitions: _standardPOIs(["early", "start"])),
-      PrefabMetadata(
-        id: "jct_+",
-        tags: ["generic", "hall"],
-        weight: 1,
-        maxPorts: -1,
-        hasDoors: false,
-        neighborTags: ["*"],
-        poiDefinitions: [POIDefinition(
-          code: BLInt(CP437.char(for: "m")),
-          kind: .mob,
-          tags: ["technician"],
-          isRequired: false)]),
-      PrefabMetadata(
-        id: "jct_-",
-        tags: ["generic", "hall"],
-        weight: 1,
-        maxPorts: -1,
-        hasDoors: false,
-        neighborTags: ["*"],
-        poiDefinitions: []),
-      PrefabMetadata(
-        id: "jct_|",
-        tags: ["generic", "hall"],
-        weight: 1,
-        maxPorts: -1,
-        hasDoors: false,
-        neighborTags: ["*"],
-        poiDefinitions: []),
-    ]
-  }()
+      POIDefinition(
+        code: BLInt(CP437.char(for: "m")),
+        kind: .mob,
+        tags: tags,
+        isRequired: false),
+      POIDefinition(
+        code: BLInt(CP437.char(for: "i")),
+        kind: .item,
+        tags: tags,
+        isRequired: false),
+      POIDefinition(
+        code: BLInt(CP437.char(for: "e")),
+        kind: .entrance,
+        tags: tags,
+        isRequired: false),
+      POIDefinition(
+        code: BLInt(CP437.char(for: "E")),
+        kind: .entrance,
+        tags: tags,
+        isRequired: true),
+      POIDefinition(
+        code: BLInt(CP437.char(for: "x")),
+        kind: .exit,
+        tags: tags,
+        isRequired: false),
+      POIDefinition(
+        code: BLInt(CP437.char(for: "X")),
+        kind: .exit,
+        tags: tags,
+        isRequired: true),
+      ]
+  }
 }

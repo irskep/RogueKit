@@ -9,9 +9,13 @@ import Foundation
 import BearLibTerminal
 
 
-class CSVDB {
-  let resources: ResourceCollectionProtocol
+private let _Q = "\""
 
+
+class CSVDB {
+  weak var resources: ResourceCollectionProtocol!
+
+  lazy var prefabs: [String: PrefabMetadata] = { _createPrefabDB() }()
   lazy var actors: [String: ActorDefinition] = { _createActorsDB() }()
   lazy var weapons: [String: WeaponDefinition] = { _createWeaponsDB() }()
   lazy var armors: [String: ArmorDefinition] = { _createArmorDB() }()
@@ -26,6 +30,38 @@ class CSVDB {
   func actors(matching t: [String]) -> [ActorDefinition] { return actors.values.filter({ $0.matches(t) })}
   func weapons(matching t: [String]) -> [WeaponDefinition] { return weapons.values.filter({ $0.matches(t) })}
   func armors(matching t: [String]) -> [ArmorDefinition] { return armors.values.filter({ $0.matches(t) })}
+
+  private func _createPrefabDB() -> [String: PrefabMetadata] {
+    var last: PrefabMetadata!
+    do {
+      return try resources.csvMap(name: "prefabs", mapper: {
+        (row: StringBox) -> (String, PrefabMetadata) in
+
+        let id: String = row["id"]
+        let weight: Double = row.string("weight") == _Q ? last.weight : row["weight"]
+        let maxPorts: Int = row.string("max_ports") == _Q ? last.maxPorts : row["max_ports"]
+        let hasDoors: Bool = row.string("has_doors") == _Q ? last.hasDoors : row["has_doors"]
+        let tags = row.string("tags") == _Q
+          ? last.tags
+          : row.string("tags").lowercased().split(separator: ",").map { String($0) }
+        let neighborTags = row.string("neighbor_tags") == _Q
+          ? last.neighborTags
+          : row.string("neighbor_tags").lowercased().split(separator: ",").map { String($0) }
+        let poiTags = row.string("poi_tags") == _Q
+          ? last.poiDefinitions.first!.tags  // unsafe but ok for 7drl
+          : row.string("poi_tags").lowercased().split(separator: ",").map { String($0) }
+
+        let m = PrefabMetadata(
+          id: id, tags: tags, weight: weight, maxPorts: maxPorts,
+          hasDoors: hasDoors, neighborTags: neighborTags,
+          poiDefinitions: PrefabMetadata.poiDefs(poiTags))
+        last = m
+        return (id, m)
+      })
+    } catch {
+      fatalError("Could not load stats_etc.csv")
+    }
+  }
 
   private func _createActorsDB() -> [String: ActorDefinition] {
     do {

@@ -73,6 +73,7 @@ class MoveAfterPlayerC: ECSComponent, Codable {
     if let forceWaitC = worldModel.forceWaitS[entity] {
       if forceWaitC.turnsRemaining > 0 {
         worldModel.log("\(nameC.name) stumbles from exhaustion")
+        forceWaitC.turnsRemaining -= 1
         return false
       }
 

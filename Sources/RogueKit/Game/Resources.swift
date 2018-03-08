@@ -14,10 +14,11 @@ enum ResourceError: Error {
 }
 
 
-protocol ResourceCollectionProtocol {
+protocol ResourceCollectionProtocol: class {
   var path: String { get }
   var prefabs: [String: Prefab] { get }
   var defaultPalette: PaletteStore { get }
+  var csvDB: CSVDB { get }
   func path(for name: String) -> String
   func url(for name: String) -> URL?
   func rexPaintImage(named: String) -> REXPaintImage?
@@ -66,6 +67,8 @@ extension ResourceCollectionProtocol {
 
 class ResourceCollection: ResourceCollectionProtocol {
   let path: String
+
+  lazy var csvDB: CSVDB = { return CSVDB(resources: self) }()
   
   init(path: String) {
     self.path = path
@@ -73,15 +76,10 @@ class ResourceCollection: ResourceCollectionProtocol {
 
   lazy var prefabs: [String : Prefab] = {
     guard let image = self.rexPaintImage(named: "fabs") else { return [:] }
-
-    var metadatas = [String: PrefabMetadata]()
-    for m in PrefabMetadata.data {
-      metadatas[m.id] = m
-    }
-
+    
     return [String: Prefab](uniqueKeysWithValues: SpriteSheet(image: image)
       .sprites
-      .map({ Prefab(sprite: $0, metadata: metadatas[$0.name] ?? PrefabMetadata.zero) })
+      .map({ Prefab(sprite: $0, metadata: self.csvDB.prefabs[$0.name] ?? PrefabMetadata.zero) })
       .map({ (p: Prefab) -> (String, Prefab) in (p.sprite.name, p) }))
   }()
 

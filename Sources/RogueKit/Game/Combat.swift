@@ -121,7 +121,7 @@ extension CombatStats {
     if attacker.weapon.isMelee {
       stats.baseHitChance = 1
       stats.hitChance = defenderBaseDodgeChance
-      if distance > 1 && !forUI {
+      if attacker.position.manhattanDistance(to: defender.position) > 1 && !forUI {
         stats.hitChance = 0  // too far!
       }
     } else {

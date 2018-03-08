@@ -20,7 +20,7 @@ extension WorldModel {
         var results = point
           .getNeighbors(bounds: BLRect(size: self.size), diagonals: false)
           .filter({ self.can(entity: entity, remember: $0) })
-          .filter({ self.may(entity: entity, moveTo: $0) })
+          .filter({ self.may(entity: entity, moveThrough: $0) })
         if let rng = rng { rng.shuffleInPlace(&results) }
         return results
     },

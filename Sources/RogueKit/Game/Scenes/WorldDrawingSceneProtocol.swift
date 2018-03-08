@@ -75,7 +75,7 @@ extension WorldDrawingSceneProtocol {
       worldModel.nameS[inspectedEntity] != nil
     {
       let string = StringUtils.describe(
-        entity: inspectedEntity, in: worldModel, showName: true, showWeaponDescription: true)
+        entity: inspectedEntity, in: worldModel, showName: true, showWeaponDescription: false)
 
       let menuOrigin: BLPoint
       if point.x < worldModel.activeMap.size.w / 2 {

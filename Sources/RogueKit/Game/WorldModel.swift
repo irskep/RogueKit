@@ -324,6 +324,7 @@ class WorldModel: Codable {
       }
 
       self.turn += 1
+      print("turn", turn)
     }
   }
 
@@ -430,6 +431,7 @@ extension WorldModel {
 
   func predictFight(attacker: Entity, defender: Entity, forUI: Bool = false) -> CombatStats? {
     guard
+      self.canWeaponFire(wieldedBy: attacker),
       let weaponC1: WeaponDefinition = weapon(wieldedBy: attacker),
       let equipmentC1 = equipmentS[attacker],
       let actorC1 = actorS[attacker],
@@ -467,7 +469,8 @@ extension WorldModel {
 
   @discardableResult
   func fight(attacker: Entity, defender: Entity) -> Bool {
-    guard predictFight(attacker: attacker, defender: defender) != nil,
+    guard let stats = predictFight(attacker: attacker, defender: defender),
+      stats.hitChance > 0,
       let attackerWeapon: WeaponDefinition = self.weapon(wieldedBy: attacker),
       self.canWeaponFire(wieldedBy: attacker)
       else {

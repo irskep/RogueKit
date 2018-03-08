@@ -78,9 +78,12 @@ class StringUtils {
       if showWeaponDescription {
         strings.append(S.dim("(\(weaponC.weaponDefinition.description))"))
         strings.append(weaponC.weaponDefinition.statsDescription)
-        if weaponC.turnsUntilCanFire(in: worldModel) > 0 {
-          strings.append(S.loud("Cooldown remaining: \(weaponC.turnsUntilCanFire(in: worldModel))"))
-        }
+      }
+      if weaponC.weaponDefinition.isRanged {
+        strings.append(S.dim("Max range: ") + "\(weaponC.weaponDefinition.rangeMax)")
+      }
+      if weaponC.turnsUntilCanFire(in: worldModel) > 0 {
+        strings.append(S.loud("Cooldown remaining: \(weaponC.turnsUntilCanFire(in: worldModel))"))
       }
     }
     if let armor = worldModel.armorS[entity]?.armorDefinition {

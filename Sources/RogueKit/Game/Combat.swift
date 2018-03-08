@@ -41,7 +41,6 @@ struct CombatStats {
 
   var baseHitChance: Double = 0
   var hitChance: Double = 0
-  var strengthDifference: Double = 0
   var fatigueDelta: Double = 0
 
   // sums to 1
@@ -54,7 +53,7 @@ struct CombatStats {
   var humanDescription: String {
     var strings: [String] = [
       """
-      Strength diff:    \(Int(strengthDifference))
+      Fatigue:          +\(Int(fatigueDelta))
       Final hit chance: [color=ui_text]\(_pct(hitChance))
       [color=ui_text_dim]Fatigue:          [color=ui_text]\(Int(fatigueDelta))
       """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -125,7 +124,6 @@ extension CombatStats {
         stats.hitChance = 0  // too far!
       }
     } else {
-      stats.strengthDifference = min(0,  stats.strengthDifference)
       if distance > Double(attacker.weapon.rangeMax) &&
         attacker.weapon.rangeMax > 0
       {
@@ -158,7 +156,8 @@ extension CombatStats {
   }
 
   static func fight(rng: RKRNGProtocol, stats: CombatStats) -> [CombatOutcome] {
-    if stats.hitChance == 0 || rng.get() <= stats.hitChance {
+    let didHit = rng.get() <= stats.hitChance
+    if stats.hitChance == 0 || !didHit {
       return [.miss(StatBucket(
         hp: 0, fatigue: stats.fatigueDelta, awareness: 0, reflex: 0, strength: 0))]
     } else {

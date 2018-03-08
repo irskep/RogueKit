@@ -16,7 +16,7 @@ h5-,"""","""","""","""","""","""","""",
 h5|,"""","""","""","""","""","""","""",
 medicalstart,0,"medicalstart,medical",medical,-1,-1,TRUE,,MEDICAL TESTING
 surgery,1,medical,"medical,generic","""","""","""",doctor,INVOLUNTARY SURGERY
-cages_monk,1,medical,"medical,generic","""","""","""",monkey,MONKEY COHORT
+cages_monk,0.5,medical,"medical,generic","""","""","""",monkey,MONKEY COHORT
 cages_pig,"""",medical,"medical,generic","""","""","""",pig,PIG COHORT
 cages_rabb,"""",medical,"medical,generic","""","""","""",rabbit,RABBIT COHORT
 cages_beag,"""",medical,"medical,generic","""","""","""",beagle,BEAGLE COHORT

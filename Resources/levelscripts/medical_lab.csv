@@ -5,10 +5,6 @@ growPrefabs,500
 connectAdjacentPorts,10
 removeDeadEnds,hall
 
-growPrefabs,500
-connectAdjacentPorts,10
-removeDeadEnds,hall
-
 addHallwaysToRemoteAreas,1,2
 addHallwaysToRemoteAreas,1,2
 addHallwaysToRemoteAreas,1,2

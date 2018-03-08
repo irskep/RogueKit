@@ -9,8 +9,9 @@ baton,Baton,24,white,3,-1,Physical:20,,,,none,A heavy stick with a handle,0.5,10
 knife,Utility Knife,24,white,2,-1,Physical:20,,,,none,"A short, sharp knife",0.1,100,"basic,technician",1
 rapier,Rapier,24,white,3,-1,Physical:40,,,,none,A stylish 18th-century thrusting sword,4,1100,shrine,1
 sword,Longsword,24,white,4,-1,Physical:50,,,,none,A sweet medieval-looking sword,5,2000,shrine,1
-laser_small,Small Laser Gun,26,red,1,30,,Heat:50,1,-1,laser,A forearm-sized experimental laser gun. Hard to dodge.,2,1400,"laserguard,goodarmory,laser",1
-laser_large,Big Laser Gun,26,red,3,30,,Heat:80,1,-1,laser,"A bulky, powerful experimental laser gun. Does more damage, but is easier to dodge, than its smaller counterpart.",4,4000,special,1
+laser_tiny,Tiny Laser Gun,26,red,1,30,,Heat:10,3,20,laser,A tiny little laser meant more for incentivizing than injuring. Annoying but not very deadly.,1,1100,weaklaser,1
+laser_small,Small Laser Gun,26,red,2,30,,Heat:50,1,30,laser,A forearm-sized experimental laser gun. Hard to dodge.,2,1400,"laserguard,goodarmory,laser",1
+laser_large,Big Laser Gun,26,red,3,30,,Heat:80,1,40,laser,"A bulky, powerful experimental laser gun. Does more damage, but is easier to dodge, than its smaller counterpart.",4,4000,special,1
 taser_small,Small TZR,26,teal,1,5,,Electric:50,5,10,shock,A small electroshock weapon,1,500,"beefyguard,goodarmory",1
 taser_large,Big TZR,26,teal,3,10,,Electric:80,5,10,shock,An electroshock weapon with a larger-than-usual battery,1.5,750,"basic,special",1
 shock_baton,Shock Baton,24,teal,2,10,"Physical:20,electric:20",,,,,A baton that shocks the victim on contact,0.5,1000,"armory,beefyguard,okguard",1

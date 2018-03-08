@@ -22,5 +22,8 @@ build: .build/debug/libBearLibTerminal.dylib .build/debug/Resources Sources
 build-release: .build/release/libBearLibTerminal.dylib .build/release/Resources
 	swift build -c release -Xlinker -L./Binaries
 
+csvs:
+	./librecsv.py Resources/CSVs.ods
+
 run: build
 	./.build/debug/RogueKit\ Demo

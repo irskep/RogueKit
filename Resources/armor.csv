@@ -12,7 +12,7 @@ leather_armor,Leather Armor,93,white,"This is a roguelike, what more do you want
 swat_helmet,SWAT Helmet,94,white,A sturdy helmet commonly used by militarized police forces (this item is likely OP),10,5000,"armory,beefyguard,okguard",1,head,50,0,0,0
 gas_mask,Gas Mask,94,white,A mask that covers your face and isolates you from airborne weapons. This game doesn't have any of those so it's just some protection.,4,1000,"armory,lab",1,head,20,0,0,0
 welding_Mask,Welding Mask,94,red,"A thick, heavy mask worn when working with intense heat",8,8000,workshop,1,head,30,0,0,0
-cap,Guard Cap,94,white,A black security guard’s hat,0.5,500,okguard,1,head,10,80,30,0
+cap,Guard Cap,94,white,A black security guard's hat,0.5,500,okguard,1,head,10,80,30,0
 #hands,,,,,,,,,,,,,
 work_gloves,Work Gloves,6,white,"Sturdy work gloves that protect your hands against physical, electric, and heat damage",0.25,300,"utility_closet,technician",1,hands,20,10,10,0
 rubber_gloves,Thick Rubber Gloves,6,teal,Thick rubber gloves for dangerous electrical work,0.5,600,"utility_closet,doctor",1,hands,10,50,0,0

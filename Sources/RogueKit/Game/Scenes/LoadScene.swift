@@ -73,7 +73,6 @@ class LoadScene: Scene {
         rng.shuffleInPlace(&reqdMobPoints)
         var nonReqdMobPoints = gen.points(where: { $0.poi?.kind == .mob && $0.poi?.isRequired == false })
         rng.shuffleInPlace(&nonReqdMobPoints)
-        print(reqdMobPoints.count, nonReqdMobPoints.count)
         // drop 'required' mobs first
         var mobPoints = reqdMobPoints + nonReqdMobPoints
 

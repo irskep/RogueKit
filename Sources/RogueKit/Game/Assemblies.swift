@@ -17,6 +17,7 @@ struct ZValues {
   static let player: Int = 3
   static let hud: Int = 100
   static let modal: Int = 101
+  static let animations = 102
 }
 
 

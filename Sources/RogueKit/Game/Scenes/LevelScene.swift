@@ -9,6 +9,11 @@ import Foundation
 import BearLibTerminal
 
 
+protocol Animator: class {
+  func play(animation: String, source: BLPoint, dest: BLPoint?, callback: () -> Void)
+}
+
+
 class AStarMover {
   let worldModel: WorldModel
   var points = [BLPoint]()
@@ -57,7 +62,7 @@ class AStarMover {
 }
 
 
-class LevelScene: Scene, WorldDrawingSceneProtocol {
+class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
   let worldModel: WorldModel
   let resources: ResourceCollectionProtocol
 
@@ -72,11 +77,13 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
 
   override func willEnter(with director: Director) {
     super.willEnter(with: director)
+    worldModel.animator = self
     worldModel.activeMap.palette.apply(to: BLTerminal.main)  // cheat
     isDirty = true
   }
 
   override func willExit() {
+    worldModel.animator = nil
     save()
   }
 
@@ -264,5 +271,75 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
         director?.transition(to: LoseScene(resources: resources))
       }
     }
+  }
+
+  func play(animation: String, source: BLPoint, dest: BLPoint?, callback: () -> Void)
+  {
+    print("Run animation", animation)
+    switch (animation, dest) {
+    case ("laser", .some(let dest)): self.playLineAnimation(
+      source: source, dest: dest,
+      color: "red", h: "-", v: "|", nw: "\\", ne: "/", sw: "/", se: "\\",
+      callback: callback)
+    case ("poop", .some(let dest)): self.playLineAnimation(
+      source: source, dest: dest,
+      color: "white", h: "*", v: "*", nw: "*", ne: "*", sw: "*", se: "*",
+      callback: callback)
+    case ("shock", .some(let dest)): self.playLineAnimation(
+      source: source, dest: dest,
+      color: "teal", h: "-", v: "|", nw: "\\", ne: "/", sw: "/", se: "\\",
+      callback: callback)
+    default: callback()
+    }
+  }
+
+  func playLineAnimation(
+    source: BLPoint, dest: BLPoint,
+    color: String,
+    h: String, v: String, nw: String, ne: String, sw: String, se: String,
+    callback: () -> Void)
+  {
+    let drawWorld: () -> Void = {
+      self.drawWorld(in: terminal)
+      self.drawInspectedEntityOverlay()
+    }
+    var last: BLPoint!
+    for point in source.bresenham(to: dest) {
+      if last == nil {
+        last = point
+        continue
+      }
+      let delta = point - last
+      let char: String
+      if delta.x < 0 {
+        if delta.y < 0 {
+          char = nw
+        } else if delta.y > 0 {
+          char = sw
+        } else {
+          char = h
+        }
+      } else if delta.x > 0 {
+        if delta.y < 0 {
+          char = ne
+        } else if delta.y > 0 {
+          char = se
+        } else {
+          char = h
+        }
+      } else {
+        char = v
+      }
+
+      drawWorld()
+      let oldLayer = terminal.layer
+      terminal.layer = BLInt(ZValues.animations)
+      terminal.foregroundColor = terminal.getColor(name: color)
+      terminal.print(point: point, string: char)
+      terminal.layer = oldLayer
+      terminal.refresh()
+      terminal.delay(milliseconds: 33)
+    }
+    callback()
   }
 }

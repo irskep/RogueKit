@@ -81,6 +81,45 @@ extension BLPoint: CustomDebugStringConvertible {
   public var debugDescription: String {
     return "BLPoint(\(x), \(y))"
   }
+
+  func bresenham(to point: BLPoint) -> [BLPoint] {
+    var delta = point - self
+    let xsign: BLInt = delta.x > 0 ? 1 : -1
+    let ysign: BLInt = delta.y > 0 ? 1 : -1
+
+    delta.x = abs(delta.x)
+    delta.y = abs(delta.y)
+
+    var xx: BLInt = xsign
+    var xy: BLInt = 0
+    var yx: BLInt = 0
+    var yy: BLInt = ysign
+    if delta.x <= delta.y {
+      let (deltax, deltay) = (delta.y, delta.x)
+      delta.x = deltax
+      delta.y = deltay
+      xx = 0
+      xy = ysign
+      yx = xsign
+      yy = 0
+    }
+
+    var D = 2*delta.y - delta.x
+    var y = 0
+
+    var results: [BLPoint] = []
+    for x in 0..<(BLInt(delta.x) + 1) {
+      let rx: BLInt = self.x + BLInt(x)*xx + BLInt(y)*yx
+      let ry: BLInt = self.y + BLInt(x)*xy + BLInt(y)*yy
+      results.append(BLPoint(x: BLInt(rx), y: BLInt(ry)))
+      if D > 0 {
+        y += 1
+        D -= delta.x
+      }
+      D += delta.y
+    }
+    return results
+  }
 }
 
 

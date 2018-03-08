@@ -40,6 +40,7 @@ class WorldModel: Codable {
   var activeMapId: String
   var activeMap: LevelMap { return maps[activeMapId]! }
   var messageLog = [String]()
+  weak var animator: Animator?
   var gameHasntEnded: Bool {
     guard let playerHP = actorS[player]?.currentStats.hp, playerHP > 0 else { return false }
     return true
@@ -443,6 +444,26 @@ extension WorldModel {
 
   @discardableResult
   func fight(attacker: Entity, defender: Entity) -> Bool {
+    guard predictFight(attacker: attacker, defender: defender) != nil,
+      let attackerWeapon = self.weapon(wieldedBy: attacker)
+      else {
+        return false
+    }
+    if let animator = animator,
+      let attackerPos = self.position(of: attacker),
+      let defenderPos = self.position(of: defender),
+      self.can(entity: attacker, see: defenderPos) {
+      var ret = false
+      animator.play(animation: attackerWeapon.animationId, source: attackerPos, dest: defenderPos, callback: {
+        ret = self._continueFight(attacker: attacker, defender: defender)
+      })
+      return ret
+    } else {
+      return _continueFight(attacker: attacker, defender: defender)
+    }
+  }
+
+  private func _continueFight(attacker: Entity, defender: Entity) -> Bool {
     guard
       let nameC1 = nameS[attacker],
       let nameC2 = nameS[defender],
@@ -610,8 +631,21 @@ extension WorldModel {
   }
 
   func can(entity: Entity, see point: BLPoint) -> Bool {
-    let fovCache = fovS[player]?.getFovCache(map: activeMap, positionS: positionS, sightS: sightS)
-    return fovCache?.contains(point) == true
+    if entity == player {
+      let fovCache = fovS[player]?.getFovCache(map: activeMap, positionS: positionS, sightS: sightS)
+      return fovCache?.contains(point) == true
+    } else if let source = position(of: entity), let sightC = sightS[entity] {
+      for pt in source.bresenham(to: point) {
+        if pt == source { continue }
+        if pt == point { return true }
+        guard let cell = activeMap.cells[pt] else { return false }
+        if !sightC.getCanSeeThrough(level: activeMap, cell) { return false }
+      }
+      return true
+    } else {
+      print("Entity has no sight")
+      return false
+    }
   }
 
   func can(entity: Entity, remember point: BLPoint) -> Bool {

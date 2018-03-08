@@ -291,7 +291,10 @@ class WorldModel: Codable {
     while 1 + (forceWaitS[player]?.turnsRemaining ?? 0) > 0 {
       guard gameHasntEnded else { break }
       i += 1
-      if i > 1 { log("You stumble from exhaustion (extra turn for enemies)") }
+      if i > 1 {
+        log("You stumble from exhaustion (extra turn for enemies)")
+        animator?.play(animation: "exhausted", source: playerPos, dest: nil, callback: nil)
+      }
       forceWaitS[player]?.turnsRemaining -= 1
       for c in moveAfterPlayerS.all {
         guard gameHasntEnded else { break }
@@ -452,7 +455,8 @@ extension WorldModel {
     if let animator = animator,
       let attackerPos = self.position(of: attacker),
       let defenderPos = self.position(of: defender),
-      self.can(entity: attacker, see: defenderPos) {
+      self.can(entity: attacker, see: defenderPos),
+      self.can(entity: player, see: attackerPos) || self.can(entity: player, see: defenderPos) {
       var ret = false
       animator.play(animation: attackerWeapon.animationId, source: attackerPos, dest: defenderPos, callback: {
         ret = self._continueFight(attacker: attacker, defender: defender)

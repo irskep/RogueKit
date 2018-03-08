@@ -10,7 +10,7 @@ import BearLibTerminal
 
 
 protocol Animator: class {
-  func play(animation: String, source: BLPoint, dest: BLPoint?, callback: () -> Void)
+  func play(animation: String, source: BLPoint, dest: BLPoint?, callback: (() -> Void)?)
 }
 
 
@@ -273,7 +273,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     }
   }
 
-  func play(animation: String, source: BLPoint, dest: BLPoint?, callback: () -> Void)
+  func play(animation: String, source: BLPoint, dest: BLPoint?, callback: (() -> Void)?)
   {
     print("Run animation", animation)
     switch (animation, dest) {
@@ -289,15 +289,36 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       source: source, dest: dest,
       color: "teal", h: "-", v: "|", nw: "\\", ne: "/", sw: "/", se: "\\",
       callback: callback)
-    default: callback()
+    case ("exhausted", _):
+      self.playExhaustedAnimation(source: source, callback: callback)
+    default: callback?()
     }
+  }
+
+  func playExhaustedAnimation(source: BLPoint, callback: (() -> Void)?) {
+    let drawWorld: () -> Void = {
+      self.drawWorld(in: terminal)
+      self.drawInspectedEntityOverlay()
+    }
+    for i: BLInt in [1, 2, 3, 4] {
+      drawWorld()
+
+      let oldLayer = terminal.layer
+      terminal.layer = BLInt(ZValues.animations)
+      terminal.foregroundColor = terminal.getColor(name: "teal")
+      terminal.print(point: source + BLPoint(x: -1 * i, y: -1 * i), string: "z")
+      terminal.layer = oldLayer
+      terminal.refresh()
+      terminal.delay(milliseconds: 33)
+    }
+    callback?()
   }
 
   func playLineAnimation(
     source: BLPoint, dest: BLPoint,
     color: String,
     h: String, v: String, nw: String, ne: String, sw: String, se: String,
-    callback: () -> Void)
+    callback: (() -> Void)?)
   {
     let drawWorld: () -> Void = {
       self.drawWorld(in: terminal)
@@ -340,6 +361,6 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       terminal.refresh()
       terminal.delay(milliseconds: 33)
     }
-    callback()
+    callback?()
   }
 }

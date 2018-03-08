@@ -2,7 +2,7 @@ prefabs_and_hallways,80,50
 
 placePrefab,hivestart
 growPrefabs,500
-connectAdjacentPorts,10
+connectAdjacentPorts,20
 removeDeadEnds,hall
 
 #addHallwaysToRemoteAreas,1,2

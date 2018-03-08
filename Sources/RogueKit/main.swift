@@ -24,6 +24,7 @@ struct Config: Codable {
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS
   var keyDebugOmniscience: Int32 = BLConstant._1
+  var keyDebugInvincible: Int32 = BLConstant._2
 
   var keyMenu: Int32 = BLConstant.ESCAPE
   var keyExit: Int32 = BLConstant.Q

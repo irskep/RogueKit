@@ -216,7 +216,7 @@ class WorldModel: Codable {
 
     self.activeMapId = activeMapId
 
-    EnemyAssembly().assemble(
+    ActorAssembly().assemble(
       entity: player,
       worldModel: self,
       poiString: "player",
@@ -471,7 +471,13 @@ extension WorldModel {
   }
 
   func maybeKill(_ entity: Entity) {
-    if let actorC = actorS[entity], actorC.currentStats.hp <= 0 { self.kill(entity) }
+    if let actorC = actorS[entity], actorC.currentStats.hp <= 0 {
+      if entity == player && debugFlags["invincible"] == 1 {
+        actorC.currentStats.hp = actorC.definition.stats.hp  // I LIVE, I DIE, I LIVE AGAIN!
+      } else {
+        self.kill(entity)
+      }
+    }
   }
 
   func kill(_ entity: Entity) {
@@ -565,6 +571,18 @@ extension WorldModel {
     if let actorC = actorS[entity] {
       actorC.didMove(in: self)
     }
+  }
+
+  func may(entity: Entity, moveThrough point: BLPoint) -> Bool {
+    // return false if cell contains an entity with the same faction
+    for posC in positionS.all(in: activeMapId, at: point) {
+      guard let e = posC.entity else { continue }
+      guard let f = factionS[entity]?.faction else { continue }
+      if factionS[e]?.faction == f {
+        return false
+      }
+    }
+    return activeMap.getIsPassable(entity: entity, point: point) || activeMap.getIsPathable(point: point)
   }
 
   func may(entity: Entity, moveTo point: BLPoint) -> Bool {

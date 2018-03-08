@@ -28,6 +28,7 @@ struct Feature: Codable {
   let color: String
   let canSeeThrough: Bool
   let walkable: Bool
+  let pathable: Bool
 }
 
 struct Interaction: Codable {
@@ -147,7 +148,8 @@ class LevelMap: Codable {
         char: row["Character"],
         color: row["Color"],
         canSeeThrough: row["See thru?"],
-        walkable: row["Walkable?"])
+        walkable: row["Walkable?"],
+        pathable: row["pathable"])
       return (id, feature)
     }
 
@@ -198,6 +200,10 @@ class LevelMap: Codable {
   func getIsPassable(entity: Entity, point: BLPoint) -> Bool {
     return self.terrain(at: point)?.walkable == true &&
       (self.feature(at: point) == nil || self.feature(at: point)?.walkable == true)
+  }
+
+  func getIsPathable(point: BLPoint) -> Bool {
+    return self.feature(at: point)?.pathable == true
   }
 
   func terrain(at point: BLPoint) -> Terrain? {

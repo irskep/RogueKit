@@ -51,6 +51,9 @@ extension WorldDrawingSceneProtocol {
         coveringCellAt: worldModel.playerPos) {
       s += "\n\n" + "[color=ui_text_dim]Current room:\n[color=ui_text]" + desc
     }
+    if worldModel.debugFlags["invincible"] == 1 {
+      s += "\n\nINVINCIBLE"
+    }
 
     let stringSize = terminal.measure(
       size: BLSize(w: MENU_W - 1, h: 1000),

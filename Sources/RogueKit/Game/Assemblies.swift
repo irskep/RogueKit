@@ -30,7 +30,7 @@ protocol EntityAssemblyProtocol {
 }
 
 
-class EnemyAssembly: EntityAssemblyProtocol {
+class ActorAssembly: EntityAssemblyProtocol {
   func assemble(
     entity: Entity,
     worldModel: WorldModel,
@@ -79,11 +79,17 @@ class EnemyAssembly: EntityAssemblyProtocol {
     let equipmentC = worldModel.equipmentS.add(
       component: EquipmentC(entity: entity))
 
-    let allowedStartingEquipment = worldModel.csvDB.armors(matching: actorDefinition.id)
-
     // Add starting armor, if any is allowed
     for slot in EquipmentC.Slot.all {
-      let options = allowedStartingEquipment.filter({ $0.slot == slot.rawValue})
+      let chooser: WeightedChoice
+      switch slot {
+      case .body: chooser = actorDefinition.armorBody
+      case .head: chooser = actorDefinition.armorHead
+      case .hands: chooser = actorDefinition.armorHands
+      }
+      guard !chooser.choices.isEmpty else { continue }
+      let tagChoice = chooser.choose(rng: worldModel.mapRNG)
+      let options = worldModel.csvDB.armors(matching: tagChoice).filter({ $0.slot == slot.rawValue })
       guard !options.isEmpty else { continue }
       let option = WeightedChoice.choose(rng: worldModel.mapRNG, items: options).id
       let e = worldModel.addEntity()
@@ -99,15 +105,20 @@ class EnemyAssembly: EntityAssemblyProtocol {
       weaponEntity: nil,
       defaultWeaponDefinition: worldModel.csvDB.weapons[actorDefinition.defaultWeapon]!))
 
-    if !worldModel.csvDB.weapons(matching: actorDefinition.id).isEmpty {
+    // rest of this assembly is choosing weapon. early exit w/ guard; do not add code after.
+    guard !actorDefinition.weapon.choices.isEmpty else { return }
+    let weaponTagChoice = actorDefinition.weapon.choose(rng: worldModel.mapRNG)
+    let allowedWeapons = worldModel.csvDB.weapons(matching: weaponTagChoice)
+    if !allowedWeapons.isEmpty {
       let weaponE = worldModel.addEntity()
       wieldingC.weaponEntity = weaponE
       inventoryC.add(entity: weaponE)
+      let weapon = WeightedChoice.choose(rng: worldModel.mapRNG, items: allowedWeapons)
 
       WeaponAssembly().assemble(
         entity: weaponE,
         worldModel: worldModel,
-        poiString: actorDefinition.id,  // actor defn ID doubles as weapon tag
+        poiString: "#" + weapon.id,
         point: nil,
         levelId: levelId)
     }
@@ -220,7 +231,7 @@ class ItemAssembly: EntityAssemblyProtocol {
 
 let ASSEMBLIES: [String: EntityAssemblyProtocol] = {
   return [
-    "enemy": EnemyAssembly(),
+    "enemy": ActorAssembly(),
     "weapon": WeaponAssembly(),
     "armor": ArmorAssembly(),
     "item": ItemAssembly(),

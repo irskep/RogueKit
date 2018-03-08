@@ -431,9 +431,13 @@ class PurePrefabGenerator {
           self.cells[point] = instance.generatorCell(at: point)
         } else {
           // Merge cells from two overlapping prefabs
+          // TODO: add this back, but blacklist prefabs with no available ports
           if newCell.flags.contains(.portUsed) {
             self.cells[point].flags.insert(.portUsed)
-          } else if oldCell.flags.contains(.portUnused) && newCell.flags.contains(.portUnused) {
+          } else if oldCell.flags.contains(.portUnused) &&
+            newCell.flags.contains(.portUnused) &&
+            instance.availablePorts > 0 && false
+          {
             self.cells[point].basicType = .floor
             self.cells[point].flags.insert(.portUsed)
             self.cells[point].flags.insert(.createdToAddCycle)

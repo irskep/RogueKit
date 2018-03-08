@@ -1,5 +1,5 @@
-ID,Name,Character,Color,See thru?,Walkable?
-1,door_open,7,brown,true,true
-2,door_closed,43,brown,false,false
-3,entrance,40,green,TRUE,TRUE
-4,exit,41,green,TRUE,TRUE
+ID,Name,Character,Color,See thru?,Walkable?,pathable
+1,door_open,7,brown,true,true,TRUE
+2,door_closed,43,brown,false,false,TRUE
+3,entrance,40,green,TRUE,TRUE,FALSE
+4,exit,41,green,TRUE,TRUE,FALSE

@@ -1,7 +1,7 @@
 id,weight,tags,neighbor_tags,max_actors,max_ports,has_doors,poi_tags,description
 cell1,10,"start,cell",cross_hall,1,1,TRUE,insane_test_subject,"A dark, claustrophobic cell meant for holding unwilling test subjects"
 xhall,0.5,"start,cross_hall,hall",*,"""",-1,FALSE,"start,early,mid,late",
-room,1,"generic,startingroom",*,"""",-1,TRUE,"start,early,mid,late",
+room,1,"generic,startingroom",*,"""",-1,TRUE,guard,
 room5,"""","""","""","""","""","""","""",
 oval,"""","""",*,"""","""","""","""",
 oval2,"""","""",*,"""","""","""","""",

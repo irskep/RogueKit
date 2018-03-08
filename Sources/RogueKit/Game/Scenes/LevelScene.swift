@@ -36,7 +36,7 @@ class AStarMover {
         return point
           .getNeighbors(bounds: BLRect(size: worldModel.size), diagonals: false)
           .filter({ worldModel.can(entity: worldModel.player, remember: $0) })
-          .filter({ worldModel.may(entity: worldModel.player, moveTo: $0) })
+          .filter({ worldModel.may(entity: worldModel.player, moveThrough: $0) })
       },
       heuristicFn: {
         (point: BLPoint) -> Float in
@@ -141,15 +141,8 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
       switch terminal.read() {
       case config.keyMenu:
-        if let e = inspectedEntity,
-          let ep = worldModel.position(of: e),
-          worldModel.can(entity: worldModel.player, see: ep)
-        {
-          // actually do nothing, it's fine
-        } else {
-          inspectedEntity = nil
-          isDirty = true
-        }
+        inspectedEntity = nil
+        isDirty = true
       case config.keyExit:
         self.save()
         director?.transition(to: TitleScene(resources: resources))
@@ -210,6 +203,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
           worldModel.debugFlags["omniscient"] = worldModel.debugFlags["omniscient"] == 1 ? nil : 1
         }
         isDirty = true
+      case config.keyDebugInvincible:
+        if terminal.check(BLConstant.SHIFT) {
+          worldModel.debugFlags["invincible"] = worldModel.debugFlags["invincible"] == 1 ? nil : 1
+        }
+        isDirty = true
 
       case BLConstant.MOUSE_MOVE:
         let newPoint = BLPoint(
@@ -234,7 +232,15 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
       }
     }
     if didMove {
-      inspectedEntity = nil
+      if let e = inspectedEntity,
+        let ep = worldModel.position(of: e),
+        worldModel.can(entity: worldModel.player, see: ep)
+      {
+        // actually do nothing, it's fine
+      } else {
+        inspectedEntity = nil
+        isDirty = true
+      }
     }
     if let nextLevelId = worldModel.waitingToTransitionToLevelId {
       didMove = true

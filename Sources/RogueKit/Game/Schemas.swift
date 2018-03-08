@@ -116,7 +116,7 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
   let strengthRequired: Int
 
 //  let meleeDistance: Int
-  let usesRemaining: Int // TODO
+  let cooldown: Int
   let meleeDamagePhysical: Int // TODO
   let meleeDamageElectric: Int // TODO
   let meleeDamageHeat: Int // TODO
@@ -138,7 +138,7 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
       weight: 0,
       char: CP437.BLOCK, color: "red", liters: 0, grams: 0, strengthRequired: 0,
 //      meleeDistance: 0,
-      usesRemaining: 0, meleeDamagePhysical: 0,
+      cooldown: 0, meleeDamagePhysical: 0,
       meleeDamageElectric: 0, meleeDamageHeat: 0, rangeDamagePhysical: 0,
       rangeDamageElectric: 0, rangeDamageHeat: 0, rangeFalloff: 0, rangeMax: 0)
   }()
@@ -151,8 +151,8 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
       "Requires \(strengthRequired) str",
       ""
     ]
-    if usesRemaining > -1 {
-      strings.append("\(usesRemaining) uses remaining")
+    if cooldown > 0 {
+      strings.append("\(cooldown)-turn cooldown")
       strings.append("")
     }
     if isRanged {

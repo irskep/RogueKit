@@ -145,7 +145,7 @@ class CSVDB {
           grams: row["grams"],
           strengthRequired: row["strength_required"],
 //          meleeDistance: row["melee_dist"],
-          usesRemaining: row["uses_remaining"],
+          cooldown: row["cooldown"],
           meleeDamagePhysical: meleeDamage["physical"] ?? 0,
           meleeDamageElectric: meleeDamage["electric"] ?? 0,
           meleeDamageHeat: meleeDamage["heat"] ?? 0,

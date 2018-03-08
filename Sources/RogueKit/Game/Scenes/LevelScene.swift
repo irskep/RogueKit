@@ -111,9 +111,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     let inspectablesInRange = worldModel.playerFOVCache
       .flatMap({
         (point: BLPoint) -> (BLPoint, Entity)? in
-        // only do mobs for this, not items
-        guard let e = self.inspectedEntity(at: point) else { return nil }
-        guard worldModel.mob(at: point) != nil else { return nil }
+        guard let e = self.inspectedEntity(at: point), e != self.worldModel.player else { return nil }
         return (point, e)
       })
       .sorted(by: { $0.0.y == $1.0.y ? $0.0.x < $1.0.x : $0.0.y < $1.0.y })
@@ -194,8 +192,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
         self.toggleInspectedEntity()
         isDirty = true
       case config.keyRangedFire:
-        guard let e = inspectedEntity else { break }
-        worldModel.fight(attacker: worldModel.player, defender: e)
+        self.rangedFire()
         didMove = true
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {
@@ -270,6 +267,21 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       } else {
         director?.transition(to: LoseScene(resources: resources))
       }
+    }
+  }
+
+  func rangedFire() {
+    guard let e = inspectedEntity else { return }
+    if worldModel.moveAfterPlayerS[e] != nil {
+      if worldModel.canWeaponFire(wieldedBy: worldModel.player) {
+        worldModel.fight(attacker: worldModel.player, defender: e)
+      } else {
+        worldModel.log("Your weapon is cooling down. Press space to wait.")
+      }
+    } else if let p = worldModel.position(of: e) {
+      mover.update(cursorPoint: p)
+      worldModel.movePlayer(by: mover.points.last! - worldModel.positionS[worldModel.player]!.point)
+      mover.update(cursorPoint: p)
     }
   }
 

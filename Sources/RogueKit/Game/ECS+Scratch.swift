@@ -147,6 +147,7 @@ class CollectibleS: ECSSystem<CollectibleC>, Codable {
 class WeaponC: ECSComponent, Codable {
   var entity: Entity?
   var weaponDefinition: WeaponDefinition
+  var turnLastUsed = 0
 
   init(entity: Entity?) {
     self.entity = entity
@@ -156,6 +157,21 @@ class WeaponC: ECSComponent, Codable {
   convenience init(entity: Entity?, weaponDefinition: WeaponDefinition) {
     self.init(entity: entity)
     self.weaponDefinition = weaponDefinition
+  }
+
+  func turnsUntilCanFire(in worldModel: WorldModel) -> Int {
+    if worldModel.turn - turnLastUsed >= weaponDefinition.cooldown { return 0 }
+    return weaponDefinition.cooldown - (worldModel.turn - turnLastUsed)
+  }
+
+  func canFire(in worldModel: WorldModel) -> Bool {
+    return turnsUntilCanFire(in: worldModel) <= 0
+  }
+
+  func fire(in worldModel: WorldModel) -> Bool {
+    guard canFire(in: worldModel) else { return false }
+    turnLastUsed = worldModel.turn
+    return true
   }
 }
 class WeaponS: ECSSystem<WeaponC>, Codable {

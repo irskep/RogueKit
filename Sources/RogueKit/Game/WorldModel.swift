@@ -35,6 +35,7 @@ class WorldModel: Codable {
   var resources: ResourceCollectionProtocol?
   var csvDB: CSVDB { return resources!.csvDB }
 
+  var turn: Int = 0
   var mapDefinitions = [String: MapDefinition]()
   var maps: [String: LevelMap]
   var activeMapId: String
@@ -85,6 +86,7 @@ class WorldModel: Codable {
     case mapDefinitions
     case player
 
+    case turn
     case activeMapId
     case mapMemory
     case nextEntityId
@@ -131,6 +133,7 @@ class WorldModel: Codable {
 
     player = try values.decode(Entity.self, forKey: .player)
     nextEntityId = try values.decode(Entity.self, forKey: .nextEntityId)
+    turn = try values.decode(Entity.self, forKey: .turn)
     waitingToTransitionToLevelId = try? values.decode(String.self, forKey: .waitingToTransitionToLevelId)
     debugFlags = try values.decode([String: Int].self, forKey: .debugFlags)
     messageLog = try values.decode([String].self, forKey: .messageLog)
@@ -164,6 +167,7 @@ class WorldModel: Codable {
     try container.encode(waitingToTransitionToLevelId, forKey: .waitingToTransitionToLevelId)
     try container.encode(debugFlags, forKey: .debugFlags)
     try container.encode(messageLog, forKey: .messageLog)
+    try container.encode(turn, forKey: .turn)
 
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)
@@ -318,6 +322,8 @@ class WorldModel: Codable {
           }
         }
       }
+
+      self.turn += 1
     }
   }
 
@@ -383,6 +389,20 @@ extension WorldModel {
     return self.can(entity: player, see: positionS[e]!.point)  // just use FOV cache for symmetry
   }
 
+  func canWeaponFire(wieldedBy entity: Entity) -> Bool {
+    guard let wieldC = wieldingS[entity] else { return false }
+    if let we = wieldC.weaponEntity {
+      return weaponS[we]?.canFire(in: self) ?? false
+    } else {
+      return true  // default weapon can always fire
+    }
+  }
+
+  func weapon(wieldedBy entity: Entity) -> WeaponC? {
+    guard let we = wieldingS[entity]?.weaponEntity else { return nil }
+    return weaponS[we]
+  }
+
   func weapon(wieldedBy entity: Entity) -> WeaponDefinition? {
     return wieldingS[entity]?.weaponDefinition(in: self)
   }
@@ -410,11 +430,11 @@ extension WorldModel {
 
   func predictFight(attacker: Entity, defender: Entity, forUI: Bool = false) -> CombatStats? {
     guard
-      let weaponC1 = weapon(wieldedBy: attacker),
+      let weaponC1: WeaponDefinition = weapon(wieldedBy: attacker),
       let equipmentC1 = equipmentS[attacker],
       let actorC1 = actorS[attacker],
       let posC1 = positionS[attacker],
-      let weaponC2 = weapon(wieldedBy: defender),
+      let weaponC2: WeaponDefinition = weapon(wieldedBy: defender),
       let equipmentC2 = equipmentS[defender],
       let actorC2 = actorS[defender],
       let posC2 = positionS[defender] else {
@@ -448,7 +468,8 @@ extension WorldModel {
   @discardableResult
   func fight(attacker: Entity, defender: Entity) -> Bool {
     guard predictFight(attacker: attacker, defender: defender) != nil,
-      let attackerWeapon = self.weapon(wieldedBy: attacker)
+      let attackerWeapon: WeaponDefinition = self.weapon(wieldedBy: attacker),
+      self.canWeaponFire(wieldedBy: attacker)
       else {
         return false
     }
@@ -478,6 +499,9 @@ extension WorldModel {
       let stats = predictFight(attacker: attacker, defender: defender)
       else {
         return false
+    }
+    if let weaponC: WeaponC = self.weapon(wieldedBy: attacker) {
+      guard weaponC.fire(in: self) else { return false }
     }
     for outcome in CombatStats.fight(rng: mapRNG, stats: stats) {
       switch outcome {
@@ -521,7 +545,11 @@ extension WorldModel {
     positionS.remove(entity: item)
     inventoryS[host]?.add(entity: item)
     if let hostNameC = nameS[host], let itemNameC = nameS[item] {
-      self.log("\(hostNameC.name) picks up \(itemNameC.name)")
+      if host == player {
+        self.log("You pick up \(itemNameC.name) [color=ui_text_dim](Equip it with 'e')[/color]")
+      } else {
+        self.log("\(hostNameC.name) picks up \(itemNameC.name)")
+      }
     }
   }
 

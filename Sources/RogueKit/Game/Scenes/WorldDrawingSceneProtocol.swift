@@ -69,7 +69,7 @@ extension WorldDrawingSceneProtocol {
 
     terminal.foregroundColor = terminal.getColor(name: "ui_text")
     let y = worldModel.activeMap.cells.size.h
-    let h = terminal.height - 2 - y
+    let h = terminal.height - 3 - y
     let w = terminal.width - MENU_W
     var messages = worldModel.messageLog
     if messages.count > h {
@@ -85,7 +85,7 @@ extension WorldDrawingSceneProtocol {
       worldModel.nameS[inspectedEntity] != nil
     {
       let string = StringUtils.describe(
-        entity: inspectedEntity, in: worldModel, showName: true, showWeaponDescription: false)
+        entity: inspectedEntity, in: worldModel, showName: true, showWeaponDescription: true)
 
       let menuOrigin: BLPoint
       if point.x < worldModel.activeMap.size.w / 2 {

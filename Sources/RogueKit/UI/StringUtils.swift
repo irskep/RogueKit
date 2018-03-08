@@ -47,6 +47,10 @@ class S {
   static func dim(_ s: String) -> String {
     return "[color=ui_text_dim]" + s + "[/color]"
   }
+
+  static func loud(_ s: String) -> String {
+    return "[color=ui_accent]" + s + "[/color]"
+  }
 }
 
 
@@ -69,20 +73,23 @@ class StringUtils {
     if let faction = worldModel.factionS[entity]?.faction {
       strings.append(contentsOf: ["", "\(S.dim("Faction:")) \(faction)"])
     }
-    if let weaponDef: WeaponDefinition = worldModel.weapon(wieldedBy: entity) {
-      strings.append(contentsOf: ["", "\(S.dim("Wielding:")) \(weaponDef.name)"])
+    if let weaponC: WeaponC = worldModel.weapon(wieldedBy: entity) {
+      strings.append(contentsOf: ["", "\(S.dim("Wielding:")) \(weaponC.weaponDefinition.name)"])
       if showWeaponDescription {
-        strings.append(S.dim("(\(weaponDef.description))"))
-        strings.append(weaponDef.statsDescription)
+        strings.append(S.dim("(\(weaponC.weaponDefinition.description))"))
+        strings.append(weaponC.weaponDefinition.statsDescription)
+        if weaponC.turnsUntilCanFire(in: worldModel) > 0 {
+          strings.append(S.loud("Cooldown remaining: \(weaponC.turnsUntilCanFire(in: worldModel))"))
+        }
       }
     }
     if let armor = worldModel.armorS[entity]?.armorDefinition {
       strings.append("")
       strings.append(armor.statsDescription)
     }
-    if let weapon = worldModel.weaponS[entity]?.weaponDefinition {
+    if let weaponC = worldModel.weaponS[entity]  {
       strings.append("")
-      strings.append(weapon.statsDescription)
+      strings.append(weaponC.weaponDefinition.statsDescription)
     }
     if let equipmentC = worldModel.equipmentS[entity] {
       strings.append("")

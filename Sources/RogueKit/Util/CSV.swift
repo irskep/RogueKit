@@ -42,6 +42,14 @@ class StringBox {
     return Double(s) ?? 0
   }
 
+  func stringList(_ index: String) -> [String] {
+    return self.string(index).split(separator: ",").map { $0.lowercased() }
+  }
+
+  func maybeString(_ index: String) -> String? {
+    if self.string(index).isEmpty { return nil } else { return self.string(index) }
+  }
+
   func string(_ index: String) -> String {
     guard let valueIndex = labelToIndex[index] else { fatalError("Index out of range") }
     if valueIndex >= values.count {

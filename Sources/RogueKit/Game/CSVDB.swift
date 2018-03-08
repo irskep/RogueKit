@@ -12,6 +12,7 @@ import BearLibTerminal
 class CSVDB {
   weak var resources: ResourceCollectionProtocol!
 
+  lazy var mapDefinitions: [MapDefinition] = { _createMapDefinitionDB() }()
   lazy var prefabs: [String: PrefabMetadata] = { _createPrefabDB() }()
   lazy var actors: [String: ActorDefinition] = { _createActorsDB() }()
   lazy var weapons: [String: WeaponDefinition] = { _createWeaponsDB() }()
@@ -27,6 +28,26 @@ class CSVDB {
   func actors(matching t: [String]) -> [ActorDefinition] { return actors.values.filter({ $0.matches(t) })}
   func weapons(matching t: [String]) -> [WeaponDefinition] { return weapons.values.filter({ $0.matches(t) })}
   func armors(matching t: [String]) -> [ArmorDefinition] { return armors.values.filter({ $0.matches(t) })}
+
+  private func _createMapDefinitionDB() -> [MapDefinition] {
+    do {
+      return try resources.csv(name: "maps", mapper: {
+        (row: StringBox) -> (MapDefinition) in
+        var exits = [String: String]()
+        if let v = row.maybeString("previous") { exits["previous"] = v }
+        if let v = row.maybeString("next") { exits["next"] = v }
+        return MapDefinition(
+          id: row["id"],
+          generatorId: row["script"],
+          tagWhitelist: row.stringList("tag_whitelist"),
+          numItems: row["num_items"],
+          numMobs: row["num_mobs"],
+          exits: exits)
+      })
+    } catch {
+      fatalError("Could not load stats_etc.csv")
+    }
+  }
 
   private func _createPrefabDB() -> [String: PrefabMetadata] {
     var last: PrefabMetadata!

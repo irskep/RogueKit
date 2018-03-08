@@ -225,9 +225,14 @@ struct GeneratorCell {
   init(layer0Cell: REXPaintCell, layer1Cell: REXPaintCell, prefabId: String, metadata: PrefabMetadata) {
     self.prefabId = prefabId
 
+    self.flags = Set()
+
     switch layer0Cell.code {
     case CP437.BLOCK: self.basicType = .wall
     case CP437.DOT: self.basicType = .floor
+    case CP437.PLUS:
+      self.basicType = .floor
+      self.flags.insert(.staticDoor)
     case CP437.NULL, CP437.SPACE: self.basicType = .empty
     default: fatalError("Unknown cell type: \(layer0Cell.code)")
     }
@@ -237,9 +242,8 @@ struct GeneratorCell {
     case CP437.ARROW_W: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: -1, y: 0)
     case CP437.ARROW_S: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: 0, y: 1)
     case CP437.ARROW_N: self.flags = Set([.portUnused]); self.portDirection = BLPoint(x: 0, y: -1)
-    case CP437.DOT: self.flags = Set([.portUnused]); self.portDirection = BLPoint.zero
+    case CP437.DOT: self.flags.insert(.portUnused); self.portDirection = BLPoint.zero
     default:
-      self.flags = Set()
       self.portDirection = nil
     }
 
@@ -264,6 +268,7 @@ struct GeneratorCell {
     case debugPoint
     case lateStageHallway
     case invisibleDoor
+    case staticDoor
 
     // prefab origins
     case hasDoors

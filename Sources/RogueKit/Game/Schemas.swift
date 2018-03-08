@@ -240,6 +240,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
   var maxPorts: Int
   var hasDoors: Bool
   var neighborTags: [String]
+  var description: String
   var poiDefinitions: [POIDefinition]
 
   struct POIDefinition: Codable {
@@ -277,6 +278,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       maxPorts: -1,
       hasDoors: false,
       neighborTags: ["*"],
+      description: "",
       poiDefinitions: [])
   }()
 
@@ -287,6 +289,11 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         kind: .mob,
         tags: tags,
         isRequired: false),
+      POIDefinition(
+        code: BLInt(CP437.char(for: "M")),
+        kind: .mob,
+        tags: tags,
+        isRequired: true),
       POIDefinition(
         code: BLInt(CP437.char(for: "i")),
         kind: .item,

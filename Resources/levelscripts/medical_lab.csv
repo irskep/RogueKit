@@ -1,6 +1,6 @@
 prefabs_and_hallways,80,50
 
-placePrefab,startingroom
+placePrefab,medicalstart
 growPrefabs,500
 connectAdjacentPorts,10
 removeDeadEnds,hall

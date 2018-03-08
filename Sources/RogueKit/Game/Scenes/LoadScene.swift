@@ -68,8 +68,14 @@ class LoadScene: Scene {
           $0.poi?.kind == .item || $0.poi?.kind == .weapon || $0.poi?.kind == .armor
         })
         rng.shuffleInPlace(&itemPoints)
-        var mobPoints = gen.points(where: { $0.poi?.kind == .mob })
-        rng.shuffleInPlace(&mobPoints)
+
+        var reqdMobPoints = gen.points(where: { $0.poi?.kind == .mob && $0.poi?.isRequired == true })
+        rng.shuffleInPlace(&reqdMobPoints)
+        var nonReqdMobPoints = gen.points(where: { $0.poi?.kind == .mob && $0.poi?.isRequired == false })
+        rng.shuffleInPlace(&nonReqdMobPoints)
+        print(reqdMobPoints.count, nonReqdMobPoints.count)
+        // drop 'required' mobs first
+        var mobPoints = reqdMobPoints + nonReqdMobPoints
 
         var entrancePoints = gen.points(where: { $0.poi?.kind == .entrance && $0.poi?.isRequired == true })
         if entrancePoints.isEmpty {

@@ -9,9 +9,6 @@ import Foundation
 import BearLibTerminal
 
 
-private let _Q = "\""
-
-
 class CSVDB {
   weak var resources: ResourceCollectionProtocol!
 
@@ -38,22 +35,23 @@ class CSVDB {
         (row: StringBox) -> (String, PrefabMetadata) in
 
         let id: String = row["id"]
-        let weight: Double = row.string("weight") == _Q ? last.weight : row["weight"]
-        let maxPorts: Int = row.string("max_ports") == _Q ? last.maxPorts : row["max_ports"]
-        let hasDoors: Bool = row.string("has_doors") == _Q ? last.hasDoors : row["has_doors"]
-        let tags = row.string("tags") == _Q
+        let weight: Double = row.isQuotes("weight") ? last.weight : row["weight"]
+        let maxPorts: Int = row.isQuotes("max_ports") ? last.maxPorts : row["max_ports"]
+        let hasDoors: Bool = row.isQuotes("has_doors") ? last.hasDoors : row["has_doors"]
+        let tags = row.isQuotes("tags")
           ? last.tags
           : row.string("tags").lowercased().split(separator: ",").map { String($0) }
-        let neighborTags = row.string("neighbor_tags") == _Q
+        let neighborTags = row.isQuotes("neighbor_tags")
           ? last.neighborTags
           : row.string("neighbor_tags").lowercased().split(separator: ",").map { String($0) }
-        let poiTags = row.string("poi_tags") == _Q
+        let poiTags = row.isQuotes("poi_tags")
           ? last.poiDefinitions.first!.tags  // unsafe but ok for 7drl
           : row.string("poi_tags").lowercased().split(separator: ",").map { String($0) }
 
         let m = PrefabMetadata(
           id: id, tags: tags, weight: weight, maxPorts: maxPorts,
           hasDoors: hasDoors, neighborTags: neighborTags,
+          description: row["description"],
           poiDefinitions: PrefabMetadata.poiDefs(poiTags))
         last = m
         return (id, m)

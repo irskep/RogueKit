@@ -1,9 +1,23 @@
-id,weight,tags,neighbor_tags,max_actors,max_ports,has_doors,poi_tags
-cell1,10,"start,cell",cross_hall,1,1,TRUE,insane_test_subject
-xhall,0.5,"start,cross_hall,hall",*,"""",-1,FALSE,"start,early,mid,late"
-room,1,"generic,startingroom",*,"""",-1,TRUE,"start,early,mid,late"
-room5,"""","""","""","""","""","""",""""
-oval,"""","""",*,"""","""","""",""""
-jct_+,1,"generic,hall",*,"""",-1,FALSE,technician
-jct_-,"""","""","""","""","""","""",""""
-jct_|,"""","""","""","""","""","""",""""
+id,weight,tags,neighbor_tags,max_actors,max_ports,has_doors,poi_tags,description
+cell1,10,"start,cell",cross_hall,1,1,TRUE,insane_test_subject,"A dark, claustrophobic cell meant for holding unwilling test subjects"
+xhall,0.5,"start,cross_hall,hall",*,"""",-1,FALSE,"start,early,mid,late",
+room,1,"generic,startingroom",*,"""",-1,TRUE,"start,early,mid,late",
+room5,"""","""","""","""","""","""","""",
+oval,"""","""",*,"""","""","""","""",
+oval2,"""","""",*,"""","""","""","""",
+jct_+,0.5,"generic,hall",*,"""",-1,FALSE,technician,
+jct_-,"""","""","""","""","""","""","""",
+jct_|,"""","""","""","""","""","""","""",
+jct_se5,"""","""","""","""","""","""","""",
+jct_sw5,"""","""","""","""","""","""","""",
+jct_ne5,"""","""","""","""","""","""","""",
+jc_nw5,"""","""","""","""","""","""","""",
+h5-,"""","""","""","""","""","""","""",
+h5|,"""","""","""","""","""","""","""",
+medicalstart,0,"medicalstart,medical",medical,-1,-1,TRUE,,MEDICAL TESTING
+surgery,1,medical,"medical,generic","""","""","""",doctor,INVOLUNTARY SURGERY
+cages_monk,1,medical,"medical,generic","""","""","""",monkey,MONKEY COHORT
+cages_pig,"""",medical,"medical,generic","""","""","""",pig,PIG COHORT
+cages_rabb,"""",medical,"medical,generic","""","""","""",rabbit,RABBIT COHORT
+cages_beag,"""",medical,"medical,generic","""","""","""",beagle,BEAGLE COHORT
+cages_craz,"""",medical,"medical,generic","""","""","""",insane_test_subject,HUMAN COHORT

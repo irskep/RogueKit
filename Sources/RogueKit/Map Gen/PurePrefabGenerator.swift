@@ -79,16 +79,16 @@ class PurePrefabGenerator {
     guard let portPair = openPorts.popLast() else { return }
     let (instance, port) = portPair
     let portDirectionInverse = port.direction * BLPoint(x: -1, y: -1)
-    guard
-      instance.availablePorts > 0,
-      let candidates = _prefabsByDirection[portDirectionInverse]?
-        .filter({
-          return (
-            $0.metadata.matches(instance.prefab.metadata.neighborTags) &&
+    let candidates = _prefabsByDirection[portDirectionInverse]?
+      .filter({
+        return (
+          $0.metadata.matches(instance.prefab.metadata.neighborTags) &&
             instance.prefab.metadata.matches($0.metadata.neighborTags))
-        }),
-      !candidates.isEmpty
-      else {
+      }) ?? []
+    guard instance.availablePorts > 0, !candidates.isEmpty else {
+      if candidates.isEmpty {
+        print("No neighbor candidates for \(instance.prefab.id)")
+      }
 //      openPorts.append(portPair)
       return
     }

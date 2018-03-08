@@ -44,8 +44,14 @@ extension WorldDrawingSceneProtocol {
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
     let menuCtx = terminal.transform(offset: BLPoint(x: terminal.width - MENU_W, y: 0))
 
-    let s = StringUtils.describe(
-      entity: worldModel.player, in: worldModel, showName: false, showWeaponDescription: true)
+    var s = StringUtils.describe(
+      entity: worldModel.player, in: worldModel, showName: false,
+      showWeaponDescription: true)
+    if worldModel.gameHasntEnded, let desc = worldModel.activeMap.descriptionOfRoom(
+        coveringCellAt: worldModel.playerPos) {
+      s += "\n\n" + "[color=ui_text_dim]Current room:\n[color=ui_text]" + desc
+    }
+
     let stringSize = terminal.measure(
       size: BLSize(w: MENU_W - 1, h: 1000),
       align: BLConstant.ALIGN_LEFT,

@@ -26,6 +26,10 @@ class StringBox {
   subscript(index: String) -> String { return self.string(index) }
   subscript(index: String) -> Bool { return self.bool(index) }
 
+  func isQuotes(_ index: String) -> Bool {
+    return self.string(index) == "\"" || self.string(index) == "\"\""
+  }
+
   func int(_ index: String) -> Int {
     let s = self.string(index)
     if s.isEmpty { return 0 }

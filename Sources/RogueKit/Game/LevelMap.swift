@@ -39,15 +39,22 @@ struct Interaction: Codable {
 struct MapCell: Codable {
   var terrain: Int
   var feature: Int
+  var prefabId: String?
 
-  static let zero = { return MapCell(terrain: 0, feature: 0) }()
+  static let zero = { return MapCell(terrain: 0, feature: 0, prefabId:  nil) }()
 }
 
 extension MapCell {
   init(generatorCell: GeneratorCell) {
+    self.prefabId = generatorCell.prefabId
     if generatorCell.flags.contains(.portUsed) &&
        !generatorCell.flags.contains(.invisibleDoor) &&
        generatorCell.flags.contains(.hasDoors) {
+      self.terrain = 1
+      self.feature = 2
+      return
+    }
+    if generatorCell.flags.contains(.staticDoor) {
       self.terrain = 1
       self.feature = 2
       return
@@ -201,6 +208,12 @@ class LevelMap: Codable {
   func feature(at point: BLPoint) -> Feature? {
     guard let cell = self.cells[point] else { return nil }
     return self.features[cell.feature]
+  }
+
+  func descriptionOfRoom(coveringCellAt point: BLPoint) -> String? {
+    guard let pid = self.cells[point]?.prefabId else { return nil }
+    let desc = resources.csvDB.prefabs[pid]?.description ?? pid
+    return desc.isEmpty ? pid : desc
   }
 }
 

@@ -141,7 +141,12 @@ class LevelScene: Scene, WorldDrawingSceneProtocol {
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
       switch terminal.read() {
       case config.keyMenu:
-        if inspectedEntity != nil {
+        if let e = inspectedEntity,
+          let ep = worldModel.position(of: e),
+          worldModel.can(entity: worldModel.player, see: ep)
+        {
+          // actually do nothing, it's fine
+        } else {
           inspectedEntity = nil
           isDirty = true
         }

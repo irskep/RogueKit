@@ -309,7 +309,6 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
 
   func play(animation: String, source: BLPoint, dest: BLPoint?, callback: (() -> Void)?)
   {
-    print("Run animation", animation)
     switch (animation, dest) {
     case ("laser", .some(let dest)): self.playLineAnimation(
       source: source, dest: dest,

@@ -32,14 +32,14 @@ class LoadScene: Scene {
       return
     }
     do {
-      try self.finishLoading(terminal: terminal)
+      try self.loadForReal(terminal: terminal)
     } catch let error {
       print(error)
       fatalError("Could not generate map: \(error)")
     }
   }
 
-  func finishLoading(terminal: BLTerminalInterface) throws {
+  func loadForReal(terminal: BLTerminalInterface) throws {
     let rng = worldModel.rngStore[id]
     let reader = GeneratorReader(resources: resources)
     try reader.run(
@@ -64,126 +64,143 @@ class LoadScene: Scene {
       terminal.refresh()
 
       if result != nil {
-        let levelMap = try LevelMap(
-          definition: worldModel.mapDefinitions[self.id]!,
-          size: gen.cells.size,
-          paletteName: "default",
-          resources: resources,
-          terminal: terminal,
-          generator: gen)
-
-        var itemPoints = gen.points(where: {
-          $0.poi?.kind == .item || $0.poi?.kind == .weapon || $0.poi?.kind == .armor
-        })
-        rng.shuffleInPlace(&itemPoints)
-
-        var reqdMobPoints = gen.points(where: { $0.poi?.kind == .mob && $0.poi?.isRequired == true })
-        rng.shuffleInPlace(&reqdMobPoints)
-        var nonReqdMobPoints = gen.points(where: { $0.poi?.kind == .mob && $0.poi?.isRequired == false })
-        rng.shuffleInPlace(&nonReqdMobPoints)
-        // drop 'required' mobs first
-        var mobPoints = reqdMobPoints + nonReqdMobPoints
-
-        var entrancePoints = gen.points(where: { $0.poi?.kind == .entrance && $0.poi?.isRequired == true })
-        if entrancePoints.isEmpty {
-          entrancePoints = gen.points(where: { $0.poi?.kind == .entrance })
-        }
-        rng.shuffleInPlace(&entrancePoints)
-
-        var exitPoints = gen.points(where: { $0.poi?.kind == .exit && $0.poi?.isRequired == true })
-        if exitPoints.isEmpty {
-          exitPoints = gen.points(where: { $0.poi?.kind == .exit })
-        }
-        rng.shuffleInPlace(&exitPoints)
-
-        if entrancePoints.isEmpty {
-          print("ERROR: no entrance points in this map!")
-          entrancePoints = [mobPoints.removeFirst()]
-        }
-        if exitPoints.isEmpty {
-          print("ERROR: no exit points in this map!")
-          exitPoints = [mobPoints.removeFirst()]
-        }
-
-        let playerStart: BLPoint = entrancePoints.removeFirst()
-        levelMap.pointsOfInterest = [
-          PointOfInterest(kind: "playerStart", point: playerStart),
-        ]
-        if levelMap.definition.exits["previous"] != nil {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "entrance", point: playerStart))
-        }
-        if levelMap.definition.exits["next"] != nil {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exitPoints.removeFirst()))
-        }
-
-        var i = 0
-        while i < levelMap.definition.numItems && !itemPoints.isEmpty {
-          let p = itemPoints.removeFirst()
-          let genCell = gen.cells[p]
-          guard let poi = genCell.poi else {
-            fatalError("How did we even get here?")
-          }
-
-          let weapons = worldModel.csvDB.weapons(matching: poi.tags)
-            .filter({ $0.matches(levelMap.definition.tagWhitelist) })
-            .map({ WeightedChoice.Choice(value: $0.id, weight: $0.weight) })
-          let armors = worldModel.csvDB.armors(matching: poi.tags)
-            .filter({ $0.matches(levelMap.definition.tagWhitelist) })
-            .map({ WeightedChoice.Choice(value: $0.id, weight: $0.weight) })
-
-          if poi.kind == .weapon {
-            guard !weapons.isEmpty else { continue }
-            let weapon = WeightedChoice(choices: weapons).choose(rng: rng)
-            levelMap.pointsOfInterest.append(PointOfInterest(kind: "weapon:#\(weapon)", point: p))
-            i += 1
-          } else if poi.kind == .armor {
-            guard !armors.isEmpty else { continue }
-            let armor = WeightedChoice(choices: armors).choose(rng: rng)
-            levelMap.pointsOfInterest.append(PointOfInterest(kind: "armor:#\(armor)", point: p))
-            i += 1
-          } else if poi.kind == .item {
-            let allItems = weapons + armors
-            guard !allItems.isEmpty else { continue }
-            let item = WeightedChoice(choices: allItems).choose(rng: rng)
-            levelMap.pointsOfInterest.append(PointOfInterest(kind: "item:\(item)", point: p))
-            i += 1
-          } else {
-            fatalError("Should not be possible due to earlier filtering")
-          }
-        }
-
-        i = 0
-        while i < levelMap.definition.numMobs && !mobPoints.isEmpty {
-          let p = mobPoints.removeFirst()
-          let genCell = gen.cells[p]
-          guard let poi = genCell.poi else {
-            fatalError("How did we even get here?")
-          }
-
-          let mobsFirstPass = worldModel.csvDB.actors(matching: poi.tags)
-          let mobsSecondPass = mobsFirstPass.filter({
-            let m = $0
-            return m.matches(levelMap.definition.tagWhitelist)
-          })
-          let mobs = mobsSecondPass
-            .map({ WeightedChoice.Choice(value: $0.id, weight: $0.weight) })
-          guard !mobs.isEmpty else {
-            print("No mobs match", poi.tags, "and", levelMap.definition.tagWhitelist)
-            continue
-          }
-          let mob = WeightedChoice(choices: mobs).choose(rng: rng)
-          print("Instantiating", mob)
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy:#\(mob)", point: p))
-          i += 1
-        }
-
-        levelMap.isPopulated = true
-
-        self.worldModel.maps[self.id] = levelMap
-        self.worldModel.travel(to: self.id)
-        self.worldModel.applyPOIs()
-        self.director?.transition(to: LevelScene(resources: self.resources, worldModel: self.worldModel))
+        try self.finishLoading(terminal: terminal, gen: gen, reader: reader)
       }
     }
+  }
+
+  func finishLoading(terminal: BLTerminalInterface, gen: PurePrefabGenerator, reader: GeneratorReader) throws {
+    let rng = worldModel.rngStore[id]
+    let levelMap = try LevelMap(
+      definition: worldModel.mapDefinitions[self.id]!,
+      size: gen.cells.size,
+      paletteName: "default",
+      resources: resources,
+      terminal: terminal,
+      generator: gen)
+
+    var reqdItemPoints = gen.points(where: {
+      guard $0.poi?.isRequired == true else { return false }
+      return $0.poi?.kind == .item || $0.poi?.kind == .weapon || $0.poi?.kind == .armor
+    })
+    print("ip:" ,reqdItemPoints)
+    rng.shuffleInPlace(&reqdItemPoints)
+    var nonReqdItemPoints = gen.points(where: {
+      guard $0.poi?.isRequired == false else { return false }
+      return $0.poi?.kind == .item || $0.poi?.kind == .weapon || $0.poi?.kind == .armor
+    })
+    rng.shuffleInPlace(&nonReqdItemPoints)
+    var itemPoints = reqdItemPoints + nonReqdItemPoints
+
+    var reqdMobPoints = gen.points(where: { $0.poi?.kind == .mob && $0.poi?.isRequired == true })
+    rng.shuffleInPlace(&reqdMobPoints)
+    var nonReqdMobPoints = gen.points(where: { $0.poi?.kind == .mob && $0.poi?.isRequired == false })
+    rng.shuffleInPlace(&nonReqdMobPoints)
+    // drop 'required' mobs first
+    var mobPoints = reqdMobPoints + nonReqdMobPoints
+
+    var entrancePoints = gen.points(where: { $0.poi?.kind == .entrance && $0.poi?.isRequired == true })
+    if entrancePoints.isEmpty {
+      entrancePoints = gen.points(where: { $0.poi?.kind == .entrance })
+    }
+    rng.shuffleInPlace(&entrancePoints)
+
+    var exitPoints = gen.points(where: { $0.poi?.kind == .exit && $0.poi?.isRequired == true })
+    if exitPoints.isEmpty {
+      exitPoints = gen.points(where: { $0.poi?.kind == .exit })
+    }
+    rng.shuffleInPlace(&exitPoints)
+
+    if entrancePoints.isEmpty {
+      print("ERROR: no entrance points in this map!")
+      entrancePoints = [mobPoints.removeFirst()]
+    }
+    if exitPoints.isEmpty {
+      print("ERROR: no exit points in this map!")
+      exitPoints = [mobPoints.removeFirst()]
+    }
+
+    let playerStart: BLPoint = entrancePoints.removeFirst()
+    levelMap.pointsOfInterest = [
+      PointOfInterest(kind: "playerStart", point: playerStart),
+    ]
+    if levelMap.definition.exits["previous"] != nil {
+      levelMap.pointsOfInterest.append(PointOfInterest(kind: "entrance", point: playerStart))
+    }
+    if levelMap.definition.exits["next"] != nil {
+      levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exitPoints.removeFirst()))
+    }
+
+    var i = 0
+    while i < levelMap.definition.numItems && !itemPoints.isEmpty {
+      let p = itemPoints.removeFirst()
+      let genCell = gen.cells[p]
+      guard let poi = genCell.poi else {
+        fatalError("How did we even get here?")
+      }
+
+      let weapons = worldModel.csvDB.weapons(matching: poi.tags)
+        .filter({ $0.matches(levelMap.definition.tagWhitelist) })
+        .map({ WeightedChoice.Choice(value: $0.id, weight: $0.weight) })
+      let armors = worldModel.csvDB.armors(matching: poi.tags)
+        .filter({ $0.matches(levelMap.definition.tagWhitelist) })
+        .map({ WeightedChoice.Choice(value: $0.id, weight: $0.weight) })
+
+      if poi.kind == .weapon {
+        guard !weapons.isEmpty else { continue }
+        let weapon = WeightedChoice(choices: weapons).choose(rng: rng)
+        levelMap.pointsOfInterest.append(PointOfInterest(kind: "weapon:#\(weapon)", point: p))
+        i += 1
+      } else if poi.kind == .armor {
+        guard !armors.isEmpty else { continue }
+        let armor = WeightedChoice(choices: armors).choose(rng: rng)
+        levelMap.pointsOfInterest.append(PointOfInterest(kind: "armor:#\(armor)", point: p))
+        i += 1
+      } else if poi.kind == .item {
+        let allItems = weapons + armors
+        guard !allItems.isEmpty else {
+          print("No items match", poi.tags, "and", levelMap.definition.tagWhitelist)
+          continue
+        }
+        let item = WeightedChoice(choices: allItems).choose(rng: rng)
+        print("Instantiating item", item)
+        levelMap.pointsOfInterest.append(PointOfInterest(kind: "item:\(item)", point: p))
+        i += 1
+      } else {
+        fatalError("Should not be possible due to earlier filtering")
+      }
+    }
+
+    i = 0
+    while i < levelMap.definition.numMobs && !mobPoints.isEmpty {
+      let p = mobPoints.removeFirst()
+      let genCell = gen.cells[p]
+      guard let poi = genCell.poi else {
+        fatalError("How did we even get here?")
+      }
+
+      let mobsFirstPass = worldModel.csvDB.actors(matching: poi.tags)
+      let mobsSecondPass = mobsFirstPass.filter({
+        let m = $0
+        return m.matches(levelMap.definition.tagWhitelist)
+      })
+      let mobs = mobsSecondPass
+        .map({ WeightedChoice.Choice(value: $0.id, weight: $0.weight) })
+      guard !mobs.isEmpty else {
+        print("No mobs match", poi.tags, "and", levelMap.definition.tagWhitelist)
+        continue
+      }
+      let mob = WeightedChoice(choices: mobs).choose(rng: rng)
+      print("Instantiating mob", mob)
+      levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy:#\(mob)", point: p))
+      i += 1
+    }
+
+    levelMap.isPopulated = true
+
+    self.worldModel.maps[self.id] = levelMap
+    self.worldModel.travel(to: self.id)
+    self.worldModel.applyPOIs()
+    self.director?.transition(to: LevelScene(resources: self.resources, worldModel: self.worldModel))
   }
 }

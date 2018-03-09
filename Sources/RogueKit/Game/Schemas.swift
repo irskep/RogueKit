@@ -323,6 +323,11 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         tags: tags,
         isRequired: false),
       POIDefinition(
+        code: BLInt(CP437.char(for: "I")),
+        kind: .item,
+        tags: tags,
+        isRequired: true),
+      POIDefinition(
         code: BLInt(CP437.char(for: "e")),
         kind: .entrance,
         tags: tags,

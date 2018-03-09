@@ -338,7 +338,6 @@ class WorldModel: Codable {
   }
 
   func remove(entity: Entity) {
-    print("remove", entity)
     for s in _allSystems {
       s.remove(entity: entity)
     }
@@ -555,9 +554,14 @@ extension WorldModel {
   }
 
   func haveEntity(_ host: Entity, pickUp item: Entity) {
+    guard let ic = inventoryS[host] else { return }
+    if let nameC = nameS[item], ic.containsItem(named: nameC.name, in: self), host == player {
+      self.log("You already have a \(nameC.name)")
+      return
+    }
     // Remove item from map; add to player's inventory
     positionS.remove(entity: item)
-    inventoryS[host]?.add(entity: item)
+    ic.add(entity: item)
     if let hostNameC = nameS[host], let itemNameC = nameS[item] {
       if host == player {
         self.log("You pick up \(itemNameC.name) [color=ui_text_dim](Equip it with 'e')[/color]")

@@ -110,6 +110,15 @@ class InventoryC: ECSComponent, Codable {
         return prev + (collectibleS[e]?.grams ?? 0)
       })
   }
+
+  func containsItem(named name: String, in worldModel: WorldModel) -> Bool {
+    for i in contents {
+      if worldModel.nameS[i]?.name == name {
+        return true
+      }
+    }
+    return false
+  }
 }
 class InventoryS: ECSSystem<InventoryC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }

@@ -1,6 +1,7 @@
 id,weight,tags,neighbor_tags,max_actors,max_ports,has_doors,poi_tags,description
 cell1,10,"start,cell",cross_hall,1,1,TRUE,insane_test_subject,"A dark, claustrophobic cell meant for holding unwilling test subjects"
 xhall,0.5,"start,cross_hall,hall",*,"""",-1,FALSE,"start,early,mid,late",
+util,1,"utility_closet,generic",*,"""",1,TRUE,"utility_closet,mid",A dank utility closet with a few shelves and a bare lightbulb
 room,1,"generic,startingroom,start",*,"""",-1,TRUE,guard,
 room5,"""","""","""","""","""","""","""",
 oval,"""",generic,*,"""","""","""","""",

@@ -18,4 +18,5 @@ shock_baton,Shock Baton,24,teal,"armory,beefyguard,okguard",1,2,1,"Physical:20,e
 bone_saw,Bone Saw,24,white,medical,1,3,0,Physical:20,,,,none,"A bloody saw used for cutting ""meat.""",2,1000
 handgun,Handgun,26,white,"armory,beefyguard",1,3,1,,Physical:50,5,30,shoot,A security guard sidearm with 24 rounds. Don't worry about reloading.,1,1400
 assault_rifle,AR-15,26,white,"special,goodarmory",1,3,0,,Physical:80,10,20,shoot,A low-accuracy assault rifle meant for doing a lot of damage at short range,10,5000
+rock,Rock,24,white,"early,start,crazy",1,2,0,physical:6,,,,none,A medium-sized rock that was just sort of lying around,0.02,500
 rebar,Piece of Rebar,24,white,"early,start,crazy",1,3,0,Physical:6,,,,none,A piece of rebar from some crumbling concrete,0.5,2000

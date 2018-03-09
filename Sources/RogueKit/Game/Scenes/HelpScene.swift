@@ -46,6 +46,7 @@ COMBAT
 (arrows)       Bump into enemies to attack them with MELEE weapons.
 (tab, mouse)   Select an enemy for a ranged attack
 (enter, click) Attack the selected enemy with your wielded ranged weapon
+(s)            Reset your fatigue with a stim
 
 Combat costs FATIGUE. If you get too fatigued, you lose a turn after fighting.
 

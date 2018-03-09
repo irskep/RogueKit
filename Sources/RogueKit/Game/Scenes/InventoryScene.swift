@@ -99,9 +99,9 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
     let uiRect = BLRect(
       x: terminal.state(BLConstant.WIDTH) / 2 - 20,
-      y: terminal.state(BLConstant.HEIGHT) / 2 - 15,
+      y: terminal.state(BLConstant.HEIGHT) / 2 - 29,
       w: 40,
-      h: 30)
+      h: 58)
     menu.rect = uiRect.inset(byX1: 1, y1: 3, x2: 1, y2: 1)
     terminal.clear(area: uiRect)
     terminal.foregroundColor = resources.defaultPalette["ui_accent"]

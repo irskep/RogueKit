@@ -62,6 +62,11 @@ class ActorC: ECSComponent, Codable {
       applyDelta(delta: StatBucket(hp: 0, fatigue: -1, awareness: 0, reflex: 0, strength: 0))
     }
   }
+
+  func useStim(in worldModel: WorldModel) {
+    self.currentStats.fatigue = 0
+    worldModel.stimsUsed += 1
+  }
 }
 class ActorS: ECSSystem<ActorC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }

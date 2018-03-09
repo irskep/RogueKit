@@ -26,6 +26,9 @@ class PurePrefabGenerator {
   var pointsBlacklistedForHallways = Set<BLPoint>()
   var debugDistanceField: DistanceField?
 
+  // WARNING: DOES NOT REDUCE WHEN REMOVING HALLWAYS
+  var instanceCounts = [String: Int]()
+
   var rect: BLRect { return BLRect(x: 0, y: 0, w: cells.size.w, h: cells.size.h) }
 
   lazy var prefabsByTag: [String: [Prefab]] = {
@@ -83,6 +86,9 @@ class PurePrefabGenerator {
     let portDirectionInverse = port.direction * BLPoint(x: -1, y: -1)
     let candidates = _prefabsByDirection[portDirectionInverse]?
       .filter({
+        if $0.metadata.maxInstances > 0 && (instanceCounts[$0.metadata.id] ?? 0) >= $0.metadata.maxInstances {
+          return false
+        }
         return (
           $0.metadata.matches(instance.prefab.metadata.neighborTags) &&
             instance.prefab.metadata.matches($0.metadata.neighborTags))
@@ -108,6 +114,7 @@ class PurePrefabGenerator {
     }
     self.register(prefabInstance: newInstance)
     self.usePort(instance: instance, port: port, counterpart: newInstance)
+    instanceCounts[prefab.metadata.id] = (instanceCounts[prefab.metadata.id] ?? 0) + 1
   }
 
   func connectAdjacentPorts(maxNewCycles: Int = 10) {

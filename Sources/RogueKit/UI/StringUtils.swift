@@ -31,7 +31,7 @@ private extension ActorC {
       barColorThresholds: [
         (0.0, "ui_text", "teal", "darkblue"),
         (0.75, "ui_text", "orange", "darkpurple"),
-        (0.9, "ui_text", "red", "darkpurple"),
+//        (0.9, "ui_text", "red", "darkpurple"),
         ])
     return """
       \(hpBar)[bkcolor=ui_bg]

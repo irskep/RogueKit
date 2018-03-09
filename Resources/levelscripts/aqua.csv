@@ -1,0 +1,13 @@
+prefabs_and_hallways,80,50
+
+placePrefab,aquastart
+growPrefabs,500
+connectAdjacentPorts,20
+removeDeadEnds,hall
+
+addHallwaysToRemoteAreas,1,2
+addHallwaysToRemoteAreas,1,2
+addHallwaysToRemoteAreas,1,2
+
+addWallsNextToBareFloor
+removeDoubleDoors

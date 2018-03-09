@@ -261,6 +261,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
   var tags: [String]
   var weight: Double
   var maxPorts: Int
+  var maxInstances: Int
   var hasDoors: Bool
   var neighborTags: [String]
   var description: String
@@ -299,6 +300,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       tags: [],
       weight: 0,
       maxPorts: -1,
+      maxInstances: -1,
       hasDoors: false,
       neighborTags: ["*"],
       description: "",

@@ -131,8 +131,8 @@ extension CombatStats {
         stats.hitChance = 0
       } else {
         stats.baseHitChance = 1.0 - _100(attacker.weapon.rangeFalloff) * distance
-        if distance == 1 {  // "too close" is a special case; 50% nerf
-          stats.baseHitChance /= 2
+        if distance == 1 {  // "too close" is a special case; 66% nerf
+          stats.baseHitChance /= 3
         }
         stats.hitChance = stats.baseHitChance * defenderBaseDodgeChance
       }

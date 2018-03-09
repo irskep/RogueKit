@@ -214,6 +214,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       case config.keyRangedFire:
         self.rangedFire()
         didMove = true
+      case config.keyStim:
+        worldModel.actorS[worldModel.player]?.useStim(in: worldModel)
+        worldModel.waitPlayer()
+        didMove = true
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {
           director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))
@@ -278,7 +282,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     }
     if let nextLevelId = worldModel.waitingToTransitionToLevelId {
       didMove = true
-      director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: nextLevelId))
+      if nextLevelId == "win" {
+        director?.transition(to: WinScene(resources: resources))
+      } else {
+        director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: nextLevelId))
+      }
       return
     }
 
@@ -291,9 +299,9 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     drawInspectedEntityOverlay()
     terminal.refresh()
 
-    if didMove {
+    if didMove && !isResting {
       if worldModel.gameHasntEnded {
-        save()
+//        save()
       } else {
         director?.transition(to: LoseScene(resources: resources))
       }
@@ -321,6 +329,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     case ("poop", .some(let dest)): self.playLineAnimation(
       source: source, dest: dest,
       color: "white", h: "*", v: "*", nw: "*", ne: "*", sw: "*", se: "*",
+      callback: callback)
+    case ("shoot", .some(let dest)): self.playLineAnimation(
+      source: source, dest: dest,
+      color: "white", h: ".", v: "*", nw: "*", ne: "*", sw: "*", se: "*",
       callback: callback)
     case ("shock", .some(let dest)): self.playLineAnimation(
       source: source, dest: dest,

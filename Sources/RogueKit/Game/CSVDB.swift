@@ -59,6 +59,7 @@ class CSVDB {
         let weight: Double = row.isQuotes("weight") ? last.weight : row["weight"]
         let maxPorts: Int = row.isQuotes("max_ports") ? last.maxPorts : row["max_ports"]
         let hasDoors: Bool = row.isQuotes("has_doors") ? last.hasDoors : row["has_doors"]
+        let maxInstances: Int = row.isQuotes("max_instances") ? last.maxInstances : row["max_instances"]
         let tags = row.isQuotes("tags")
           ? last.tags
           : row.string("tags").lowercased().split(separator: ",").map { String($0) }
@@ -70,7 +71,7 @@ class CSVDB {
           : row.string("poi_tags").lowercased().split(separator: ",").map { String($0) }
 
         let m = PrefabMetadata(
-          id: id, tags: tags, weight: weight, maxPorts: maxPorts,
+          id: id, tags: tags, weight: weight, maxPorts: maxPorts, maxInstances: maxInstances,
           hasDoors: hasDoors, neighborTags: neighborTags,
           description: row["description"],
           poiDefinitions: PrefabMetadata.poiDefs(poiTags))

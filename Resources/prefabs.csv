@@ -1,52 +1,63 @@
-id,weight,tags,neighbor_tags,max_actors,max_ports,has_doors,poi_tags,description
-cell1,10,"start,cell",cross_hall,1,1,TRUE,insane_test_subject,"A dark, claustrophobic cell meant for holding unwilling test subjects"
-xhall,0.5,"start,cross_hall,hall",*,"""",-1,FALSE,"start,early,mid,late",
-util,1,"utility_closet,generic",*,"""",1,TRUE,"utility_closet,mid",A dank utility closet with a few shelves and a bare lightbulb
-room,1,"generic,startingroom,start",*,"""",-1,TRUE,guard,
-room5,"""","""","""","""","""","""","""",
-oval,"""",generic,*,"""","""","""","""",
-oval2,"""",generic,*,"""","""","""","""",
-jct_+,0.5,"generic,hall,tinyhall",*,"""",-1,FALSE,technician,
-jct_-,"""","""","""","""","""","""","""",
-jct_|,"""","""","""","""","""","""","""",
-jct_se5,"""","generic,hall","""","""","""","""","""",
-jct_sw5,"""","""","""","""","""","""","""",
-jct_ne5,"""","""","""","""","""","""","""",
-jc_nw5,"""","""","""","""","""","""","""",
-h5-,"""","""","""","""","""","""","""",
-h5|,"""","""","""","""","""","""","""",
-medicalstart,0,"medicalstart,medical",medical,-1,-1,TRUE,,MEDICAL TESTING
-surgery,1,medical,"medical,generic","""","""","""",doctor,INVOLUNTARY SURGERY
-cages_monk,0.5,medical,"medical,generic","""","""","""",monkey,MONKEY COHORT
-cages_pig,"""",medical,"medical,generic","""","""","""",pig,PIG COHORT
-cages_rabb,"""",medical,"medical,generic","""","""","""",rabbit,RABBIT COHORT
-cages_beag,"""",medical,"medical,generic","""","""","""",beagle,BEAGLE COHORT
-cages_craz,"""",medical,"medical,generic","""","""","""",insane_test_subject,HUMAN COHORT
-hive_rm,1,"hivestart,hive,hiveroom",hivehall,"""","""","""","hive,animal",NATURAL SELECTION COMPLEX
-hive_rm2,1,"""","""","""","""","""","""",NATURAL SELECTION COMPLEX
-hive_rm3,1,"""","""","""","""","""","""",NATURAL SELECTION COMPLEX
-hive_|,1,"hive,hall,hivehall",hiveroom,"""","""",FALSE,,NATURAL SELECTION COMPLEX
-hive_-,1,"hive,hall,hivehall",hiveroom,"""","""",FALSE,,NATURAL SELECTION COMPLEX
-pen1,1,pen,pen,-1,-1,False,dinosaurs,RAPTOR PEN
-pen2,"""","""","""","""","""","""","""",RAPTOR PEN
-pen3,"""","""","""","""","""","""","""",RAPTOR PEN
-pen4,"""","""","""","""","""","""","""",RAPTOR PEN
-pen5,"""","""","""","""","""","""","""",RAPTOR PEN
-pen6,"""","""","""","""","""","""","""",RAPTOR PEN
-pen7,"""","""","""","""","""","""","""",RAPTOR PEN
-pen8,"""","""","""","""","""","""","""",RAPTOR PEN
-pen9,"""","""","""","""","""","""","""",RAPTOR PEN
-pen10,"""","""","""","""","""",True,"""",RAPTOR PEN
-pen11,"""","""","""","""","""",False,"""",RAPTOR PEN
-pen12,"""","""","""","""","""",False,"""",RAPTOR PEN
-pen13,"""","""","""","""","""",True,"""",RAPTOR PEN
-pen14,"""","""","""","""","""",False,"""",RAPTOR PEN
-pen15,"""","""","""","""","""",False,"""",RAPTOR PEN
-pen16,"""","""","""","""","""",True,"""",RAPTOR PEN
-dice5,"""","armory,armorystart",armory,-1,-1,False,guard,
-armory1,"""",armory,armory,-1,-1,True,guard,"A long, skinny room with lockers on one side for guards to keep their equipment"
-guardpost1,"""","""","""","""","""","""","""",
-l_nw,"""","armory,hall","""","""","""",False,technician,
-l_ne,"""","""","""","""","""","""","""",
-l_sw,"""","""","""","""","""","""","""",
-l_se,"""","""","""","""","""","""","""",
+id,weight,tags,neighbor_tags,max_actors,max_ports,max_instances,has_doors,poi_tags,description
+cell1,10,"start,cell",cross_hall,1,1,-1,TRUE,insane_test_subject,"A dark, claustrophobic cell meant for holding unwilling test subjects"
+xhall,2,"start,cross_hall,hall",*,"""",-1,"""",FALSE,"start,early,mid,late",
+util,1,"utility_closet,generic",*,"""",1,"""",TRUE,"utility_closet,mid",A dank utility closet with a few shelves and a bare lightbulb
+room,1,"generic,startingroom,start",*,"""",-1,"""",TRUE,guard,
+room5,"""","""","""","""","""","""","""","""",
+oval,"""",generic,*,"""","""","""","""","""",
+oval2,"""",generic,*,"""","""","""","""","""",
+jct_+,0.5,"generic,hall,tinyhall",*,"""",-1,"""",FALSE,technician,
+jct_-,"""","""","""","""","""","""","""","""",
+jct_|,"""","""","""","""","""","""","""","""",
+jct_se5,"""","generic,hall","""","""","""","""","""","""",
+jct_sw5,"""","""","""","""","""","""","""","""",
+jct_ne5,"""","""","""","""","""","""","""","""",
+jct_nw5,"""","""","""","""","""","""","""","""",
+h5-,"""","""","""","""","""","""","""","""",
+h5|,"""","""","""","""","""","""","""","""",
+medicalstart,0,"medicalstart,medical",medical,-1,-1,"""",TRUE,,MEDICAL TESTING
+surgery,1,medical,"medical,generic","""","""","""","""",doctor,INVOLUNTARY SURGERY
+cages_monk,0.5,medical,"medical,generic","""","""","""","""",monkey,MONKEY COHORT
+cages_pig,"""",medical,"medical,generic","""","""","""","""",pig,PIG COHORT
+cages_rabb,"""",medical,"medical,generic,special,shrine","""","""","""","""",rabbit,RABBIT COHORT
+cages_beag,"""",medical,"medical,generic,special,shrine","""","""","""","""",beagle,BEAGLE COHORT
+cages_craz,"""",medical,"medical,generic,special,shrine","""","""","""","""",insane_test_subject,HUMAN COHORT
+hive_rm,1,"hivestart,hive,hiveroom","hivehall,special,shrine","""","""","""","""","hive,animal",NATURAL SELECTION COMPLEX
+hive_rm2,1,"""","""","""","""","""","""","""",NATURAL SELECTION COMPLEX
+hive_rm3,1,"""","""","""","""","""","""","""",NATURAL SELECTION COMPLEX
+hive_|,1,"hive,hall,hivehall",hiveroom,"""","""","""",FALSE,,NATURAL SELECTION COMPLEX
+hive_-,1,"hive,hall,hivehall",hiveroom,"""","""","""",FALSE,,NATURAL SELECTION COMPLEX
+pen1,1,pen,"pen,special,shrine",-1,-1,"""",False,dinosaurs,RAPTOR PEN
+pen2,"""","""","""","""","""","""","""","""",RAPTOR PEN
+pen3,"""","""","""","""","""","""","""","""",RAPTOR PEN
+pen4,"""","""","""","""","""","""","""","""",RAPTOR PEN
+pen5,"""","""","""","""","""","""","""","""",RAPTOR PEN
+pen6,"""","""","""","""","""","""","""","""",RAPTOR PEN
+pen7,"""","""","""","""","""","""","""","""",RAPTOR PEN
+pen8,"""","""","""","""","""","""","""","""",RAPTOR PEN
+pen9,"""","""","""","""","""","""","""","""",RAPTOR PEN
+pen10,"""","""","""","""","""","""",True,"""",RAPTOR PEN
+pen11,"""","""","""","""","""","""",False,"""",RAPTOR PEN
+pen12,"""","""","""","""","""","""",False,"""",RAPTOR PEN
+pen13,"""","""","""","""","""","""",True,"""",RAPTOR PEN
+pen14,"""","""","""","""","""","""",False,"""",RAPTOR PEN
+pen15,"""","""","""","""","""","""",False,"""",RAPTOR PEN
+pen16,"""","""","""","""","""","""",True,"""",RAPTOR PEN
+pen17,"""","pen,penstart","""","""","""","""",True,"""",
+dice5,"""","armory,armorystart",armory,-1,-1,"""",False,"armory,weakguard,okguard,beefyguard,guard",
+armory1,"""","armory,armorystart","armory,tinyhall,special,shrine",-1,-1,"""",True,"armory,weakguard,okguard,beefyguard,guard","A long, skinny room with lockers on one side for guards to keep their equipment"
+guardpost1,"""","""","""","""","""","""","""","""",
+guardpost2,"""","""","""","""","""","""","""","""",
+l_nw,"""","armory,hall","""","""","""","""",False,technician,
+l_ne,"""","""","""","""","""","""","""","""",
+l_sw,"""","""","""","""","""","""","""","""",
+l_se,"""","""","""","""","""","""","""","""",
+aqua1,"""",aqua,"aqua,tinyhall",-1,-1,"""",False,mechapiranha,MECHAPIRANHA HABITAT
+aqua2,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT
+aqua3,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT
+aqua4,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT
+aqua5,"""","aqua,aquastart","""","""","""","""","""","""",MECHAPIRANHA HABITAT
+aqua6,"""",aqua,"""","""","""","""","""","""",MECHAPIRANHA HABITAT
+shrine,0.5,shrine,*,-1,1,1,True,shrine,"A tiny museum of medieval armor and weaponry. You're not sure why it's here, but some of this stuff looks useful."
+special,0.5,special,*,-1,1,1,True,special,A gleaming white room with a pedestal in the center
+endstart,1,"endstart,end",end,-1,-1,1,True,the_doctor,A high-ceilinged marble entrance hall

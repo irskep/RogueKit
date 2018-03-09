@@ -1,0 +1,5 @@
+prefabs_and_hallways,80,50
+placePrefab,endstart
+
+addWallsNextToBareFloor
+#removeDoubleDoors

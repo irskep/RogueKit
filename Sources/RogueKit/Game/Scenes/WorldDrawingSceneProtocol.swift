@@ -28,7 +28,7 @@ extension WorldDrawingSceneProtocol {
     terminal.foregroundColor = resources.defaultPalette["ui_text_dim"]
     terminal.print(
       point: BLPoint(x: 1, y: terminal.height - 1),
-      string: "Press ? for help. Keys are: arrows, tab, enter, E(quip), D(rop), R(est)")
+      string: "Press ? for help. Keys: arrows, tab, enter, E(quip), D(rop), R(est), S(tim)")
 
 
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
@@ -38,6 +38,7 @@ extension WorldDrawingSceneProtocol {
       entity: worldModel.player, in: worldModel, showName: false,
       showWeaponDescription: true,
       compareToEquipmentOn: nil)
+    s += "\n\n[color=ui_text_dim]Stims used: [color=ui_text] \(worldModel.stimsUsed)"
     if worldModel.gameHasntEnded, let desc = worldModel.activeMap.descriptionOfRoom(
         coveringCellAt: worldModel.playerPos) {
       s += "\n\n" + "[color=ui_text_dim]Current room:\n[color=ui_text]" + desc
@@ -80,7 +81,7 @@ extension WorldDrawingSceneProtocol {
         showWeaponDescription: false, compareToEquipmentOn: worldModel.player)
 
       let menuOrigin: BLPoint
-      if point.x < worldModel.activeMap.size.w / 2 {
+      if point.x < (terminal.width - MENU_W) / 2 {
         menuOrigin = BLPoint(x: terminal.width - MENU_W * 2, y: 0)
       } else {
         menuOrigin = BLPoint.zero

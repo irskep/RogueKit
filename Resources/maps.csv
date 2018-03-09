@@ -1,6 +1,8 @@
-id,script,tag_whitelist,num_items,num_mobs,next,previous
-1,start,start,4,10,2,
-2,medical_lab,"mid,generic,medical",20,40,3,1
-3,dino_pen,"pen,mid,dinosaurs",20,15,4,2
-4,hive,"hive,animal,mid",20,40,5,3
-5,armory,"late,generic,armory,technician,tinyhall",20,40,,4
+id,script,tag_whitelist,num_items,num_mobs,next,previous,text
+1,start,start,4,10,7,,This is the game-start text.
+2,medical_lab,"mid,generic,medical",20,40,3,1,
+3,hive,"hive,animal,mid,shrine,special",20,40,4,2,
+4,armory,"late,generic,armory,technician,tinyhall,shrine,special",20,40,5,3,
+5,dino_pen,"pen,mid,dinosaurs,shrine,special",20,15,6,4,
+6,aqua,"aqua,mechapiranha,tinyhall,late,shrine,special",20,40,7,5,
+7,end,end,0,1,win,6,This is the game-end text.

@@ -1,6 +1,6 @@
 prefabs_and_hallways,60,50
 
-placePrefab,pen
+placePrefab,penstart
 growPrefabs,500
 connectAdjacentPorts,0
 removeDeadEnds,hall

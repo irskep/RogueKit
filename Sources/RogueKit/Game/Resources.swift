@@ -79,7 +79,12 @@ class ResourceCollection: ResourceCollectionProtocol {
     
     return [String: Prefab](uniqueKeysWithValues: SpriteSheet(image: image)
       .sprites
-      .map({ Prefab(sprite: $0, metadata: self.csvDB.prefabs[$0.name] ?? PrefabMetadata.zero) })
+      .map({
+        guard let m = self.csvDB.prefabs[$0.name] else {
+          fatalError("no metadata for \($0.name)")
+        }
+        return Prefab(sprite: $0, metadata: m)
+      })
       .map({ (p: Prefab) -> (String, Prefab) in (p.sprite.name, p) }))
   }()
 

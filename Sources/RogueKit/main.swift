@@ -22,6 +22,7 @@ struct Config: Codable {
   var keyToggleInspectedEntity: Int32 = BLConstant.TAB
   var keyHelp: Int32 = BLConstant.SLASH
   var keyRest: Int32 = BLConstant.R
+  var keyStim: Int32 = BLConstant.S
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS
@@ -59,7 +60,8 @@ class SteveRLDirector: Director {
 #endif
 
 //let FONT = "fonts/Alloy_curses_12x12.png"
-let FONT = "fonts/font_12x12.png"
+//let FONT = "fonts/font_12x12.png"
+let FONT = "fonts/Taffer_20x20.png"
 //let FONT = "fonts/cp437_10x10.png"
 let FONT_SIZE = FONT[FONT.index(FONT.endIndex, offsetBy: -9)..<FONT.index(FONT.endIndex, offsetBy: -4)]
 
@@ -84,7 +86,8 @@ private let director = SteveRLDirector(terminal: terminal, configBlock: {
   if let window = NSApp.windows.first,
     let screen = window.screen,
     // ...but only do that if we're probably on my computer
-    FileManager.default.fileExists(atPath: "/Users/steve/_d/games/RogueKit/Readme.md")
+    FileManager.default.fileExists(atPath: "/Users/steve/_d/games/Dr. Hallervorden/Readme.md")
+    ,false
   {
     window.setFrameOrigin(NSPoint(
       x: screen.frame.size.width - window.frame.size.width - 11,

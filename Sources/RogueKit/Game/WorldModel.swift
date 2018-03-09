@@ -35,6 +35,8 @@ class WorldModel: Codable {
   var resources: ResourceCollectionProtocol?
   var csvDB: CSVDB { return resources!.csvDB }
 
+  var stimsUsed: Int = 0
+
   var turn: Int = 0
   var mapDefinitions = [String: MapDefinition]()
   var maps: [String: LevelMap]
@@ -92,6 +94,7 @@ class WorldModel: Codable {
     case nextEntityId
     case waitingToTransitionToLevelId
     case messageLog
+    case stimsUsed
 
     case positionS
     case sightS
@@ -137,6 +140,7 @@ class WorldModel: Codable {
     waitingToTransitionToLevelId = try? values.decode(String.self, forKey: .waitingToTransitionToLevelId)
     debugFlags = try values.decode([String: Int].self, forKey: .debugFlags)
     messageLog = try values.decode([String].self, forKey: .messageLog)
+    stimsUsed = try values.decode(Int.self, forKey: .stimsUsed)
 
     positionS = try values.decode(PositionS.self, forKey: .positionS)
     sightS = try values.decode(SightS.self, forKey: .sightS)
@@ -168,6 +172,7 @@ class WorldModel: Codable {
     try container.encode(debugFlags, forKey: .debugFlags)
     try container.encode(messageLog, forKey: .messageLog)
     try container.encode(turn, forKey: .turn)
+    try container.encode(stimsUsed, forKey: .stimsUsed)
 
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)

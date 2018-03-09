@@ -289,6 +289,7 @@ class WorldModel: Codable {
     // Pick up any items on the ground
     for posC in positionS.all(in: activeMapId, at: playerPos) where posC.entity != nil {
       guard let entity = posC.entity, collectibleS[entity] != nil else { continue }
+      guard can(entity: player, pickUp: entity) else { continue }
       self.haveEntity(player, pickUp: entity)
     }
 
@@ -647,6 +648,15 @@ extension WorldModel {
     if let actorC = actorS[entity] {
       actorC.didMove(in: self)
     }
+  }
+
+  func can(entity host: Entity, pickUp item: Entity) -> Bool {
+    guard let ic = inventoryS[host], let nameC = nameS[item] else { return false }
+    if ic.contents.count >= SimpleMenu.defaultKeys.count {
+      self.log("Your inventory won't fit a \(nameC.name)")
+      return false
+    }
+    return true
   }
 
   func may(entity: Entity, moveThrough point: BLPoint) -> Bool {

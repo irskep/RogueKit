@@ -83,6 +83,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     isDirty = true
   }
 
+  override func didEnter() {
+    super.didEnter()
+    self.save()
+  }
+
   override func willExit() {
     worldModel.animator = nil
     save()

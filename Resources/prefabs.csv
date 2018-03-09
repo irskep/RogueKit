@@ -7,7 +7,7 @@ room5,"""","""","""","""","""","""","""","""",
 oval,"""",generic,*,"""","""","""","""","""",
 oval2,"""",generic,*,"""","""","""","""","""",
 jct_+,0.5,"generic,hall,tinyhall",*,"""",-1,"""",FALSE,technician,
-jct_-,"""","""","""","""","""","""","""","""",
+jct_-,"""", ,"""","""","""","""","""","""",
 jct_|,"""","""","""","""","""","""","""","""",
 jct_se5,"""","generic,hall","""","""","""","""","""","""",
 jct_sw5,"""","""","""","""","""","""","""","""",
@@ -27,23 +27,23 @@ hive_rm2,1,"""","""","""","""","""","""","""",NATURAL SELECTION COMPLEX
 hive_rm3,1,"""","""","""","""","""","""","""",NATURAL SELECTION COMPLEX
 hive_|,1,"hive,hall,hivehall",hiveroom,"""","""","""",FALSE,,NATURAL SELECTION COMPLEX
 hive_-,1,"hive,hall,hivehall",hiveroom,"""","""","""",FALSE,,NATURAL SELECTION COMPLEX
-pen1,1,pen,"pen,special,shrine",-1,-1,"""",False,dinosaurs,RAPTOR PEN
-pen2,"""","""","""","""","""","""","""","""",RAPTOR PEN
-pen3,"""","""","""","""","""","""","""","""",RAPTOR PEN
-pen4,"""","""","""","""","""","""","""","""",RAPTOR PEN
-pen5,"""","""","""","""","""","""","""","""",RAPTOR PEN
-pen6,"""","""","""","""","""","""","""","""",RAPTOR PEN
-pen7,"""","""","""","""","""","""","""","""",RAPTOR PEN
-pen8,"""","""","""","""","""","""","""","""",RAPTOR PEN
-pen9,"""","""","""","""","""","""","""","""",RAPTOR PEN
-pen10,"""","""","""","""","""","""",True,"""",RAPTOR PEN
-pen11,"""","""","""","""","""","""",False,"""",RAPTOR PEN
-pen12,"""","""","""","""","""","""",False,"""",RAPTOR PEN
-pen13,"""","""","""","""","""","""",True,"""",RAPTOR PEN
-pen14,"""","""","""","""","""","""",False,"""",RAPTOR PEN
-pen15,"""","""","""","""","""","""",False,"""",RAPTOR PEN
-pen16,"""","""","""","""","""","""",True,"""",RAPTOR PEN
-pen17,"""","pen,penstart","""","""","""","""",True,"""",
+pen1,1,pen,"pen,special,shrine",-1,-1,"""",False,dinosaurs,VELOCIRAPTOR PEN
+pen2,"""","""","""","""","""","""","""","""",VELOCIRAPTOR PEN
+pen3,"""","""","""","""","""","""","""","""",VELOCIRAPTOR PEN
+pen4,"""","""","""","""","""","""","""","""",VELOCIRAPTOR PEN
+pen5,"""","""","""","""","""","""","""","""",VELOCIRAPTOR PEN
+pen6,"""","""","""","""","""","""","""","""",VELOCIRAPTOR PEN
+pen7,"""","""","""","""","""","""","""","""",VELOCIRAPTOR PEN
+pen8,"""","""","""","""","""","""","""","""",VELOCIRAPTOR PEN
+pen9,"""","""","""","""","""","""","""","""",VELOCIRAPTOR PEN
+pen10,"""","""","""","""","""","""",True,"""",VELOCIRAPTOR PEN
+pen11,"""","""","""","""","""","""",False,"""",VELOCIRAPTOR PEN
+pen12,"""","""","""","""","""","""",False,"""",VELOCIRAPTOR PEN
+pen13,"""","""","""","""","""","""",True,"""",VELOCIRAPTOR PEN
+pen14,"""","""","""","""","""","""",False,"""",VELOCIRAPTOR PEN
+pen15,"""","""","""","""","""","""",False,"""",VELOCIRAPTOR PEN
+pen16,"""","""","""","""","""","""",True,"""",VELOCIRAPTOR PEN
+pen17,"""","pen,penstart","""","""","""","""",True,"""",VELOCIRAPTOR PEN
 dice5,"""","armory,armorystart",armory,-1,-1,"""",False,"armory,weakguard,okguard,beefyguard,guard",
 armory1,"""","armory,armorystart","armory,tinyhall,special,shrine",-1,-1,"""",True,"armory,weakguard,okguard,beefyguard,guard","A long, skinny room with lockers on one side for guards to keep their equipment"
 guardpost1,"""","""","""","""","""","""","""","""",

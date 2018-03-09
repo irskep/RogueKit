@@ -69,6 +69,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
   lazy var mover: AStarMover = { return AStarMover(worldModel: self.worldModel) }()
   var cursorPoint: BLPoint = BLPoint.zero
   var inspectedEntity: Entity?
+  var isResting = false
 
   init(resources: ResourceCollectionProtocol, worldModel: WorldModel) {
     self.worldModel = worldModel
@@ -105,6 +106,17 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
         NSLog("WARNING: SAVE FILE IS NOT WORKING")
       }
     }
+  }
+
+  func mayPlayerRest() -> Bool {
+    guard let actorC = worldModel.actorS[worldModel.player] else { return false }
+    guard actorC.currentStats.hp < actorC.definition.stats.hp || actorC.currentStats.fatigue > 0 else { return false }
+    for p in worldModel.playerFOVCache {
+      if let m = worldModel.mob(at: p), m != worldModel.player {
+        return false
+      }
+    }
+    return true
   }
 
   func toggleInspectedEntity() {
@@ -144,6 +156,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
   override func update(terminal: BLTerminalInterface) {
     var didMove = false
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
+      self.isResting = false
       switch terminal.read() {
       case config.keyMenu:
         inspectedEntity = nil
@@ -170,6 +183,8 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       case config.keyWait:
         worldModel.waitPlayer()
         didMove = true
+      case config.keyRest:
+        self.isResting = true
       case config.keyInventoryOpen:
         director?.transition(to: InventoryScene(
           resources: resources,
@@ -240,6 +255,12 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       default: break
       }
     }
+
+    if self.isResting && self.mayPlayerRest() {
+      worldModel.waitPlayer()
+      didMove = true
+    }
+
     if didMove {
       if let e = inspectedEntity,
         let ep = worldModel.position(of: e),

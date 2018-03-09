@@ -21,6 +21,7 @@ struct Config: Codable {
   var keyRangedFire: Int32 = BLConstant.ENTER
   var keyToggleInspectedEntity: Int32 = BLConstant.TAB
   var keyHelp: Int32 = BLConstant.SLASH
+  var keyRest: Int32 = BLConstant.R
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS

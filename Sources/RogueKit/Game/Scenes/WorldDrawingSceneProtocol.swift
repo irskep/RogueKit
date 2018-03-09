@@ -28,7 +28,7 @@ extension WorldDrawingSceneProtocol {
     terminal.foregroundColor = resources.defaultPalette["ui_text_dim"]
     terminal.print(
       point: BLPoint(x: 1, y: terminal.height - 1),
-      string: "Press ? for help. Keys are: arrows, tab, enter, E(quip), D(rop)")
+      string: "Press ? for help. Keys are: arrows, tab, enter, E(quip), D(rop), R(est)")
 
 
     terminal.foregroundColor = resources.defaultPalette["ui_text"]

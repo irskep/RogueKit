@@ -324,7 +324,6 @@ class WorldModel: Codable {
       }
 
       self.turn += 1
-      print("turn", turn)
     }
   }
 

@@ -84,6 +84,10 @@ class ResourceCollection: ResourceCollectionProtocol {
   }()
 
   lazy var defaultPalette: PaletteStore = {
-    try! PaletteStore(terminal: BLTerminal.main, resources: self, name: "default")
+    do {
+      return try PaletteStore(terminal: BLTerminal.main, resources: self, name: "default")
+    } catch let error {
+      fatalError("Could not load palettes/default.csv")
+    }
   }()
 }

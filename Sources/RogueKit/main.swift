@@ -37,7 +37,7 @@ var path = ""
 if CommandLine.arguments.count > 1 {
   path = CommandLine.arguments[1]
 }
-if !FileManager.default.fileExists(atPath: path) {
+if FileManager.default.fileExists(atPath: Bundle.main.resourcePath! + "/Resources") {
   path = Bundle.main.resourcePath! + "/Resources"
 }
 NSLog("Path to Resources/: \(path)")

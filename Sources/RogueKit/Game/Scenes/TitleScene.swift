@@ -84,8 +84,12 @@ class TitleScene: Scene {
   }
 
   func actionStartGame() {
+    var t: timeval = timeval()
+    gettimeofday(&t, nil)
+    let seed = Int64(t.tv_sec * 1000) + Int64(t.tv_usec / 1000)
+    print("SEED:", seed)
     let worldModel = WorldModel(
-      rngStore: RandomSeedStore(seed: 135205160),
+      rngStore: RandomSeedStore(seed: UInt64(seed)),
       resources: resources,
       mapDefinitions: resources.csvDB.mapDefinitions,
       activeMapId: resources.csvDB.mapDefinitions.first!.id)

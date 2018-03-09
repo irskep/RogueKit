@@ -31,10 +31,18 @@ class LoadScene: Scene {
       self.director?.transition(to: LevelScene(resources: self.resources, worldModel: self.worldModel))
       return
     }
+    do {
+      try self.finishLoading(terminal: terminal)
+    } catch let error {
+      print(error)
+      fatalError("Could not generate map: \(error)")
+    }
+  }
 
+  func finishLoading(terminal: BLTerminalInterface) throws {
     let rng = worldModel.rngStore[id]
     let reader = GeneratorReader(resources: resources)
-    try! reader.run(
+    try reader.run(
       id: worldModel.mapDefinitions[id]!.generatorId,
       rng: rng,
       factory: { PurePrefabGenerator(
@@ -168,44 +176,6 @@ class LoadScene: Scene {
           levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy:#\(mob)", point: p))
           i += 1
         }
-
-        /*
-        var floorsWithMargins = Array(levelMap.floorsWithMargins)
-        rng.shuffleInPlace(&floorsWithMargins)
-        let entrance = floorsWithMargins[0]
-        let exit = floorsWithMargins[1]
-        let playerStart = rng.choice(Array(floorsWithMargins[0]
-          .getNeighbors(bounds: BLRect(size: levelMap.size), diagonals: false)))
-
-        let blacklist = [entrance, exit]
-        var floors = levelMap.floors.filter({ !blacklist.contains($0) })
-        rng.shuffleInPlace(&floors)
-        var floorIndex = 0
-        let getFloor: () -> BLPoint = {
-          let val = floors[floorIndex]
-          floorIndex += 1
-          return val
-        }
-        
-        levelMap.pointsOfInterest = [
-          PointOfInterest(kind: "playerStart", point: playerStart),
-        ]
-        if levelMap.definition.exits["previous"] != nil {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "entrance", point: entrance))
-        }
-        if levelMap.definition.exits["next"] != nil {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exit))
-        }
-        for _ in 0..<10 {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy:early", point: getFloor()))
-        }
-        for _ in 0..<10 {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "weapon:basic", point: getFloor()))
-        }
-        for _ in 0..<10 {
-          levelMap.pointsOfInterest.append(PointOfInterest(kind: "armor:basic", point: getFloor()))
-        }
-        */
 
         levelMap.isPopulated = true
 

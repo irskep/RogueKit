@@ -32,19 +32,26 @@ class LoseScene: Scene {
     self.resources = resources
   }
 
+  lazy var headshot: REXPaintImage? = { return resources.rexPaintImage(named: "hv_lose") }()
+
   override func update(terminal: BLTerminalInterface) {
     terminal.backgroundColor = resources.defaultPalette["ui_bg"]
     terminal.clear()
 
+    if let headshot = headshot {
+      headshot.draw(in: terminal, at: BLPoint(x: terminal.width / 2 - headshot.width / 2, y: 0))
+    }
+
+    terminal.backgroundColor = resources.defaultPalette["ui_bg"]
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
     terminal.print(
-      rect: BLRect(x: terminal.width / 4, y: terminal.height / 3, w: terminal.width / 2, h: 1000),
+      rect: BLRect(x: terminal.width / 4, y: terminal.height - 4, w: terminal.width / 2, h: 1000),
       align: BLConstant.ALIGN_CENTER,
       string: INTRO.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
 
     terminal.foregroundColor = resources.defaultPalette["green"]
-    let rect = BLRect(x: 0, y: 0, w: terminal.state(BLConstant.WIDTH), h: 10)
-    drawCenteredString(terminal, rect, TITLE)
+    let rect = BLRect(x: 0, y: terminal.height / 4 * 3 - 3, w: terminal.state(BLConstant.WIDTH), h: 10)
+    _ = drawCenteredString(terminal, rect, TITLE)
 
     terminal.refresh()
 

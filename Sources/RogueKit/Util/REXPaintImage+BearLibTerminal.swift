@@ -40,6 +40,7 @@ public extension REXPaintDrawable {
     let transparent = terminal.getColor(a: 255, r: 255, g: 0, b: 255)
     let wasCompositing = terminal.isCompositionEnabled
     if layersCount > 1 { terminal.isCompositionEnabled = true }
+    let originalBG = terminal.backgroundColor
     for layer in 0..<layersCount {
       for y in 0..<height {
         for x in 0..<width {
@@ -51,7 +52,7 @@ public extension REXPaintDrawable {
 
           let bg = terminal.getColor(a: 255, r: cell.backgroundColor.0, g: cell.backgroundColor.1, b: cell.backgroundColor.2)
           if bg == transparent {
-            terminal.backgroundColor = terminal.getColor(a: 0, r: 0, g: 0, b: 0)
+            terminal.backgroundColor = originalBG
           } else {
             terminal.backgroundColor = bg
           }

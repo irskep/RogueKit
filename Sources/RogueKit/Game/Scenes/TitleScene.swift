@@ -26,11 +26,11 @@ This morning, your cell door swung open on its own. It is time to escape!
 
 var seedOverride: UInt64? = nil
 
-func drawCenteredString(_ terminal: BLTerminalInterface, _ box: BLRect, _ s: String) {
+func drawCenteredString(_ terminal: BLTerminalInterface, _ box: BLRect, _ s: String) -> BLSize {
   let stringSize = terminal.measure(string: s)
   let x = box.x + box.w / 2 - stringSize.w / 2
   let y = box.y + box.h / 2 - stringSize.h / 2
-  terminal.print(point: BLPoint(x: x, y: y), string: s)
+  return terminal.print(point: BLPoint(x: x, y: y), string: s)
 }
 
 
@@ -51,6 +51,8 @@ class TitleScene: Scene {
     }
   }()
 
+  lazy var headshot: REXPaintImage? = { return resources.rexPaintImage(named: "hallervorden_title") }()
+
   init(resources: ResourceCollectionProtocol) {
     self.resources = resources
   }
@@ -58,6 +60,14 @@ class TitleScene: Scene {
   override func update(terminal: BLTerminalInterface) {
     terminal.backgroundColor = resources.defaultPalette["ui_bg"]
     terminal.clear()
+
+    if let headshot = headshot {
+      headshot.draw(in: terminal, at: BLPoint.zero)
+    }
+
+    terminal.foregroundColor = resources.defaultPalette["green"]
+    let rect = BLRect(x: 0, y: 0, w: terminal.state(BLConstant.WIDTH), h: 10)
+    _ = drawCenteredString(terminal, rect, TITLE)
 
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
     menu.rect = BLRect(
@@ -67,14 +77,10 @@ class TitleScene: Scene {
       h: 2)
     menu.draw(in: terminal)
 
-    terminal.print(
-      rect: BLRect(x: terminal.width / 4, y: terminal.height / 3, w: terminal.width / 2, h: 1000),
-      align: BLConstant.ALIGN_LEFT,
-      string: INTRO.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
-
-    terminal.foregroundColor = resources.defaultPalette["green"]
-    let rect = BLRect(x: 0, y: 0, w: terminal.state(BLConstant.WIDTH), h: 10)
-    drawCenteredString(terminal, rect, TITLE)
+//    terminal.print(
+//      rect: BLRect(x: terminal.width / 4, y: terminal.height / 3, w: terminal.width / 2, h: 1000),
+//      align: BLConstant.ALIGN_LEFT,
+//      string: INTRO.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
 
     terminal.refresh()
 

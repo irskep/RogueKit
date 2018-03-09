@@ -54,7 +54,7 @@ class SimpleMenu {
       terminal.print(
         point: BLPoint(x: rect.x, y: y),
         string: "(\(BLConstant.label(for: key) ?? "???")) \(label)")
-      y += 1
+      y += 2
     }
   }
 

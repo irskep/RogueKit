@@ -220,7 +220,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
         }
       case config.keyDebugRight:
         if let id = worldModel.exits["next"] {
-          director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))
+          if id == "win" {
+            director?.transition(to: WinScene(resources: resources))
+          } else {
+            director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))
+          }
         }
       case config.keyDebugOmniscience:
         if terminal.check(BLConstant.SHIFT) {

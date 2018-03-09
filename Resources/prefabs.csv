@@ -26,3 +26,19 @@ hive_rm2,1,"""","""","""","""","""","""",NATURAL SELECTION HIVE
 hive_rm3,1,"""","""","""","""","""","""",NATURAL SELECTION HIVE
 hive_|,1,"hive,hall,hivehall",hiveroom,"""","""",FALSE,,NATURAL SELECTION HIVE
 hive_-,1,"hive,hall,hivehall",hiveroom,"""","""",FALSE,,NATURAL SELECTION HIVE
+pen1,1,pen,pen,-1,-1,False,dinosaurs,RAPTOR PEN
+pen2,"""","""","""","""","""","""","""",RAPTOR PEN
+pen3,"""","""","""","""","""","""","""",RAPTOR PEN
+pen4,"""","""","""","""","""","""","""",RAPTOR PEN
+pen5,"""","""","""","""","""","""","""",RAPTOR PEN
+pen6,"""","""","""","""","""","""","""",RAPTOR PEN
+pen7,"""","""","""","""","""","""","""",RAPTOR PEN
+pen8,"""","""","""","""","""","""","""",RAPTOR PEN
+pen9,"""","""","""","""","""","""","""",RAPTOR PEN
+pen10,"""","""","""","""","""",True,"""",RAPTOR PEN
+pen11,"""","""","""","""","""",False,"""",RAPTOR PEN
+pen12,"""","""","""","""","""",False,"""",RAPTOR PEN
+pen13,"""","""","""","""","""",True,"""",RAPTOR PEN
+pen14,"""","""","""","""","""",False,"""",RAPTOR PEN
+pen15,"""","""","""","""","""",False,"""",RAPTOR PEN
+pen16,"""","""","""","""","""",True,"""",RAPTOR PEN

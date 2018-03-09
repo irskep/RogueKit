@@ -25,6 +25,7 @@ struct MapDefinition: Codable {
   let tagWhitelist: [String]
   var numItems: Int
   var numMobs: Int
+  let text: String
   let exits: [String: String]  // "next"|"previous" -> mapId
 }
 
@@ -473,6 +474,7 @@ extension WorldModel {
   @discardableResult
   func fightPlayer(defender: Entity) -> Bool {
     if self.fight(attacker: player, defender: defender) {
+      moveAfterPlayerS[defender]?.isAttacked = true
       self.playerDidTakeAction()
       return true
     } else {

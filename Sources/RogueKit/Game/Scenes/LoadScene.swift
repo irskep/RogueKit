@@ -83,7 +83,6 @@ class LoadScene: Scene {
       guard $0.poi?.isRequired == true else { return false }
       return $0.poi?.kind == .item || $0.poi?.kind == .weapon || $0.poi?.kind == .armor
     })
-    print("ip:" ,reqdItemPoints)
     rng.shuffleInPlace(&reqdItemPoints)
     var nonReqdItemPoints = gen.points(where: {
       guard $0.poi?.isRequired == false else { return false }
@@ -201,6 +200,17 @@ class LoadScene: Scene {
     self.worldModel.maps[self.id] = levelMap
     self.worldModel.travel(to: self.id)
     self.worldModel.applyPOIs()
-    self.director?.transition(to: LevelScene(resources: self.resources, worldModel: self.worldModel))
+
+    let levelScene = LevelScene(resources: self.resources, worldModel: self.worldModel)
+    let mapText = worldModel.mapDefinitions[self.id]?.text
+    if let mapText = mapText, !mapText.isEmpty {
+      self.director?.transition(to: TextScene(
+        resources: resources,
+        worldModel: worldModel,
+        returnToScene: levelScene,
+        text: mapText))
+    } else {
+      self.director?.transition(to: levelScene)
+    }
   }
 }

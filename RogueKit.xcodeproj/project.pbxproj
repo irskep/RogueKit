@@ -119,6 +119,8 @@
 		AAC6A5122049EF24008D971B /* AStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A5102049EF24008D971B /* AStar.swift */; };
 		AAD50C09205256B70090AB90 /* WinScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD50C08205256B70090AB90 /* WinScene.swift */; };
 		AAD50C0A205256B70090AB90 /* WinScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD50C08205256B70090AB90 /* WinScene.swift */; };
+		AAD50C0C20532EA70090AB90 /* TextScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD50C0B20532EA70090AB90 /* TextScene.swift */; };
+		AAD50C0D20532EA70090AB90 /* TextScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD50C0B20532EA70090AB90 /* TextScene.swift */; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -313,6 +315,7 @@
 		AAC6A50D2049EF1A008D971B /* SwiftPriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPriorityQueue.swift; sourceTree = "<group>"; };
 		AAC6A5102049EF24008D971B /* AStar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AStar.swift; sourceTree = "<group>"; };
 		AAD50C08205256B70090AB90 /* WinScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinScene.swift; sourceTree = "<group>"; };
+		AAD50C0B20532EA70090AB90 /* TextScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextScene.swift; sourceTree = "<group>"; };
 		"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BearLibTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::Gzip::Product" /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Gzip::system-zlib::Product" /* system_zlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = system_zlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -454,6 +457,7 @@
 				AA467152204DDD3C003A1114 /* LoseScene.swift */,
 				AA4671552051F352003A1114 /* HelpScene.swift */,
 				AAD50C08205256B70090AB90 /* WinScene.swift */,
+				AAD50C0B20532EA70090AB90 /* TextScene.swift */,
 			);
 			name = Scenes;
 			path = Sources/RogueKit/Game/Scenes;
@@ -919,6 +923,7 @@
 				AA3DA2672012DE0300A7CA1B /* CP437.swift in Sources */,
 				AAC6A5002049CF8C008D971B /* URLs.swift in Sources */,
 				AA467154204DDD3C003A1114 /* LoseScene.swift in Sources */,
+				AAD50C0D20532EA70090AB90 /* TextScene.swift in Sources */,
 				AA3DA2682012DE0300A7CA1B /* DistanceField.swift in Sources */,
 				AA072D7B204B5C8900479A94 /* CSVDB.swift in Sources */,
 				AA072D84204C817C00479A94 /* StringUtils.swift in Sources */,
@@ -987,6 +992,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_72 /* RecursiveShadowcastingFOVProvider.swift in Sources */,
+				AAD50C0C20532EA70090AB90 /* TextScene.swift in Sources */,
 				AA4671562051F352003A1114 /* HelpScene.swift in Sources */,
 				OBJ_73 /* Prefab.swift in Sources */,
 				AA90B097204A234400A59645 /* Assemblies.swift in Sources */,

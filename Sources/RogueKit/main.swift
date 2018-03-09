@@ -60,8 +60,8 @@ class SteveRLDirector: Director {
 #endif
 
 //let FONT = "fonts/Alloy_curses_12x12.png"
-//let FONT = "fonts/font_12x12.png"
-let FONT = "fonts/Taffer_20x20.png"
+let FONT = "fonts/font_12x12.png"
+//let FONT = "fonts/Taffer_20x20.png"
 //let FONT = "fonts/cp437_10x10.png"
 let FONT_SIZE = FONT[FONT.index(FONT.endIndex, offsetBy: -9)..<FONT.index(FONT.endIndex, offsetBy: -4)]
 

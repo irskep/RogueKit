@@ -52,6 +52,7 @@ class MoveAfterPlayerC: ECSComponent, Codable {
     set { stateString = newValue.rawValue }
   }
 
+  var isAttacked = false
   var intendedPath: [BLPoint]?
   var lastTargetPos: BLPoint?
   var target: Entity?
@@ -93,7 +94,7 @@ class MoveAfterPlayerC: ECSComponent, Codable {
     if worldModel.canMobSeePlayer(entity) {
       switch state {
       case .standingStill, .wandering:
-        if worldModel.mapRNG.get() <= _100(stats.awareness) {
+        if worldModel.mapRNG.get() <= _100(stats.awareness) || isAttacked {
           self.state = .pursuingPlayer
           self.target = worldModel.player
           self.lastTargetPos = worldModel.playerPos
@@ -102,6 +103,8 @@ class MoveAfterPlayerC: ECSComponent, Codable {
         }
       default: break
       }
+    } else {
+      isAttacked = false
     }
 
     switch state {

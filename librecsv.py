@@ -15,4 +15,4 @@ for k, v in get_data(sys.argv[1]).items():
         max_cols = 0
         for row in v:
             max_cols = max(max_cols, len(row))
-            writer.writerow(row + [''] * (max_cols - len(row)))
+            writer.writerow([str(c).replace("\n", "\\n") for c in row] + [''] * (max_cols - len(row)))

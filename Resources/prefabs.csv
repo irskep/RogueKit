@@ -6,10 +6,10 @@ room,1,"generic,startingroom,start",*,"""",-1,TRUE,guard,
 room5,"""","""","""","""","""","""","""",
 oval,"""",generic,*,"""","""","""","""",
 oval2,"""",generic,*,"""","""","""","""",
-jct_+,0.5,"generic,hall",*,"""",-1,FALSE,technician,
+jct_+,0.5,"generic,hall,tinyhall",*,"""",-1,FALSE,technician,
 jct_-,"""","""","""","""","""","""","""",
 jct_|,"""","""","""","""","""","""","""",
-jct_se5,"""","""","""","""","""","""","""",
+jct_se5,"""","generic,hall","""","""","""","""","""",
 jct_sw5,"""","""","""","""","""","""","""",
 jct_ne5,"""","""","""","""","""","""","""",
 jc_nw5,"""","""","""","""","""","""","""",
@@ -43,3 +43,10 @@ pen13,"""","""","""","""","""",True,"""",RAPTOR PEN
 pen14,"""","""","""","""","""",False,"""",RAPTOR PEN
 pen15,"""","""","""","""","""",False,"""",RAPTOR PEN
 pen16,"""","""","""","""","""",True,"""",RAPTOR PEN
+dice5,"""","armory,armorystart",armory,-1,-1,False,guard,
+armory1,"""",armory,armory,-1,-1,True,guard,"A long, skinny room with lockers on one side for guards to keep their equipment"
+guardpost1,"""","""","""","""","""","""","""",
+l_nw,"""","armory,hall","""","""","""",False,technician,
+l_ne,"""","""","""","""","""","""","""",
+l_sw,"""","""","""","""","""","""","""",
+l_se,"""","""","""","""","""","""","""",

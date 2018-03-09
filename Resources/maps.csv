@@ -1,6 +1,6 @@
 id,script,tag_whitelist,num_items,num_mobs,next,previous
 1,start,start,4,10,2,
-2,medical_lab,"mid,generic,medical",20,40,3,1
+5,medical_lab,"mid,generic,medical",20,40,3,1
 3,dino_pen,"pen,mid,dinosaurs",20,15,4,2
 4,hive,"hive,animal,mid",20,40,5,3
-5,generic_lair,"late,generic",20,40,,4
+2,armory,"late,generic,armory,technician,tinyhall",20,40,,4

@@ -55,7 +55,7 @@ extension ResourceCollectionProtocol {
   }
 
   func url(for name: String) -> URL? {
-    return URL(string: "file://\(path)/\(name)")
+    return URL(fileURLWithPath: "/\(path)/\(name)")
   }
 
   func rexPaintImage(named name: String) -> REXPaintImage? {

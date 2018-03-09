@@ -328,7 +328,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       callback: callback)
     case ("poop", .some(let dest)): self.playLineAnimation(
       source: source, dest: dest,
-      color: "white", h: "*", v: "*", nw: "*", ne: "*", sw: "*", se: "*",
+      color: "brown", h: "*", v: "*", nw: "*", ne: "*", sw: "*", se: "*",
       callback: callback)
     case ("shoot", .some(let dest)): self.playLineAnimation(
       source: source, dest: dest,

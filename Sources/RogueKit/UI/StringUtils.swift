@@ -59,7 +59,8 @@ class StringUtils {
     entity: Entity,
     in worldModel: WorldModel,
     showName: Bool,
-    showWeaponDescription: Bool)
+    showWeaponDescription: Bool,
+    compareToEquipmentOn comparisonEntity: Entity?)
     -> String
   {
     var strings = [String]()
@@ -88,7 +89,13 @@ class StringUtils {
     }
     if let armor = worldModel.armorS[entity]?.armorDefinition {
       strings.append("")
-      strings.append(armor.statsDescription)
+      if let ce = comparisonEntity, let equipC = worldModel.equipmentS[ce] {
+        strings.append(armor.statsDescription(
+          in: worldModel,
+          comparedTo: equipC.armor(on: armor.slot, in: worldModel)?.armorDefinition))
+      } else {
+        strings.append(armor.statsDescription)
+      }
     }
     if let weaponC = worldModel.weaponS[entity]  {
       strings.append("")

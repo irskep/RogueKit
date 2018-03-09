@@ -38,7 +38,7 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
 
     var title: String {
       switch self {
-      case .willOpenMenu, .menuIsOpen(_): return "Inventory (broken)"
+      case .willOpenMenu, .menuIsOpen(_): return "Inventory"
       case .willEquip: return "Equip/Unequip"
       case .willDrop: return "Drop"
       }
@@ -168,7 +168,8 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
 
     let s = StringUtils.describe(
       entity: entity, in: worldModel,
-      showName: true, showWeaponDescription: true)
+      showName: true, showWeaponDescription: true,
+      compareToEquipmentOn: worldModel.player)
     terminal.print(rect: menuRect.inset(byX1: 1, y1: 1, x2: 1, y2: 1),
                    align: BLConstant.ALIGN_LEFT,
                    string: s)

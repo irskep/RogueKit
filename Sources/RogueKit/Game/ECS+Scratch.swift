@@ -261,9 +261,13 @@ class EquipmentC: ECSComponent, Codable {
     return false
   }
 
-  func armor(on slot: Slot, in worldModel: WorldModel) -> ArmorC? {
-    guard let e = slots[slot.rawValue] else { return nil }
+  func armor(on slot: String, in worldModel: WorldModel) -> ArmorC? {
+    guard let e = slots[slot] else { return nil }
     return worldModel.armorS[e]
+  }
+
+  func armor(on slot: Slot, in worldModel: WorldModel) -> ArmorC? {
+    return armor(on: slot.rawValue, in: worldModel)
   }
 
   func put(armor e: Entity, on slot: Slot) {

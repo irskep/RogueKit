@@ -36,7 +36,8 @@ extension WorldDrawingSceneProtocol {
 
     var s = StringUtils.describe(
       entity: worldModel.player, in: worldModel, showName: false,
-      showWeaponDescription: true)
+      showWeaponDescription: true,
+      compareToEquipmentOn: nil)
     if worldModel.gameHasntEnded, let desc = worldModel.activeMap.descriptionOfRoom(
         coveringCellAt: worldModel.playerPos) {
       s += "\n\n" + "[color=ui_text_dim]Current room:\n[color=ui_text]" + desc
@@ -75,7 +76,8 @@ extension WorldDrawingSceneProtocol {
       worldModel.nameS[inspectedEntity] != nil
     {
       let string = StringUtils.describe(
-        entity: inspectedEntity, in: worldModel, showName: true, showWeaponDescription: false)
+        entity: inspectedEntity, in: worldModel, showName: true,
+        showWeaponDescription: false, compareToEquipmentOn: worldModel.player)
 
       let menuOrigin: BLPoint
       if point.x < worldModel.activeMap.size.w / 2 {

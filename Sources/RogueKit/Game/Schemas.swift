@@ -145,8 +145,8 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
 
   var statsDescription: String {
     var strings: [String] = [
-      "\(Int(grams))g, \(liters)L",
-      "",
+//      "\(Int(grams))g, \(liters)L",
+//      "",
       isMelee ? "Melee weapon" : "Ranged weapon",
       "Requires \(strengthRequired) str",
       ""
@@ -189,14 +189,14 @@ struct ArmorDefinition: Codable, Tagged, WeightedChoosable {
   static let zero = {
     return ArmorDefinition(
       id: "null", name: "null", char: 0, color: "red", description: "", liters: 0,
-      grams: 0, tags: [], weight: 0, slot: "null", protectionPhysical: 0, flammability: 0,
-      conductiveness: 0, storageLiters: 0)
+      grams: 0, tags: [], weight: 0, slot: "null", protectionPhysical: 0, flammability: 100,
+      conductiveness: 100, storageLiters: 0)
   }()
 
   var statsDescription: String {
     var strings: [String] = [
-      "\(Int(grams))g, \(liters)L",
-      "",
+//      "\(Int(grams))g, \(liters)L",
+//      "",
       "Worn on \(slot)",
       ""
     ]
@@ -208,6 +208,29 @@ struct ArmorDefinition: Codable, Tagged, WeightedChoosable {
     }
     if flammability < 100 {
       strings.append("\(Int(100 - flammability))% fire protection")
+    }
+    return strings.joined(separator: "\n")
+  }
+
+  func statsDescription(in worldModel: WorldModel, comparedTo armorDefinition: ArmorDefinition?) -> String {
+    let armorDef = armorDefinition ?? ArmorDefinition.zero
+    var strings: [String] = [
+//      "\(Int(grams))g, \(liters)L",
+//      "",
+      "Worn on \(slot)",
+      ""
+    ]
+    if protectionPhysical > 0 || armorDef.protectionPhysical > 0 {
+      strings.append("\(Int(protectionPhysical))% physical protection")
+      strings.append(S.dim("(current: \(Int(armorDef.protectionPhysical))%)"))
+    }
+    if conductiveness < 100 || armorDef.conductiveness < 100 {
+      strings.append("\(Int(100 - conductiveness))% electric protection")
+      strings.append(S.dim("(current: \(Int(100 - armorDef.conductiveness))%)"))
+    }
+    if flammability < 100 || armorDef.flammability < 100 {
+      strings.append("\(Int(100 - flammability))% fire protection")
+      strings.append(S.dim("(current: \(Int(100 - armorDef.flammability))%)"))
     }
     return strings.joined(separator: "\n")
   }

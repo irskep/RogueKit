@@ -162,7 +162,7 @@ class WeaponC: ECSComponent, Codable {
 
   func turnsUntilCanFire(in worldModel: WorldModel) -> Int {
     if worldModel.turn - turnLastUsed > weaponDefinition.cooldown { return 0 }
-    return weaponDefinition.cooldown - (worldModel.turn - turnLastUsed) + 1
+    return weaponDefinition.cooldown - (worldModel.turn - turnLastUsed)
   }
 
   func canFire(in worldModel: WorldModel) -> Bool {
@@ -172,7 +172,7 @@ class WeaponC: ECSComponent, Codable {
   func fire(in worldModel: WorldModel) -> Bool {
     print("\(entity!).turn = \(worldModel.turn)")
     guard canFire(in: worldModel) else { return false }
-    turnLastUsed = worldModel.turn - 1
+    turnLastUsed = worldModel.turn + 1
     return true
   }
 }
@@ -200,8 +200,8 @@ class WieldingC: ECSComponent, Codable {
   }
 
   func weaponDefinition(in worldModel: WorldModel) -> WeaponDefinition {
-    if let weaponE = weaponEntity {
-      return worldModel.weaponS[weaponE]!.weaponDefinition
+    if let weaponE = weaponEntity, let weaponC = worldModel.weaponS[weaponE], weaponC.canFire(in: worldModel) {
+      return weaponC.weaponDefinition
     } else {
       return defaultWeaponDefinition
     }

@@ -59,7 +59,7 @@ extension ResourceCollectionProtocol {
   }
 
   func rexPaintImage(named name: String) -> REXPaintImage? {
-    guard let url = URL(string: "file://\(self.path)/xp/\(name).xp") else { return nil }
+    guard let url = self.url(for: "xp/\(name).xp") else { return nil }
     return REXPaintImage(url: url)
   }
 }

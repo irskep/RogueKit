@@ -24,6 +24,7 @@ You, a retail store employee, were captured by the mad scientist Dr. Hallervorde
 This morning, your cell door swung open on its own. It is time to escape!
 """
 
+var seedOverride: UInt64? = nil
 
 func drawCenteredString(_ terminal: BLTerminalInterface, _ box: BLRect, _ s: String) {
   let stringSize = terminal.measure(string: s)
@@ -87,9 +88,9 @@ class TitleScene: Scene {
     var t: timeval = timeval()
     gettimeofday(&t, nil)
     let seed = Int64(t.tv_sec * 1000) + Int64(t.tv_usec / 1000)
-    print("SEED:", seed)
+    print("SEED:", seedOverride ?? seed)
     let worldModel = WorldModel(
-      rngStore: RandomSeedStore(seed: UInt64(seed)),
+      rngStore: RandomSeedStore(seed: seedOverride ?? UInt64(seed)),
       resources: resources,
       mapDefinitions: resources.csvDB.mapDefinitions,
       activeMapId: resources.csvDB.mapDefinitions.first!.id)

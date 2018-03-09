@@ -46,7 +46,8 @@ COMBAT
 
 Combat costs FATIGUE. If you get too fatigued, you lose a turn after fighting.
 
-Some weapons (mostly ranged) have a COOLDOWN. While a weapon is cooling down, you can move, but not shoot.
+Some weapons (mostly ranged) have a COOLDOWN. While a weapon is cooling down,
+you will attack with your fallback weapon, i.e. your fists.
 """
 
 

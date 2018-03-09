@@ -282,7 +282,7 @@
 		AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorProtocol.swift; sourceTree = "<group>"; };
 		AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorReader.swift; sourceTree = "<group>"; };
 		AA3DA229200C37BF00A7CA1B /* RKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKColor.swift; sourceTree = "<group>"; };
-		AA3DA22F2012DD2600A7CA1B /* RogueKitApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RogueKitApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA3DA22F2012DD2600A7CA1B /* Dr. Hallervorden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dr. Hallervorden.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3DA2312012DD2600A7CA1B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA3DA2332012DD2600A7CA1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA3DA2362012DD2600A7CA1B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -579,7 +579,7 @@
 				"Gzip::Gzip::Product" /* Gzip.framework */,
 				"Gzip::system-zlib::Product" /* system_zlib.framework */,
 				"BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */,
-				AA3DA22F2012DD2600A7CA1B /* RogueKitApp.app */,
+				AA3DA22F2012DD2600A7CA1B /* Dr. Hallervorden.app */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -657,9 +657,9 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
-		AA3DA22E2012DD2600A7CA1B /* RogueKitApp */ = {
+		AA3DA22E2012DD2600A7CA1B /* Dr. Hallervorden */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA3DA23A2012DD2600A7CA1B /* Build configuration list for PBXNativeTarget "RogueKitApp" */;
+			buildConfigurationList = AA3DA23A2012DD2600A7CA1B /* Build configuration list for PBXNativeTarget "Dr. Hallervorden" */;
 			buildPhases = (
 				AA3DA22B2012DD2600A7CA1B /* Sources */,
 				AA3DA22C2012DD2600A7CA1B /* Frameworks */,
@@ -675,9 +675,9 @@
 				AA3DA2582012DD7900A7CA1B /* PBXTargetDependency */,
 				AA3DA25C2012DD7900A7CA1B /* PBXTargetDependency */,
 			);
-			name = RogueKitApp;
+			name = "Dr. Hallervorden";
 			productName = RogueKitApp;
-			productReference = AA3DA22F2012DD2600A7CA1B /* RogueKitApp.app */;
+			productReference = AA3DA22F2012DD2600A7CA1B /* Dr. Hallervorden.app */;
 			productType = "com.apple.product-type.application";
 		};
 		"BearLibTerminal::BearLibTerminal" /* BearLibTerminal */ = {
@@ -846,7 +846,7 @@
 				"BearLibTerminal::BearLibTerminal" /* BearLibTerminal */,
 				"RogueKit::RogueKit Demo::ProductTarget" /* RogueKit Demo */,
 				AA3DA1F4200BE88A00A7CA1B /* Sync Resources */,
-				AA3DA22E2012DD2600A7CA1B /* RogueKitApp */,
+				AA3DA22E2012DD2600A7CA1B /* Dr. Hallervorden */,
 			);
 		};
 /* End PBXProject section */
@@ -1268,7 +1268,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_SWIFT_FLAGS = "-DXcode -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.steveasleep.RogueKitApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.steveasleep.DrHallervorden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 4.0;
@@ -1335,7 +1335,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-DXcode -Xcc -fmodule-map-file=$(SRCROOT)/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.steveasleep.RogueKitApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.steveasleep.DrHallervorden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -1685,7 +1685,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		AA3DA23A2012DD2600A7CA1B /* Build configuration list for PBXNativeTarget "RogueKitApp" */ = {
+		AA3DA23A2012DD2600A7CA1B /* Build configuration list for PBXNativeTarget "Dr. Hallervorden" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA3DA23B2012DD2600A7CA1B /* Debug */,

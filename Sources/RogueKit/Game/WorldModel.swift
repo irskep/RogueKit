@@ -431,7 +431,6 @@ extension WorldModel {
 
   func predictFight(attacker: Entity, defender: Entity, forUI: Bool = false) -> CombatStats? {
     guard
-      self.canWeaponFire(wieldedBy: attacker),
       let weaponC1: WeaponDefinition = weapon(wieldedBy: attacker),
       let equipmentC1 = equipmentS[attacker],
       let actorC1 = actorS[attacker],
@@ -468,11 +467,23 @@ extension WorldModel {
   }
 
   @discardableResult
+  func fightPlayer(defender: Entity) -> Bool {
+    if self.fight(attacker: player, defender: defender) {
+      self.playerDidTakeAction()
+      return true
+    } else {
+      self.log("Your weapon is cooling down or they are too far away.")
+    }
+    return false
+  }
+
+  @discardableResult
   func fight(attacker: Entity, defender: Entity) -> Bool {
+    let w: WeaponDefinition? = self.weapon(wieldedBy: attacker)
+    print(attacker, "fights", defender, "with", w?.name ?? "nothing")
     guard let stats = predictFight(attacker: attacker, defender: defender),
       stats.hitChance > 0,
-      let attackerWeapon: WeaponDefinition = self.weapon(wieldedBy: attacker),
-      self.canWeaponFire(wieldedBy: attacker)
+      let attackerWeapon: WeaponDefinition = self.weapon(wieldedBy: attacker)
       else {
         return false
     }
@@ -499,11 +510,12 @@ extension WorldModel {
       let actorC1 = actorS[attacker],
 //      let equipmentC2 = equipmentS[defender],
       let actorC2 = actorS[defender],
+      let weaponDef: WeaponDefinition = self.weapon(wieldedBy: attacker),
       let stats = predictFight(attacker: attacker, defender: defender)
       else {
         return false
     }
-    if let weaponC: WeaponC = self.weapon(wieldedBy: attacker) {
+    if let weaponC: WeaponC = self.weapon(wieldedBy: attacker), weaponC.weaponDefinition.id == weaponDef.id {
       guard weaponC.fire(in: self) else { return false }
     }
     for outcome in CombatStats.fight(rng: mapRNG, stats: stats) {
@@ -514,7 +526,7 @@ extension WorldModel {
       case .changeStats(let slot, let attackerStatDelta, let defenderStatDelta, let damageSummaryString):
         actorC1.applyDelta(delta: attackerStatDelta)
         actorC2.applyDelta(delta: defenderStatDelta)
-        self.log("\(nameC1.name) hits \(nameC2.name) on the \(slot) for \(damageSummaryString)")
+        self.log("\(nameC1.name) hits \(nameC2.name) with \(weaponDef.name) on the \(slot) for \(damageSummaryString)")
       }
     }
     self.maybeKill(attacker)

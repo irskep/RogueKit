@@ -230,7 +230,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
         }
       case BLConstant.MOUSE_LEFT:
         if let e = inspectedEntity, worldModel.moveAfterPlayerS[e] != nil {
-          worldModel.fight(attacker: worldModel.player, defender: e)
+          worldModel.fightPlayer(defender: e)
           didMove = true
         } else if !mover.points.isEmpty {
           worldModel.movePlayer(by: mover.points.last! - worldModel.positionS[worldModel.player]!.point)
@@ -278,11 +278,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
   func rangedFire() {
     guard let e = inspectedEntity else { return }
     if worldModel.moveAfterPlayerS[e] != nil {
-      if worldModel.canWeaponFire(wieldedBy: worldModel.player) {
-        worldModel.fight(attacker: worldModel.player, defender: e)
-      } else {
-        worldModel.log("Your weapon is cooling down. Press space to wait.")
-      }
+      worldModel.fightPlayer(defender: e)
     } else if let p = worldModel.position(of: e) {
       mover.update(cursorPoint: p)
       worldModel.movePlayer(by: mover.points.last! - worldModel.positionS[worldModel.player]!.point)

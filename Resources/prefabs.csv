@@ -52,7 +52,7 @@ l_nw,"""","armory,hall","""","""","""","""",False,technician,
 l_ne,"""","""","""","""","""","""","""","""",
 l_sw,"""","""","""","""","""","""","""","""",
 l_se,"""","""","""","""","""","""","""","""",
-aqua1,"""",aqua,"aqua,tinyhall",-1,-1,"""",False,mechapiranha,MECHAPIRANHA HABITAT
+aqua1,"""",aqua,"aqua,tinyhall",-1,-1,"""",False,"mechapiranha,early,mid",MECHAPIRANHA HABITAT
 aqua2,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT
 aqua3,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT
 aqua4,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT

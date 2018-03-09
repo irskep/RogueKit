@@ -789,8 +789,6 @@ extension WorldModel: BLTDrawable {
       terminal.clear(area: BLRect(origin: point + offset))
     }
 
-    terminal.foregroundColor = activeMap.palette["lightgreen"]
-
     let positionCs = positionS.all(in: activeMapId, at: point)
     guard positionCs.count > 0 else { return }
     var toDraw = [SpriteC]()
@@ -805,6 +803,7 @@ extension WorldModel: BLTDrawable {
       toDraw.sort(by: { $0.z < $1.z })
     }
     for spriteC in toDraw {
+      terminal.foregroundColor = spriteC.color
       if let int = spriteC.int {
         terminal.put(point: point, code: int)
       } else if let str = spriteC.str {

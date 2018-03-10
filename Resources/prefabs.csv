@@ -56,8 +56,8 @@ aqua1,"""",aqua,"aqua,tinyhall",-1,-1,"""",False,"mechapiranha,early,mid",MECHAP
 aqua2,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT
 aqua3,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT
 aqua4,"""","""","""","""","""","""","""","""",MECHAPIRANHA HABITAT
-aqua5,"""","aqua,aquastart","""","""","""","""","""","""",MECHAPIRANHA HABITAT
-aqua6,"""",aqua,"""","""","""","""","""","""",MECHAPIRANHA HABITAT
+aqua5,0.7,"aqua,aquastart","""","""","""","""","""","""",MECHAPIRANHA HABITAT
+aqua6,1,aqua,"""","""","""","""","""","""",MECHAPIRANHA HABITAT
 shrine,0.5,shrine,*,-1,1,1,True,shrine,"A tiny museum of medieval armor and weaponry. You're not sure why it's here, but some of this stuff looks useful."
 special,0.5,special,*,-1,1,1,True,special,A gleaming white room with a pedestal in the center
 endstart,1,"endstart,end",end,-1,-1,1,True,the_doctor,A high-ceilinged marble entrance hall

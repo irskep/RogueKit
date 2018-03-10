@@ -139,8 +139,19 @@ class LoadScene: Scene {
     if levelMap.definition.exits["previous"] != nil {
       levelMap.pointsOfInterest.append(PointOfInterest(kind: "entrance", point: playerStart))
     }
+    
     if levelMap.definition.exits["next"] != nil, !exitPoints.isEmpty {
-      levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exitPoints.removeFirst()))
+      var exitPoint = exitPoints.removeFirst()
+      var dist = exitPoint.manhattanDistance(to: playerStart)
+      for _ in 0..<3 {
+        guard !exitPoints.isEmpty else { break }
+        let nextPoint = exitPoints.removeFirst()
+        if nextPoint.manhattanDistance(to: playerStart) > dist {
+          exitPoint = nextPoint
+          dist = nextPoint.manhattanDistance(to: playerStart)
+        }
+      }
+      levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exitPoint))
     }
 
     var i = 0

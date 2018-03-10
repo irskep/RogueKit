@@ -212,16 +212,22 @@ class LoadScene: Scene {
 
     self.worldModel.maps[self.id] = levelMap
     self.worldModel.travel(to: self.id)
+    self.worldModel.activeMap.palette.apply(to: BLTerminal.main)
     self.worldModel.applyPOIs()
 
     let levelScene = LevelScene(resources: self.resources, worldModel: self.worldModel)
     let mapText = worldModel.mapDefinitions[self.id]?.text
     if let mapText = mapText, !mapText.isEmpty {
-      self.director?.transition(to: TextScene(
+      let ts = TextScene(
         resources: resources,
         worldModel: worldModel,
         returnToScene: levelScene,
-        text: mapText))
+        text: mapText)
+      if id == "1" {
+        self.director?.transition(to: HelpScene(resources: resources, worldModel: worldModel, returnToScene: ts))
+      } else {
+        self.director?.transition(to: ts)
+      }
     } else {
       self.director?.transition(to: levelScene)
     }

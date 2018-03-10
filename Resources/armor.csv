@@ -2,10 +2,10 @@ id,name,char,color,description,liters,grams,tags,weight,slot,protection_physical
 #body,,,,,,,,,,,,,
 cotton_shirt,Cotton Shirt,93,white,A short-sleeved shirt,0.5,400,"basic,player,early,start",1,body,10,100,70,0
 lab_coat,Lab Coat,93,white,The basic style of lab coat worn by the evil scientists around here. Has two big pockets.,3,1000,"medical,lab,doctor,the_doctor",1,body,20,80,30,8
-tactical_vest,Tactical Vest,93,white,A tough vest with lots of pockets,3,2000,"armory,beefyguard,mechapiranha",1,body,80,20,30,8
-light_jacket,Light Jacket,93,white,A basic jacket with a few big pockets,3,2000,"basic,weakguard,technician,mechapiranha",1,body,30,60,50,6
+tactical_vest,Tactical Vest,93,white,A tough vest with lots of pockets,3,2000,"armory,beefyguard,mechapiranha",1,body,80,50,50,8
+light_jacket,Light Jacket,93,white,A basic jacket with a few big pockets,3,2000,"basic,weakguard,technician,mechapiranha,okguard",1,body,30,60,50,6
 chain_mail,Chain Mail,93,white,A medieval chain mail shirt,5,10000,shrine,1,body,80,50,100,0
-fireproof_jacket,Fireproof Jacket,93,red,A firefighter's jacket,5,8000,"utility_closet,mid",1,body,20,0,70,0
+fireproof_jacket,Laserproof Jacket,93,red,A firefighter's jacket,5,8000,"utility_closet,mid",1,body,20,0,70,0
 rubber_jacket,Rubber Jacket,93,teal,"A jacket that doesn't conduct electricity, but doesn't protect from much else",5,5000,"utility_closet,mid,mechapiranha",1,body,20,50,0,0
 leather_armor,Leather Armor,93,white,"This is a roguelike, what more do you want?",5,8000,shrine,1,body,50,20,30,4
 #head,,,,,,,,,,,,,
@@ -16,5 +16,5 @@ cap,Guard Cap,94,white,A black security guard's hat,0.5,500,"okguard,armory,earl
 #hands,,,,,,,,,,,,,
 work_gloves,Work Gloves,6,white,"Sturdy work gloves that protect your hands against physical, electric, and heat damage",0.25,300,"utility_closet,technician,mid",1,hands,20,50,40,0
 rubber_gloves,Thick Rubber Gloves,6,teal,Thick rubber gloves for dangerous electrical work,0.5,600,"utility_closet,doctor,mid,mechapiranha",1,hands,10,70,10,0
-fire_gloves,Fireproof Gloves,6,red,A firefighter's gloves,0.5,600,"utility_closet,mid",1,hands,10,0,30,0
+fire_gloves,Laserproof Gloves,6,red,A firefighter's gloves,0.5,600,"utility_closet,mid",1,hands,10,0,30,0
 leather_gloves,Black Leather Gloves,6,white,"Some protection, but mostly worn to look like an evil badass",0.1,200,"doctor,mid,generic,utility_closet,the_doctor",1,hands,10,10,10,0

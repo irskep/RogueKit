@@ -88,6 +88,7 @@ class StringUtils {
       if weaponC.turnsUntilCanFire(in: worldModel) > 0 {
         strings.append(S.loud("Cooldown remaining: \(weaponC.turnsUntilCanFire(in: worldModel))"))
       }
+      strings.append(contentsOf: ["", "Only 33% as accurate at point blank range!"])
       strings.append("------------------------")
     }
     if let armor = worldModel.armorS[entity]?.armorDefinition {

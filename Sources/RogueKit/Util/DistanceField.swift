@@ -41,6 +41,28 @@ class DistanceField {
     return 1 - (Double(val) / Double(maxVal))
   }
 
+  func neighbor(of src: BLPoint, closestToValue value: Int) -> BLPoint {
+    let neighbors = src
+      .getNeighbors(bounds: BLRect(size: cells.size), diagonals: false)
+      .filter({ self.cells[$0] < Int.max })
+    let sorted = neighbors
+      .sorted(by: {
+        abs(self.cells[$0] - value) < abs(self.cells[$1] - value) })
+    return sorted.first!
+  }
+
+  func findClosest(to target: BLPoint, where filter: (BLPoint) -> Bool) -> BLPoint? {
+    var dist = BLInt.max
+    var candidate: BLPoint? = nil
+    for point in BLRect(size: cells.size) {
+      if filter(point) && target.manhattanDistance(to: point) < dist {
+        candidate = point
+        dist = target.manhattanDistance(to: point)
+      }
+    }
+    return candidate
+  }
+
   func findMinimum(where filter: (BLPoint) -> Bool) -> BLPoint? {
     var minVal = Int.max
     var candidate: BLPoint? = nil

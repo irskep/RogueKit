@@ -87,6 +87,8 @@ class WorldModel: Codable {
   var exits: [String: String] { return mapDefinitions[activeMapId]?.exits ?? [:] }
   var mapRNG: RKRNGProtocol { return rngStore[activeMapId] }
 
+  var _playerGoalMap: DistanceField!
+
   enum CodingKeys: String, CodingKey {
     case version
     case rngStore
@@ -293,6 +295,8 @@ class WorldModel: Codable {
   func playerDidTakeAction() {
     guard gameHasntEnded else { return }
     updateFOV()
+    _playerGoalMap = DistanceField(size: activeMap.size)
+    _playerGoalMap.populate(seeds: [playerPos], isPassable: { self.may(entity: self.player, moveThrough: $0) })
 
     // Update playerStart point of interest to reflect player's current position
     // so if they go up/down stairs they end up in the same spot again
@@ -749,6 +753,10 @@ extension WorldModel {
       if factionS[e]?.faction == f {
         return false
       }
+      if activeMap.cells[point]?.feature == 3 || activeMap.cells[point]?.feature == 4 {
+        // don't go through entrance or exit
+        return false
+      }
     }
     return activeMap.getIsPassable(entity: entity, point: point) || activeMap.getIsPathable(point: point)
   }
@@ -890,6 +898,9 @@ extension WorldModel: BLTDrawable {
     terminal.isCompositionEnabled = true
     for spriteC in toDraw {
       terminal.foregroundColor = spriteC.color
+      if moveAfterPlayerS[spriteC.entity!] != nil || spriteC.entity == player {
+        terminal.isCompositionEnabled = false
+      }
       if let int = spriteC.int {
         terminal.put(point: point, code: int)
       } else if let str = spriteC.str {

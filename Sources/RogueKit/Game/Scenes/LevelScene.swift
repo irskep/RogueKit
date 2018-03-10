@@ -365,6 +365,8 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       callback: callback)
     case ("exhausted", _):
       self.playExhaustedAnimation(source: source, callback: callback)
+    case ("notice", _):
+      self.playNoticeAnimation(source: source, callback: callback)
     default: callback?()
     }
   }
@@ -382,6 +384,30 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       terminal.foregroundColor = terminal.getColor(name: "teal")
       terminal.print(point: source + BLPoint(x: -1 * i, y: -1 * i), string: "z")
       terminal.layer = oldLayer
+      terminal.refresh()
+      terminal.delay(milliseconds: 33)
+    }
+    callback?()
+  }
+
+  func playNoticeAnimation(source: BLPoint, callback: (() -> Void)?) {
+    let drawWorld: () -> Void = {
+      self.drawWorld(in: terminal)
+      self.drawInspectedEntityOverlay()
+    }
+    for v: Bool in [true, false, true, false] {
+      drawWorld()
+
+      if v {
+        let oldLayer = terminal.layer
+        terminal.layer = BLInt(ZValues.animations)
+        terminal.foregroundColor = terminal.getColor(name: "gray")
+        terminal.print(point: source + BLPoint(x: -1, y: -1), string: "\\")
+        terminal.print(point: source + BLPoint(x: 1, y: 1), string: "\\")
+        terminal.print(point: source + BLPoint(x: -1, y: 1), string: "/")
+        terminal.print(point: source + BLPoint(x: 1, y: -1), string: "/")
+        terminal.layer = oldLayer
+      }
       terminal.refresh()
       terminal.delay(milliseconds: 33)
     }

@@ -43,19 +43,21 @@ class MoveAfterPlayerC: ECSComponent, Codable {
   enum State: String {
     case standingStill
     case wandering
-    case pursuingPlayer
+    case pursuingHiddenTarget
+    case fightingVisibleTarget
   }
 
-  var stateString: String = "standStill"
+  var stateString: String = State.wandering.rawValue
   var state: State {
     get { return State(rawValue: stateString)! }
     set { stateString = newValue.rawValue }
   }
 
   var isAttacked = false
-  var intendedPath: [BLPoint]?
-  var lastTargetPos: BLPoint?
+//  var hasNoticedTarget = false
   var target: Entity?
+
+  var chasePath: [BLPoint]?
 
   init(entity: Entity?) {
     self.entity = entity
@@ -68,6 +70,7 @@ class MoveAfterPlayerC: ECSComponent, Codable {
 
   func execute(in worldModel: WorldModel) -> Bool {
     guard let entity = entity,
+      let entityPos = worldModel.position(of: entity),
       let actorC = worldModel.actorS[entity],
       let nameC = worldModel.nameS[entity]
       else { return false }
@@ -88,40 +91,81 @@ class MoveAfterPlayerC: ECSComponent, Codable {
       }
     }
 
-    let stats = actorC.currentStats
-    // TODO: have mob notice entities of OTHER FACTIONS as well as just the
-    // player!
-    if worldModel.canMobSeePlayer(entity) {
-      switch state {
-      case .standingStill, .wandering:
-        if worldModel.mapRNG.get() <= _100(stats.awareness) || isAttacked {
-          self.state = .pursuingPlayer
-          self.target = worldModel.player
-          self.lastTargetPos = worldModel.playerPos
-          worldModel.log("\(nameC.name) notices you")
-          return true
-        }
-      default: break
-      }
-    } else {
-      isAttacked = false
+    target = worldModel.player
+
+    guard let target = target,
+        let targetPos = worldModel.position(of: target)
+        else {
+      return self.walkRandomly(in: worldModel)
     }
 
+    let stats = actorC.currentStats
+
     switch state {
-    case .standingStill: return true
-    case .wandering: return walkRandomly(in: worldModel)
-    case .pursuingPlayer:
-      let val = pursue(in: worldModel)
-      if val {
+    case .wandering, .standingStill:
+      if worldModel.canMobSeePlayer(entity) && (worldModel.mapRNG.get() <= _100(stats.awareness) || isAttacked) {
+        self.state = .fightingVisibleTarget
+        worldModel.log("\(nameC.name) notices you")
+        worldModel.animator?.play(animation: "notice", source: entityPos, dest: nil, callback: nil)
+        return true
+      } else {
+        if state == .wandering {
+          return walkRandomly(in: worldModel)
+        } else {
+          return true
+        }
+      }
+    case .pursuingHiddenTarget:
+      isAttacked = false
+      if worldModel.canMobSeePlayer(entity) {
+        state = .fightingVisibleTarget
+        fallthrough
+      } else if self.chase(in: worldModel) {
         return true
       } else {
         self.state = .wandering
-        self.intendedPath = nil
-        self.target = nil
-        self.lastTargetPos = nil
-        return false
+        return walkRandomly(in: worldModel)
+      }
+    case .fightingVisibleTarget:
+      isAttacked = false
+      if worldModel.canMobSeePlayer(entity) {
+        chasePath = worldModel.aStar(
+          entity: entity,
+          start: entityPos,
+          end: targetPos,
+          rng: worldModel.mapRNG)?.dropLast().reversed()
+      } else {
+        state = .pursuingHiddenTarget
+        if var chasePath = chasePath, !chasePath.isEmpty {
+          let ret = worldModel.push(entity: entity, by: chasePath.removeFirst() - entityPos)
+          self.chasePath = chasePath
+          return ret
+        } else {
+          return false
+        }
+      }
+      if let outcome = worldModel.predictFight(attacker: entity, defender: target),
+        outcome.hitChance >= 0.4
+      {
+        return worldModel.fight(attacker: entity, defender: target)
+      } else if worldModel.weapon(wieldedBy: entity)?.isMelee == true {
+        let dest = worldModel._playerGoalMap.neighbor(of: entityPos, closestToValue: 0)
+        return worldModel.push(entity: entity, by: dest - entityPos)
+      } else {
+        let dest = worldModel._playerGoalMap.neighbor(of: entityPos, closestToValue: 2)
+        return worldModel.push(entity: entity, by: dest - entityPos)
       }
     }
+  }
+
+  func chase(in worldModel: WorldModel) -> Bool {
+    guard let entity = entity,
+      var chasePath = chasePath,
+      !chasePath.isEmpty,
+      let entityPos = worldModel.position(of: entity) else { return false }
+    let ret = worldModel.push(entity: entity, by: chasePath.removeFirst() - entityPos)
+    self.chasePath = chasePath
+    return ret
   }
 
   func walkRandomly(in worldModel: WorldModel) -> Bool {
@@ -138,56 +182,6 @@ class MoveAfterPlayerC: ECSComponent, Codable {
       nextPoint = worldModel.mapRNG.choice(Array(options))
     }
     return worldModel.push(entity: entity, by: nextPoint - posC.point)
-  }
-
-  func regenerateIntendedPath(in worldModel: WorldModel) {
-    guard
-      let entity = entity,
-      let target = target,
-      let entityPos = worldModel.position(of: entity),
-      let targetPos = worldModel.position(of: target),
-      let path = worldModel.aStar(entity: entity, start: entityPos, end: targetPos, rng: worldModel.mapRNG)
-      else { return }
-    self.intendedPath = path.dropLast().reversed()
-    self.target = target
-  }
-
-  func pursue(in worldModel: WorldModel) -> Bool {
-    guard let entity = entity,
-      let target = target,
-      let targetPos = worldModel.positionS[target]?.point,
-      let entityPos = worldModel.positionS[entity]?.point
-      else { return false }
-
-    if targetPos.manhattanDistance(to: entityPos) == 1 {
-      return worldModel.push(entity: entity, by: targetPos - entityPos)
-    }
-
-    if targetPos != lastTargetPos || intendedPath == nil {
-      // If target has moved or there is an obstacle in the way, regenerate the path
-      self.regenerateIntendedPath(in: worldModel)
-    } else if let path = intendedPath, let first = path.first, !worldModel.may(entity: entity, moveTo: first) {
-      self.regenerateIntendedPath(in: worldModel)
-    }
-    lastTargetPos = targetPos
-
-    // If holding a ranged weapon and have more than 40% chance to hit, fire!
-    if worldModel.weapon(wieldedBy: entity)?.isRanged == true,
-      worldModel.can(entity: worldModel.player, see: entityPos),
-      let outcome = worldModel.predictFight(attacker: entity, defender: target),
-      outcome.hitChance >= 0.4 {
-      return worldModel.fight(attacker: entity, defender: target)
-    }
-
-    // If there is a path, move along it by one cell and update the path
-    guard let path = intendedPath, let first = path.first else { return false }
-
-    if worldModel.push(entity: entity, by: first - entityPos) {
-      self.intendedPath = Array(path.dropFirst())
-      return true
-    } else {
-      return false
-    }
   }
 }
 class MoveAfterPlayerS: ECSSystem<MoveAfterPlayerC>, Codable {

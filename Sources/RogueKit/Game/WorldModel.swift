@@ -38,7 +38,9 @@ class WorldModel: Codable {
   var csvDB: CSVDB { return resources!.csvDB }
 
   var numStims: Int = 0
+  var numHealths: Int = 0
   var stimsUsed: Int = 0
+  var lastEntityAttackedByPlayer: Entity? = nil
 
   var turn: Int = 0
   var mapDefinitions = [String: MapDefinition]()
@@ -100,6 +102,7 @@ class WorldModel: Codable {
     case messageLog
     case stimsUsed
     case numStims
+    case numHealths
 
     case positionS
     case sightS
@@ -148,6 +151,7 @@ class WorldModel: Codable {
     messageLog = try values.decode([String].self, forKey: .messageLog)
     stimsUsed = try values.decode(Int.self, forKey: .stimsUsed)
     numStims = try values.decode(Int.self, forKey: .numStims)
+    numHealths = try values.decode(Int.self, forKey: .numHealths)
 
     positionS = try values.decode(PositionS.self, forKey: .positionS)
     sightS = try values.decode(SightS.self, forKey: .sightS)
@@ -182,6 +186,7 @@ class WorldModel: Codable {
     try container.encode(turn, forKey: .turn)
     try container.encode(stimsUsed, forKey: .stimsUsed)
     try container.encode(numStims, forKey: .numStims)
+    try container.encode(numHealths, forKey: .numHealths)
 
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)
@@ -303,10 +308,15 @@ class WorldModel: Codable {
       if collectibleS[entity] != nil {
         guard can(entity: player, pickUp: entity) else { continue }
         self.haveEntity(player, pickUp: entity)
-      } else if stimS[entity] != nil {
+      } else if let stimC = stimS[entity] {
         positionS.remove(entity: entity)
-        self.numStims += 1
-        self.log("You pick up a stim")
+        if stimC.kind == "stim" {
+          self.numStims += 1
+          self.log("You pick up a stim")
+        } else {
+          self.numHealths += 1
+          self.log("You pick up a health boost")
+        }
       }
     }
 
@@ -444,6 +454,11 @@ extension WorldModel {
   var playerFOVCache: Set<BLPoint> {
     return fovS[player]!.getFovCache(map: activeMap, positionS: positionS, sightS: sightS)
   }
+
+  func burdenedness(of entity: Entity) -> Double {
+    guard let actorC = actorS[entity], let ic = inventoryS[entity] else { return 1 }
+    return (ic.mass(collectibleS: collectibleS)) / actorC.weightCapacity
+  }
 }
 
 // MARK: Actions
@@ -477,13 +492,15 @@ extension WorldModel {
         weapon: weaponC1,
         equipment: getEquipment(equipmentC1),
         stats: actorC1.currentStats,
-        isExhausted: (forceWaitS[attacker]?.turnsRemaining ?? 0) > 0),
+        isExhausted: (forceWaitS[attacker]?.turnsRemaining ?? 0) > 0,
+        burdenedness: burdenedness(of: attacker)),
       defender: Combatant(
         position: posC2.point,
         weapon: weaponC2,
         equipment: getEquipment(equipmentC2),
         stats: actorC2.currentStats,
-        isExhausted: (forceWaitS[defender]?.turnsRemaining ?? 0) > 0),
+        isExhausted: (forceWaitS[defender]?.turnsRemaining ?? 0) > 0,
+        burdenedness: burdenedness(of: defender)),
       forUI: forUI)
   }
 
@@ -501,6 +518,10 @@ extension WorldModel {
 
   @discardableResult
   func fight(attacker: Entity, defender: Entity) -> Bool {
+    if attacker == player {
+      self.lastEntityAttackedByPlayer = defender
+    }
+
     let w: WeaponDefinition? = self.weapon(wieldedBy: attacker)
     print(attacker, "fights", defender, "with", w?.name ?? "nothing")
     guard let stats = predictFight(attacker: attacker, defender: defender),
@@ -557,6 +578,7 @@ extension WorldModel {
   }
 
   func maybeKill(_ entity: Entity) {
+    print(entity, actorS[entity]?.currentStats.hp ?? -1)
     if let actorC = actorS[entity], actorC.currentStats.hp <= 0 {
       if entity == player && debugFlags["invincible"] == 1 {
         actorC.currentStats.hp = actorC.definition.stats.hp  // I LIVE, I DIE, I LIVE AGAIN!
@@ -604,6 +626,20 @@ extension WorldModel {
     if entity == player {
       self.numStims -= 1
       self.log("You inject the stim and your fatigue disappears.")
+      waitPlayer()
+    }
+    return true
+  }
+
+  func haveEntityUseHealth(entity: Entity) -> Bool {
+    guard numHealths > 0 else {
+      self.log("You're out of health boosts.")
+      return false
+    }
+    actorS[entity]?.useHealthBoost(in: self)
+    if entity == player {
+      self.numHealths -= 1
+      self.log("You inject the health boost and regain your HP.")
       waitPlayer()
     }
     return true
@@ -688,6 +724,11 @@ extension WorldModel {
       self.log("Your inventory won't fit a \(nameC.name)")
       return false
     }
+    if let actorC = actorS[host],
+      actorC.weightCapacity < ic.mass(collectibleS: collectibleS) + ic.mass(of: item, in: self) {
+      self.log("Your inventory won't fit a \(nameC.name)")
+      return false
+    }
     return true
   }
 
@@ -731,6 +772,9 @@ extension WorldModel {
     if entity == player {
       let fovCache = fovS[player]?.getFovCache(map: activeMap, positionS: positionS, sightS: sightS)
       return fovCache?.contains(point) == true
+    } else if point == playerPos {
+      let fovCache = fovS[player]?.getFovCache(map: activeMap, positionS: positionS, sightS: sightS)
+      return fovCache?.contains(self.position(of: entity)!) == true
     } else if let source = position(of: entity), let sightC = sightS[entity] {
       for pt in source.bresenham(to: point) {
         if pt == source { continue }

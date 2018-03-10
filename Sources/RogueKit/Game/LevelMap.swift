@@ -218,8 +218,9 @@ class LevelMap: Codable {
 
   func descriptionOfRoom(coveringCellAt point: BLPoint) -> String? {
     guard let pid = self.cells[point]?.prefabId else { return nil }
-    let desc = resources.csvDB.prefabs[pid]?.description ?? pid
-    return desc.isEmpty ? pid : desc
+    let desc = resources.csvDB.prefabs[pid]?.description ?? ""
+//    return desc.isEmpty ? pid : desc
+    return desc
   }
 }
 
@@ -249,7 +250,7 @@ extension LevelMap: BLTDrawable {
   func draw(layer: Int, offset: BLPoint, point: BLPoint, terminal: BLTerminalInterface, live: Bool) {
     guard let cell = self.cells[point] else { return }
     if let feature = features[cell.feature] {
-      terminal.foregroundColor = live ? palette[feature.color] : palette["level_memory"]
+      terminal.foregroundColor = (live || cell.feature == 4) ? palette[feature.color] : palette["level_memory"]
       terminal.put(point: point + offset, code: BLInt(feature.char))
     } else if let terrain = terrains[cell.terrain] {
       terminal.foregroundColor = live ? palette[terrain.color] : palette["level_memory"]

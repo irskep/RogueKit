@@ -45,9 +45,9 @@ pen15,"""","""","""","""","""","""",False,"""",VELOCIRAPTOR PEN
 pen16,"""","""","""","""","""","""",True,"""",VELOCIRAPTOR PEN
 pen17,"""","pen,penstart","""","""","""","""",True,"""",VELOCIRAPTOR PEN
 dice5,"""","armory,armorystart",armory,-1,-1,"""",False,"armory,weakguard,okguard,beefyguard,guard",
-armory1,"""","armory,armorystart","armory,tinyhall,special,shrine",-1,-1,"""",True,"armory,weakguard,okguard,beefyguard,guard","A long, skinny room with lockers on one side for guards to keep their equipment"
-guardpost1,"""","""","""","""","""","""","""","""",
-guardpost2,"""","""","""","""","""","""","""","""",
+armory1,"""","armory,armorystart","armory,tinyhall,special,shrine",-1,-1,"""",True,"armory,weakguard,okguard,guard","A long, skinny room with lockers on one side for guards to keep their equipment"
+guardpost1,"""","""","""","""","""","""","""","""",GUARD UNIT A
+guardpost2,"""","""","""","""","""","""","""","""",GUARD UNIT B
 l_nw,"""","armory,hall","""","""","""","""",False,technician,
 l_ne,"""","""","""","""","""","""","""","""",
 l_sw,"""","""","""","""","""","""","""","""",

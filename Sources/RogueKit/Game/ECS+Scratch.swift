@@ -29,12 +29,9 @@ class ActorC: ECSComponent, Codable {
     }
   }
 
-//  var inventoryCapacity: Int {
-//    switch currentStats.strength {
-//    case 0: return 0
-//    case 1: return
-//    }
-//  }
+  var weightCapacity: Double {
+    return currentStats.strength * 15000
+  }
 
   init(entity: Entity?) {
     self.entity = entity
@@ -72,6 +69,11 @@ class ActorC: ECSComponent, Codable {
 
   func useStim(in worldModel: WorldModel) {
     self.currentStats.fatigue = 0
+    worldModel.stimsUsed += 1
+  }
+
+  func useHealthBoost(in worldModel: WorldModel) {
+    self.currentStats.hp = self.definition.stats.hp
     worldModel.stimsUsed += 1
   }
 }
@@ -121,6 +123,10 @@ class InventoryC: ECSComponent, Codable {
         (prev: Double, e: Entity) -> Double in
         return prev + (collectibleS[e]?.grams ?? 0)
       })
+  }
+
+  func mass(of entity: Entity, in worldModel: WorldModel) -> Double {
+    return worldModel.weaponS[entity]?.weaponDefinition.grams ?? worldModel.armorS[entity]?.armorDefinition.grams ?? 0
   }
 
   func containsItem(named name: String, in worldModel: WorldModel) -> Bool {
@@ -316,7 +322,9 @@ class EquipmentS: ECSSystem<EquipmentC>, Codable {
 
 class StimC: ECSComponent, Codable {
   var entity: Entity?
-  init(entity: Entity?) { self.entity = entity }
+  var kind: String
+  init(entity: Entity?) { self.entity = entity; self.kind = "stim" }
+  init(entity: Entity?, kind: String) { self.entity = entity; self.kind = kind }
 }
 class StimS: ECSSystem<StimC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }

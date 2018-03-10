@@ -28,7 +28,7 @@ extension WorldDrawingSceneProtocol {
     terminal.foregroundColor = resources.defaultPalette["ui_text_dim"]
     terminal.print(
       point: BLPoint(x: 1, y: terminal.height - 1),
-      string: "Press ? for help. Keys: arrows, tab, enter, E(quip), D(rop), R(est), S(tim)")
+      string: "? for help. Keys: arrows, tab, enter, E(quip), D(rop), R(est), S(tim), he(A)lth")
 
 
     terminal.foregroundColor = resources.defaultPalette["ui_text"]
@@ -38,7 +38,8 @@ extension WorldDrawingSceneProtocol {
       entity: worldModel.player, in: worldModel, showName: false,
       showWeaponDescription: true,
       compareToEquipmentOn: nil)
-    s += "\n\n[color=ui_text_dim]Stims in inventory: [color=ui_text]\(worldModel.numStims)"
+    s += "\n\n[color=ui_text_dim]Stims:         [color=ui_text]\(worldModel.numStims)"
+    s += "\n\n[color=ui_text_dim]Health boosts: [color=ui_text]\(worldModel.numHealths)"
 //    s += "\n\n[color=ui_text_dim]Stims used: [color=ui_text]\(worldModel.stimsUsed)"
     if worldModel.gameHasntEnded, let desc = worldModel.activeMap.descriptionOfRoom(
         coveringCellAt: worldModel.playerPos) {

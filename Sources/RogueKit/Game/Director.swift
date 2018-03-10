@@ -64,6 +64,7 @@ class Director {
 
   func quit() {
     guard !shouldExit else { return }
+    activeScene?.willQuit()
     _transition(to: nil)
     shouldExit = true
   }
@@ -90,6 +91,10 @@ class Scene {
   }
 
   func update(terminal: BLTerminalInterface) {
+
+  }
+
+  func willQuit() {
 
   }
 }

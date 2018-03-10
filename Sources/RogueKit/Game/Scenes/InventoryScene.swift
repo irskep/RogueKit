@@ -64,17 +64,31 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
           let key = self.myDefaultKeys[$0]
           let e = self.worldModel.playerInventory[$0]
           var label = self.worldModel.nameS[e]?.name ?? "NOT FOUND"
+          var grams: Double?
+          var extraChars = 0
           if let armorC = self.worldModel.armorS[e] {
-            label = "\(CP437.string(for: armorC.armorDefinition.char).bltEscaped) " + label
+            grams = armorC.armorDefinition.grams
+            let s = CP437.string(for: armorC.armorDefinition.char)
+            let lenBefore = s.count
+            extraChars += s.bltEscaped.count - lenBefore
+            label = "\(s.bltEscaped) " + label
           }
           if let weaponC = self.worldModel.weaponS[e] {
-            label = "\(CP437.string(for: weaponC.weaponDefinition.char).bltEscaped) " + label
+            grams = weaponC.weaponDefinition.grams
+            let s = CP437.string(for: weaponC.weaponDefinition.char)
+            let lenBefore = s.count
+            extraChars += s.bltEscaped.count - lenBefore
+            label = "\(s.bltEscaped) " + label
           }
           if e == self.worldModel.playerWeaponC?.entity {
             label += " (wielded)"
           }
           if self.worldModel.equipmentS[self.worldModel.player]!.isWearing(e) {
-            label += "(\(self.worldModel.armorS[e]!.armorDefinition.slot))"
+            label += " (\(self.worldModel.armorS[e]!.armorDefinition.slot))"
+          }
+          if let g = grams {
+            label = label.rightPad(28 + extraChars, " ")
+            label += "\(g/1000)kg"
           }
           return (key, label, { self.selectItem(index: index, entity: e) })
         }))
@@ -102,7 +116,7 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
       y: terminal.state(BLConstant.HEIGHT) / 2 - 29,
       w: 40,
       h: 58)
-    menu.rect = uiRect.inset(byX1: 1, y1: 3, x2: 1, y2: 1)
+    menu.rect = uiRect.inset(byX1: 1, y1: 5, x2: 1, y2: 1)
     terminal.clear(area: uiRect)
     terminal.foregroundColor = resources.defaultPalette["ui_accent"]
     DrawUtils.drawBox(in: terminal, rect: uiRect)
@@ -116,6 +130,16 @@ class InventoryScene: Scene, WorldDrawingSceneProtocol {
         size: BLSize(w: uiRect.size.w - 2, h: 1)),
       align: BLConstant.ALIGN_CENTER,
       string: "\(state.title):")
+
+    if let actorC = worldModel.actorS[worldModel.player], let inventoryC = worldModel.inventoryS[worldModel.player] {
+      let kg = inventoryC.mass(collectibleS: worldModel.collectibleS) / 1000
+      terminal.print(
+        rect: BLRect(
+          origin: uiRect.origin + BLPoint(x: 1, y: 3),
+          size: BLSize(w: uiRect.size.w - 2, h: 1)),
+        align: BLConstant.ALIGN_CENTER,
+        string: "Weight: \(kg)kg/\(actorC.weightCapacity/1000)kg")
+    }
 
     switch state {
     case .menuIsOpen(let entity):

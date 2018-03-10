@@ -43,7 +43,7 @@ You have one weapon slot and 3 armor slots (head, body, hands). Never mind about
 COMBAT
 ------
 
-(arrows)       Bump into enemies to attack them with MELEE weapons.
+(arrows/hjkl)  Bump into enemies to attack them with MELEE weapons.
 (tab, mouse)   Select an enemy for a ranged attack
 (enter, click) Attack the selected enemy with your wielded ranged weapon
 (s)            Reset your fatigue with a stim

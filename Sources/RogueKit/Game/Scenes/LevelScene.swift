@@ -90,7 +90,12 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
 
   override func willExit() {
     worldModel.animator = nil
-    save()
+    if worldModel.gameHasntEnded { save() }
+  }
+
+  override func willQuit() {
+    super.willQuit()
+    self.save()
   }
 
   func inspectedEntity(at point: BLPoint) -> Entity? {
@@ -169,19 +174,19 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       case config.keyExit:
         self.save()
         director?.transition(to: TitleScene(resources: resources))
-      case config.keyLeft:
+      case config.keyLeft, config.keyLeftAlt:
         worldModel.movePlayer(by: BLPoint(x: -1, y: 0))
         mover.update(cursorPoint: nil)
         didMove = true
-      case config.keyRight:
+      case config.keyRight, config.keyRightAlt:
         worldModel.movePlayer(by: BLPoint(x: 1, y: 0))
         mover.update(cursorPoint: nil)
         didMove = true
-      case config.keyUp:
+      case config.keyUp, config.keyUpAlt:
         worldModel.movePlayer(by: BLPoint(x: 0, y: -1))
         mover.update(cursorPoint: nil)
         didMove = true
-      case config.keyDown:
+      case config.keyDown, config.keyDownAlt:
         worldModel.movePlayer(by: BLPoint(x: 0, y: 1))
         mover.update(cursorPoint: nil)
         didMove = true
@@ -222,6 +227,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       case config.keyStim:
         isDirty = true
         if worldModel.haveEntityUseStim(entity: worldModel.player) {
+          didMove = true
+        }
+      case config.keyHealth:
+        isDirty = true
+        if worldModel.haveEntityUseHealth(entity: worldModel.player) {
           didMove = true
         }
       case config.keyDebugLeft:
@@ -276,6 +286,11 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     }
 
     if didMove {
+      if let e = worldModel.lastEntityAttackedByPlayer {
+        inspectedEntity = e
+        worldModel.lastEntityAttackedByPlayer = nil
+      }
+
       if let e = inspectedEntity,
         let ep = worldModel.position(of: e),
         worldModel.can(entity: worldModel.player, see: ep)

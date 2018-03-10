@@ -1,8 +1,8 @@
 id,script,tag_whitelist,num_items,num_mobs,num_stims,next,previous,text
-1,start,start,4,10,2,2,,"A year ago, you were kidnapped by Dr. Hallervorden's henchmen. For the past\n\nyear, you have been subjected to his demented experiments. You are stronger\n\nand more capable than when you came in, but nothing remains of your mind but\n\nrage.\n\n\n\nThis morning, your cell door swung open on its own. It is time to escape!"
-2,medical_lab,"mid,generic,medical",20,40,10,3,1,
-3,hive,"hive,animal,mid,shrine,special",20,40,5,4,2,
-4,armory,"late,generic,armory,technician,tinyhall,shrine,special",20,40,10,5,3,
-5,dino_pen,"pen,mid,dinosaurs,shrine,special",20,15,10,6,4,
-6,aqua,"aqua,mechapiranha,tinyhall,late,shrine,special,mid",20,40,10,7,5,
-7,end,end,0,1,0,win,6,"At last, you are face to face with your mad tormenter Dr. Hallervorden. He\n\nholds a massive, deadly-looking laser weapon, and he barks a bitter laugh\n\nas he notices you enter the room.\n\n""You thought it would be so easy!"" he grumbles hoarsely. ""TIME TO DIE!"""
+1,start,start,4,10,5,2,,"A year ago, you were kidnapped by Dr. Hallervorden's henchmen. For the past\n\nyear, you have been subjected to his demented experiments. You are stronger\n\nand more capable than when you came in, but nothing remains of your mind but\n\nrage.\n\n\n\nThis morning, your cell door swung open on its own. It is time to escape!"
+2,medical_lab,"mid,generic,medical",20,40,20,3,1,
+3,hive,"hive,animal,mid,shrine,special",20,40,10,4,2,
+4,armory,"late,generic,armory,technician,tinyhall,shrine,special,guard",20,20,20,5,3,
+5,dino_pen,"pen,mid,dinosaurs,shrine,special",20,15,20,6,4,
+6,aqua,"aqua,mechapiranha,tinyhall,late,shrine,special,mid",20,40,20,7,5,
+7,end,end,0,1,4,win,6,"At last, you are face to face with your mad tormenter Dr. Hallervorden. He\n\nholds a massive, deadly-looking laser weapon, and he barks a bitter laugh\n\nas he notices you enter the room.\n\n""You thought it would be so easy!"" he grumbles hoarsely. ""TIME TO DIE!"""

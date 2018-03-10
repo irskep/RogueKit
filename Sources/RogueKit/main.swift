@@ -10,10 +10,17 @@ import BearLibTerminal
 #endif
 
 struct Config: Codable {
+
   var keyLeft: Int32 = BLConstant.LEFT
   var keyRight: Int32 = BLConstant.RIGHT
   var keyUp: Int32 = BLConstant.UP
   var keyDown: Int32 = BLConstant.DOWN
+
+  var keyLeftAlt: Int32 = BLConstant.H
+  var keyRightAlt: Int32 = BLConstant.L
+  var keyUpAlt: Int32 = BLConstant.K
+  var keyDownAlt: Int32 = BLConstant.J
+
   var keyWait: Int32 = BLConstant.SPACE
   var keyInventoryOpen: Int32 = BLConstant.I
   var keyEquip: Int32 = BLConstant.E
@@ -23,6 +30,7 @@ struct Config: Codable {
   var keyHelp: Int32 = BLConstant.SLASH
   var keyRest: Int32 = BLConstant.R
   var keyStim: Int32 = BLConstant.S
+  var keyHealth: Int32 = BLConstant.A
 
   var keyDebugLeft: Int32 = BLConstant.MINUS
   var keyDebugRight: Int32 = BLConstant.EQUALS
@@ -60,8 +68,8 @@ class SteveRLDirector: Director {
 #endif
 
 //let FONT = "fonts/Alloy_curses_12x12.png"
-let FONT = "fonts/font_12x12.png"
-//let FONT = "fonts/Taffer_20x20.png"
+//let FONT = "fonts/font_12x12.png"
+let FONT = "fonts/Taffer_20x20.png"
 //let FONT = "fonts/cp437_10x10.png"
 let FONT_SIZE = FONT[FONT.index(FONT.endIndex, offsetBy: -9)..<FONT.index(FONT.endIndex, offsetBy: -4)]
 

@@ -145,7 +145,7 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
 
   var statsDescription: String {
     var strings: [String] = [
-//      "\(Int(grams))g, \(liters)L",
+      "\(Int(grams))g",
 //      "",
       isMelee ? "Melee weapon" : "Ranged weapon",
       "Requires \(strengthRequired) str",
@@ -162,8 +162,8 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
     }
 
     strings.append("Damage:")
-    if damagePhysical > 0 { strings.append("\(damagePhysical) physical") }
-    if damageElectric > 0 { strings.append("\(damageElectric) electric") }
+    if damagePhysical > 0 { strings.append("\(damagePhysical)p(hysical)") }
+    if damageElectric > 0 { strings.append("\(damageElectric)e(lectric)") }
     if damageHeat > 0 { strings.append("\(damageHeat)h(eat)") }
     return strings.joined(separator: "\n")
   }
@@ -195,7 +195,7 @@ struct ArmorDefinition: Codable, Tagged, WeightedChoosable {
 
   var statsDescription: String {
     var strings: [String] = [
-//      "\(Int(grams))g, \(liters)L",
+      "\(Int(grams))g",
 //      "",
       "Worn on \(slot)",
       ""
@@ -215,7 +215,7 @@ struct ArmorDefinition: Codable, Tagged, WeightedChoosable {
   func statsDescription(in worldModel: WorldModel, comparedTo armorDefinition: ArmorDefinition?) -> String {
     let armorDef = armorDefinition ?? ArmorDefinition.zero
     var strings: [String] = [
-//      "\(Int(grams))g, \(liters)L",
+      "\(Int(grams))g",
 //      "",
       "Worn on \(slot)",
       ""

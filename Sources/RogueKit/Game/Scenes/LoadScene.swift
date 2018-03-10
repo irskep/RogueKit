@@ -203,7 +203,8 @@ class LoadScene: Scene {
     i = 0
     while i < levelMap.definition.numStims && !stimPoints.isEmpty {
       let p = stimPoints.removeFirst()
-      levelMap.pointsOfInterest.append(PointOfInterest(kind: "stim:stim", point: p))
+      let kind = rng.get() < 0.5 ? "stim" : "health"
+      levelMap.pointsOfInterest.append(PointOfInterest(kind: "stim:\(kind)", point: p))
       i += 1
     }
 

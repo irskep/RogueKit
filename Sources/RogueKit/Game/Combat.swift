@@ -25,6 +25,7 @@ struct Combatant {
   let equipment: [String: ArmorC]
   let stats: StatBucket
   let isExhausted: Bool
+  let burdenedness: Double
 }
 
 

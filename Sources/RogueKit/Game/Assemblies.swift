@@ -239,10 +239,10 @@ class StimAssembly: EntityAssemblyProtocol {
     levelId: String?)
   {
     worldModel.positionS.add(component: PositionC(entity: entity, point: point ?? BLPoint.zero, levelId: levelId))
-    worldModel.stimS.add(component: StimC(entity: entity))
+    worldModel.stimS.add(component: StimC(entity: entity, kind: poiString))
     worldModel.spriteS.add(component: SpriteC(
       entity: entity, int: nil, str: "!", z: ZValues.item,
-      color: worldModel.resources!.defaultPalette["yellow"]))
+      color: poiString == "stim" ? worldModel.resources!.defaultPalette["yellow"] : worldModel.resources!.defaultPalette["red"]))
   }
 }
 

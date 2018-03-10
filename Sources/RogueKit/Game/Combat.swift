@@ -55,8 +55,8 @@ struct CombatStats {
     var strings: [String] = [
       """
       Fatigue:          +\(Int(fatigueDelta))
-      Final hit chance: [color=ui_text]\(_pct(hitChance))
-      [color=ui_text_dim]Fatigue:          [color=ui_text]\(Int(fatigueDelta))
+      HIT CHANCE:       [color=ui_text]\(_pct(hitChance))
+        
       """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     ]
 

@@ -38,8 +38,10 @@ extension WorldDrawingSceneProtocol {
       entity: worldModel.player, in: worldModel, showName: false,
       showWeaponDescription: true,
       compareToEquipmentOn: nil)
+    s += "\n------------------------"
     s += "\n\n[color=ui_text_dim]Stims:         [color=ui_text]\(worldModel.numStims)"
     s += "\n\n[color=ui_text_dim]Health boosts: [color=ui_text]\(worldModel.numHealths)"
+    s += "\n------------------------"
 //    s += "\n\n[color=ui_text_dim]Stims used: [color=ui_text]\(worldModel.stimsUsed)"
     if worldModel.gameHasntEnded, let desc = worldModel.activeMap.descriptionOfRoom(
         coveringCellAt: worldModel.playerPos) {

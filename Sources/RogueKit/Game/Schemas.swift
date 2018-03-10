@@ -223,10 +223,12 @@ struct ArmorDefinition: Codable, Tagged, WeightedChoosable {
     if protectionPhysical > 0 || armorDef.protectionPhysical > 0 {
       strings.append("\(Int(protectionPhysical))% physical protection")
       strings.append(S.dim("(current: \(Int(armorDef.protectionPhysical))%)"))
+      strings.append("")
     }
     if conductiveness < 100 || armorDef.conductiveness < 100 {
       strings.append("\(Int(100 - conductiveness))% electric protection")
       strings.append(S.dim("(current: \(Int(100 - armorDef.conductiveness))%)"))
+      strings.append("")
     }
     if flammability < 100 || armorDef.flammability < 100 {
       strings.append("\(Int(100 - flammability))% fire protection")

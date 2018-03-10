@@ -162,9 +162,9 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
     }
 
     strings.append("Damage:")
-    if damagePhysical > 0 { strings.append("\(damagePhysical)p(hysical)") }
-    if damageElectric > 0 { strings.append("\(damageElectric)e(lectric)") }
-    if damageHeat > 0 { strings.append("\(damageHeat)h(eat)") }
+    if damagePhysical > 0 { strings.append("\(damagePhysical)p (physical)") }
+    if damageElectric > 0 { strings.append("\(damageElectric)e (electric)") }
+    if damageHeat > 0 { strings.append("\(damageHeat)h (heat)") }
     return strings.joined(separator: "\n")
   }
 }

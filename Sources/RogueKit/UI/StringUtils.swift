@@ -75,7 +75,9 @@ class StringUtils {
       strings.append(contentsOf: ["", "\(S.dim("Faction:")) \(faction)"])
     }
     if let weaponC: WeaponC = worldModel.weapon(wieldedBy: entity) {
-      strings.append(contentsOf: ["", "\(S.dim("Wielding:")) \(weaponC.weaponDefinition.name)"])
+      strings.append("")
+      strings.append("------------------------")
+      strings.append(contentsOf: ["\(S.dim("Wielding:")) \(weaponC.weaponDefinition.name)"])
       if showWeaponDescription {
         strings.append(S.dim("(\(weaponC.weaponDefinition.description))"))
         strings.append(weaponC.weaponDefinition.statsDescription)
@@ -86,6 +88,7 @@ class StringUtils {
       if weaponC.turnsUntilCanFire(in: worldModel) > 0 {
         strings.append(S.loud("Cooldown remaining: \(weaponC.turnsUntilCanFire(in: worldModel))"))
       }
+      strings.append("------------------------")
     }
     if let armor = worldModel.armorS[entity]?.armorDefinition {
       strings.append("")

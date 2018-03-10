@@ -180,12 +180,38 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
     return strings.joined(separator: "\n")
   }
 
+  func statsDescription(onEntityWithStats stats: StatBucket) -> String {
+    var strings: [String] = [
+      "\(Int(grams))g",
+      //      "",
+      isMelee ? "Melee weapon" : "Ranged weapon",
+      "+\(Int(stats.fatigue(forUsingWeapon: self))) fatigue",
+      ""
+    ]
+    if cooldown > 0 {
+      strings.append("\(cooldown)-turn cooldown")
+      strings.append("")
+    }
+    if isRanged {
+      strings.append("Loses \(rangeFalloff)% accuracy per tile of distance")
+      strings.append("Max range of \(rangeMax) tiles")
+      strings.append("")
+    }
+
+    strings.append("Damage:")
+    if damagePhysical > 0 { strings.append("\(damagePhysical)p (physical)") }
+    if damageElectric > 0 { strings.append("\(damageElectric)e (electric)") }
+    if damageHeat > 0 { strings.append("\(damageHeat)h (heat)") }
+    return strings.joined(separator: "\n")
+  }
+
   func statsDescription(compareTo other: WeaponDefinition, onEntityWithStats stats: StatBucket) -> String {
     var strings: [String] = [
       "\(Int(grams))g",
       //      "",
       isMelee ? "Melee weapon" : "Ranged weapon",
       "+\(Int(stats.fatigue(forUsingWeapon: self))) fatigue",
+      S.dim("Current: +\(Int(stats.fatigue(forUsingWeapon: other)))"),
       ""
     ]
     if cooldown > 0 {

@@ -96,7 +96,11 @@ class HelpScene: Scene, WorldDrawingSceneProtocol {
     if terminal.hasInput {
       let config = gameDirector.config
       let char = terminal.read()
-      if char == config.keyMenu || (char == config.keyHelp && terminal.check(BLConstant.SHIFT)) {
+      if char == config.keyMenu ||
+        (char == config.keyHelp && terminal.check(BLConstant.SHIFT)) ||
+        char == config.keyRest ||
+        char == config.keyRangedFire
+      {
         director?.transition(to: returnToScene)
       }
     }

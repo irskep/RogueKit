@@ -1,5 +1,5 @@
 id,weight,tags,neighbor_tags,max_actors,max_ports,max_instances,has_doors,poi_tags,description
-cell1,10,"start,cell",cross_hall,1,1,-1,TRUE,insane_test_subject,"A dark, claustrophobic cell meant for holding unwilling test subjects"
+cell1,10,"start,cell",cross_hall,1,1,-1,TRUE,insane_test_subject,"A dark, claustrophobic cell"
 xhall,2,"start,cross_hall,hall",*,"""",-1,"""",FALSE,"start,early,mid,late",
 util,1,"utility_closet,generic",*,"""",1,"""",TRUE,"utility_closet,mid",A dank utility closet with a few shelves and a bare lightbulb
 room,1,"generic,startingroom,start",*,"""",-1,"""",TRUE,guard,
@@ -16,12 +16,12 @@ jct_nw5,"""","""","""","""","""","""","""","""",
 h5-,"""","""","""","""","""","""","""","""",
 h5|,"""","""","""","""","""","""","""","""",
 medicalstart,0,"medicalstart,medical",medical,-1,-1,"""",TRUE,,MEDICAL TESTING
-surgery,1,medical,"medical,generic","""","""","""","""",doctor,INVOLUNTARY SURGERY
-cages_monk,0.5,medical,"medical,generic","""","""","""","""",monkey,MONKEY COHORT
-cages_pig,"""",medical,"medical,generic","""","""","""","""",pig,PIG COHORT
-cages_rabb,"""",medical,"medical,generic,special,shrine","""","""","""","""",rabbit,RABBIT COHORT
-cages_beag,"""",medical,"medical,generic,special,shrine","""","""","""","""",beagle,BEAGLE COHORT
-cages_craz,"""",medical,"medical,generic,special,shrine","""","""","""","""",insane_test_subject,HUMAN COHORT
+surgery,1,medical,"medical,generic","""","""","""","""",doctor,"INVOLUNTARY SURGERY\n\nA bloodstained steel table is in the middle of the room, surrounded by trays of nasty-looking tools."
+cages_monk,0.5,medical,"medical,generic","""","""","""","""",monkey,MONKEY CAGES
+cages_pig,"""",medical,"medical,generic","""","""","""","""",pig,PIG CAGES
+cages_rabb,"""",medical,"medical,generic,special,shrine","""","""","""","""",rabbit,RABBIT CAGES
+cages_beag,"""",medical,"medical,generic,special,shrine","""","""","""","""",beagle,BEAGLE CAGES
+cages_craz,"""",medical,"medical,generic,special,shrine","""","""","""","""",insane_test_subject,HUMAN CAGES
 hive_rm,1,"hivestart,hive,hiveroom","hivehall,special,shrine","""","""","""","""","hive,animal",NATURAL SELECTION COMPLEX
 hive_rm2,1,"""","""","""","""","""","""","""",NATURAL SELECTION COMPLEX
 hive_rm3,1,"""","""","""","""","""","""","""",NATURAL SELECTION COMPLEX

@@ -1,8 +1,8 @@
 id,script,tag_whitelist,num_items,num_mobs,num_stims,next,previous,text
-1,start,start,4,10,5,2,,"A year ago, you were kidnapped by Dr. Hallervorden's henchmen. For the past\n\nyear, you have been subjected to his demented experiments. You are stronger\n\nand more capable than when you came in, but nothing remains of your mind but\n\nrage.\n\n\n\nThis morning, your cell door swung open on its own. It is time to escape!"
-2,medical_lab,"mid,generic,medical",20,40,20,3,1,
-3,hive,"hive,animal,mid,shrine,special",20,40,10,4,2,
-4,armory,"late,generic,armory,technician,tinyhall,shrine,special,guard",20,30,20,5,3,
-5,dino_pen,"pen,mid,dinosaurs,shrine,special",20,15,20,6,4,
-6,aqua,"aqua,mechapiranha,tinyhall,late,shrine,special,mid",20,40,20,7,5,
+1,start,start,4,10,5,2,,"A year ago, you were kidnapped by Dr. Hallervorden's henchmen. For the past\n\nyear, you have been subjected to his demented experiments. You are stronger\n\nand more capable than when you came in, but nothing remains of your mind\n\nexcept rage.\n\n\n\nThis morning, your cell door swung open on its own. It is time to escape!"
+2,medical_lab,"early,generic,medical",16,40,20,3,1,"As soon as you open the door to the second floor, you're hit with the scent of\n\nbodily fluids. For a moment, your mind is overwhelmed by recollections of the\n\ntimes you were carried up here to undergo ""modifications.""\n\n\n\nIt's time to make the doctors pay."
+3,hive,"hive,animal,mid,shrine,special",20,40,10,4,2,"This floor seems to be made of connected spherical pods. You aren't sure what\n\nit's for, but angry animal noises echo from every corner."
+4,armory,"late,generic,armory,technician,tinyhall,shrine,special,guard,mid",20,30,20,5,3,This floor seems more fit for human habitation. The floor is tile and the\n\nwalls are concrete. Perhaps this is where the henchmen live?
+5,dino_pen,"pen,mid,dinosaurs,shrine,special",20,15,20,6,4,"You step out into a hot, humid artificial jungle. Insects and birds flit and\n\nchatter around you. It seems peaceful at first, but you think you hear\n\nsomething moving in the bushes..."
+6,aqua,"aqua,mechapiranha,tinyhall,late,shrine,special,mid",4,40,10,7,5,"Having escaped the velociraptor pen with your life, this cold, wet artificial\n\ncave seems like a welcome change. Until you see the words stenciled on the\n\nwall:\n\n\n\nMECHAPIRANHA HABITAT\n\n\n\nUh oh."
 7,end,end,0,1,4,win,6,"At last, you are face to face with your mad tormenter Dr. Hallervorden. He\n\nholds a massive, deadly-looking laser weapon, and he barks a bitter laugh\n\nas he notices you enter the room.\n\n""You thought it would be so easy!"" he grumbles hoarsely. ""TIME TO DIE!"""

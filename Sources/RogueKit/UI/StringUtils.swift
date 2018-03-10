@@ -105,10 +105,13 @@ class StringUtils {
     if let weaponC = worldModel.weaponS[entity]  {
       strings.append("")
       if let e = comparisonEntity,
-        let w: WeaponDefinition = worldModel.weapon(wieldedBy: e),
         let stats = worldModel.actorS[e]?.currentStats
       {
-        strings.append(weaponC.weaponDefinition.statsDescription(compareTo: w, onEntityWithStats: stats))
+        if let w: WeaponDefinition = worldModel.weapon(wieldedBy: e) {
+          strings.append(weaponC.weaponDefinition.statsDescription(compareTo: w, onEntityWithStats: stats))
+        } else {
+          strings.append(weaponC.weaponDefinition.statsDescription(onEntityWithStats: stats))
+        }
       } else {
         strings.append(weaponC.weaponDefinition.statsDescription)
       }

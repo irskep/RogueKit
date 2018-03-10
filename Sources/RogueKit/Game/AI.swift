@@ -107,6 +107,11 @@ class MoveAfterPlayerC: ECSComponent, Codable {
         self.state = .fightingVisibleTarget
         worldModel.log("\(nameC.name) notices you")
         worldModel.animator?.play(animation: "notice", source: entityPos, dest: nil, callback: nil)
+        chasePath = worldModel.aStar(
+          entity: entity,
+          start: entityPos,
+          end: targetPos,
+          rng: worldModel.mapRNG)?.dropLast().reversed()
         return true
       } else {
         if state == .wandering {

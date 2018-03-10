@@ -358,6 +358,19 @@ class PurePrefabGenerator {
       }
     }
 
+    for point in rect {
+      guard self.cells[point].flags.contains(.portUsed) else { continue }
+      guard point.x < rect.max.x - 1, point.y < rect.max.y - 1, point.x > 0, point.y > 0 else { continue }
+      let numFloorNeighbors = point.getNeighbors(bounds: rect, diagonals: false)
+        .filter({ self.cells[$0].isPassable })
+        .count
+      guard numFloorNeighbors != 2 else { continue }
+      if self.cells[point + BLPoint(x: 1, y: -1)].flags.contains(.portUsed) &&
+        !self.cells[point + BLPoint(x: 0, y: -1)].isPassable {
+        self.cells[point + BLPoint(x: 0, y: -1)].flags.insert(.portUsed)
+      }
+    }
+
     for point in newWallPoints {
       self.cells[point].basicType = .wall
     }

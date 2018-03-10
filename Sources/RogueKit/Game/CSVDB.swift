@@ -42,6 +42,7 @@ class CSVDB {
           tagWhitelist: row.stringList("tag_whitelist"),
           numItems: row["num_items"],
           numMobs: row["num_mobs"],
+          numStims: row["num_stims"],
           text: row["text"],
           exits: exits)
       })

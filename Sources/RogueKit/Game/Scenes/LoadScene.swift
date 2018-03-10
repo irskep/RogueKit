@@ -110,13 +110,18 @@ class LoadScene: Scene {
     }
     rng.shuffleInPlace(&exitPoints)
 
+    var stimPoints = gen.points(where: { $0.poi?.kind == .stim })
+    rng.shuffleInPlace(&stimPoints)
+
     if entrancePoints.isEmpty {
       print("ERROR: no entrance points in this map!")
       entrancePoints = [mobPoints.removeFirst()]
     }
     if exitPoints.isEmpty {
       print("ERROR: no exit points in this map!")
-      exitPoints = [mobPoints.removeFirst()]
+      if !mobPoints.isEmpty {
+        exitPoints = [mobPoints.removeFirst()]
+      }
     }
 
     let playerStart: BLPoint = entrancePoints.removeFirst()
@@ -126,7 +131,7 @@ class LoadScene: Scene {
     if levelMap.definition.exits["previous"] != nil {
       levelMap.pointsOfInterest.append(PointOfInterest(kind: "entrance", point: playerStart))
     }
-    if levelMap.definition.exits["next"] != nil {
+    if levelMap.definition.exits["next"] != nil, !exitPoints.isEmpty {
       levelMap.pointsOfInterest.append(PointOfInterest(kind: "exit", point: exitPoints.removeFirst()))
     }
 
@@ -192,6 +197,13 @@ class LoadScene: Scene {
       let mob = WeightedChoice(choices: mobs).choose(rng: rng)
       print("Instantiating mob", mob)
       levelMap.pointsOfInterest.append(PointOfInterest(kind: "enemy:#\(mob)", point: p))
+      i += 1
+    }
+
+    i = 0
+    while i < levelMap.definition.numStims && !stimPoints.isEmpty {
+      let p = stimPoints.removeFirst()
+      levelMap.pointsOfInterest.append(PointOfInterest(kind: "stim:stim", point: p))
       i += 1
     }
 

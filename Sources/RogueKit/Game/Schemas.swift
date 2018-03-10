@@ -284,6 +284,7 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
       case weapon
       case entrance
       case exit
+      case stim
     }
 
     init(code: BLInt, kind: Kind, tags: [String], isRequired: Bool) {
@@ -349,6 +350,11 @@ struct PrefabMetadata: Codable, Tagged, WeightedChoosable {
         kind: .exit,
         tags: tags,
         isRequired: true),
+      POIDefinition(
+        code: BLInt(CP437.char(for: "s")),
+        kind: .stim,
+        tags: tags,
+        isRequired: false),
       ]
   }
 }

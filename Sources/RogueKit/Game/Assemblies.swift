@@ -230,11 +230,29 @@ class ItemAssembly: EntityAssemblyProtocol {
 }
 
 
+class StimAssembly: EntityAssemblyProtocol {
+  func assemble(
+    entity: Entity,
+    worldModel: WorldModel,
+    poiString: String,
+    point: BLPoint?,
+    levelId: String?)
+  {
+    worldModel.positionS.add(component: PositionC(entity: entity, point: point ?? BLPoint.zero, levelId: levelId))
+    worldModel.stimS.add(component: StimC(entity: entity))
+    worldModel.spriteS.add(component: SpriteC(
+      entity: entity, int: nil, str: "!", z: ZValues.item,
+      color: worldModel.resources!.defaultPalette["yellow"]))
+  }
+}
+
+
 let ASSEMBLIES: [String: EntityAssemblyProtocol] = {
   return [
     "enemy": ActorAssembly(),
     "weapon": WeaponAssembly(),
     "armor": ArmorAssembly(),
     "item": ItemAssembly(),
+    "stim": StimAssembly(),
   ]
 }()

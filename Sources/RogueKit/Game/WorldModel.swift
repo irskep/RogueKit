@@ -25,6 +25,7 @@ struct MapDefinition: Codable {
   let tagWhitelist: [String]
   var numItems: Int
   var numMobs: Int
+  var numStims: Int
   let text: String
   let exits: [String: String]  // "next"|"previous" -> mapId
 }
@@ -36,6 +37,7 @@ class WorldModel: Codable {
   var resources: ResourceCollectionProtocol?
   var csvDB: CSVDB { return resources!.csvDB }
 
+  var numStims: Int = 0
   var stimsUsed: Int = 0
 
   var turn: Int = 0
@@ -65,6 +67,7 @@ class WorldModel: Codable {
   var equipmentS = EquipmentS()
   var factionS = FactionS()
   var forceWaitS = ForceWaitS()
+  var stimS = StimS()
 
   var player: Entity = 1
   var nextEntityId: Entity = 2
@@ -96,6 +99,7 @@ class WorldModel: Codable {
     case waitingToTransitionToLevelId
     case messageLog
     case stimsUsed
+    case numStims
 
     case positionS
     case sightS
@@ -112,6 +116,7 @@ class WorldModel: Codable {
     case equipmentS
     case factionS
     case forceWaitS
+    case stimS
 
     case debugFlags
   }
@@ -142,6 +147,7 @@ class WorldModel: Codable {
     debugFlags = try values.decode([String: Int].self, forKey: .debugFlags)
     messageLog = try values.decode([String].self, forKey: .messageLog)
     stimsUsed = try values.decode(Int.self, forKey: .stimsUsed)
+    numStims = try values.decode(Int.self, forKey: .numStims)
 
     positionS = try values.decode(PositionS.self, forKey: .positionS)
     sightS = try values.decode(SightS.self, forKey: .sightS)
@@ -158,6 +164,7 @@ class WorldModel: Codable {
     equipmentS = try values.decode(EquipmentS.self, forKey: .equipmentS)
     factionS = try values.decode(FactionS.self, forKey: .factionS)
     forceWaitS = try values.decode(ForceWaitS.self, forKey: .forceWaitS)
+    stimS = try values.decode(StimS.self, forKey: .stimS)
   }
 
   func encode(to encoder: Encoder) throws {
@@ -174,6 +181,7 @@ class WorldModel: Codable {
     try container.encode(messageLog, forKey: .messageLog)
     try container.encode(turn, forKey: .turn)
     try container.encode(stimsUsed, forKey: .stimsUsed)
+    try container.encode(numStims, forKey: .numStims)
 
     try container.encode(positionS, forKey: .positionS)
     try container.encode(sightS, forKey: .sightS)
@@ -190,6 +198,7 @@ class WorldModel: Codable {
     try container.encode(equipmentS, forKey: .equipmentS)
     try container.encode(factionS, forKey: .factionS)
     try container.encode(forceWaitS, forKey: .forceWaitS)
+    try container.encode(stimS, forKey: .stimS)
   }
 
   var _allSystems: [ECSRemovable] {
@@ -209,6 +218,7 @@ class WorldModel: Codable {
       equipmentS,
       factionS,
       forceWaitS,
+      stimS,
     ]
   }
 
@@ -289,9 +299,15 @@ class WorldModel: Codable {
 
     // Pick up any items on the ground
     for posC in positionS.all(in: activeMapId, at: playerPos) where posC.entity != nil {
-      guard let entity = posC.entity, collectibleS[entity] != nil else { continue }
-      guard can(entity: player, pickUp: entity) else { continue }
-      self.haveEntity(player, pickUp: entity)
+      guard let entity = posC.entity else { continue }
+      if collectibleS[entity] != nil {
+        guard can(entity: player, pickUp: entity) else { continue }
+        self.haveEntity(player, pickUp: entity)
+      } else if stimS[entity] != nil {
+        positionS.remove(entity: entity)
+        self.numStims += 1
+        self.log("You pick up a stim")
+      }
     }
 
     forceWaitS[player]!.turnsRemaining = actorS[player]!.fatigueLevel
@@ -577,6 +593,20 @@ extension WorldModel {
         self.log("\(hostNameC.name) picks up \(itemNameC.name)")
       }
     }
+  }
+
+  func haveEntityUseStim(entity: Entity) -> Bool {
+    guard numStims > 0 else {
+      self.log("You're out of stims.")
+      return false
+    }
+    actorS[entity]?.useStim(in: self)
+    if entity == player {
+      self.numStims -= 1
+      self.log("You inject the stim and your fatigue disappears.")
+      waitPlayer()
+    }
+    return true
   }
 
   func waitPlayer() {

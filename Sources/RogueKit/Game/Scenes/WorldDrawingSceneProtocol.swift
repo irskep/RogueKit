@@ -38,7 +38,8 @@ extension WorldDrawingSceneProtocol {
       entity: worldModel.player, in: worldModel, showName: false,
       showWeaponDescription: true,
       compareToEquipmentOn: nil)
-    s += "\n\n[color=ui_text_dim]Stims used: [color=ui_text] \(worldModel.stimsUsed)"
+    s += "\n\n[color=ui_text_dim]Stims in inventory: [color=ui_text]\(worldModel.numStims)"
+//    s += "\n\n[color=ui_text_dim]Stims used: [color=ui_text]\(worldModel.stimsUsed)"
     if worldModel.gameHasntEnded, let desc = worldModel.activeMap.descriptionOfRoom(
         coveringCellAt: worldModel.playerPos) {
       s += "\n\n" + "[color=ui_text_dim]Current room:\n[color=ui_text]" + desc

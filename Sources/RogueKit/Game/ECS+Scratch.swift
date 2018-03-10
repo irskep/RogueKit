@@ -29,6 +29,13 @@ class ActorC: ECSComponent, Codable {
     }
   }
 
+//  var inventoryCapacity: Int {
+//    switch currentStats.strength {
+//    case 0: return 0
+//    case 1: return
+//    }
+//  }
+
   init(entity: Entity?) {
     self.entity = entity
     definition = ActorDefinition()
@@ -298,6 +305,20 @@ class EquipmentC: ECSComponent, Codable {
   }
 }
 class EquipmentS: ECSSystem<EquipmentC>, Codable {
+  required init(from decoder: Decoder) throws { try super.init(from: decoder) }
+  required init() { super.init() }
+  override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }
+}
+
+
+// MARK: Stims
+
+
+class StimC: ECSComponent, Codable {
+  var entity: Entity?
+  init(entity: Entity?) { self.entity = entity }
+}
+class StimS: ECSSystem<StimC>, Codable {
   required init(from decoder: Decoder) throws { try super.init(from: decoder) }
   required init() { super.init() }
   override func encode(to encoder: Encoder) throws { try super.encode(to: encoder) }

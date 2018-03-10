@@ -220,9 +220,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
         self.rangedFire()
         didMove = true
       case config.keyStim:
-        worldModel.actorS[worldModel.player]?.useStim(in: worldModel)
-        worldModel.waitPlayer()
-        didMove = true
+        isDirty = true
+        if worldModel.haveEntityUseStim(entity: worldModel.player) {
+          didMove = true
+        }
       case config.keyDebugLeft:
         if let id = worldModel.exits["previous"] {
           director?.transition(to: LoadScene(worldModel: worldModel, resources: resources, id: id))

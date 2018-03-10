@@ -56,7 +56,7 @@ struct CombatStats {
       """
       Fatigue:          +\(Int(fatigueDelta))
       HIT CHANCE:       [color=ui_text]\(_pct(hitChance))
-        
+
       """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     ]
 

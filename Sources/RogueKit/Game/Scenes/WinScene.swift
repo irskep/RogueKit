@@ -38,7 +38,7 @@ class WinScene: Scene {
     self.resources = resources
   }
 
-  lazy var headshot: REXPaintImage? = { return resources.rexPaintImage(named: "hv_lose") }()
+  lazy var headshot: REXPaintImage? = { return resources.rexPaintImage(named: "hv_win") }()
 
   override func update(terminal: BLTerminalInterface) {
     terminal.backgroundColor = resources.defaultPalette["ui_bg"]

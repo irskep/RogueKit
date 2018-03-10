@@ -35,9 +35,10 @@ private extension ActorC {
         ])
     return """
       \(hpBar)[bkcolor=ui_bg]
+
       \(fatigueBar)[bkcolor=ui_bg]
+
       Reflex: \(Int(currentStats.reflex))
-      Strength: \(Int(currentStats.strength))
       """.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
   }
 }
@@ -103,7 +104,14 @@ class StringUtils {
     }
     if let weaponC = worldModel.weaponS[entity]  {
       strings.append("")
-      strings.append(weaponC.weaponDefinition.statsDescription)
+      if let e = comparisonEntity,
+        let w: WeaponDefinition = worldModel.weapon(wieldedBy: e),
+        let stats = worldModel.actorS[e]?.currentStats
+      {
+        strings.append(weaponC.weaponDefinition.statsDescription(compareTo: w, onEntityWithStats: stats))
+      } else {
+        strings.append(weaponC.weaponDefinition.statsDescription)
+      }
     }
     if let equipmentC = worldModel.equipmentS[entity] {
       strings.append("")
@@ -116,10 +124,10 @@ class StringUtils {
 
     if entity != worldModel.player {
       if let prediction = worldModel.predictFight(attacker: worldModel.player, defender: entity, forUI: true) {
-        strings.append(contentsOf: ["", "You attack them:", prediction.humanDescription])
+        strings.append(contentsOf: ["", "You attack them:", "", prediction.humanDescription])
       }
       if let prediction = worldModel.predictFight(attacker: entity, defender: worldModel.player, forUI: true) {
-        strings.append(contentsOf: ["", "They attack you:", prediction.humanDescription])
+        strings.append(contentsOf: ["", "They attack you:", "", prediction.humanDescription])
       }
     }
 

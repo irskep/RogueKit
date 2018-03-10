@@ -17,4 +17,4 @@ cap,Guard Cap,94,white,A black security guard's hat,0.5,500,"okguard,armory,earl
 work_gloves,Work Gloves,6,white,"Sturdy work gloves that protect your hands against physical, electric, and heat damage",0.25,300,"utility_closet,technician,mid",1,hands,20,50,40,0
 rubber_gloves,Thick Rubber Gloves,6,teal,Thick rubber gloves for dangerous electrical work,0.5,600,"utility_closet,doctor,mid,mechapiranha",1,hands,10,70,10,0
 fire_gloves,Laserproof Gloves,6,red,A firefighter's gloves,0.5,600,"utility_closet,mid",1,hands,10,0,30,0
-leather_gloves,Black Leather Gloves,6,white,"Some protection, but mostly worn to look like an evil badass",0.1,200,"doctor,mid,generic,utility_closet,the_doctor",1,hands,10,10,10,0
+leather_gloves,Black Leather Gloves,6,white,"Some protection, but mostly worn to look like an evil badass",0.1,200,"doctor,mid,generic,utility_closet,the_doctor",1,hands,10,40,40,0

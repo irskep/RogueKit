@@ -417,6 +417,15 @@ extension WorldModel {
       .entity
   }
 
+  func entities(at point: BLPoint, matchingPredicate predicate: (Entity) -> Bool) -> [Entity] {
+    return positionS
+      .all(in: activeMapId, at: point)
+      .flatMap({ $0.entity })
+      .flatMap({ self.spriteS[$0] })
+      .sorted(by: { $0.z > $1.z })
+      .flatMap { $0.entity }
+  }
+
   func canMobSeePlayer(_ e: Entity) -> Bool {
     return self.can(entity: player, see: positionS[e]!.point)  // just use FOV cache for symmetry
   }
@@ -878,6 +887,7 @@ extension WorldModel: BLTDrawable {
     if toDraw.count > 1 {
       toDraw.sort(by: { $0.z < $1.z })
     }
+    terminal.isCompositionEnabled = true
     for spriteC in toDraw {
       terminal.foregroundColor = spriteC.color
       if let int = spriteC.int {
@@ -886,6 +896,7 @@ extension WorldModel: BLTDrawable {
         terminal.print(point: point, string: str)
       }
     }
+    terminal.isCompositionEnabled = false
   }
 
   var size: BLSize { return activeMap.size }

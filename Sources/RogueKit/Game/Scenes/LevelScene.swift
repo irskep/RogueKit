@@ -98,10 +98,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     self.save()
   }
 
-  func inspectedEntity(at point: BLPoint) -> Entity? {
+  func inspectedEntities(at point: BLPoint) -> [Entity] {
     guard worldModel.debugFlags["omniscient"] == 1 ||
-      worldModel.playerFOVCache.contains(point) else { return nil }
-    return worldModel.entity(at: point, matchingPredicate: {
+      worldModel.playerFOVCache.contains(point) else { return [] }
+    return worldModel.entities(at: point, matchingPredicate: {
       return self.worldModel.nameS[$0] != nil
     })
   }
@@ -132,9 +132,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
   func toggleInspectedEntity() {
     let inspectablesInRange = worldModel.playerFOVCache
       .flatMap({
-        (point: BLPoint) -> (BLPoint, Entity)? in
-        guard let e = self.inspectedEntity(at: point), e != self.worldModel.player else { return nil }
-        return (point, e)
+        (point: BLPoint) -> [(BLPoint, Entity)] in
+        return self.inspectedEntities(at: point)
+          .filter({ $0 != worldModel.player })
+          .map { (point, $0) }
       })
       .sorted(by: { $0.0.y == $1.0.y ? $0.0.x < $1.0.x : $0.0.y < $1.0.y })
       .map({ $0.1 })
@@ -264,7 +265,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
         if newPoint != cursorPoint {
           isDirty = true
           cursorPoint = newPoint
-          inspectedEntity = inspectedEntity(at: cursorPoint)
+          inspectedEntity = self.inspectedEntities(at: cursorPoint).first
           mover.update(cursorPoint: cursorPoint)
         }
       case BLConstant.MOUSE_LEFT:
@@ -327,6 +328,9 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
         director?.transition(to: LoseScene(resources: resources))
       }
     }
+
+    // drain event queue every frame
+    if terminal.hasInput { self.update(terminal: terminal) }
   }
 
   func rangedFire() {

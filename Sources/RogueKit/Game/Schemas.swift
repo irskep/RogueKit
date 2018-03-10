@@ -88,6 +88,18 @@ struct StatBucket: Codable {
   var awareness: Double = 0
   var reflex: Double = 0
   var strength: Double = 0
+
+  func fatigue(forUsingWeapon weapon: WeaponDefinition) -> Double {
+    let strReq = Double(weapon.strengthRequired)
+    if strength == strReq {
+      return 10
+    } else if strength > strReq {
+      return 10 / (strength - strReq)
+    } else {
+      let d = (strReq - strength) + 1
+      return 10 + d * d
+    }
+  }
 }
 func +(_ a: StatBucket, _ b: StatBucket) -> StatBucket {
   return StatBucket(hp: a.hp + b.hp,
@@ -165,6 +177,45 @@ struct WeaponDefinition: Codable, Tagged, WeightedChoosable {
     if damagePhysical > 0 { strings.append("\(damagePhysical)p (physical)") }
     if damageElectric > 0 { strings.append("\(damageElectric)e (electric)") }
     if damageHeat > 0 { strings.append("\(damageHeat)h (heat)") }
+    return strings.joined(separator: "\n")
+  }
+
+  func statsDescription(compareTo other: WeaponDefinition, onEntityWithStats stats: StatBucket) -> String {
+    var strings: [String] = [
+      "\(Int(grams))g",
+      //      "",
+      isMelee ? "Melee weapon" : "Ranged weapon",
+      "+\(Int(stats.fatigue(forUsingWeapon: self))) fatigue",
+      ""
+    ]
+    if cooldown > 0 {
+      strings.append("\(cooldown)-turn cooldown")
+      strings.append(S.dim("Current: \(other.cooldown)"))
+      strings.append("")
+    }
+    if isRanged {
+      strings.append("Loses \(rangeFalloff)% accuracy per tile of distance")
+      if other.isRanged {
+        strings.append(contentsOf: [S.dim("Current: \(other.rangeFalloff)%"), ""])
+      }
+      strings.append("Max range of \(rangeMax) tiles")
+      strings.append(S.dim("Current: \(other.rangeMax)"))
+      strings.append("")
+    }
+
+    strings.append("Damage:")
+    if damagePhysical > 0 || other.damagePhysical > 0 { strings.append("\(damagePhysical)p (physical)") }
+    if other.damagePhysical > 0 {
+      strings.append(contentsOf: [S.dim("Current: \(other.damagePhysical)p"), ""])
+    }
+    if damageElectric > 0 || other.damageElectric > 0 { strings.append("\(damageElectric)e (electric)") }
+    if other.damageElectric > 0 {
+      strings.append(contentsOf: [S.dim("Current: \(other.damageElectric)e"), ""])
+    }
+    if damageHeat > 0 || other.damageHeat > 0 { strings.append("\(damageHeat)h (heat)") }
+    if other.damageHeat > 0 {
+      strings.append(contentsOf: [S.dim("Current: \(other.damageHeat)h"), ""])
+    }
     return strings.joined(separator: "\n")
   }
 }

@@ -57,10 +57,18 @@ class LoadScene: Scene {
       guard self.director?.activeScene === self else { return }
 
       terminal.clear()
-      terminal.layer = 0
-      gen.draw(in: terminal, at: BLPoint.zero)
-      terminal.layer = 2
-      gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
+
+      terminal.foregroundColor = terminal.getColor(name: "ui_text")
+      terminal.print(
+        rect: BLRect(origin: BLPoint(x: 0, y: terminal.height / 2),
+                     size: BLSize(w: terminal.width, h: terminal.height / 2)),
+        align: BLConstant.ALIGN_CENTER,
+        string: "Loading\n" + status)
+
+//      terminal.layer = 0
+//      gen.draw(in: terminal, at: BLPoint.zero)
+//      terminal.layer = 2
+//      gen.debugDistanceField?.draw(in: terminal, at: BLPoint.zero)
       terminal.refresh()
 
       if result != nil {

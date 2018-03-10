@@ -43,6 +43,7 @@ struct CombatStats {
   var baseHitChance: Double = 0
   var hitChance: Double = 0
   var fatigueDelta: Double = 0
+  var weaponDef: WeaponDefinition = WeaponDefinition.zero
 
   // sums to 1
   var slotChances: [EquipmentC.Slot: Double] = [.head: 0.25, .hands: 0.1, .body: 1 - 0.35]
@@ -54,6 +55,7 @@ struct CombatStats {
   var humanDescription: String {
     var strings: [String] = [
       """
+      \(weaponDef.name)
       Fatigue:          +\(Int(fatigueDelta))
       HIT CHANCE:       [color=ui_text]\(_pct(hitChance))
 
@@ -99,6 +101,7 @@ func _pct(_ val: Double) -> String {
 extension CombatStats {
   static func predictFight(attacker: Combatant, defender: Combatant, forUI: Bool = false) -> CombatStats {
     var stats = CombatStats()
+    stats.weaponDef = attacker.weapon
 
     let distance = _distance(attacker.position, defender.position)
 
@@ -108,15 +111,7 @@ extension CombatStats {
     }
     let defenderBaseDodgeChance = 0.05 + (1 - defenderReflex * 0.95)
 
-    let strReq = Double(attacker.weapon.strengthRequired)
-    if attacker.stats.strength == strReq {
-      stats.fatigueDelta = 10
-    } else if attacker.stats.strength > strReq {
-      stats.fatigueDelta = 10 / (attacker.stats.strength - strReq)
-    } else {
-      let d = (strReq - attacker.stats.strength) + 1
-      stats.fatigueDelta = 10 + d * d
-    }
+    stats.fatigueDelta = attacker.stats.fatigue(forUsingWeapon: attacker.weapon)
 
     if attacker.weapon.isMelee {
       stats.baseHitChance = 1

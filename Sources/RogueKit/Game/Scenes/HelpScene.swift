@@ -21,6 +21,7 @@ MOVEMENT
 (space)  Wait a turn (recover HP and Fatigue)
 (tab)    Inspect things you can see
 (enter)  Move toward or attack the selected thing
+(i)      Inspect an item in your inventory.
 (r)      Wait until you see an enemy or you're fully healed.
          There's no food clock, so there is no penalty for doing this.
 (q)      Save and exit to the title screen

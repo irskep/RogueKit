@@ -73,10 +73,8 @@
 		AA3DA26E2012DE0300A7CA1B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* main.swift */; };
 		AA3DA2742013045300A7CA1B /* libBearLibTerminal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; };
 		AA3DA276201304A700A7CA1B /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AA3DA2772013055800A7CA1B /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; };
 		AA3DA2782013055A00A7CA1B /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; };
 		AA3DA27A2013057400A7CA1B /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AA3DA27C2013059100A7CA1B /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AA3DA27E2015B1E300A7CA1B /* WorldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */; };
 		AA3DA27F2015B1E300A7CA1B /* WorldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */; };
 		AA3DA2812015B20C00A7CA1B /* ECS.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA2802015B20C00A7CA1B /* ECS.swift */; };
@@ -121,6 +119,8 @@
 		AAD50C0A205256B70090AB90 /* WinScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD50C08205256B70090AB90 /* WinScene.swift */; };
 		AAD50C0C20532EA70090AB90 /* TextScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD50C0B20532EA70090AB90 /* TextScene.swift */; };
 		AAD50C0D20532EA70090AB90 /* TextScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD50C0B20532EA70090AB90 /* TextScene.swift */; };
+		AAD50C122055BE490090AB90 /* libBearLibTerminal.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; };
+		AAD50C132055C0AE0090AB90 /* libBearLibTerminal.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		OBJ_101 /* Data+Gzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Data+Gzip.swift */; };
 		OBJ_103 /* system_zlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; };
 		OBJ_109 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* anchor.c */; };
@@ -251,11 +251,11 @@
 		};
 		AA3DA27B2013058B00A7CA1B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				AA3DA27C2013059100A7CA1B /* libBearLibTerminal.dylib in CopyFiles */,
+				AAD50C132055C0AE0090AB90 /* libBearLibTerminal.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +285,7 @@
 		AA3DA2362012DD2600A7CA1B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		AA3DA2382012DD2600A7CA1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3DA2392012DD2600A7CA1B /* RogueKitApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RogueKitApp.entitlements; sourceTree = "<group>"; };
-		AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libBearLibTerminal.dylib; path = Binaries/libBearLibTerminal.dylib; sourceTree = "<group>"; };
+		AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libBearLibTerminal.dylib; sourceTree = "<group>"; };
 		AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldModel.swift; sourceTree = "<group>"; };
 		AA3DA2802015B20C00A7CA1B /* ECS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECS.swift; sourceTree = "<group>"; };
 		AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ECS+Scratch.swift"; sourceTree = "<group>"; };
@@ -327,7 +327,6 @@
 		OBJ_24 /* fovTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fovTest.swift; sourceTree = "<group>"; };
 		OBJ_25 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_26 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
-		OBJ_28 /* Binaries */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Binaries; sourceTree = SOURCE_ROOT; };
 		OBJ_29 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = SOURCE_ROOT; };
 		OBJ_33 /* anchor.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = anchor.c; sourceTree = "<group>"; };
 		OBJ_35 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = "/Users/steve/_d/games/RogueKit/.build/checkouts/GzipSwift.git-2487387372573236187/Sources/system-zlib/include/module.modulemap"; sourceTree = "<group>"; };
@@ -345,9 +344,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAD50C122055BE490090AB90 /* libBearLibTerminal.dylib in Frameworks */,
 				AA3DA2592012DD7900A7CA1B /* BearLibTerminal.framework in Frameworks */,
 				AA3DA2552012DD7900A7CA1B /* system_zlib.framework in Frameworks */,
-				AA3DA2772013055800A7CA1B /* libBearLibTerminal.dylib in Frameworks */,
 				AA3DA2512012DD7900A7CA1B /* Gzip.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +464,14 @@
 			name = SwiftPriorityQueue;
 			path = Sources/RogueKit/SwiftPriorityQueue;
 			sourceTree = SOURCE_ROOT;
+		};
+		AAD50C102055BE2D0090AB90 /* Binaries */ = {
+			isa = PBXGroup;
+			children = (
+				AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */,
+			);
+			path = Binaries;
+			sourceTree = "<group>";
 		};
 		OBJ_11 /* Map Gen */ = {
 			isa = PBXGroup;
@@ -589,18 +596,17 @@
 			isa = PBXGroup;
 			children = (
 				AA90B099204A305D00A59645 /* itch_mac.sh */,
-				AA3DA2732013045300A7CA1B /* libBearLibTerminal.dylib */,
 				AA3DA1F1200BE81200A7CA1B /* Makefile */,
 				AA3DA1F0200BE81200A7CA1B /* Package.resolved */,
 				AA3DA1EF200BE81200A7CA1B /* Readme.md */,
 				AA3DA1F2200BE81300A7CA1B /* sync_resources.sh */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
+				AA3DA2302012DD2600A7CA1B /* RogueKitApp */,
 				OBJ_27 /* Tests */,
-				OBJ_28 /* Binaries */,
+				AAD50C102055BE2D0090AB90 /* Binaries */,
 				OBJ_29 /* Resources */,
 				OBJ_30 /* Dependencies */,
-				AA3DA2302012DD2600A7CA1B /* RogueKitApp */,
 				OBJ_44 /* Products */,
 				AA3DA2402012DD6400A7CA1B /* Frameworks */,
 			);

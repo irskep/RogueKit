@@ -6,7 +6,7 @@ beefyguard,"late,guard",1,Elite Henchman,"An athletic, combat-trained henchman t
 doctor,"medical,doctor",1,Evil Doctor,"A ""researcher"" in Dr. Hallervorden's lab",100,salmon,20,80,1,30,20,2,medical:1,medical:1,medical:1,medical:1,fist,wander_chase,Evil Lair Staff,
 nurse,"medical,doctor",1,Evil Nurse,"An assistant to the ""researchers"" in Dr. Hallervorden's lab",110,salmon,20,80,1,30,20,2,medical:1,medical:1,medical:1,medical:1,fist,wander_chase,Evil Lair Staff,
 technician,"mid,late,technician,early",1,Technician,A hunchbacked servant of Dr. Hallervorden who fixes the lab,116,green,30,80,1,40,20,2,technician:1,technician:1,technician:1,technician:1,fist,wander_chase,Evil Lair Staff,
-crazy,"start,early,insane_test_subject,medical",1,Insane Test Subject,"A test subject just like you, but no longer able to tell friend from foe",115,green,20,50,1,80,10,1,Playerstart:1,playerstart:1,playerstart:1,"crazy:1,none:1",fist,wander_chase,Insane Test Subjects,
+crazy,"start,early,insane_test_subject,medical",1,Feral Test Subject,"A test subject just like you, but no longer able to tell friend from foe",115,green,20,50,1,80,10,1,Playerstart:1,playerstart:1,playerstart:1,"crazy:1,none:1",fist,wander_chase,Feral Test Subjects,
 laserraptor,dinosaurs,1,Velociraptor,A raptor cloned from DNA trapped in amber. With a laser attached to its head.,118,orange,60,80,1,50,70,3,,,,Laser:1,talon,wander_chase,Dinosaurs,
 pig,"medical,pig,animal",1,Pig,A pig used for illegal medical testing. It isn't happy.,112,pink,100,80,1,15,15,3,,,,,teeth,wander_chase,Animals,
 rabbit,"medical,rabbit,animal",1,Rabbit,A rabbit that has been implanted with assorted experimental chemicals,114,white,20,80,1,50,30,1,,,,,teeth,wander_chase,Animals,

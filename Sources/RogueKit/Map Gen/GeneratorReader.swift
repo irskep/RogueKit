@@ -27,11 +27,10 @@ class GeneratorReader {
     var gen: T?
     var commands = [(String, [String])]()
 
-    string.enumerateLines {
-      (line: String, stop: inout Bool) in
-      guard !line.starts(with: "#") else { return }
+    for line in string.split(separator: "\n") {
+      guard !line.starts(with: "#") else { continue }
       let values = line.split(separator: ",")
-      guard values.count > 0 else { return }
+      guard values.count > 0 else { continue }
       let cmd = String(values[0])
       let args = values.dropFirst().map({ String($0) })
       if gen == nil {

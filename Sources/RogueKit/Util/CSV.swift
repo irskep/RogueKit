@@ -133,7 +133,7 @@ func parseLine(_ line: String) -> [String] {
 
 
 func readCSV<T>(url: URL, mapper: @escaping (StringBox) -> T) throws -> [T] {
-  let string = try String(contentsOf: url)
+  let string = try String(contentsOf: url, encoding: .utf8)
   var results = [T]()
   var labels = [String]()
 

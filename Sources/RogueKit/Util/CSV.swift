@@ -138,16 +138,15 @@ func readCSV<T>(url: URL, mapper: @escaping (StringBox) -> T) throws -> [T] {
   var labels = [String]()
 
   var i = 0
-  string.enumerateLines {
-    (line: String, stop: inout Bool) in
-    guard !line.isEmpty && !line.starts(with: "#") else { return }
+  for line in string.split(separator: "\n") {
+    guard !line.isEmpty && !line.starts(with: "#") else { continue }
 
-    let values = parseLine(line)
-    guard values.count > 0 else { return }
+    let values = parseLine(String(line))
+    guard values.count > 0 else { continue }
     guard i > 0 else {
       labels = values
       i += 1
-      return
+      continue
     }
     results.append(mapper(StringBox(labels: labels, values: values)))
     i += 1

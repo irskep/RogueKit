@@ -97,8 +97,6 @@
 		AAC6A4E720433B71008D971B /* PCG32.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E420433B5F008D971B /* PCG32.swift */; };
 		AAC6A4E920488916008D971B /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E820488916008D971B /* Director.swift */; };
 		AAC6A4EA20488916008D971B /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4E820488916008D971B /* Director.swift */; };
-		AAC6A4EC20489374008D971B /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EB20489374008D971B /* RunLoop.swift */; };
-		AAC6A4ED20489374008D971B /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EB20489374008D971B /* RunLoop.swift */; };
 		AAC6A4F02049C1C2008D971B /* LoadScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EF2049C1C2008D971B /* LoadScene.swift */; };
 		AAC6A4F12049C1C2008D971B /* LoadScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4EF2049C1C2008D971B /* LoadScene.swift */; };
 		AAC6A4F32049C1C9008D971B /* LevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC6A4F22049C1C9008D971B /* LevelScene.swift */; };
@@ -298,7 +296,6 @@
 		AA90B09A204A684400A59645 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
 		AAC6A4E420433B5F008D971B /* PCG32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PCG32.swift; sourceTree = "<group>"; };
 		AAC6A4E820488916008D971B /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
-		AAC6A4EB20489374008D971B /* RunLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoop.swift; sourceTree = "<group>"; };
 		AAC6A4EF2049C1C2008D971B /* LoadScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadScene.swift; sourceTree = "<group>"; };
 		AAC6A4F22049C1C9008D971B /* LevelScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelScene.swift; sourceTree = "<group>"; };
 		AAC6A4F52049C3F1008D971B /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
@@ -500,7 +497,6 @@
 				OBJ_21 /* REXPaintImage.swift */,
 				AA3DA229200C37BF00A7CA1B /* RKColor.swift */,
 				OBJ_22 /* RKRNG.swift */,
-				AAC6A4EB20489374008D971B /* RunLoop.swift */,
 				OBJ_23 /* SpriteSheet.swift */,
 				AAC6A4FE2049CF8C008D971B /* URLs.swift */,
 				AA072D7F204B66A600479A94 /* DrawUtils.swift */,
@@ -886,7 +882,6 @@
 				AAC6A4F42049C1C9008D971B /* LevelScene.swift in Sources */,
 				AA467151204C9D2B003A1114 /* Schemas.swift in Sources */,
 				AA3DA2322012DD2600A7CA1B /* AppDelegate.swift in Sources */,
-				AAC6A4ED20489374008D971B /* RunLoop.swift in Sources */,
 				AA1CCC8B2030CF6100BFA85A /* PaletteStore.swift in Sources */,
 				AA3DA2652012DE0300A7CA1B /* Array2D.swift in Sources */,
 				AA3DA26E2012DE0300A7CA1B /* main.swift in Sources */,
@@ -1036,7 +1031,6 @@
 				AA3DA2812015B20C00A7CA1B /* ECS.swift in Sources */,
 				OBJ_86 /* test.swift in Sources */,
 				AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */,
-				AAC6A4EC20489374008D971B /* RunLoop.swift in Sources */,
 				AAC6A50E2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */,
 				AA072D80204B66A600479A94 /* DrawUtils.swift in Sources */,
 			);

@@ -142,7 +142,7 @@ class WorldModel: Codable {
       print("RNG store wasn't able to load. Giving you a fresh one.")
       var t: timeval = timeval()
       gettimeofday(&t, nil)
-      rngStore = RandomSeedStore(seed: UInt64(t.tv_usec))
+      rngStore = RandomSeedStore(seed: UInt64(bitPattern: Int64(t.tv_usec)))
     }
 
     player = try values.decode(Entity.self, forKey: .player)

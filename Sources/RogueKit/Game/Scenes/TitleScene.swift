@@ -18,7 +18,7 @@ private let TITLE = """
                         ▀                              ▐
 """
 
-var seedOverride: UInt64? = nil
+var seedOverride: UInt64? = 1520884466483
 
 func drawCenteredString(_ terminal: BLTerminalInterface, _ box: BLRect, _ s: String) -> BLSize {
   let stringSize = terminal.measure(string: s)
@@ -87,10 +87,10 @@ class TitleScene: Scene {
   func actionStartGame() {
     var t: timeval = timeval()
     gettimeofday(&t, nil)
-    let seed = Int64(t.tv_sec * 1000) + Int64(t.tv_usec / 1000)
+    let seed = UInt64(bitPattern: Int64(t.tv_sec) * 1000) + UInt64(bitPattern: Int64(t.tv_usec) / 1000)
     print("SEED:", seedOverride ?? seed)
     let worldModel = WorldModel(
-      rngStore: RandomSeedStore(seed: seedOverride ?? UInt64(seed)),
+      rngStore: RandomSeedStore(seed: seedOverride ?? seed),
       resources: resources,
       mapDefinitions: resources.csvDB.mapDefinitions,
       activeMapId: resources.csvDB.mapDefinitions.first!.id)

@@ -38,7 +38,7 @@ public class RandomSeedStore: Codable {
   }
 
   public subscript(index: String) -> PCG32Generator {
-    let seq = UInt64(index.hashValue)
+    let seq = UInt64(bitPattern: Int64(index.hashValue))
     if let s = collisionChecks[seq], s != index {
       assertionFailure("RandomSeedStore collision between \(s) (existing) and \(index) (new)")
     }

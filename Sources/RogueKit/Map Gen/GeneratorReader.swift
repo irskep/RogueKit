@@ -22,7 +22,7 @@ class GeneratorReader {
     factory: @escaping (RKRNGProtocol, ResourceCollectionProtocol, BLSize) -> T,
     callback: (T, String, Array2D<GeneratorCell>?) throws -> Void) throws
   {
-    let string = try String(contentsOf: resources.url(for: "levelscripts/\(id).csv")!)
+    let string = try String(contentsOf: resources.url(for: "levelscripts/\(id).csv")!, encoding: .utf8)
 
     var gen: T?
     var commands = [(String, [String])]()

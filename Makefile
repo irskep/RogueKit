@@ -2,11 +2,11 @@
 
 .build/debug/libBearLibTerminal.dylib:
 	mkdir -p ./.build/debug
-	cp Binaries/libBearLibTerminal.dylib ./.build/debug/
+	cp Binaries/* ./.build/debug/
 
 .build/release/libBearLibTerminal.dylib:
 	mkdir -p ./.build/release
-	cp Binaries/libBearLibTerminal.dylib ./.build/release/
+	cp Binaries/* ./.build/release/
 
 .build/debug/Resources: Resources
 	mkdir -p ./.build/debug

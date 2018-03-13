@@ -337,9 +337,9 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
     guard let e = inspectedEntity else { return }
     if worldModel.moveAfterPlayerS[e] != nil {
       worldModel.fightPlayer(defender: e)
-    } else if let p = worldModel.position(of: e) {
+    } else if let p = worldModel.position(of: e), let lastPoint = mover.points.last {
       mover.update(cursorPoint: p)
-      worldModel.movePlayer(by: mover.points.last! - worldModel.positionS[worldModel.player]!.point)
+      worldModel.movePlayer(by: lastPoint - worldModel.positionS[worldModel.player]!.point)
       mover.update(cursorPoint: p)
     }
   }

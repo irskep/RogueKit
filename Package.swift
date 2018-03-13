@@ -3,9 +3,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "RogueKit",
+    name: "Dr. Hallervorden",
     products: [
-        .executable(name: "RogueKit Demo", targets: ["RogueKit"]),
+        .executable(name: "Dr. Hallervorden", targets: ["RogueKit"]),
         .library(name: "RogueKit", targets: ["RogueKit"]),
     ],
     dependencies: [

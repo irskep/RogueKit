@@ -284,7 +284,7 @@ struct ArmorDefinition: Codable, Tagged, WeightedChoosable {
       strings.append("\(Int(100 - conductiveness))% electric protection")
     }
     if flammability < 100 {
-      strings.append("\(Int(100 - flammability))% fire protection")
+      strings.append("\(Int(100 - flammability))% heat protection")
     }
     return strings.joined(separator: "\n")
   }
@@ -308,7 +308,7 @@ struct ArmorDefinition: Codable, Tagged, WeightedChoosable {
       strings.append("")
     }
     if flammability < 100 || armorDef.flammability < 100 {
-      strings.append("\(Int(100 - flammability))% fire protection")
+      strings.append("\(Int(100 - flammability))% heat protection")
       strings.append(S.dim("(current: \(Int(100 - armorDef.flammability))%)"))
     }
     return strings.joined(separator: "\n")

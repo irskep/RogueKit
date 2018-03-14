@@ -14,6 +14,8 @@ Dr. Hallervorden Help
 
 Press ? to hide and show this screen.
 
+EVERY KEY IS IMPORTANT.
+
 MOVEMENT
 --------
 

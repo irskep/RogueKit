@@ -18,7 +18,8 @@ private let TITLE = """
                         ▀                              ▐
 """
 
-var seedOverride: UInt64? = 1520884466483
+//var seedOverride: UInt64? = 1520884466483
+var seedOverride: UInt64? = nil
 
 func drawCenteredString(_ terminal: BLTerminalInterface, _ box: BLRect, _ s: String) -> BLSize {
   let stringSize = terminal.measure(string: s)

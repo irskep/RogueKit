@@ -164,38 +164,53 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
   }
 
   var isDirty = true
+  var keyReleaseGate = false
   override func update(terminal: BLTerminalInterface) {
     var didMove = false
+
     if terminal.hasInput, let config = (director as? SteveRLDirector)?.config {
-      self.isResting = false
-      switch terminal.read() {
+      let key = terminal.read()
+
+      if key & config.keyRest != config.keyRest {
+        self.isResting = false
+      }
+
+      switch key {
       case config.keyMenu:
         inspectedEntity = nil
         isDirty = true
       case config.keyExit:
         self.save()
         director?.transition(to: TitleScene(resources: resources))
+
       case config.keyLeft, config.keyLeftAlt:
+        guard keyReleaseGate else { break }
         worldModel.movePlayer(by: BLPoint(x: -1, y: 0))
         mover.update(cursorPoint: nil)
         didMove = true
       case config.keyRight, config.keyRightAlt:
+        guard keyReleaseGate else { break }
         worldModel.movePlayer(by: BLPoint(x: 1, y: 0))
         mover.update(cursorPoint: nil)
         didMove = true
       case config.keyUp, config.keyUpAlt:
+        guard keyReleaseGate else { break }
         worldModel.movePlayer(by: BLPoint(x: 0, y: -1))
         mover.update(cursorPoint: nil)
         didMove = true
       case config.keyDown, config.keyDownAlt:
+        guard keyReleaseGate else { break }
         worldModel.movePlayer(by: BLPoint(x: 0, y: 1))
         mover.update(cursorPoint: nil)
         didMove = true
       case config.keyWait:
+        guard keyReleaseGate else { break }
         worldModel.waitPlayer()
         didMove = true
       case config.keyRest:
+        guard keyReleaseGate else { break }
         self.isResting = true
+
       case config.keyInventoryOpen:
         director?.transition(to: InventoryScene(
           resources: resources,
@@ -223,14 +238,17 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
         self.toggleInspectedEntity()
         isDirty = true
       case config.keyRangedFire:
+        guard keyReleaseGate else { break }
         self.rangedFire()
         didMove = true
       case config.keyStim:
+        guard keyReleaseGate else { break }
         isDirty = true
         if worldModel.haveEntityUseStim(entity: worldModel.player) {
           didMove = true
         }
       case config.keyHealth:
+        guard keyReleaseGate else { break }
         isDirty = true
         if worldModel.haveEntityUseHealth(entity: worldModel.player) {
           didMove = true
@@ -278,6 +296,12 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
           didMove = true
         }
       default: break
+      }
+
+      if key & BLConstant.KEY_RELEASED != 0 {
+        keyReleaseGate = true
+      } else {
+        keyReleaseGate = false
       }
     }
 
@@ -386,6 +410,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       terminal.layer = oldLayer
       terminal.refresh()
       terminal.delay(milliseconds: 33)
+      if terminal.hasInput {
+        callback?()
+        return
+      }
     }
     callback?()
   }
@@ -410,6 +438,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       }
       terminal.refresh()
       terminal.delay(milliseconds: 33)
+      if terminal.hasInput {
+        callback?()
+        return
+      }
     }
     callback?()
   }
@@ -460,6 +492,10 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
       terminal.layer = oldLayer
       terminal.refresh()
       terminal.delay(milliseconds: 33)
+      if terminal.hasInput {
+        callback?()
+        return
+      }
     }
     callback?()
   }

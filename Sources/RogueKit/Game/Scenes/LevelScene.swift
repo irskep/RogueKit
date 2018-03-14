@@ -85,7 +85,7 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
 
   override func didEnter() {
     super.didEnter()
-    self.save()
+//    self.save()
   }
 
   override func willExit() {

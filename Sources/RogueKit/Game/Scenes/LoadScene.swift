@@ -235,6 +235,7 @@ class LoadScene: Scene {
     self.worldModel.applyPOIs()
 
     let levelScene = LevelScene(resources: self.resources, worldModel: self.worldModel)
+    levelScene.save()
     let mapText = worldModel.mapDefinitions[self.id]?.text
     if let mapText = mapText, !mapText.isEmpty {
       let ts = TextScene(

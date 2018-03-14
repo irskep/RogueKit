@@ -306,24 +306,6 @@ class WorldModel: Codable {
       }
     }
 
-    // Pick up any items on the ground
-    for posC in positionS.all(in: activeMapId, at: playerPos) where posC.entity != nil {
-      guard let entity = posC.entity else { continue }
-      if collectibleS[entity] != nil {
-        guard can(entity: player, pickUp: entity) else { continue }
-        self.haveEntity(player, pickUp: entity)
-      } else if let stimC = stimS[entity] {
-        positionS.remove(entity: entity)
-        if stimC.kind == "stim" {
-          self.numStims += 1
-          self.log("You pick up a stim")
-        } else {
-          self.numHealths += 1
-          self.log("You pick up a health boost")
-        }
-      }
-    }
-
     forceWaitS[player]!.turnsRemaining = actorS[player]!.fatigueLevel
 
     // Move all enemies on this level
@@ -683,6 +665,24 @@ extension WorldModel {
     }
 
     if self.push(entity: player, by: delta) {
+      // Pick up any items on the ground
+      for posC in positionS.all(in: activeMapId, at: playerPos) where posC.entity != nil {
+        guard let entity = posC.entity else { continue }
+        if collectibleS[entity] != nil {
+          guard can(entity: player, pickUp: entity) else { continue }
+          self.haveEntity(player, pickUp: entity)
+        } else if let stimC = stimS[entity] {
+          positionS.remove(entity: entity)
+          if stimC.kind == "stim" {
+            self.numStims += 1
+            self.log("You pick up a stim")
+          } else {
+            self.numHealths += 1
+            self.log("You pick up a health boost")
+          }
+        }
+      }
+
       self.playerDidTakeAction()
     }
   }

@@ -40,7 +40,7 @@
 		AA1CCC8A2030CF6100BFA85A /* PaletteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1CCC892030CF6100BFA85A /* PaletteStore.swift */; };
 		AA1CCC8B2030CF6100BFA85A /* PaletteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1CCC892030CF6100BFA85A /* PaletteStore.swift */; };
 		AA3DA1F3200BE81300A7CA1B /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA1F1200BE81200A7CA1B /* Makefile */; };
-		AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */; };
+		AA3DA224200BECAF00A7CA1B /* PRNGStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA222200BECAB00A7CA1B /* PRNGStore.swift */; };
 		AA3DA226200BF4B600A7CA1B /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */; };
 		AA3DA228200BF72100A7CA1B /* GeneratorReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */; };
 		AA3DA22A200C37BF00A7CA1B /* RKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA229200C37BF00A7CA1B /* RKColor.swift */; };
@@ -54,7 +54,7 @@
 		AA3DA2562012DD7900A7CA1B /* system_zlib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = "Gzip::system-zlib::Product" /* system_zlib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA3DA2592012DD7900A7CA1B /* BearLibTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */; };
 		AA3DA25A2012DD7900A7CA1B /* BearLibTerminal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = "BearLibTerminal::BearLibTerminal::Product" /* BearLibTerminal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AA3DA25E2012DE0300A7CA1B /* RandomSeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */; };
+		AA3DA25E2012DE0300A7CA1B /* PRNGStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA222200BECAB00A7CA1B /* PRNGStore.swift */; };
 		AA3DA25F2012DE0300A7CA1B /* RecursiveShadowcastingFOVProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* RecursiveShadowcastingFOVProvider.swift */; };
 		AA3DA2602012DE0300A7CA1B /* GeneratorReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */; };
 		AA3DA2612012DE0300A7CA1B /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */; };
@@ -273,7 +273,7 @@
 		AA3DA1F0200BE81200A7CA1B /* Package.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Package.resolved; sourceTree = "<group>"; };
 		AA3DA1F1200BE81200A7CA1B /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		AA3DA1F2200BE81300A7CA1B /* sync_resources.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = sync_resources.sh; sourceTree = "<group>"; };
-		AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSeedStore.swift; sourceTree = "<group>"; };
+		AA3DA222200BECAB00A7CA1B /* PRNGStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRNGStore.swift; sourceTree = "<group>"; };
 		AA3DA225200BF4B600A7CA1B /* GeneratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorProtocol.swift; sourceTree = "<group>"; };
 		AA3DA227200BF72100A7CA1B /* GeneratorReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorReader.swift; sourceTree = "<group>"; };
 		AA3DA229200C37BF00A7CA1B /* RKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKColor.swift; sourceTree = "<group>"; };
@@ -401,7 +401,6 @@
 				AAC6A4EE2049C19C008D971B /* Scenes */,
 				AA3DA2802015B20C00A7CA1B /* ECS.swift */,
 				AA3DA28320163C3700A7CA1B /* ECS+Scratch.swift */,
-				AA3DA222200BECAB00A7CA1B /* RandomSeedStore.swift */,
 				AA0DE9012013C87400CCF61F /* LevelMap.swift */,
 				OBJ_14 /* Resources.swift */,
 				AA3DA27D2015B1E300A7CA1B /* WorldModel.swift */,
@@ -493,6 +492,7 @@
 				OBJ_19 /* DistanceField.swift */,
 				AA1CCC892030CF6100BFA85A /* PaletteStore.swift */,
 				AAC6A4E420433B5F008D971B /* PCG32.swift */,
+				AA3DA222200BECAB00A7CA1B /* PRNGStore.swift */,
 				OBJ_20 /* REXPaintImage+BearLibTerminal.swift */,
 				OBJ_21 /* REXPaintImage.swift */,
 				AA3DA229200C37BF00A7CA1B /* RKColor.swift */,
@@ -885,7 +885,7 @@
 				AA1CCC8B2030CF6100BFA85A /* PaletteStore.swift in Sources */,
 				AA3DA2652012DE0300A7CA1B /* Array2D.swift in Sources */,
 				AA3DA26E2012DE0300A7CA1B /* main.swift in Sources */,
-				AA3DA25E2012DE0300A7CA1B /* RandomSeedStore.swift in Sources */,
+				AA3DA25E2012DE0300A7CA1B /* PRNGStore.swift in Sources */,
 				AAC6A50F2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */,
 				AAC6A4E720433B71008D971B /* PCG32.swift in Sources */,
 				AA46714E204C9C14003A1114 /* Combat.swift in Sources */,
@@ -1030,7 +1030,7 @@
 				OBJ_85 /* main.swift in Sources */,
 				AA3DA2812015B20C00A7CA1B /* ECS.swift in Sources */,
 				OBJ_86 /* test.swift in Sources */,
-				AA3DA224200BECAF00A7CA1B /* RandomSeedStore.swift in Sources */,
+				AA3DA224200BECAF00A7CA1B /* PRNGStore.swift in Sources */,
 				AAC6A50E2049EF1A008D971B /* SwiftPriorityQueue.swift in Sources */,
 				AA072D80204B66A600479A94 /* DrawUtils.swift in Sources */,
 			);

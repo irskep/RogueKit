@@ -33,7 +33,7 @@ struct MapDefinition: Codable {
 
 class WorldModel: Codable {
   let version: String = SAVE_FILE_VERSION
-  let rngStore: RandomSeedStore
+  let rngStore: PRNGStore
   var resources: ResourceCollectionProtocol?
   var csvDB: CSVDB { return resources!.csvDB }
 
@@ -137,12 +137,12 @@ class WorldModel: Codable {
     activeMapId = try values.decode(String.self, forKey: .activeMapId)
 
     do {
-      rngStore = try values.decode(RandomSeedStore.self, forKey: .rngStore)
+      rngStore = try values.decode(PRNGStore.self, forKey: .rngStore)
     } catch {
       print("RNG store wasn't able to load. Giving you a fresh one.")
       var t: timeval = timeval()
       gettimeofday(&t, nil)
-      rngStore = RandomSeedStore(seed: UInt64(bitPattern: Int64(t.tv_usec)))
+      rngStore = PRNGStore(seed: UInt64(bitPattern: Int64(t.tv_usec)))
     }
 
     player = try values.decode(Entity.self, forKey: .player)
@@ -230,7 +230,7 @@ class WorldModel: Codable {
   }
 
   init(
-    rngStore: RandomSeedStore,
+    rngStore: PRNGStore,
     resources: ResourceCollectionProtocol,
     mapDefinitions: [MapDefinition],
     activeMapId: String)

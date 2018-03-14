@@ -1,5 +1,5 @@
 //
-//  RandomSeedStore.swift
+//  PRNGStore.swift
 //  RogueKitPackageDescription
 //
 //  Created by Steve Johnson on 1/14/18.
@@ -21,13 +21,13 @@ import Foundation
  class stores separate state for each stream.
 
  ```
- let store = RandomSeedStore(seed: 1234)
+ let store = PRNGStore(seed: 1234)
 
  let rng1 = store["main"]
  let rng2 =
  ```
  */
-public class RandomSeedStore: Codable {
+public class PRNGStore: Codable {
   public let seed: UInt64
 
   private var rngCache = [UInt64: PCG32Generator]()
@@ -38,9 +38,10 @@ public class RandomSeedStore: Codable {
   }
 
   public subscript(index: String) -> PCG32Generator {
-    let seq = UInt64(bitPattern: Int64(index.hashValue))
-    if let s = collisionChecks[seq], s != index {
-      assertionFailure("RandomSeedStore collision between \(s) (existing) and \(index) (new)")
+    var seq = UInt64(bitPattern: Int64(index.hashValue))
+    while collisionChecks[seq] != nil && collisionChecks[seq] != index {
+      print("Collision between", index, "and", collisionChecks[seq] ?? "nil")
+      seq += 1
     }
     if collisionChecks[seq] == nil {
       collisionChecks[seq] = index

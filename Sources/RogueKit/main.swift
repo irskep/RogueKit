@@ -104,7 +104,7 @@ private let director = SteveRLDirector(terminal: terminal, configBlock: {
 #endif
 
 //director.run(initialScene: LoadScene(
-//  rngStore: RandomSeedStore(seed: 135205160),
+//  rngStore: PRNGStore(seed: 135205160),
 //  resources: resources,
 //  id: "basic"))
 director.run(initialScene: TitleScene(resources: resources))

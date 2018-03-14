@@ -91,7 +91,7 @@ class TitleScene: Scene {
     let seed = UInt64(bitPattern: Int64(t.tv_sec) * 1000) + UInt64(bitPattern: Int64(t.tv_usec) / 1000)
     print("SEED:", seedOverride ?? seed)
     let worldModel = WorldModel(
-      rngStore: RandomSeedStore(seed: seedOverride ?? seed),
+      rngStore: PRNGStore(seed: seedOverride ?? seed),
       resources: resources,
       mapDefinitions: resources.csvDB.mapDefinitions,
       activeMapId: resources.csvDB.mapDefinitions.first!.id)

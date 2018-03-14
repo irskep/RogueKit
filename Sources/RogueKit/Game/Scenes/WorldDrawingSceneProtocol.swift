@@ -25,7 +25,7 @@ extension WorldDrawingSceneProtocol {
     terminal.clear()
     worldModel.draw(in: terminal, at: BLPoint.zero)
 
-    terminal.foregroundColor = resources.defaultPalette["ui_text_dim"]
+    terminal.foregroundColor = resources.defaultPalette["teal"]
     terminal.print(
       point: BLPoint(x: 1, y: terminal.height - 1),
       string: "? for help. Arrows, tab, enter, E(quip) D(rop) R(est) S(tim) he(A)lth (I)nspect")

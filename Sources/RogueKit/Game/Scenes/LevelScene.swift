@@ -90,7 +90,6 @@ class LevelScene: Scene, WorldDrawingSceneProtocol, Animator {
 
   override func willExit() {
     worldModel.animator = nil
-    if worldModel.gameHasntEnded { save() }
   }
 
   override func willQuit() {

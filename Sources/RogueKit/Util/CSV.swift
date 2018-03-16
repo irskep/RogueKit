@@ -55,7 +55,7 @@ class StringBox {
     if valueIndex >= values.count {
       return ""
     } else {
-      return values[labelToIndex[index]!]
+      return values[labelToIndex[index]!].replacingOccurrences(of: "\\n", with: "\n")
     }
   }
 

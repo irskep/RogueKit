@@ -1,5 +1,5 @@
-#  RogueKit
+#  Dr. Hallervorden
 
-Right now, this is just an example of using
-[BearLibTerminal](http://foo.wyrd.name/en:bearlibterminal) with Swift, and an
-implementation of the recursive shadowcasting FOV algorithm.
+This is my 2018 7DRL game.
+
+[Download](https://irskep.itch.io/dr_hallervorden)
